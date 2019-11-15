@@ -1,0 +1,7 @@
+<div class="stat-container">
+  <div class="item-wrapper" *ngFor="let stat of statItems">
+    <div class="number" *ngIf="stat.count > 0">
+      {{stat.count}}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="filter-bar">
+  <mat-tab-group [@.disabled]="true">
+    <mat-tab label="Category">
+      <div>
+        <mat-chip-list>
+          <mat-basic-chip [class.selected]="selectedCategoryFilterId === item.id" (click)="navigate(item)"
+            *ngFor="let item of categoryFilters">
+            {{item.name}}
+          </mat-basic-chip>
+        </mat-chip-list>
+      </div>
+    </mat-tab>
+    <mat-tab label="Size">
+      <app-size-filter [filters]="currentSizeFilters" (filtersChanged)="sizeFiltersChanged($event)"></app-size-filter>
+    </mat-tab>
+    <mat-tab label="Color">
+      <app-color-filter [colors]="colorFilters" (filtersChanged)="colorFiltersChanged($event)"></app-color-filter>
+    </mat-tab>
+    <mat-tab label="Price">
+      <mat-chip-list>
+        <mat-basic-chip [class.selected]="selectedPriceFilterIds.indexOf(item.id) > -1" (click)="setPriceFilter(item)"
+          *ngFor="let item of priceFilters">
+          {{item.name}}
+        </mat-basic-chip>
+      </mat-chip-list>
+    </mat-tab>
+    <mat-tab label="Listings">
+      <div class='listing-wrapper'>
+        <mat-basic-chip (click)="bid = !bid" [class.selected]="bid"> Bid</mat-basic-chip>
+        <mat-basic-chip (click)="buy = !buy" [class.selected]="buy"> Buy</mat-basic-chip>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

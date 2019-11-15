@@ -1,0 +1,60 @@
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    flex: 1 0 auto;
+    margin-top: 64px;
+    overflow: hidden;
+  }
+
+  .footer {
+    flex: 0 0 auto;
+    padding: 0 15px;
+    text-align: center;
+
+    .row {
+      padding: 10px 0;
+
+      .links {
+        a {
+          transition: padding 0.5s;
+          display: inline-block;
+          padding: 20px 5px;
+
+          &:hover {
+            text-decoration: none;
+          }
+
+          fa-icon {
+            font-size: 30px;
+            width: 35px;
+          }
+
+          span {
+            display: inline-block;
+            width: 75px;
+            padding: 0 0 0 3px;
+            overflow: hidden;
+            text-align: left;
+            white-space: nowrap;
+            transition: width 0.5s;
+          }
+        }
+      }
+    }
+  }
+}
+
+.toolbar-filler {
+  flex: 1 1 auto;
+}
+
+.toolbar-gap {
+  margin-right: 10px;
+}

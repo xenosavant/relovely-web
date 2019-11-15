@@ -1,0 +1,17 @@
+@import '../../../../../styles-variables.scss';
+
+.group-wrapper {
+    display: flex;
+    height: 40px;
+    flex-direction: row;
+    div {
+        margin-left: 5px;
+        margin-right: 5px;
+        font-size: .7em;
+        display: flex;
+        align-items: center;
+        div.selected {
+            color: $pink-text;
+        }
+    }
+}

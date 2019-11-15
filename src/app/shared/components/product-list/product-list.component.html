@@ -1,0 +1,21 @@
+<div class="product-container" [class.grid]="grid" [class.headless]="!showHeader">
+  <div *ngIf="showHeader" class="profile-header" (click)="goToProfile($event)">
+    <span class="profile-image-wrapper">
+      <app-avatar [image]="product.userImageUrl"></app-avatar>
+    </span>
+    <span class="profile-name">
+      {{product.sellerUsername}}
+    </span>
+  </div>
+  <div class="product-image">
+    <app-product-body [product]="product" (click)="goToProduct($event)"></app-product-body>
+  </div>
+  <div class="bottom-icons">
+    <div class="left">
+      <app-button [type]="'primary'" [text]="product.auction === true ? 'Buy Now' : 'Bid'"></app-button>
+    </div>
+    <div class="right" (click)="favorite()">
+      <fa-icon [class.fa-lg]="!grid" [class.favorited]="product.favorited" icon="heart"></fa-icon>
+    </div>
+  </div>
+</div>

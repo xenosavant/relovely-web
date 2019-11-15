@@ -1,0 +1,39 @@
+@import '../../../../styles-variables.scss';
+
+.header-container {
+    margin-left:12px;
+    margin-right:12px;
+    margin-bottom:24px;
+    display:flex;
+    flex-direction: row;
+    align-items:  center;
+    height:75px;
+
+
+    .avatar-wrapper {
+        width:75px;
+    }
+
+    .title-wrapper {
+        height:2.5em;
+        line-height:1.25em;
+        flex-grow: 1;
+        font-size: .9em;
+        color: $light-gray-text;
+        padding-left:2vw;
+
+        .review {
+            span {
+                font-weight: 300;
+                font-size: .85em;
+            }
+        }
+        div fa-icon {
+            padding-right:1vw;
+        }
+    }
+
+    .button-wrapper {
+        min-width: 20vw;
+    }
+}

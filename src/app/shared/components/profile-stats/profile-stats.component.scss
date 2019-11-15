@@ -1,0 +1,23 @@
+@import '../../../../styles-variables.scss';
+
+.stat-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    margin-bottom: 5px;
+}
+
+.item-wrapper {
+    text-align: center;
+    line-height: 1.3;
+
+    .number {
+        font-weight: bold;
+        font-size: .8em;
+    }
+    .title {
+        color: $light-gray-text;
+        font-size: .7em;
+        font-weight: 300;
+    }
+}

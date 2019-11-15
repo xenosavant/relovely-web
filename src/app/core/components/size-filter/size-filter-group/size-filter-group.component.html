@@ -1,0 +1,7 @@
+<div class="group-wrapper">
+  <div (click)="selectFilter(filter)" *ngFor="let filter of group.filters">
+    <div [class.selected]="group.selectedKeys.indexOf(filter.key) > -1">
+      {{filter.value}}
+    </div>
+  </div>
+</div>

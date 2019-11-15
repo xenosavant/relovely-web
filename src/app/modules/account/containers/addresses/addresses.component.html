@@ -1,0 +1,5 @@
+<ng-template cdkPortal #addAddressModal="cdkPortal">
+  <app-add-address (close)="close($event)"></app-add-address>
+</ng-template>
+
+<app-button type="primary" (click)="openModal()" text="Add Address"></app-button>

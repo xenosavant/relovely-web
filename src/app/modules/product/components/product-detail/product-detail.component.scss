@@ -1,0 +1,57 @@
+@import '../../../../../styles-variables';
+
+.profile-container {
+    height:18vw;
+    display:flex;
+    flex-flow: row;
+    align-items: center;
+    padding:1vw;
+
+    .profile-image-wrapper {
+        width: 15vw;
+    }
+    .product-user-name {
+        padding:5vw;
+        font-weight: 300;
+        font-size:.9em;
+    }
+}
+
+.info-container {
+    line-height: 1.4 !important;
+    display:flex;
+    flex-direction: row;
+    .info {
+        flex-grow: 1;
+        .product-name {
+            font-size: .9em;
+            font-weight:500;
+        }
+        .product-price {
+            font-size: .8em;
+            font-weight:500;
+            .retail {
+                color: $pink-text;
+                text-decoration: line-through;
+            }
+        }
+        .product-size {
+            font-size: .8em;
+            .title {
+                color: #a4a4a4;
+                padding-right:1vw;
+            }
+        }
+    }
+
+    .action {
+        
+    }
+}
+
+.product-details {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: .7em;
+    font-weight:400;
+}

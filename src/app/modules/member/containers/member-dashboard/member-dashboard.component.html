@@ -1,0 +1,18 @@
+<mat-tab-group mat-stretch-tabs [selectedIndex]="selected" (swipeleft)="swipe($event.type)"
+  (swiperight)="swipe($event.type)">
+  <mat-tab label="Favorites">
+    <div class="content-wrapper">
+      <app-products-list [products]="products"></app-products-list>
+    </div>
+  </mat-tab>
+  <mat-tab label="Following">
+    <div class="content-wrapper">
+      <app-products-list [products]="products"></app-products-list>
+    </div>
+  </mat-tab>
+  <mat-tab label="Orders">
+    <div class="content-wrapper">
+      <app-products-list [products]="products"></app-products-list>
+    </div>
+  </mat-tab>
+</mat-tab-group>

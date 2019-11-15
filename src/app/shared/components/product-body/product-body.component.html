@@ -1,0 +1,16 @@
+<div (click)="onClicked($event)">
+  <div class="image-wrapper">
+    <img class="product" [src]="product.asset">
+  </div>
+  <div class="info-footer">
+    <div class="product-name">
+      <strong>{{product.name}}</strong>
+    </div>
+    <div class="product-size">
+      Size: {{product.size}}
+    </div>
+    <div class="product-price">
+      {{product.price | currency}}
+    </div>
+  </div>
+</div>

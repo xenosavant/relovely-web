@@ -1,0 +1,37 @@
+<div class="profile-container" (click)="goToProfile($event)">
+  <div class="profile-image-wrapper">
+    <app-avatar [image]="product.userImageUrl"></app-avatar>
+  </div>
+  <div class="product-user-name">
+    {{product.sellerUsername}}
+  </div>
+</div>
+<owl-carousel-o [options]="carouselOptions" (changed)="carouselTranslated($event)" appOwlPreventClick #featuredCarousel>
+  <ng-container *ngFor="let image of product.imageUrls, let i = index">
+    <ng-template carouselSlide [id]="i">
+      <a appClick target="_blank">
+        <img [src]="image" alt="" #imageElement>
+      </a>
+    </ng-template>
+  </ng-container>
+</owl-carousel-o>
+<div class="info-container">
+  <div class="info">
+    <div class="product-name">
+      {{product.name}}
+    </div>
+    <div class="product-price">
+      {{product.price | currency}} <span class="retail">{{product.price + 50 | currency}}</span>
+    </div>
+    <div class="product-size">
+      <span class="title">Size:</span>
+      <strong>{{product.size}}</strong>
+    </div>
+  </div>
+  <div class="action">
+    <app-button type="accent" text="Buy Now"></app-button>
+  </div>
+</div>
+<div class="product-details">
+  {{product.description}}
+</div>

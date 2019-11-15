@@ -1,0 +1,7 @@
+<div class="products" [class.grid]="showGrid" [class.full]="!showGrid">
+  <div *ngFor="let product of products" class="product-wrapper" [class.mat-elevation-z1]="true">
+    <app-product-list [showGrid]="showGrid" [showHeader]="showHeader" (selectProduct)="gotToProduct($event)"
+      [product]="product">
+    </app-product-list>
+  </div>
+</div>

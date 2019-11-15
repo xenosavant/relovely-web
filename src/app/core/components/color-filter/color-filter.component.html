@@ -1,0 +1,5 @@
+<div class="color-filter-wrapper">
+  <div (click)="selectColor(color)" class="dot" [class.selected]="selectedColors.indexOf(color.key) > -1"
+    [style.background-color]="color.color" *ngFor="let color of colors">
+  </div>
+</div>

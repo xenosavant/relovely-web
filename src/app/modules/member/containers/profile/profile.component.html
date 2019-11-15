@@ -1,0 +1,8 @@
+<ng-container [ngSwitch]="user.isSeller">
+  <ng-container *ngSwitchCase="true">
+    <app-seller-profile [owner]=true [user]="user"></app-seller-profile>
+  </ng-container>
+  <ng-container *ngSwitchCase="false">
+    <app-member-profile [owner]=true [user]="user"></app-member-profile>
+  </ng-container>
+</ng-container>

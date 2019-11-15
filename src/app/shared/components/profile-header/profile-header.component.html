@@ -1,0 +1,20 @@
+<div class="header-container">
+  <div class="avatar-wrapper">
+    <app-avatar [image]="user.imageUrl"></app-avatar>
+  </div>
+  <div class="title-wrapper">
+    <div>{{user.username}}</div>
+    <div class="review">
+      <fa-icon icon="heart" [styles]="{'color': 'gray'}"></fa-icon>
+      <fa-icon icon="heart" [styles]="{'color': 'gray'}"></fa-icon>
+      <fa-icon icon="heart" [styles]="{'color': 'gray'}"></fa-icon>
+      <fa-icon icon="heart" [styles]="{'color': 'gray'}"></fa-icon>
+      <span>(4)</span>
+    </div>
+  </div>
+  <div class="button-wrapper">
+    <app-button *ngIf="!owner" [type]="'primary'" text="Follow"></app-button>
+    <app-button *ngIf="owner" [type]="'primary'" text="Edit"></app-button>
+  </div>
+</div>
+<app-profile-stats [statItems]="statItems"></app-profile-stats>

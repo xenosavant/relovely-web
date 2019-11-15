@@ -1,0 +1,5 @@
+<div class="size-filter-wrapper">
+  <ng-container *ngFor="let group of filters">
+    <app-size-filter-group (select)="selectSize($event)" [group]="group"></app-size-filter-group>
+  </ng-container>
+</div>

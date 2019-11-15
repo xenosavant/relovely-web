@@ -1,0 +1,350 @@
+@import '../styles-variables';
+
+.theme-wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+mat-sidenav-container {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  overflow-y: hidden !important;
+  position:fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+
+  @media (max-width: $toolbar-breakpoint) {
+    .content {
+      // margin-bottom: 50px !important;
+    }
+  }
+}
+
+mat-toolbar {
+  top:0;
+  mat-toolbar-row {
+    z-index:2;
+    &.header {
+      background-color: $header  !important;
+      div.header-bar{
+        color: white;
+        background-color: $header !important;
+      }
+    }
+  }
+}
+
+.topbar {
+  position:fixed;
+  top:0;
+  z-index:10;
+  fa-icon {
+    font-size: 24px;
+  }
+}
+
+.toolbar {
+  width: 100%;
+  // display: flex;
+  z-index: 5;
+
+  .nav-button {
+    margin: 0 10px 0 0;
+  }
+
+  fa-icon {
+    font-size: 24px;
+  }
+
+  .mat-stroked-button {
+    margin-right: 10px;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  mat-select {
+    margin: 0 0 0 20px;
+    width: 40px;
+    font-size: 14px;
+  }
+  // border-bottom: solid .6px $medium-dark-background;
+}
+
+mat-toolbar mat-toolbar-row.no-border::after
+{
+  border-bottom: none !important;
+}
+
+.offset-content {
+  z-index:5;
+  position: fixed !important;
+  top: 56px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: white !important;
+  overflow:auto;
+}
+  // .wrapper {
+  //   position: absolute;
+  //   top: 0; 
+  //   left: 0;
+  //   right: 0;
+  //   bottom: 0;
+  //   display: flex;
+  //   flex-direction: column;
+
+  //   &.overlay::after {
+  //     content: '\A';
+  //     position: absolute;
+  //     width: 100%; height:100%;
+  //     top:0; left:0;
+  //     background:rgba(0,0,0,0.6);
+  //     transition: all 1s;
+  //     -webkit-transition: all 1s;
+  //   }
+
+  //   .content {
+  //     flex: 1 0 auto;
+  //     margin-top: 64px;
+  //     overflow: hidden;
+  //   }
+
+    .footer {
+      flex: 0 0 auto;
+      padding: 0 15px;
+      text-align: center;
+
+      .row {
+        padding: 10px 0;
+
+        .links {
+          a {
+            transition: padding 0.5s;
+            display: inline-block;
+            padding: 20px 5px;
+
+            &:hover {
+              text-decoration: none;
+            }
+
+            fa-icon {
+              font-size: 30px;
+              width: 35px;
+            }
+
+            span {
+              display: inline-block;
+              width: 75px;
+              padding: 0 0 0 3px;
+              overflow: hidden;
+              text-align: left;
+              white-space: nowrap;
+              transition: width 0.5s;
+            }
+          }
+
+          @media (min-width: map-get($grid-breakpoints, lg)) {
+            a {
+              padding: 20px 10px;
+            }
+          }
+
+          @media (max-width: map-get($grid-breakpoints, md)) {
+            a {
+              padding: 20px;
+
+              span {
+                width: 0;
+                padding: 0;
+              }
+            }
+          }
+
+          @media (max-width: map-get($grid-breakpoints, sm)) {
+            a {
+              padding: 20px 5px;
+            }
+          }
+        }
+
+        @media (min-width: map-get($grid-breakpoints, sm)) {
+          .signature {
+            position: relative;
+
+            a {
+              position: absolute;
+              right: 15px;
+            }
+          }
+        }
+      }
+    }
+
+.toolbar-filler {
+  flex: 1 1 auto;
+  height: 50px;
+}
+
+.mega-menu-bar {
+  margin: 0 auto;
+}
+
+.toolbar-gap {
+  margin-right: 10px;
+}
+
+.mat-toolbar-row {
+  height:56px;
+}
+
+.mat-toolbar-multiple-rows {
+  min-height: 0px !important;
+}
+
+// .menu-bar-container {
+//   margin: 0 auto;
+//   width: $inner-desktop-width;
+//   height: 45px;
+//   display: grid;
+//   grid-template-columns: 1fr 145px;
+//   grid-template-rows: auto;
+//   align-items: center;
+  
+// }
+.icon-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  button {
+    color: white !important;
+    margin: auto;
+    img {
+      margin: 0;
+      &.filters {
+        height:30px;
+      }
+      &.profile {
+        height:30px;
+      }
+    }
+  }
+}
+
+mat-sidenav {
+  margin-top: 56px;
+  width: 300px;
+  background-color: $medium-gray-background !important;
+
+  .branding {
+    &.border-bottom {
+      border-bottom: solid .5px $header-border !important;
+    }
+    background-color: $medium-gray-background;
+    height: 45px;
+    padding: 8px 10px;
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    button.close {
+      width:40px;
+      padding-top:4px;
+      float:right;
+    }
+    button.back {
+      padding-top:4px;
+      width:40px;
+    }
+
+    span.text-wrapper {
+      flex:1;
+      text-align: center;
+      span.text {
+        font-size: inherit;
+
+      }
+    }
+  }
+}
+
+mat-toolbar-row {
+
+  app-search-bar {
+    margin-right:16px;
+  }
+  
+  div.header-bar {
+    width:100%;
+    padding-left:10px;
+    padding-top:6px;
+    padding-bottom:6px;
+    margin-bottom:1px;
+      h3 {
+        &.center {
+          text-align: center;
+        }
+        font-weight: 350 !important;
+      }
+  }
+ 
+  &.top-bar {
+    background-color: $medium-gray-background;
+    padding:0px 10px 0px 10px !important;
+  }
+  &.header {
+    height: 44px !important;
+    background-color: $header;
+  }
+}
+
+mat-nav-list {
+  padding-top: 0 !important;
+    &.top  {
+      a {
+        height: 75px !important;
+        margin-top:30px;
+      }
+    }
+
+    &.sub {
+      a {
+        height: 52px !important;
+        padding-bottom:2px;
+      }
+    }
+}
+
+.main-content {
+  height: 100%;
+}
+
+.grid-toggle {
+  button fa-icon {
+    color: $header-border !important;
+    font-size:20px;
+  }
+}
+
+.overlay {
+  position: relative;
+}
+
+.overlay:after {
+  content: " ";
+  z-index: 100;
+  display: block;
+  position: absolute;
+  height: 100vh;
+  top: 0;
+  left: 300px;
+  right: 0;
+  background: rgba(255, 255, 255, 0);
+}

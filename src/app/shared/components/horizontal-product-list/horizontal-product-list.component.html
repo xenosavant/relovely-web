@@ -1,0 +1,32 @@
+<div class="list-wrapper">
+  <div class="header">
+    <div class="line">
+      <hr>
+    </div>
+    <div class="title">
+      <ng-container *ngIf="subtitle">
+        <div class="top">
+          {{title}}
+        </div>
+        <div class="bottom">
+          {{subtitle}}
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!subtitle">
+        <div class="single-title"> {{title}}</div>
+      </ng-container>
+    </div>
+    <div class="line">
+      <hr>
+    </div>
+  </div>
+  <div class="product-list-wrapper">
+    <div class="product-list">
+      <div *ngFor="let product of products">
+        <div class="product-card" (click)="onClicked(product.id)">
+          <img [src]="product.asset">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

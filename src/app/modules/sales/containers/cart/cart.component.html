@@ -1,0 +1,45 @@
+<div class="cart-wrapper">
+  <div class="cart-card" [class.mat-elevation-z1]="true">
+    <div *ngFor="let product of cartProducts" class="product-wrapper">
+      <div class="product-image">
+        <div class="image-wrapper" [class.mat-elevation-z2]="true">
+          <img class="product" [src]="product.asset">
+        </div>
+      </div>
+      <div class="product-info">
+        <div class=details>
+          <div class="title mat-body">
+            {{product.name}}
+          </div>
+          <div class="size">
+            Size: {{product.size}}
+          </div>
+
+        </div>
+        <div class="price">
+          <div class="seller">
+            By {{product.sellerUsername}}
+          </div>
+          <div class="value">
+            {{product.price | currency}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="totals">
+      <div class="details">
+        <div>Subtotal:</div>
+        <div class="value">$100.00</div>
+        <div>Shipping:</div>
+        <div class="value">$20.00</div>
+        <div>Tax:</div>
+        <div class="value">$12.00</div>
+        <div class="total"><strong>Estimated Total:</strong></div>
+        <div class="value total"><strong>$199.00</strong></div>
+      </div>
+      <div class="buy-button">
+        <app-button type="primary" text="Proceed To Checkout"></app-button>
+      </div>
+    </div>
+  </div>
+</div>

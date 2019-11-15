@@ -1,0 +1,12 @@
+<div class="search">
+  <form class="search__form">
+    <input class="search__input" name="search" type="text" autocomplete="off" #searchTerm
+      (keyup.enter)="submit(searchTerm.value)" (focus)="placeholder = searchTerm.value === '' ? '' : placeholder"
+      (blur)="
+        placeholder = searchTerm.value === '' ? placeholderText : placeholder
+      " placeholder="{{ placeholder }}">
+    <button class="mat-icon-button">
+      <fa-icon icon="search" [styles]="{'color': 'black'}"></fa-icon>
+    </button>
+  </form>
+</div>
