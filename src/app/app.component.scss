@@ -225,11 +225,10 @@ mat-toolbar mat-toolbar-row.no-border::after
 // }
 .icon-wrapper {
   display: grid;
-  width:100px;
+  max-width:100px;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
   button {
-    color: white !important;
     margin: auto;
     img {
       margin: 0 auto;
@@ -305,6 +304,10 @@ mat-toolbar-row {
   &.top-bar {
     background-color: $medium-gray-background;
     padding:0px 10px 0px 10px !important;
+    display: grid;
+    grid-template-columns: 40px 120px auto 80px;
+    grid-template-rows: auto;
+    align-content: center;
   }
   &.header {
     height: 44px !important;
@@ -334,6 +337,7 @@ mat-nav-list {
 }
 
 .grid-toggle {
+  margin-right:8px;
   button fa-icon {
     color: $header-border !important;
     font-size:20px;
@@ -354,4 +358,20 @@ mat-nav-list {
   left: 300px;
   right: 0;
   background: rgba(255, 255, 255, 0);
+}
+
+.search-tool-bar {
+  display: grid;
+  grid-template-columns: 40px auto;
+  align-content: center;
+  background-color: $background-gray;
+    app-search-bar {
+      .search {
+        border: solid $dark-blue 1px;
+      }
+    }
+
+      button  {   
+        margin:auto;
+    }
 }

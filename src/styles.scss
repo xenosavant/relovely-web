@@ -28,12 +28,26 @@ $custom-typography: mat-typography-config(
 @include mat-core($custom-typography);
 @include angular-material-theme($app-light-theme);
 
-@media (max-width: 599px) {
+@media (max-width: 799px) {
   .mat-toolbar-multiple-rows {
     min-height:44px !important;
   }
 }
 
+
+button.mat-icon-button {
+  width: $search-bar-height !important;
+  height: $search-bar-height !important;
+  display: grid;
+  align-content: center;
+  align-items: center;
+  img {
+    line-height:$search-bar-height;
+  }
+  fa-icon {
+    line-height:$search-bar-height;
+  }
+}
 
 
 div.mat-tab-label {
@@ -420,7 +434,7 @@ mat-toolbar-row.mega-menu-bar {
 
 .desktop-content {
   margin: 0 auto;
-  width: $inner-desktop-width;
+  max-width: $inner-desktop-width;
 }
 
 html {
@@ -524,16 +538,18 @@ div.filter-bar {
 
 // Search Bar
 
-  button.mat-icon-button {
-    width: $search-bar-height !important;
-    height: $search-bar-height !important;
+  .search-tool-bar {
     display: grid;
+    grid-template-columns: 40px auto;
     align-content: center;
-    align-items: center;
-    img {
-      line-height:$search-bar-height;
-    }
-    fa-icon {
-      line-height:$search-bar-height;
-    }
+    background-color: $background-gray;
+      app-search-bar {
+        .search {
+          border: solid $dark-blue 1px;
+        }
+      }
+  
+        button  {   
+          margin:auto;
+      }
   }
