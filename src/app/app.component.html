@@ -132,14 +132,22 @@
               <button class="mat-icon-button" (click)="onGoToFavorites()">
                 <img class="filters" src="./assets/images/black-heart.svg">
               </button>
-              <button (click)="toggleProfile()" class="mat-icon-button" *ngIf="!showProfile">
+              <!-- <button (click)="toggleProfile()" class="mat-icon-button" *ngIf="!showProfile">
                 <img class="filters" src="./assets/images/account.svg">
-              </button>
-              <button (click)="toggleProfile()" class="mat-icon-button" *ngIf="showProfile">
+              </button> -->
+              <button class="mat-icon-button account" style="z-index:1050" [matMenuTriggerFor]="accountMenu">
                 <img class="profile" src="./assets/images/profile.png">
+                <img class="caret" src="./assets/images/caret.png">
               </button>
             </div>
           </div>
+          <mat-menu #accountMenu="matMenu" yPosition="below" xPosition="before" [overlapTrigger]="false">
+            <span class="menu-wrapper">
+              <div class="menu-item-wrapper"> Home</div>
+              <div class="menu-item-wrapper"> Profile</div>
+              <div class="menu-item-wrapper"> Settings</div>
+            </span>
+          </mat-menu>
         </div>
       </mat-toolbar-row>
       <mat-toolbar-row *ngIf="showNavBar" (click)="toggleHeader()" class="desktop-menu-bar">

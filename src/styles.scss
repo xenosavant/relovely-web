@@ -34,6 +34,10 @@ $custom-typography: mat-typography-config(
   }
 }
 
+.cdk-overlay-container {
+  background-color: transparent !important;
+}
+
 
 button.mat-icon-button {
   width: $search-bar-height !important;
@@ -46,6 +50,19 @@ button.mat-icon-button {
   }
   fa-icon {
     line-height:$search-bar-height;
+  }
+
+  &.account {
+    cursor: default;
+    img.profile {
+      height:27px !important;
+    }
+    img.caret {
+      height: 10px;
+      position: absolute;
+      bottom: -1px;
+      right: -4px;
+    }
   }
 }
 
@@ -96,6 +113,7 @@ div.left {
 .logo {
   height: 100%;
   cursor: pointer;
+  height: 45px;
 }
 
 .account {
@@ -340,10 +358,11 @@ mat-chip-list {
 .desktop-bar {
    margin: 0 auto;
    width:1080px;
-   height: 50px;
+   height: 56px;
   .desktop-bar-inner {
+    align-content: center;
     margin: 0 auto;
-    height: 50px;
+    height: 56px;
     display:grid;
     grid-template-rows: auto;
     grid-template-columns: 120px auto 100px;
@@ -449,6 +468,10 @@ html {
     background: transparent; /* make scrollbar transparent */
 }
 
+.account-menu-wrapper {
+
+}
+
 .mega-menu-wrapper {
  top:101px;
  height:$mega-menu-height;
@@ -552,4 +575,26 @@ div.filter-bar {
         button  {   
           margin:auto;
       }
+  }
+
+  .mat-menu-content {
+    padding:0px !important;
+    display:inline-block;
+    width:100%;
+      background-color:  $background-gray !important;
+      cursor:default;
+      .menu-wrapper {
+        display: grid;
+        height:100%;
+        width:100%;
+        .menu-item-wrapper {
+          width:100%;
+          height:24px;
+          display: inline-block;
+          &:hover {
+            background-color: $medium-gray-background;
+          }
+        }
+      }
+   
   }
