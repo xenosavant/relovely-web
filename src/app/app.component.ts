@@ -62,6 +62,7 @@ export class AppComponent implements OnInit {
   public showProfile = false;
   public showHeader = false;
   public showMegaMenu = false;
+  public showExtendedHeader = false;
 
   get top(): number {
     return ((this.showFilterBar ? 70 : 0) + (this.showNavBar ? 44 : 0));
@@ -110,7 +111,7 @@ export class AppComponent implements OnInit {
         p.moreItems.push(products[index]);
       }
     });
-    this.breakpointObserver.observe(['(max-width: 1044px)']).subscribe(result => {
+    this.breakpointObserver.observe(['(max-width: 799px)']).subscribe(result => {
       this.mobile = result.matches;
     })
     this.categoryService.getCatgories().subscribe(cats => {

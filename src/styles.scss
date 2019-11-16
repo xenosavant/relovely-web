@@ -320,27 +320,32 @@ mat-chip-list {
   display:grid;
   width:auto;
   grid-template-rows: auto;
-  grid-template-columns: .5fr .5fr;
+  grid-template-columns: 3fr 2fr;
 }
 
 .desktop-bar {
-  margin: 0 auto;
-  height: 50px;
-  display:grid;
-  grid-template-rows: auto;
-  grid-template-columns: auto 1fr 65px;
-  align-items: center;
-  max-width: 1000px;
-  width: $desktop-width;
-  app-search-bar {
-    display: grid;
+   margin: 0 auto;
+   width:1080px;
+   height: 50px;
+  .desktop-bar-inner {
+    margin: 0 auto;
+    height: 50px;
+    display:grid;
+    grid-template-rows: auto;
+    grid-template-columns: 120px auto 100px;
     align-items: center;
-    .search {
-      border: solid $dark-blue 1px;
+    max-width: 100%;
+    min-width: 800px;
+    app-search-bar {
+      display: grid;
+      align-items: center;
+      .search {
+        border: solid $dark-blue 1px;
+      }
     }
-  }
-  img {
-    margin-right:16px;
+    img {
+      margin-right:16px;
+    }
   }
 }
 
@@ -520,15 +525,15 @@ div.filter-bar {
 // Search Bar
 
   button.mat-icon-button {
-    width: 35px !important;
-    height: 35px !important;
+    width: $search-bar-height !important;
+    height: $search-bar-height !important;
     display: grid;
     align-content: center;
     align-items: center;
     img {
-      line-height:35px;
+      line-height:$search-bar-height;
     }
     fa-icon {
-      line-height:35px;
+      line-height:$search-bar-height;
     }
   }

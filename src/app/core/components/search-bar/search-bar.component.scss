@@ -15,7 +15,7 @@ form {
 .search__form {
   position: relative;
   display: flex;
-  height: 35px;
+  height: $search-bar-height;
 }
 
 .search__input {
@@ -28,8 +28,8 @@ form {
   color: black;
   border-radius: 8px 0 0 8px;
   .mat-icon-button {
-    width: 35px !important;
-    height:35px !important
+    width: $search-bar-height !important;
+    height:$search-bar-height !important
   }
   &::placeholder {
       color:gray;

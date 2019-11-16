@@ -83,6 +83,11 @@
 
 <div class="theme-wrapper light-theme" *ngIf="!mobile">
   <ng-container *ngTemplateOutlet="desktopToolbar"></ng-container>
+  <ng-container *ngIf="showExtendedHeader">
+    <div class="extended-header">
+
+    </div>
+  </ng-container>
   <div class="desktop-content">
     <ng-container *ngTemplateOutlet="content"></ng-container>
   </div>
@@ -117,25 +122,27 @@
     <mat-toolbar color="primary">
       <mat-toolbar-row>
         <div class="desktop-bar">
-          <img class="logo" src="./assets/images/logo.png" (click)="onGoHome()">
-          <div class="search-wrapper">
-            <div></div>
-            <app-search-bar></app-search-bar>
-          </div>
-          <div class="icon-wrapper">
-            <button class="mat-icon-button" (click)="onGoToFavorites()">
-              <img class="filters" src="./assets/images/black-heart.svg">
-            </button>
-            <button (click)="toggleProfile()" class="mat-icon-button" *ngIf="!showProfile">
-              <img class="filters" src="./assets/images/account.svg">
-            </button>
-            <button (click)="toggleProfile()" class="mat-icon-button" *ngIf="showProfile">
-              <img class="profile" src="./assets/images/profile.png">
-            </button>
+          <div class="desktop-bar-inner">
+            <img class="logo" src="./assets/images/logo.png" (click)="onGoHome()">
+            <div class="search-wrapper">
+              <div></div>
+              <app-search-bar></app-search-bar>
+            </div>
+            <div class="icon-wrapper">
+              <button class="mat-icon-button" (click)="onGoToFavorites()">
+                <img class="filters" src="./assets/images/black-heart.svg">
+              </button>
+              <button (click)="toggleProfile()" class="mat-icon-button" *ngIf="!showProfile">
+                <img class="filters" src="./assets/images/account.svg">
+              </button>
+              <button (click)="toggleProfile()" class="mat-icon-button" *ngIf="showProfile">
+                <img class="profile" src="./assets/images/profile.png">
+              </button>
+            </div>
           </div>
         </div>
       </mat-toolbar-row>
-      <mat-toolbar-row *ngIf="showFilterBar" (click)="toggleHeader()" class="desktop-menu-bar">
+      <mat-toolbar-row *ngIf="showNavBar" (click)="toggleHeader()" class="desktop-menu-bar">
         <div class="menu-bar-container">
           <div class="menu-wrapper">
             <span class="menu" (mouseleave)="onLeaveMenuBar($event)">
