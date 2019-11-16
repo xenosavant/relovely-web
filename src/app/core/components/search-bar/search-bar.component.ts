@@ -30,7 +30,7 @@ export class SearchBarComponent implements OnInit {
   public submit(searchTerm: string): void {
     if (searchTerm) {
       const params: string = this.parseInput(searchTerm);
-      this.router.navigate(['/listings'], {
+      this.router.navigate(['/products'], {
         queryParams: { searchString: params }
       });
     }
