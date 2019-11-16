@@ -316,19 +316,27 @@ mat-chip-list {
   color: $dark-gray-text !important;
 }
 
+.search-wrapper {
+  display:grid;
+  width:auto;
+  grid-template-rows: auto;
+  grid-template-columns: .5fr .5fr;
+}
+
 .desktop-bar {
   margin: 0 auto;
   height: 50px;
   display:grid;
   grid-template-rows: auto;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr 65px;
   align-items: center;
+  max-width: 1000px;
   width: $desktop-width;
   app-search-bar {
     display: grid;
     align-items: center;
     .search {
-      border: solid $dark-gray-47 1px;
+      border: solid $dark-blue 1px;
     }
   }
   img {
@@ -489,9 +497,6 @@ button.mat-stroked-button {
   // background: $gray-button !important;
 }
 
-button.mat-icon-button {
-  color:black !important;
-}
 
 button.primary {
   background-color: $light-gray-text !important;
@@ -509,5 +514,21 @@ button.mat-flat-button.mat-accent {
 
 div.filter-bar {
   width:100%;
-  background-color: $medium-gray-background;
 }
+
+
+// Search Bar
+
+  button.mat-icon-button {
+    width: 35px !important;
+    height: 35px !important;
+    display: grid;
+    align-content: center;
+    align-items: center;
+    img {
+      line-height:35px;
+    }
+    fa-icon {
+      line-height:35px;
+    }
+  }

@@ -2,7 +2,7 @@
 
 
 form {
-  background-color: $medium-dark-background;
+  background-color: $dark-blue;
   border-radius:4px;
 }
 
@@ -15,6 +15,7 @@ form {
 .search__form {
   position: relative;
   display: flex;
+  height: 35px;
 }
 
 .search__input {
@@ -26,53 +27,15 @@ form {
   transition: color 0.15s;
   color: black;
   border-radius: 4px 0 0 4px;
+  .mat-icon-button {
+    width: 35px !important;
+    height:35px !important
+  }
   &::placeholder {
       color:gray;
   }
-  
-  // & ~ .search__border {
-  //     background: $search-input-default-bg;
-  //     box-shadow: $search-input-default-shadow;
-  // }
-
-  // &:hover {
-  //     color: $search-input-hover-font-color;
-
-  //     &::placeholder {
-  //         color: $search-input-hover-placeholder;
-  //     }
-  //     & ~ .search__border {
-  //         background: $search-input-hover-bg;
-  //         box-shadow: $search-input-hover-shadow;
-  //     }
-  //     & ~ .search__button {
-  //         fill: $search-input-hover-icon-color;
-
-  //         &:hover {
-  //             fill: $search-input-hover-icon-hover-color;
-  //         }
-  //     }
-  // }
-  // &:focus {
-  //     outline: none;
-  //     color: $search-input-focus-font-color;
-
-  //     &::placeholder {
-  //         color: $search-input-focus-placeholder;
-  //     }
-  //     & ~ .search__border {
-  //         background: $search-input-focus-bg;
-  //         box-shadow: $search-input-focus-shadow;
-  //     }
-  //     & ~ .search__button {
-  //         fill: $search-input-focus-icon-color;
-
-  //         &:hover {
-  //             fill: $search-input-focus-icon-hover-color;
-  //         }
-  //     }
-  // }
 }
+
 .search__button {
   border: none;
   padding: 0;
@@ -90,9 +53,10 @@ form {
   &:focus {
     outline: none;
   }
-
-  app-icon,
-  svg {
-    display: block;
+  fa-icon {
+    app-icon,
+    svg {
+      display: block;
+    }
   }
 }

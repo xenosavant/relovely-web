@@ -118,11 +118,11 @@
       <mat-toolbar-row>
         <div class="desktop-bar">
           <img class="logo" src="./assets/images/logo.png" (click)="onGoHome()">
-          <app-search-bar></app-search-bar>
+          <div class="search-wrapper">
+            <div></div>
+            <app-search-bar></app-search-bar>
+          </div>
           <div class="icon-wrapper">
-            <button class="mat-icon-button">
-              <img class="filters" src="./assets/images/black-filters.svg">
-            </button>
             <button class="mat-icon-button" (click)="onGoToFavorites()">
               <img class="filters" src="./assets/images/black-heart.svg">
             </button>
