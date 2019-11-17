@@ -38,30 +38,31 @@ $custom-typography: mat-typography-config(
   background-color: transparent !important;
 }
 
-
-button.mat-icon-button {
-  width: $search-bar-height !important;
-  height: $search-bar-height !important;
-  display: grid;
-  align-content: center;
-  align-items: center;
-  img {
-    line-height:$search-bar-height;
-  }
-  fa-icon {
-    line-height:$search-bar-height;
-  }
-
-  &.account {
-    cursor: default;
-    img.profile {
-      height:27px !important;
+.icon-wrapper, .search__form {
+  button.mat-icon-button {
+    width: $search-bar-height !important;
+    height: $search-bar-height !important;
+    display: grid;
+    align-content: center;
+    align-items: center;
+    img {
+      line-height:$search-bar-height;
     }
-    img.caret {
-      height: 10px;
-      position: absolute;
-      bottom: -1px;
-      right: -4px;
+    fa-icon {
+      line-height:$search-bar-height;
+    }
+
+    &.account {
+      cursor: default;
+      img.profile {
+        height:27px !important;
+      }
+      img.caret {
+        height: 10px;
+        position: absolute;
+        bottom: -1px;
+        right: -4px;
+      }
     }
   }
 }

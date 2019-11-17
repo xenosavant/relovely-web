@@ -52,7 +52,8 @@
 }
 
 .toolbar-filler {
-  flex: 1 1 auto;
+  display:grid;
+  align-items: center;
 }
 
 .toolbar-gap {

@@ -192,11 +192,6 @@ mat-toolbar mat-toolbar-row.no-border::after
       }
     }
 
-.toolbar-filler {
-  flex: 1 1 auto;
-  height: 50px;
-}
-
 .mega-menu-bar {
   margin: 0 auto;
 }
@@ -302,6 +297,8 @@ mat-toolbar-row {
   }
  
   &.top-bar {
+    height: 56px;
+    align-items: center;
     background-color: $medium-gray-background;
     padding:0px 10px 0px 10px !important;
     display: grid;
