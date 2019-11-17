@@ -19,6 +19,7 @@ export class NavigationService {
         pageHeader: '',
         navigationHeader: '',
         showFilterBar: false,
+        showProfileBar: false,
         showProductGrid: true,
         categoryItems: [],
         chipItems: [],

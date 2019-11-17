@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, NgZone } from '@angular/core';
 import { Product } from '@app/shared/models/product.model';
 import { products } from '@app/data/products.data';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -22,13 +22,16 @@ export class ProductsComponent implements OnInit {
     private route: ActivatedRoute,
     private ref: ChangeDetectorRef,
     private navigationService: NavigationService,
+    private zone: NgZone,
     private categoryService: CategoryService) { }
 
   ngOnInit() {
     this.products = products;
     this.navigationService.navConfig$.subscribe(state => {
       this.grid = state.showProductGrid;
-      this.ref.markForCheck();
+      this.zone.run(() => {
+        this.ref.markForCheck();
+      })
     });
     this.route.params.subscribe(params => {
       if (params['categoryId']) {

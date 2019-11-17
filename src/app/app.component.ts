@@ -96,7 +96,9 @@ export class AppComponent implements OnInit {
       this.showTopLevel = val.showTopLeveNavigation;
       this.chipItems = val.chipItems;
       this.currentNavigationItems = val.currentNavigationItems;
-      this.ref.detectChanges();
+      this.zone.run(() => {
+        this.ref.detectChanges();
+      });
     });
   }
 
