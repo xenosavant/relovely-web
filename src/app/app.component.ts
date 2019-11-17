@@ -50,6 +50,7 @@ export class AppComponent implements OnInit {
   public desktopNavigationItems: NavigationItem[] = [];
   public desktopLinkItems: NavigationItem[] = [];
   public selectedDesktopNavSubItems: NavigationItem[];
+  public accountNav: NavigationItem;
 
 
   public showFilterBar: boolean;
@@ -70,7 +71,7 @@ export class AppComponent implements OnInit {
 
   @ViewChild('offsetContent', { static: false }) content: ElementRef;
   @ViewChild(MatSidenavContainer, { static: true }) container: MatSidenavContainer;
-  @ViewChild(MatMenuTrigger, { static: true }) trigger: MatMenuTrigger;
+  @ViewChild('menuTrigger', { read: MatMenuTrigger, static: false }) trigger: MatMenuTrigger;
 
   constructor(
     private storageService: LocalStorageService,
@@ -144,7 +145,7 @@ export class AppComponent implements OnInit {
         this.setParents(item);
       });
 
-      const accountItem = {
+      this.accountNav = {
         name: 'Account', path: null, subItems: [
           new NavigationItem([], '/member/profile', 'Profile', 0, [], [], null),
           new NavigationItem([], '/sales/orders', 'Orders', 0, [], [], null),
@@ -157,17 +158,16 @@ export class AppComponent implements OnInit {
       });
       this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'Blog', 0, [], [], null));
       this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'About', 0, [], [], null));
-      console.log(this.desktopNavigationItems);
       if (this.userService.currentUser.isSeller) {
-        accountItem.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', 0, [], [], null),
+        this.accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', 0, [], [], null),
           new NavigationItem([], '/sales/listings', 'Listings', 0, [], [], null),
         );
       }
-      accountItem.subItems.push(new NavigationItem([], '/account/settings', 'Settings', 0, [], [], null),
+      this.accountNav.subItems.push(new NavigationItem([], '/account/settings', 'Settings', 0, [], [], null),
         new NavigationItem([], '/account/terms', 'Terms of Service', 0, [], [], null),
         new NavigationItem([], '/account/help', 'Help', 0, [], [], null),
       );
-      navigationItems.push(accountItem);
+      navigationItems.push(this.accountNav);
       this.navigationService.rootNavigationItems = navigationItems;
       this.navigationService.setCurrentNavigationItems(navigationItems);
 
@@ -234,10 +234,14 @@ export class AppComponent implements OnInit {
   }
 
   public onLeaveMegaMenu(event: any) {
-    console.log(event)
-    if (event.offsetY >= 100 || event.offsetX <= 0 || event.offsetX >= 720) {
+    if (event.offsetY >= 100 || event.offsetX <= 0 || event.offsetX >= 432) {
       this.showMegaMenu = false;
     }
+  }
+
+  public onLeaveAccountMenu(event: any) {
+    console.log(event);
+    this.trigger.closeMenu();
   }
 
   public toggleProfile() {
