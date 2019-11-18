@@ -114,7 +114,7 @@ div.left {
 .logo {
   height: 100%;
   cursor: pointer;
-  height: 45px;
+  height: 55px;
 }
 
 .account {
@@ -267,6 +267,34 @@ mat-chip-list {
 
 // Profile Tabs
 
+.member-profile-container {
+  mat-tab-header {
+      div.mat-tab-label-container {
+          div.mat-tab-list {
+            div.mat-tab-labels {
+              @media( min-width:800px) {
+                margin-left: 150px;
+                width:500px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .member-profile-container {
+      app-profile-header {
+        app-profile-stats {
+        .stat-container {
+          @media( min-width:800px) {
+              margin-left: 78px;
+              width: 640px;
+          }
+        }
+      }
+    }
+  }
+
 .profile-container {
   overflow: hidden;
   .mat-tab-body-wrapper {
@@ -281,6 +309,9 @@ mat-chip-list {
           div.mat-tab-list {
             height: 50px;
             width:100%;
+            @media( min-width:800px) {
+              margin-left: 200px;
+            }
             div.mat-tab-labels {
               height: 50px !important;
               bottom: 30px !important;
@@ -297,6 +328,7 @@ mat-chip-list {
                 height: 50px !important;
                 div.mat-tab-label-content {
                   font-size: .85em;
+                  margin-bottom: 4px;
                 }
               }
             }
@@ -332,6 +364,7 @@ mat-chip-list {
                 height: 50px !important;
                 div.mat-tab-label-content {
                   font-size: .85em;
+                  margin-bottom: 4px;
                 }
               }
             }
@@ -358,7 +391,7 @@ mat-chip-list {
 
 .desktop-bar {
    margin: 0 auto;
-   width:1080px;
+   width:1280px;
    height: 56px;
   .desktop-bar-inner {
     align-content: center;
@@ -374,7 +407,7 @@ mat-chip-list {
       display: grid;
       align-items: center;
       .search {
-        border: solid $dark-blue 1px;
+        border: solid black 1px;
       }
     }
     img {
@@ -432,7 +465,7 @@ mat-toolbar-row.mega-menu-bar {
           font-weight: 200;
           &:hover {
             font-weight: 300 !important;
-            background-color: $light-blue;
+            background-color: #1b2121;
           }
           h1 {
             text-align: center;
@@ -570,7 +603,7 @@ div.filter-bar {
     background-color: $background-gray;
       app-search-bar {
         .search {
-          border: solid $dark-blue 1px;
+          border: solid black 1px;
         }
       }
         button  {   

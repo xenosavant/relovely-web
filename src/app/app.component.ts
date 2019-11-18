@@ -1,6 +1,6 @@
 import browser from 'browser-detect';
 import { Component, OnInit, ChangeDetectorRef, NgZone, ViewChild, ElementRef, Inject } from '@angular/core';
-import { Observable, BehaviorSubject, fromEvent } from 'rxjs';
+import { Observable, BehaviorSubject, fromEvent, Subscription } from 'rxjs';
 
 import {
   LocalStorageService
@@ -17,7 +17,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { NavigationItem } from './shared/models/navigation-item.model';
 import { CategoryService } from './shared/services/category.service';
 import { KeyValue, DOCUMENT } from '@angular/common';
-import { Router, Navigation } from '@angular/router';
+import { Router, Navigation, ActivatedRoute } from '@angular/router';
 import { NavigationService } from './shared/services/navigation.service';
 import { UserService } from './shared/services/user.service';
 import { Category } from './shared/models/category.model';
@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
   envName = env.envName;
   version = env.versions.app;
   year = new Date().getFullYear();
+  private scrollSubscription$: Subscription;
 
 
   showSearch: boolean = false;
@@ -63,7 +64,6 @@ export class AppComponent implements OnInit {
   public showProfile = false;
   public showHeader = false;
   public showMegaMenu = false;
-  public showExtendedHeader = false;
 
   get top(): number {
     return ((this.showFilterBar ? 70 : 0) + (this.showNavBar ? 44 : 0));
@@ -72,6 +72,7 @@ export class AppComponent implements OnInit {
   @ViewChild('offsetContent', { static: false }) content: ElementRef;
   @ViewChild(MatSidenavContainer, { static: true }) container: MatSidenavContainer;
   @ViewChild('menuTrigger', { read: MatMenuTrigger, static: false }) trigger: MatMenuTrigger;
+  @ViewChild('.mat-sidenav-content', { static: false }) sideNavContent: ElementRef;
 
   constructor(
     private storageService: LocalStorageService,
@@ -81,6 +82,7 @@ export class AppComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private zone: NgZone,
     private userService: UserService,
+    private route: ActivatedRoute,
     @Inject(DOCUMENT) private document: any
   ) {
     this.showFilterBar = false;
@@ -116,6 +118,11 @@ export class AppComponent implements OnInit {
     });
     this.breakpointObserver.observe(['(max-width: 799px)']).subscribe(result => {
       this.mobile = result.matches;
+      if (this.mobile) {
+        this.resetScrollSubscription();
+      } else if (this.scrollSubscription$) {
+        this.scrollSubscription$.unsubscribe();
+      }
     })
     this.categoryService.getCatgories().subscribe(cats => {
       const navigationItems = cats.map(cat => {
@@ -172,29 +179,44 @@ export class AppComponent implements OnInit {
       navigationItems.push(this.accountNav);
       this.navigationService.rootNavigationItems = navigationItems;
       this.navigationService.setCurrentNavigationItems(navigationItems);
-
+      // if (RegExp('^/member/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$')
+      //   .test(this.route.snapshot.url.join(''))) {
+      //   this.showExtendedHeader = true;
+      // } else {
+      //   this.showExtendedHeader = false;
+      // }
     })
     this.storageService.testLocalStorage();
   }
 
   ngAfterViewInit() {
-    const content = document.querySelector('.mat-sidenav-content');
-    const scroll$ = fromEvent(content, 'scroll').pipe(
-      throttleTime(10), // only emit every 10 ms
-      map(() => content.scrollTop) // get vertical scroll positio
-    );
+    this.resetScrollSubscription();
+  }
 
-    scroll$.subscribe(result => {
-      if (result <= this.top) {
-        if (result === 0) {
-          this.scroll0 = true;
+  private resetScrollSubscription() {
+    if (this.scrollSubscription$) {
+      this.scrollSubscription$.unsubscribe();
+    }
+    const content = document.querySelector('.mat-sidenav-content');
+    if (content) {
+      const scroll = fromEvent(content, 'scroll').pipe(
+        throttleTime(10), // only emit every 10 ms
+        map(() => content.scrollTop) // get vertical scroll positio
+      );
+
+      this.scrollSubscription$ = scroll.subscribe(result => {
+        console.log(result);
+        if (result <= this.top) {
+          if (result === 0) {
+            this.scroll0 = true;
+          }
+          this.scrolledToTop = true;
+        } else if (this.scrolledToTop) {
+          this.scroll0 = false;
+          this.scrolledToTop = false;
         }
-        this.scrolledToTop = true;
-      } else if (this.scrolledToTop) {
-        this.scroll0 = false;
-        this.scrolledToTop = false;
-      }
-    });
+      });
+    }
   }
 
 
@@ -242,7 +264,6 @@ export class AppComponent implements OnInit {
   }
 
   public onLeaveAccountMenu(event: any) {
-    console.log(event);
     this.trigger.closeMenu();
   }
 

@@ -83,12 +83,7 @@
 
 <div class="theme-wrapper light-theme" *ngIf="!mobile">
   <ng-container *ngTemplateOutlet="desktopToolbar"></ng-container>
-  <ng-container *ngIf="showExtendedHeader">
-    <div class="extended-header">
-
-    </div>
-  </ng-container>
-  <div class="desktop-content">
+  <div>
     <ng-container *ngTemplateOutlet="content"></ng-container>
   </div>
   <div class="mega-menu-wrapper" *ngIf="showMegaMenu">

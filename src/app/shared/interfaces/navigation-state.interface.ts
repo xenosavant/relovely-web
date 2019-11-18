@@ -7,7 +7,6 @@ export interface INavigationState {
     pageHeader: string;
     navigationHeader: string;
     showFilterBar: boolean;
-    showProfileBar: boolean;
     showProductGrid: boolean;
     categoryItems: Category[];
     chipItems: NavigationItem[];

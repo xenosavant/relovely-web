@@ -5,8 +5,14 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
     margin-bottom: 5px;
+
+    @media( min-width:800px) {
+        margin-left: 200px;
+    }
+
 }
 
+ 
 .item-wrapper {
     text-align: center;
     line-height: 1.3;

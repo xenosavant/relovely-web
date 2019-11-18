@@ -13,7 +13,7 @@
     .avatar-wrapper {
         width:75px;
     }
-
+    
     .title-wrapper {
         height:2.5em;
         line-height:1.25em;
@@ -21,7 +21,10 @@
         font-size: .9em;
         color: $light-gray-text;
         padding-left:2vw;
-
+        @media( min-width:800px) {
+            color: white;
+            font-size: 1.4em;
+          }
         .review {
             span {
                 font-weight: 300;
@@ -34,6 +37,21 @@
     }
 
     .button-wrapper {
-        min-width: 20vw;
+        min-width: 100px;
+        @media( min-width:800px) {
+            visibility: hidden;
+        }
     }
+
+    &.desktop {
+        position:absolute;
+        top:150px;
+        z-index:1051;
+        .avatar-wrapper {
+            width:200px !important;
+            border-radius: 50%;
+            display: inline-block;
+            border: 3px solid $background-gray;
+            }
+     }
 }
