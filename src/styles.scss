@@ -53,7 +53,7 @@ $custom-typography: mat-typography-config(
     }
 
     &.account {
-      cursor: default;
+      cursor: pointer;
       img.profile {
         height:27px !important;
       }
@@ -464,7 +464,7 @@ mat-toolbar-row.mega-menu-bar {
           color: white;
           font-weight: 200;
           &:hover {
-            font-weight: 300 !important;
+            // font-weight: 300 !important;
             background-color: #1b2121;
           }
           h1 {
