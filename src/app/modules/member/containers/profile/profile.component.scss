@@ -5,3 +5,24 @@
     height:150px;
     background-color: $dark-blue;
 }
+
+.profile-content {
+    .sidebar-wrapper {
+        margin: 50px 16px 16px 16px;
+        border-radius: 4px;
+        .info-wrapper {
+            margin: 16px;
+            ul {
+                padding:0 !important;
+                li {
+                list-style-type: none;
+                margin-bottom:8px;
+                img {
+                    width:24px !important;
+                    margin-right:8px;
+                }
+            }
+          }
+        }
+    }
+}

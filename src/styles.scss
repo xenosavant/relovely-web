@@ -28,7 +28,7 @@ $custom-typography: mat-typography-config(
 @include mat-core($custom-typography);
 @include angular-material-theme($app-light-theme);
 
-@media (max-width: 799px) {
+@media (max-width: 899px) {
   .mat-toolbar-multiple-rows {
     min-height:44px !important;
   }
@@ -272,7 +272,7 @@ mat-chip-list {
       div.mat-tab-label-container {
           div.mat-tab-list {
             div.mat-tab-labels {
-              @media( min-width:800px) {
+              @media( min-width:$desktop-breakpoint) {
                 margin-left: 150px;
                 width:500px !important;
               }
@@ -286,7 +286,7 @@ mat-chip-list {
       app-profile-header {
         app-profile-stats {
         .stat-container {
-          @media( min-width:800px) {
+          @media( min-width:$desktop-breakpoint) {
               margin-left: 78px;
               width: 640px;
           }
@@ -309,8 +309,8 @@ mat-chip-list {
           div.mat-tab-list {
             height: 50px;
             width:100%;
-            @media( min-width:800px) {
-              margin-left: 200px;
+            @media( min-width:$desktop-breakpoint) {
+              // margin-left: 240px;
             }
             div.mat-tab-labels {
               height: 50px !important;
@@ -328,7 +328,6 @@ mat-chip-list {
                 height: 50px !important;
                 div.mat-tab-label-content {
                   font-size: .85em;
-                  margin-bottom: 4px;
                 }
               }
             }
@@ -402,7 +401,7 @@ mat-chip-list {
     grid-template-columns: 120px auto 100px;
     align-items: center;
     max-width: 100%;
-    min-width: 800px;
+    min-width:$desktop-breakpoint;
     app-search-bar {
       display: grid;
       align-items: center;
@@ -491,6 +490,21 @@ mat-toolbar-row.mega-menu-bar {
   max-width: $inner-desktop-width;
 }
 
+.products-content {
+  margin: 0 auto;
+  max-width: $desktop-width;
+}
+
+.profile-content {
+  margin: 0 auto;
+  max-width: 1200px;
+  @media(min-width: $desktop-breakpoint) {
+    display:grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows:auto;
+  }
+}
+
 html {
   body {
   // font-size: calc(1em + 1vw) !important;
@@ -556,6 +570,11 @@ html {
     }
   }
  }
+
+ .users-wrapper {
+  .item-wrapper {
+  }
+}
 
 
 //  Carousel

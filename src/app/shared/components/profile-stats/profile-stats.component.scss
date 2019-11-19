@@ -6,8 +6,8 @@
     grid-template-rows: auto;
     margin-bottom: 5px;
 
-    @media( min-width:800px) {
-        margin-left: 200px;
+    @media( min-width:$desktop-breakpoint) {
+        // margin-left: 240px;
     }
 
 }

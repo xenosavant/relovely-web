@@ -4,7 +4,7 @@
 
   grid-template-columns: repeat(2, 1fr);
 
-  @media (min-width:800px) {
+  @media (min-width:$desktop-breakpoint) {
     grid-template-columns: repeat(4, 1fr);
   }
     grid-template-rows: auto;
@@ -14,7 +14,7 @@
     padding-top: 10px;
 
 
-    @media (min-width:800px) {
+    @media (min-width:$desktop-breakpoint) {
         .product-wrapper {
             flex: 1 21%;
             margin:4%;
@@ -26,7 +26,7 @@
     }
 
     &.grid {
-      @media (max-width: 799px) {
+      @media (max-width: $mobile-breakpoint) {
         .product-wrapper {
           flex: 1 40%;
           margin-bottom:5%;
@@ -42,7 +42,7 @@
     }
 
     &.full {
-      @media (max-width: 799px) {
+      @media (max-width: $mobile-breakpoint) {
         grid-template-columns: repeat(1, 1fr) !important;
       .product-wrapper {
         margin:10px;

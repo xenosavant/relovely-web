@@ -31,7 +31,7 @@ export class ProfileHeaderComponent implements OnInit {
       this.statItems.push({ name: 'Following', count: this.user.numberFollowing });
       this.statItems.push({ name: '', count: -1 });
     }
-    this.breakpointObserver.observe(['(max-width: 799px)']).subscribe(result => {
+    this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.desktop = !result.matches;
       this.ref.markForCheck();
     })

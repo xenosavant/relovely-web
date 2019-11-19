@@ -116,7 +116,7 @@ export class AppComponent implements OnInit {
         p.moreItems.push(products[index]);
       }
     });
-    this.breakpointObserver.observe(['(max-width: 799px)']).subscribe(result => {
+    this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
       if (this.mobile) {
         this.resetScrollSubscription();

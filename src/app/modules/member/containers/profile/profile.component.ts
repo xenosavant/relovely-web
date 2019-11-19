@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
       const id = param.get('id');
       this.user = users.find(u => u.id === id);
     })
-    this.breakpointObserver.observe(['(max-width: 799px)']).subscribe(result => {
+    this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
     });
   }

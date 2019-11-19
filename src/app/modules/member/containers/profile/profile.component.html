@@ -1,7 +1,21 @@
 <div *ngIf="!mobile" class="header-bar">
 
 </div>
-<div class="desktop-content">
+<div class="profile-content">
+  <div class="sidebar-wrapper" *ngIf="!mobile">
+    <div class="desktop-inner">
+      <div class="info-wrapper">
+        <ul>
+          <li><img src="./assets/images/instagram.png"> @influencer1987</li>
+          <li>
+            <img src="./assets/images/black-heart.svg"> 546 Favorites
+          </li>
+          <li><img src="./assets/images/location.png"> Newark, NJ</li>
+          <li></li>
+        </ul>
+      </div>
+    </div>
+  </div>
   <ng-container [ngSwitch]="user.isSeller">
     <ng-container *ngSwitchCase="true">
       <app-seller-profile [owner]=true [user]="user"></app-seller-profile>

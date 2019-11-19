@@ -20,11 +20,14 @@
         flex-grow: 1;
         font-size: .9em;
         color: $light-gray-text;
-        padding-left:2vw;
-        @media( min-width:800px) {
+        padding-left:16px;
+        @media( min-width:$desktop-breakpoint) {
             color: white;
             font-size: 1.4em;
           }
+          @media( min-width:900px) {
+            padding-left:45px;
+        }
         .review {
             span {
                 font-weight: 300;
@@ -38,12 +41,18 @@
 
     .button-wrapper {
         min-width: 100px;
-        @media( min-width:800px) {
+        @media( min-width:$desktop-breakpoint) {
             visibility: hidden;
         }
     }
 
     &.desktop {
+        @media(max-width:999px) {
+            margin-left:-210px !important;
+        }
+        @media(min-width:1000px) {
+            margin-left:-250px;
+        }
         position:absolute;
         top:150px;
         z-index:1051;

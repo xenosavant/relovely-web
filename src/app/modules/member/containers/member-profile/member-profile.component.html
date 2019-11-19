@@ -2,10 +2,11 @@
   <app-profile-header [owner]="owner" [user]="user"></app-profile-header>
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Favorites">
-      <app-products-list [showGrid]="true" [showHeader]="true" [products]="products"></app-products-list>
+      <app-products-list class="users-wrapper" [showGrid]="true" [showHeader]="true" [products]="products">
+      </app-products-list>
     </mat-tab>
     <mat-tab label="Following">
-      <app-users-list [users]="users"></app-users-list>
+      <app-users-list class="users-wrapper" [users]="users"></app-users-list>
     </mat-tab>
   </mat-tab-group>
 </div>
