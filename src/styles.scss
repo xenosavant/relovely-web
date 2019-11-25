@@ -268,32 +268,33 @@ mat-chip-list {
 // Profile Tabs
 
 .member-profile-container {
+  
   mat-tab-header {
       div.mat-tab-label-container {
           div.mat-tab-list {
             div.mat-tab-labels {
               @media( min-width:$desktop-breakpoint) {
-                margin-left: 150px;
-                width:500px !important;
+                width:50% !important;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
               }
             }
           }
         }
       }
-    }
-
-    .member-profile-container {
       app-profile-header {
         app-profile-stats {
         .stat-container {
+          grid-template-columns: auto 160px 160px auto !important;
           @media( min-width:$desktop-breakpoint) {
-              margin-left: 78px;
-              width: 640px;
+            grid-template-columns: 0px 1fr 1fr 0px !important;
+            width:50% !important;
           }
         }
       }
     }
   }
+
 
 .profile-container {
   overflow: hidden;
