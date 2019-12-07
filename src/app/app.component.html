@@ -83,7 +83,7 @@
 
 <div class="theme-wrapper light-theme" *ngIf="!mobile">
   <ng-container *ngTemplateOutlet="desktopToolbar"></ng-container>
-  <div>
+  <div class="content-wrapper">
     <ng-container *ngTemplateOutlet="content"></ng-container>
   </div>
   <div class="mega-menu-wrapper" *ngIf="showMegaMenu">
@@ -125,7 +125,7 @@
             </div>
             <div class="icon-wrapper">
               <button class="mat-icon-button" (click)="onGoToFavorites()">
-                <img class="filters" src="./assets/images/black-heart.svg">
+                <img class="filters" src="./assets/images/heart.svg">
               </button>
               <!-- <button (click)="toggleProfile()" class="mat-icon-button" *ngIf="!showProfile">
                 <img class="filters" src="./assets/images/account.svg">

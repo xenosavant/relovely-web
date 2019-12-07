@@ -43,6 +43,13 @@ mat-toolbar {
   }
 }
 
+.content-wrapper {
+  height:auto;
+  overflow: hidden;
+  background-color: $background-gray;
+  min-height:100%;
+}
+
 .topbar {
   position:fixed;
   top:0;

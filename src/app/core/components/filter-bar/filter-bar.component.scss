@@ -12,10 +12,10 @@
     height: 40px;
     mat-basic-chip {
       background-color: $medium-gray-background !important;
-      color: $dark-gray-text !important;
-      border: solid $dark-gray-text 1px;
+      color: $dark-gray !important;
+      border: solid $dark-gray 1px;
       &.selected {
-        background-color: $dark-gray-text !important;
+        background-color: $dark-gray !important;
         color:  $medium-gray-background !important;
       }
     }

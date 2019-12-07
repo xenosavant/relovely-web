@@ -8,7 +8,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { SharedModule } from '@app/shared';
 
 @NgModule({
-  declarations: [ProductsComponent, ProductComponent, ProductDetailComponent],
+  declarations: [ProductsComponent, ProductComponent],
   imports: [
     CommonModule,
     SharedModule,

@@ -19,7 +19,7 @@ export class UserListComponent implements OnInit {
   }
 
   goToProfile() {
-    this.navigationService.navigate(new NavigationItem([], `/member/${this.user.id}`, '', 0, [], [], null), false);
+    this.navigationService.navigate({ path: `/member/${this.user.id}` });
   }
 
 }

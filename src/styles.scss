@@ -36,6 +36,9 @@ $custom-typography: mat-typography-config(
 
 .cdk-overlay-container {
   background-color: transparent !important;
+  .cdk-overlay-pane {
+    margin-top:12px;
+  }
 }
 
 .icon-wrapper, .search__form {
@@ -65,6 +68,12 @@ $custom-typography: mat-typography-config(
       }
     }
   }
+}
+
+button.mat-accent {
+  background-color: $pink-button !important;
+  font-weight: 500;
+  color:white !important;
 }
 
 
@@ -379,7 +388,7 @@ mat-chip-list {
 
 .mat-toolbar-row, .mat-toolbar-single-row {
   padding:0px !important;
-  color: $dark-gray-text !important;
+  color: $dark-gray !important;
 }
 
 .search-wrapper {
@@ -578,17 +587,6 @@ html {
 }
 
 
-//  Carousel
-
-.owl-carousel  .owl-wrapper,
-.owl-carousel  .owl-item{
--webkit-backface-visibility: hidden;
--moz-backface-visibility:    hidden;
--ms-backface-visibility:     hidden;
--webkit-transform: translate3d(0,0,0);
--moz-transform: translate3d(0,0,0);
--ms-transform: translate3d(0,0,0);
-}
 
 button.mat-stroked-button {
   // background: $gray-button !important;
@@ -596,7 +594,7 @@ button.mat-stroked-button {
 
 
 button.primary {
-  background-color: $light-gray-text !important;
+  background-color: $light-gray !important;
   color:white !important;
 }
 

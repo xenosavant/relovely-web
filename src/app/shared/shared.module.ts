@@ -75,6 +75,8 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { ProductModule } from '@app/modules/product/product.module';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { UsersListComponent } from './components/users-list/users-list.component';
+import { FakeSlidesDirective } from './directives/fake-slides.directive';
+import { ClickDirective } from './directives/click.directive';
 
 library.add(
   faBars,
@@ -146,6 +148,8 @@ library.add(
     ProfileStatsComponent,
     ProductsListComponent,
     ProductListComponent,
+    ClickDirective,
+    FakeSlidesDirective,
     UserListComponent,
     UsersListComponent],
   exports: [
@@ -184,7 +188,9 @@ library.add(
     ProductsListComponent,
     ProductListComponent,
     UserListComponent,
-    UsersListComponent
+    UsersListComponent,
+    FakeSlidesDirective,
+    ClickDirective
   ]
 })
 export class SharedModule { }

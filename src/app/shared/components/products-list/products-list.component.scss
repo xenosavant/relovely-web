@@ -2,6 +2,10 @@
 
 .products {
 
+  .product-wrapper {
+    background-color:white;
+  }
+
   grid-template-columns: repeat(2, 1fr);
 
   @media (min-width:$desktop-breakpoint) {

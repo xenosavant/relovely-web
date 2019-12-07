@@ -1,9 +1,87 @@
 <div class="product-container-wrapper">
-    <app-product-detail [product]="product"></app-product-detail>
-    <app-horizontal-product-list (clicked)="goToProduct($event)" [products]="product.moreItems"
-        [subtitle]="product.sellerUsername" [title]="'MORE FROM'">
-    </app-horizontal-product-list>
-    <app-horizontal-product-list (clicked)="goToProduct($event)" [title]="'SIMILAR ITEMS'"
-        [products]="product.similarItems">
-    </app-horizontal-product-list>
+    <ng-container *ngIf="mobile">
+        <div class="profile-container" (click)="goToProfile($event)">
+            <div class="profile-image-wrapper">
+                <app-avatar [image]="product.userImageUrl"></app-avatar>
+            </div>
+            <div class="product-user-name">
+                {{product.sellerUsername}}
+            </div>
+        </div>
+        <owl-carousel-o [options]="carouselOptions" (changed)="carouselTranslated($event)" appOwlPreventClick
+            #featuredCarousel>
+            <ng-container *ngFor="let image of product.imageUrls, let i = index">
+                <ng-template carouselSlide [id]="i">
+                    <a appClick target="_blank">
+                        <img [src]="image" alt="" #imageElement>
+                    </a>
+                </ng-template>
+            </ng-container>
+        </owl-carousel-o>
+        <div class="info-container">
+            <div class="info">
+                <div class="product-name">
+                    {{product.name}}
+                </div>
+                <div class="product-price">
+                    {{product.price | currency}} <span class="retail">{{product.price + 50 | currency}}</span>
+                </div>
+                <div class="product-size">
+                    <span class="title">Size:</span>
+                    <strong>{{product.size}}</strong>
+                </div>
+            </div>
+            <div class="action">
+                <app-button type="accent" text="Buy Now"></app-button>
+            </div>
+        </div>
+        <div class="product-details">
+            {{product.description}}
+        </div>
+        <app-horizontal-product-list (clicked)="goToProduct($event)" [products]="product.moreItems"
+            [subtitle]="product.sellerUsername" [title]="'MORE FROM'">
+        </app-horizontal-product-list>
+        <app-horizontal-product-list (clicked)="goToProduct($event)" [title]="'SIMILAR ITEMS'"
+            [products]="product.similarItems">
+        </app-horizontal-product-list>
+    </ng-container>
+    <div *ngIf="!mobile" class="grid-wrapper">
+        <div class="image-wrapper">
+            <div class="product">
+                <img [src]="currentImage">
+            </div>
+            <div class="preview">
+                <ng-container *ngFor="let image of product.imageUrls">
+                    <span class="product-gallery__carousel-item" appClick (click)="setActiveImage(image)">
+                        <img class="product-gallery__carousel-image" [src]="image" alt="">
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+        <div class="desktop-wrapper" *ngIf="!mobile">
+            <div class="desktop-info-wrapper">
+                <h1>{{product.name}}</h1>
+                <div class="user-wrapper">
+                    <app-avatar [image]="product.userImageUrl">
+
+                    </app-avatar>
+                    <div>
+                        @{{product.sellerUsername}}
+                    </div>
+                </div>
+                <div class="product-price">
+                    {{product.price | currency}}
+                </div>
+                <div class="size-wrapper">
+                    Size: <strong>M</strong>
+                </div>
+                <div class="button-wrapper">
+                    <app-button type="accent" text="Buy Now" (click)="onClose($event)"></app-button>
+                </div>
+                <div class="description">
+                    {{product.description}}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

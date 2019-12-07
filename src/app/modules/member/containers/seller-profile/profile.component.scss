@@ -1,11 +1,10 @@
 @import '../../../../../styles-variables';
 
 .profile-container {
-    background-color: $background-gray;
+    background-color: $medium-gray-background;
     padding-top:8px;
     border-left: solid $header-border 1px;
     border-right: solid $header-border 1px;
-    border-bottom: solid $header-border 1px;
-    margin-bottom: 16px;
+
 
 }
