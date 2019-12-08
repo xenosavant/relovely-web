@@ -54,9 +54,6 @@ mat-toolbar {
   position:fixed;
   top:0;
   z-index:10;
-  fa-icon {
-    font-size: 24px;
-  }
 }
 
 .toolbar {
@@ -68,9 +65,9 @@ mat-toolbar {
     margin: 0 10px 0 0;
   }
 
-  fa-icon {
-    font-size: 24px;
-  }
+  // fa-icon {
+  //   font-size: 24px;
+  // }
 
   .mat-stroked-button {
     margin-right: 10px;
@@ -147,7 +144,6 @@ mat-toolbar mat-toolbar-row.no-border::after
             }
 
             fa-icon {
-              font-size: 30px;
               width: 35px;
             }
 
@@ -191,30 +187,6 @@ mat-toolbar mat-toolbar-row.no-border::after
 //   align-items: center;
   
 // }
-.icon-wrapper {
-  display: grid;
-  max-width:150px;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto;
-  button {
-    margin: auto;
-    img {
-      margin: 0 auto;
-      &.filters {
-        height:30px;
-      }
-      &.profile {
-        height:30px !important;
-      }
-    }
-        svg {
-          color: $light-gray !important;
-          margin:0 auto;
-          width:25px;
-          height:25px;
-    }
-  }
-}
 
 mat-sidenav {
   margin-top: 56px;

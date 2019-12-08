@@ -3,22 +3,22 @@
     [class.mat-elevation-z2]="(!(showNavBar || showFilterBar) || !scrolledToTop) && !sidenavOpen">
     <mat-toolbar-row [class.no-border]=" scrolledToTop && (showFilterBar || showNavBar)" class="top-bar gray"
       *ngIf="!showSearch">
-      <button class="mat-icon-button" *ngIf="!sidenavOpen" (click)="openSidenav()">
+      <button class="mat-icon-button header-icon" *ngIf="!sidenavOpen" (click)="openSidenav()">
         <fa-icon icon="bars"></fa-icon>
       </button>
-      <button *ngIf="sidenavOpen && showTopLevel" mat-icon-button (click)="closeSidenav()">
+      <button *ngIf="sidenavOpen && showTopLevel" class="mat-icon-button header-icon" (click)="closeSidenav()">
         <fa-icon icon="times"></fa-icon>
       </button>
-      <button *ngIf="sidenavOpen && !showTopLevel" mat-icon-button (click)="goBack()">
+      <button *ngIf="sidenavOpen && !showTopLevel" class="mat-icon-button header-icon" (click)="goBack()">
         <fa-icon icon="arrow-left"></fa-icon>
       </button>
       <div class="toolbar-filler"><img class="logo" src="./assets/images/logo.png" (click)="onGoHome()"> </div>
       <div></div>
-      <div class="icon-wrapper">
-        <button class="mat-icon-button" (click)="onToggleSearchBar()">
+      <div class="icon-wrapper mobile">
+        <button class="mat-icon-button header-icon" (click)="onToggleSearchBar()">
           <fa-icon icon="search"></fa-icon>
         </button>
-        <button class="mat-icon-button" (click)="onGoToFavorites()">
+        <button class="mat-icon-button header-icon" (click)="onGoToFavorites()">
           <fa-icon icon="heart"></fa-icon>
         </button>
       </div>
@@ -123,8 +123,8 @@
               <div></div>
               <app-search-bar></app-search-bar>
             </div>
-            <div class="icon-wrapper">
-              <button class="mat-icon-button">
+            <div class="icon-wrapper desktop">
+              <button class="mat-icon-button search">
                 <fa-icon icon="search" [styles]="{'color': 'black'}"></fa-icon>
               </button>
               <button class="mat-icon-button" (click)="onGoToFavorites()">
