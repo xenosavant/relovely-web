@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent implements OnInit {
-  public readonly placeholderText: string = 'Search products...';
+  public readonly placeholderText: string = 'Search';
   public placeholder: string;
 
   private category: string;

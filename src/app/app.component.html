@@ -147,11 +147,11 @@
         </div>
       </mat-toolbar-row>
       <mat-toolbar-row (click)="toggleHeader()" class="desktop-menu-bar">
-        <div class="menu-bar-container" *ngIf="showNavBar">
+        <div class="menu-bar-container">
           <div class="menu-wrapper" style="z-index:1050" (mouseleave)="onLeaveMenuBar($event)">
             <span class="menu">
-              <span (mouseenter)="onOpenMegaMenu(item)" *ngFor="let item of desktopNavigationItems" class="menu-item">
-                <h1>{{item.name}}</h1>
+              <span *ngFor="let item of desktopNavigationItems" class="menu-item">
+                <h1 (mouseenter)="onOpenMegaMenu(item)">{{item.name}}</h1>
               </span>
             </span>
           </div>

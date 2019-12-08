@@ -251,9 +251,6 @@ mat-sidenav {
 
 mat-toolbar-row {
 
-  app-search-bar {
-    margin-right:16px;
-  }
   
   div.header-bar {
     width:100%;
@@ -337,7 +334,7 @@ mat-nav-list {
   background-color: $background-gray;
     app-search-bar {
       .search {
-        border: solid black 1px;
+        // border: solid black 1px;
       }
     }
 

@@ -2,7 +2,6 @@
 
 
 form {
-  background-color: black;
   border-radius:4px;
 }
 
@@ -11,53 +10,28 @@ form {
   
   border-radius: 8px;
   transition: box-shadow 0.15s, background 0.15s;
+  display: grid;
+  grid-template-columns: 150px 40px;
+  grid-template-rows: auto;
 }
 .search__form {
   position: relative;
-  display: flex;
-  height: $search-bar-height;
+  height: 40px;
   border-radius: 8px 4px 4px 8px;
 }
 
 .search__input {
   border: none;
-  padding: 0 17px;
-  background: white;
   flex-grow: 1;
-  font-size: 15px;
-  transition: color 0.15s;
-  color: black;
-  border-radius: 8px 0 0 8px;
+  font-size: 16px;
+  height:40px;
   .mat-icon-button {
     width: $search-bar-height !important;
     height:$search-bar-height !important
   }
   &::placeholder {
-      color:gray;
-  }
-}
-
-.search__button {
-  border: none;
-  padding: 0;
-  background: transparent;
-  flex-grow: 0;
-  width: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  fill: gray;
-  transition: fill 0.15s;
-
-  &:hover,
-  &:focus {
-    outline: none;
-  }
-  fa-icon {
-    app-icon,
-    svg {
-      display: block;
-    }
+      color: $light-gray;
+      font-size: 18px;
+      font-weight: 300;
   }
 }
