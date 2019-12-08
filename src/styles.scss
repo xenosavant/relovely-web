@@ -134,6 +134,31 @@ div.left {
  min-width: 25px !important;
 }
 
+.icon-wrapper {
+  display: grid;
+  max-width:150px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  button {
+    margin: auto;
+    img {
+      margin: 0 auto;
+      &.filters {
+        height:30px;
+      }
+      &.profile {
+        height:30px !important;
+      }
+    }
+    svg {
+      color: $light-gray !important;
+      margin:0 auto;
+      width:25px !important;
+      height:25px !important;
+  }
+  }
+}
+
 
 .mat-list-item-content {
   padding:0px !important;
@@ -397,8 +422,8 @@ mat-chip-list {
    width:1280px;
    height: 56px;
   .desktop-bar-inner {
+    margin-right: 16px;
     align-content: center;
-    margin: 0 auto;
     height: 56px;
     display:grid;
     grid-template-rows: auto;
@@ -637,12 +662,6 @@ div.filter-bar {
     }
     .search fa-icon {
       font-size:26px;
-    svg {
-      color: $light-gray !important;
-      margin:0 auto;
-      width:25px;
-      height:25px;
-    }
   }
 }
   

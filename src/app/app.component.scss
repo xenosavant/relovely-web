@@ -207,6 +207,12 @@ mat-toolbar mat-toolbar-row.no-border::after
         height:30px !important;
       }
     }
+        svg {
+          color: $light-gray !important;
+          margin:0 auto;
+          width:25px;
+          height:25px;
+    }
   }
 }
 
