@@ -391,12 +391,6 @@ mat-chip-list {
   color: $dark-gray !important;
 }
 
-.search-wrapper {
-  display:grid;
-  width:auto;
-  grid-template-rows: auto;
-  grid-template-columns: 1fr 200px;
-}
 
 .desktop-bar {
    margin: 0 auto;
@@ -408,7 +402,7 @@ mat-chip-list {
     height: 56px;
     display:grid;
     grid-template-rows: auto;
-    grid-template-columns: 120px auto 100px;
+    grid-template-columns: 120px auto 150px;
     align-items: center;
     max-width: 100%;
     min-width:$desktop-breakpoint;
@@ -632,6 +626,10 @@ div.filter-bar {
   }
 
 .search-wrapper {
+  display:grid;
+  width:auto;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 150px;
     form input {
       width:150px;
       border-bottom: solid 1px  $light-gray !important;

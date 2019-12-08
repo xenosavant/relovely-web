@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-home',
@@ -7,6 +8,13 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+    mobile: boolean;
 
-    constructor() { }
+    constructor(private breakpointObserver: BreakpointObserver) { }
+
+    ngOnInit() {
+        this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
+            this.mobile = result.matches;
+        });
+    }
 }

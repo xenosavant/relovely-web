@@ -193,8 +193,8 @@ mat-toolbar mat-toolbar-row.no-border::after
 // }
 .icon-wrapper {
   display: grid;
-  max-width:100px;
-  grid-template-columns: 1fr 1fr;
+  max-width:150px;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto;
   button {
     margin: auto;
@@ -204,7 +204,7 @@ mat-toolbar mat-toolbar-row.no-border::after
         height:30px;
       }
       &.profile {
-        height:30px;
+        height:30px !important;
       }
     }
   }

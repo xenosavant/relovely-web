@@ -9,7 +9,7 @@ import { ProductsComponent } from './modules/product/containers/products/product
 const routes: Routes = [
   {
     path: '',
-    component: ProductsComponent,
+    component: HomeComponent,
     pathMatch: 'full'
   },
   {
