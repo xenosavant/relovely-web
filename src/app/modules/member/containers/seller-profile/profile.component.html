@@ -2,7 +2,8 @@
     <app-profile-header [owner]="owner" [user]="user"></app-profile-header>
     <mat-tab-group>
         <mat-tab label="Listings">
-            <app-products-list [showGrid]="true" [showHeader]="false" [products]="user.products"></app-products-list>
+            <app-products-list [showCreate]="true" [showGrid]="true" [showHeader]="false" [products]="user.products">
+            </app-products-list>
         </mat-tab>
         <mat-tab label="Sales">
             <app-products-list [showGrid]="true" [showHeader]="false" [products]="user.products"></app-products-list>

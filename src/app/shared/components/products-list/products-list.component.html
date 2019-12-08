@@ -1,4 +1,9 @@
 <div class="products" [class.grid]="showGrid" [class.full]="!showGrid">
+  <div class="product-wrapper create-item mat-elevation-z1" *ngIf="showCreate">
+    <div class="image-wrapper">
+      <img src="./assets/images/add-product.png">
+    </div>
+  </div>
   <div *ngFor="let product of products" class="product-wrapper" [class.mat-elevation-z1]="true">
     <app-product-list [showGrid]="showGrid" [showHeader]="showHeader" (selectProduct)="gotToProduct($event)"
       [product]="product">

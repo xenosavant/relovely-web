@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FavoritesComponent } from './containers/favorites/favorites.component';
 import { ProfileComponent } from './containers/profile/profile.component';
+import { ListingsComponent } from './containers/listings/listings.component';
 
 const routes: Routes = [
     {

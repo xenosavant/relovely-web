@@ -4,7 +4,23 @@
 
   .product-wrapper {
     background-color:white;
+
+    &.create-item {
+    
+      display:flex;
+      align-items: center;
+      align-content: center;
+        .image-wrapper {
+          width: 100%;
+          img {
+            width:100%;
+            height:100%;
+          }
+        }
+      }
   }
+
+
 
   grid-template-columns: repeat(2, 1fr);
 
