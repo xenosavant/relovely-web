@@ -3,22 +3,22 @@
     [class.mat-elevation-z2]="(!(showNavBar || showFilterBar) || !scrolledToTop) && !sidenavOpen">
     <mat-toolbar-row [class.no-border]=" scrolledToTop && (showFilterBar || showNavBar)" class="top-bar gray"
       *ngIf="!showSearch">
-      <button class="mat-icon-button header-icon" *ngIf="!sidenavOpen" (click)="openSidenav()">
+      <button class="mat-icon-button black" *ngIf="!sidenavOpen" (click)="openSidenav()">
         <fa-icon icon="bars"></fa-icon>
       </button>
-      <button *ngIf="sidenavOpen && showTopLevel" class="mat-icon-button header-icon" (click)="closeSidenav()">
+      <button *ngIf="sidenavOpen && showTopLevel" class="mat-icon-button black" (click)="closeSidenav()">
         <fa-icon icon="times"></fa-icon>
       </button>
-      <button *ngIf="sidenavOpen && !showTopLevel" class="mat-icon-button header-icon" (click)="goBack()">
+      <button *ngIf="sidenavOpen && !showTopLevel" class="mat-icon-button black" (click)="goBack()">
         <fa-icon icon="arrow-left"></fa-icon>
       </button>
       <div class="toolbar-filler"><img class="logo" src="./assets/images/logo.png" (click)="onGoHome()"> </div>
       <div></div>
       <div class="icon-wrapper mobile">
-        <button class="mat-icon-button header-icon" (click)="onToggleSearchBar()">
+        <button class="mat-icon-button black" (click)="onToggleSearchBar()">
           <fa-icon icon="search"></fa-icon>
         </button>
-        <button class="mat-icon-button header-icon" (click)="onGoToFavorites()">
+        <button class="mat-icon-button black" (click)="onGoToFavorites()">
           <fa-icon icon="heart"></fa-icon>
         </button>
       </div>

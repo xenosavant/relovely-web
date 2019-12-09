@@ -1,10 +1,23 @@
 <div *ngIf="!mobile" class="header-bar">
     <div class="header-inner">
-        Don't miss a thing! Stay in the know + subscribe to the relovely newsletter
+        <div class="text-wrapper">
+            Don't miss a thing! Stay in the know + subscribe to the relovely newsletter
+        </div>
+        <div class="cta-wrapper">
+            <input class="email-input">
+            <app-button type="primary" text="Submit!">
+            </app-button>
+        </div>
     </div>
 </div>
 <div class="full-content">
     <div class="banner-wrapper">
         <img src="./assets/images/home-banner.png">
+        <div class="overlay">
+            <div class="text-wrapper">
+                <h1>AN INLFUENCER EXCLUSIVE RESELLING PLATFORM</h1>
+                <p>Giving great products new life</p>
+            </div>
+        </div>
     </div>
 </div>
