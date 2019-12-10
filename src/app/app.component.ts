@@ -126,7 +126,7 @@ export class AppComponent implements OnInit {
     })
     this.categoryService.getCatgories().subscribe(cats => {
       const navigationItems = cats.map(cat => {
-        return new NavigationItem([], null, cat.name, cat.id,
+        return new NavigationItem([], '/products/' + cat.id.toString(), cat.name, cat.id,
           cat.children.map(c1 => {
             return new NavigationItem(
               [{ key: 'category', value: c1.id.toString() }],
