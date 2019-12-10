@@ -39,9 +39,10 @@
             flex: 1 21%;
             margin:4%;
             z-index:2;
-            border: 1px solid #e6e6e6;
             border-radius: 8px;
             padding: 8px;
+            box-shadow:none;
+            background-color: $background-gray;
         }
     }
 

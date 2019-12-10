@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NavigationService } from '@app/shared/services/navigation.service';
 import { CategoryService } from '@app/shared/services/category.service';
 import { NavigationItem } from '@app/shared/models/navigation-item.model';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-products',
@@ -15,7 +16,10 @@ import { NavigationItem } from '@app/shared/models/navigation-item.model';
 export class ProductsComponent implements OnInit {
 
   public products: Product[];
+  public title: string;
   grid: boolean;
+  mobile: boolean;
+  currentNavItem: NavigationItem;
 
   constructor(
     private router: Router,
@@ -23,7 +27,8 @@ export class ProductsComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private navigationService: NavigationService,
     private zone: NgZone,
-    private categoryService: CategoryService) { }
+    private categoryService: CategoryService,
+    private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() {
     this.products = products;
@@ -33,13 +38,22 @@ export class ProductsComponent implements OnInit {
         this.ref.markForCheck();
       })
     });
+    this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
+      this.mobile = result.matches;
+    });
+    this.navigationService.navConfig$.subscribe(result => {
+      this.title = result.pageHeader;
+    });
     this.route.params.subscribe(params => {
       if (params['categoryId']) {
-        this.navigationService.navigate(this.categoryService.categoryLookup[params['categoryId']], true);
+        this.currentNavItem = this.categoryService.categoryLookup[params['categoryId']];
       } else {
         const root = this.navigationService.rootNavigationItems;
-        this.navigationService.navigate(new NavigationItem([{ key: 'category', value: '0' }], '/products', 'All Products', -1, root, [], null));
+        this.currentNavItem = new NavigationItem([{ key: 'category', value: '0' }], '/products', 'All Products', -1, root, [], null);
       }
+      this.navigationService.navigate(this.currentNavItem);
+      console.log(this.currentNavItem);
+      this.ref.markForCheck();
     });
   }
 

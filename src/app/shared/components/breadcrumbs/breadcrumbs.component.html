@@ -1,0 +1,6 @@
+<div class="breadcrumbs">
+    <span *ngFor="let crumb of crumbs, let i = index" class="crumb">
+        <a (click)="navigate(crumb)">{{crumb.name}}</a>
+        <ng-container *ngIf="i !== crumbs.length - 1">&nbsp;&nbsp;/&nbsp;&nbsp;</ng-container>
+    </span>
+</div>

@@ -1,2 +1,33 @@
 @import '../../../../../styles-variables';
 
+.header-bar {
+    height:1px;
+    background-color: $dark-blue !important;
+}
+
+.title-bar {
+    height:175px;
+    background-color: $dark-blue !important;
+    width: $desktop-width;
+    margin: 0 auto;
+    .title-inner {
+        height: 100%;
+        display: grid;
+         align-items: center;
+        .text-wrapper {
+            text-align:center;
+            color: $medium-dark-background;
+            font-size: 2em;
+            font-family: "Helvetica Neue", sans-serif;
+            font-weight: 500;
+            letter-spacing: .1em;
+        }
+    }
+}
+
+.breadcrumbs {
+    width: $desktop-width;
+    margin: 0 auto;
+    margin-top:16px;
+    margin-bottom:32px;
+}

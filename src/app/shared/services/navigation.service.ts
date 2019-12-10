@@ -28,6 +28,9 @@ export class NavigationService {
     private navConfigSubject$ = new Subject<INavigationState>();
     public navConfig$ = this.navConfigSubject$.asObservable();
 
+    private currentNavSubject$ = new Subject<NavigationItem>();
+    public currentNavConfig$ = this.currentNavSubject$.asObservable();
+
     public rootNavigationItems: NavigationItem[];
 
     constructor(private router: Router) {
@@ -118,9 +121,10 @@ export class NavigationService {
             if (!this._currentNavigationItem || this._currentNavigationItem.path !== navigationItem.path) {
                 this._navigationStack.push(navigationItem);
                 this._currentNavigationItem = navigationItem;
+                this.currentNavSubject$.next(this._currentNavigationItem);
             }
-            const replaceUrl = navigationItem.id === this._currentNavigationItem.id;
-            this.router.navigate([navigationItem.path], { queryParams: params, queryParamsHandling: 'preserve', replaceUrl: replaceUrl });
+            // const queryParamsHandling = this._currentNavigationItem.id && navigationItem.id === this._currentNavigationItem.id ?  'preserve';
+            this.router.navigate([navigationItem.path], { queryParams: params, queryParamsHandling: 'preserve', replaceUrl: false });
         }
         this._navConfig.showTopLeveNavigation = true;
         this._navConfig.currentNavigationItems = this.rootNavigationItems;
@@ -158,5 +162,10 @@ export class NavigationService {
 
     public getNavigationItem() {
         return this._currentNavigationItem;
+    }
+
+    public init(item: NavigationItem) {
+        this._currentNavigationItem = item;
+        this.currentNavSubject$.next(this._currentNavigationItem);
     }
 }
