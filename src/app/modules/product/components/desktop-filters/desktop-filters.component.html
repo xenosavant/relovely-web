@@ -1,0 +1,59 @@
+<div class="list-wrapper">
+    <ul>
+        <li [matMenuTriggerFor]="sizeMenu">
+            Size
+            <img src="./assets/images/chevron-down.svg">
+        </li>
+        <li [matMenuTriggerFor]="colorMenu">
+            Color
+            <img src="./assets/images/chevron-down.svg">
+        </li>
+        <li [matMenuTriggerFor]="priceMenu">
+            Price
+            <img src="./assets/images/chevron-down.svg">
+        </li>
+        <li [matMenuTriggerFor]="listingsMenu">
+            Listings
+            <img src="./assets/images/chevron-down.svg">
+        </li>
+    </ul>
+    <!-- <mat-paginator [length]="1" [hidePageSize]="true"></mat-paginator> -->
+    <span>1 to 25 of 25</span>
+</div>
+<div class="border">
+</div>
+
+
+<mat-menu #sizeMenu="matMenu" yPosition="below" xPosition="after" [overlapTrigger]="false">
+    <div class="size-filter-wrapper" (click)="$event.stopPropagation()">
+        <div *ngFor=" let category of sizeFilters">
+            <li *ngFor="let filter of category.filters">
+                <input [class.selected]="filter.selected" (click)="filter.selected=true" type="checkbox">
+                {{filter.value}}
+            </li>
+        </div>
+    </div>
+</mat-menu>
+
+<mat-menu #colorMenu="matMenu" yPosition="below" xPosition="after" [overlapTrigger]="false">
+    <div class="color-filter-wrapper" (click)="$event.stopPropagation()">
+        <div (click)="selectColor(color)" class="dot" [class.selected]="selectedColors.indexOf(color.key) > -1"
+            [style.background-color]="color.color" *ngFor="let color of colors">
+        </div>
+    </div>
+</mat-menu>
+
+<mat-menu #priceMenu="matMenu" yPosition="below" xPosition="after" [overlapTrigger]="false">
+    <div class="price-filter-wrapper" (click)="$event.stopPropagation()">
+        <mat-basic-chip disableRipple [class.selected]="selectedPriceFilterIds.indexOf(item.id) > -1"
+            (click)="setPriceFilter(item)" *ngFor="let item of priceFilters">
+            <div> {{item.name}}</div>
+        </mat-basic-chip>
+    </div>
+</mat-menu>
+
+<mat-menu #listingsMenu="matMenu" yPosition="below" xPosition="before" [overlapTrigger]="false">
+    <div class="listing-filter-wrapper" (click)="$event.stopPropagation()">
+
+    </div>
+</mat-menu>

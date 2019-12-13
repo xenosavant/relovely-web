@@ -1,4 +1,4 @@
-@import '../../../../../styles-variables';
+@import '../../../../../styles-variables.scss';
 
 .header-bar {
     height:1px;
@@ -7,8 +7,10 @@
 
 .title-bar {
     height:175px;
-    background-color: $dark-blue !important;
-    width: $desktop-width;
+    max-width: $desktop-width;
+    background: url("assets/images/title-background.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
     margin: 0 auto;
     .title-inner {
         height: 100%;
@@ -16,8 +18,8 @@
          align-items: center;
         .text-wrapper {
             text-align:center;
-            color: $medium-dark-background;
-            font-size: 2em;
+            color: $background-gray;
+            font-size: 2.5em;
             font-family: "Helvetica Neue", sans-serif;
             font-weight: 500;
             letter-spacing: .1em;
@@ -26,8 +28,15 @@
 }
 
 .breadcrumbs {
-    width: $desktop-width;
+    max-width: $desktop-width;
     margin: 0 auto;
-    margin-top:16px;
+    margin-top:32px;
     margin-bottom:32px;
+}
+
+
+
+.paginator {
+    max-width: $desktop-width;
+    margin: 0 auto;
 }

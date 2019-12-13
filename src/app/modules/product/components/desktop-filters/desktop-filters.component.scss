@@ -1,0 +1,115 @@
+@import '../../../../../styles-variables.scss';
+
+
+.border {
+    height:1px;
+    width:100%;
+    background-color: $dark-gray-background;
+}
+
+.size-filter-wrapper {
+    height:300px;
+    padding-top:16px;
+    overflow:scroll;
+    div {
+        padding-bottom:16px;
+        li {
+            margin-bottom:.1rem;
+            list-style-type:none;
+            input {
+                cursor: pointer;
+                border: 1px solid #333;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                height: 16px;
+                width: 16px;
+                margin-right: 16px;
+                margin-left: 16px;
+                &.selected {
+                    background-color: $dark-blue;
+                }
+            }
+        }
+    }
+}
+
+.color-filter-wrapper {
+    height:300px;
+    display: grid;
+    margin-top: 16px;
+    margin-left: 16px;
+    margin-right: 16px;
+    grid-template-columns: repeat(3, 75px);
+    grid-template-rows: repeat(4, 75px);
+    .dot {
+        height: 50px;
+        width:50px;
+        margin-left: 5px;
+        margin-right: 5px;
+        border-radius: 50%;
+        display: inline-block;
+        border: 1px solid gray;
+        &.hover {
+            cursor: pointer;
+        }
+        &.selected {
+            box-shadow: 0px 0px 0px 2px black;
+        }
+    }
+}
+
+.price-filter-wrapper {
+    height:160px;
+    width: 332px;
+    display: grid;
+    align-items: center;
+    align-content: center;
+    column-gap:16px;
+    grid-template-columns: repeat(2, 150px);
+    grid-template-rows: repeat(4, 35px);
+    padding-left: 8px;
+    mat-basic-chip {
+        div {
+            width:fit-content;
+            margin: 0 auto;
+        }
+        &.hover {
+            cursor: pointer !important;
+        }
+        background-color: $medium-gray-background !important;
+        color: $dark-gray !important;
+        border: solid $dark-gray 1px;
+        &.selected {
+          background-color: $dark-gray !important;
+          color:  $medium-gray-background !important;
+        }
+    }
+}
+
+.list-wrapper {
+    max-width: $desktop-width;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto;
+    ul {
+        margin-top:48px;
+        margin-bottom:0px;
+        padding-inline-start:0px !important;
+        height:30px;
+        li {
+            height:30px !important;
+            display:inline-block;
+            list-style-type:none;
+            margin-right:2rem;
+            color: $action-button;
+            &:hover {
+                cursor: pointer;
+            }
+            img {
+                height:15px;
+            }
+        }
+    }
+}

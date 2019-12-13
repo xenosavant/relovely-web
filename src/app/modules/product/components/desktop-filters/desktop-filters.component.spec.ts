@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PriceFilterComponent } from './price-filter.component';
+import { DesktopFiltersComponent } from './desktop-filters.component';
 
-describe('PriceFilterComponent', () => {
-  let component: PriceFilterComponent;
-  let fixture: ComponentFixture<PriceFilterComponent>;
+describe('DesktopFiltersComponent', () => {
+  let component: DesktopFiltersComponent;
+  let fixture: ComponentFixture<DesktopFiltersComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PriceFilterComponent ]
+      declarations: [ DesktopFiltersComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PriceFilterComponent);
+    fixture = TestBed.createComponent(DesktopFiltersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

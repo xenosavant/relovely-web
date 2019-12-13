@@ -52,7 +52,6 @@ export class ProductsComponent implements OnInit {
         this.currentNavItem = new NavigationItem([{ key: 'category', value: '0' }], '/products', 'All Products', -1, root, [], null);
       }
       this.navigationService.navigate(this.currentNavItem);
-      console.log(this.currentNavItem);
       this.ref.markForCheck();
     });
   }

@@ -1,12 +1,13 @@
 @import '../../../../styles-variables.scss';
 
 .crumb {
-    color: $dark-gray-background;
+    color: $action-button;
+    font-weight: 400;
+    font-size: 1.1em;
     a {
         cursor: pointer;
-        font-weight: 400;
-        &:hover {
-            color: $dark-blue;
+        &:hover { 
+            color: black;
         }
     }
 }

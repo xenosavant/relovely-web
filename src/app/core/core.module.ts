@@ -27,7 +27,6 @@ import { RouterModule } from '@angular/router';
 import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
 import { SizeFilterComponent } from './components/size-filter/size-filter.component';
 import { ColorFilterComponent } from './components/color-filter/color-filter.component';
-import { PriceFilterComponent } from './components/price-filter/price-filter.component';
 import { SizeFilterGroupComponent } from './components/size-filter/size-filter-group/size-filter-group.component';
 
 @NgModule({
@@ -37,7 +36,7 @@ import { SizeFilterGroupComponent } from './components/size-filter/size-filter-g
     HttpClientModule,
     SharedModule
   ],
-  declarations: [SearchBarComponent, ToolbarComponent, HomeComponent, NotFoundComponent, FilterBarComponent, SizeFilterComponent, ColorFilterComponent, PriceFilterComponent, SizeFilterGroupComponent],
+  declarations: [SearchBarComponent, ToolbarComponent, HomeComponent, NotFoundComponent, FilterBarComponent, SizeFilterComponent, ColorFilterComponent, SizeFilterGroupComponent],
   providers: [
     NotificationService,
     LocalStorageService,

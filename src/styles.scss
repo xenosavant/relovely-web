@@ -38,6 +38,9 @@ $custom-typography: mat-typography-config(
   background-color: transparent !important;
   .cdk-overlay-pane {
     margin-top:12px;
+    .mat-menu-panel {
+      max-width:400px !important;
+    }
   }
 }
 
@@ -62,6 +65,22 @@ $custom-typography: mat-typography-config(
         right: -4px;
       }
     }
+  }
+}
+
+.list-wrapper {
+  mat-paginator {
+      margin-top: 32px;
+      height: 30px;
+      height:30px;
+      overflow: hidden;
+      div {
+          height:30px !important;
+          div {
+              height:30px  !important;;
+
+          }
+      }
   }
 }
 
@@ -431,11 +450,9 @@ mat-chip-list {
 
 .desktop-bar {
    margin: 0 auto;
-   width:1280px;
+   width:$desktop-width;
    height: 56px;
   .desktop-bar-inner {
-    margin-right: 16px;
-    margin-left: 16px;
     align-content: center;
     height: 56px;
     display:grid;
