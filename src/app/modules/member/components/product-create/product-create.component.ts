@@ -27,4 +27,12 @@ export class ProductCreateComponent implements OnInit {
     this.close.emit($event);
   }
 
+  onCloseCropper($event: any) {
+    this.crop = false;
+  }
+
+  onImageCropped(image: string) {
+    console.log(image);
+  }
+
 }

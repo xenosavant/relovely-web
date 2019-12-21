@@ -9,16 +9,16 @@
     height: 100%;
     width: 100%;
     position:fixed;
-    background-color: $background-gray;
+    background-color: black;
+    opacity: 0.95;
     width:100vw;
-    opacity: 1;
 }
 
 
 .title-wrapper {
     margin:0 auto;
     width:fit-content;
-    color: black;
+    color: $background-gray;
     .title {
         margin-top: 16px;
     }
@@ -26,6 +26,7 @@
 
 .inner-container {
     margin:0 auto;
+    background-color: black;
     max-width:800px;
         height:100%;
         display: grid;

@@ -4,5 +4,7 @@
 </app-modal>
 
 <ng-container *ngIf="crop">
-    <app-image-cropper [imageChangedEvent]="imageChangedEvent"></app-image-cropper>
+    <app-image-cropper (cancel)="onCloseCropper($event)" (crop)="onImageCropped($event)"
+        [imageChangedEvent]="imageChangedEvent">
+    </app-image-cropper>
 </ng-container>

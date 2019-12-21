@@ -13,7 +13,8 @@ export class ImageCropperComponent implements OnInit {
   public ready = false;
   public visibilty = 'hidden';
 
-  @Output() public cropped: EventEmitter<string> = new EventEmitter<string>();
+  @Output() public crop: EventEmitter<string> = new EventEmitter<string>();
+  @Output() public cancel: EventEmitter<boolean> = new EventEmitter();
 
   @Input() public imageChangedEvent: any;
 
@@ -23,13 +24,11 @@ export class ImageCropperComponent implements OnInit {
   }
 
   public imageLoaded(): void {
-    // show cropper
+    this.visibilty = 'visible';
   }
 
   public cropperReady(): void {
     this.ready = true;
-    this.visibilty = 'visible';
-    console.log('ready')
   }
 
   public loadImageFailed(): void {
@@ -37,7 +36,11 @@ export class ImageCropperComponent implements OnInit {
   }
 
   public onImageCropped(): void {
-    this.cropped.emit(this.currentImage);
+    this.crop.emit(this.currentImage);
+  }
+
+  public onCancel(): void {
+    this.cancel.emit(true);
   }
 
   public imageCropped(event: ImageCroppedEvent): void {
