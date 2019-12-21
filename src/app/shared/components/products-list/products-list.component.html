@@ -1,7 +1,9 @@
 <div class="products" [class.grid]="showGrid" [class.full]="!showGrid">
   <div (click)="onCreate($event)" class="product-wrapper create-item mat-elevation-z1" *ngIf="showCreate">
-    <div class="image-wrapper">
-      <img src="./assets/images/add-product.png">
+    <div class="inner-wrapper">
+      <div class="image-wrapper">
+        <img src="./assets/images/plus.png">
+      </div>
     </div>
   </div>
   <div *ngFor="let product of products" class="product-wrapper" [class.mat-elevation-z1]="true">

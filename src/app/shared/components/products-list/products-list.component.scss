@@ -7,9 +7,13 @@
 
     &.create-item {
     
-      display:flex;
-      align-items: center;
-      align-content: center;
+      .inner-wrapper {
+        background-color: $medium-dark-background;
+        display:flex;
+        align-items: center;
+        align-content: center;
+        width: 100%;
+        height:100%;
         .image-wrapper {
           width: 100%;
           img {
@@ -17,9 +21,9 @@
             height:100%;
           }
         }
+       }
       }
   }
-
 
 
   grid-template-columns: repeat(2, 1fr);
