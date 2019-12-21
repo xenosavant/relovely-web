@@ -22,6 +22,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSliderModule, MatPaginatorModule } from '@angular/material/';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -79,6 +80,7 @@ import { FakeSlidesDirective } from './directives/fake-slides.directive';
 import { ClickDirective } from './directives/click.directive';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
 
 library.add(
   faBars,
@@ -139,7 +141,8 @@ library.add(
     MatSnackBarModule,
     MatSlideToggleModule,
     MatDividerModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ImageCropperModule
   ],
   declarations: [
     AvatarComponent,
@@ -155,7 +158,8 @@ library.add(
     UserListComponent,
     UsersListComponent,
     BreadcrumbsComponent,
-    ModalComponent],
+    ModalComponent,
+    ImageCropperComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -196,7 +200,8 @@ library.add(
     FakeSlidesDirective,
     ClickDirective,
     BreadcrumbsComponent,
-    ModalComponent
+    ModalComponent,
+    ImageCropperComponent
   ]
 })
 export class SharedModule { }

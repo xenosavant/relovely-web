@@ -1,0 +1,55 @@
+@import '../../../../styles-variables.scss';
+
+.cropper-container {
+    z-index:102;
+    top: 0;
+    right: 0;
+    left:0;
+    bottom:0;
+    height: 100%;
+    width: 100%;
+    position:fixed;
+    background-color: $background-gray;
+    width:100vw;
+    opacity: 1;
+}
+
+
+.title-wrapper {
+    margin:0 auto;
+    width:fit-content;
+    color: black;
+    .title {
+        margin-top: 16px;
+    }
+}
+
+.inner-container {
+    margin:0 auto;
+    max-width:800px;
+        height:100%;
+        display: grid;
+        align-content: center;
+        grid-template-rows: 1fr auto 1fr;
+    .cropper-inner {
+        width:100%;
+        image-cropper {
+            background-color: black;
+        }
+    }
+    .button-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        @media(max-width:$mobile-breakpoint) {
+            bottom: 16px;
+            position: absolute;
+            width: 100%;
+        }
+        app-button {
+            margin-left: 16px;
+            margin-right: 16px;
+            margin-top: 16px;
+        }
+    }
+}

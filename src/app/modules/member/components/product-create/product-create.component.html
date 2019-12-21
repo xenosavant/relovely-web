@@ -1,3 +1,8 @@
-<app-modal (close)="onClose($event)" title="List A Product">
-    The content!
+<app-modal *ngIf="!crop" (close)="onClose($event)" title="List A Product">
+    <div class="add-image" (click)="input.click()"></div>
+    <input #input type="file" style="visibility:hidden" (change)="imageChanged($event)" />
 </app-modal>
+
+<ng-container *ngIf="crop">
+    <app-image-cropper [imageChangedEvent]="imageChangedEvent"></app-image-cropper>
+</ng-container>

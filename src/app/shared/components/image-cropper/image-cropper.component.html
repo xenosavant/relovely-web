@@ -1,0 +1,19 @@
+<div class=cropper-container>
+    <div class="inner-container">
+        <div class="title-wrapper">
+            <h1 class="title"> Crop Image</h1>
+        </div>
+        <div class="cropper-inner" [style.visibility]="visibilty">
+            <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1"
+                [resizeToWidth]="600" format="jpeg" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+                (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
+            </image-cropper>
+        </div>
+        <div *ngIf="ready" class="button-wrapper">
+            <app-button type="primary" text="Cancel">
+            </app-button>
+            <app-button type="primary" text="Crop">
+            </app-button>
+        </div>
+    </div>
+</div>
