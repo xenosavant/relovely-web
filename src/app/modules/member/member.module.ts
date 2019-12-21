@@ -10,6 +10,7 @@ import { MemberProfileComponent } from './containers/member-profile/member-profi
 import { SellerProfileComponent } from './containers/seller-profile/profile.component';
 import { ProfileComponent } from './containers/profile/profile.component';
 import { ProductCreateComponent } from './components/product-create/product-create.component';
+import { PortalModule } from '@angular/cdk/portal';
 
 @NgModule({
   declarations: [SellerProfileComponent, MemberProfileComponent, FavoritesComponent, PurchasesComponent, MemberProfileComponent, ProfileComponent, ProductCreateComponent],
@@ -17,6 +18,7 @@ import { ProductCreateComponent } from './components/product-create/product-crea
     CommonModule,
     MemberRoutingModule,
     MatTabsModule,
+    PortalModule,
     SharedModule
   ],
   providers: [{

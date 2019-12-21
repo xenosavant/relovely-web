@@ -250,7 +250,7 @@ mat-basic-chip {
   height: 25px;
   margin-left: 5px;
   &.selected {
-    background-color: $action-button !important;
+    background-color: $dark-blue !important;
   }
 }
 
@@ -600,7 +600,7 @@ html {
  .mega-menu {
     margin: 0 auto;
     position: relative;
-    z-index:2000 !important;
+    z-index:101 !important;
     width:$desktop-menu-width;
     height:$mega-menu-height;
       .mega-menu-inner-wrapper {

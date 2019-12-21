@@ -44,7 +44,8 @@
     position:relative;
     img {
         width:100%;
-        display: block;
+        display: block;   
+         min-height: 220px;
     }
     .overlay {
         position: absolute;

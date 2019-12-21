@@ -15,10 +15,16 @@ export class ProductsListComponent implements OnInit {
   @Input() showHeader = true;
   @Input() showCreate = false;
 
+  @Output() create: EventEmitter<any> = new EventEmitter;
+
   constructor(private navigationService: NavigationService) { }
 
   ngOnInit() {
 
+  }
+
+  onCreate($event: any) {
+    this.create.emit($event);
   }
 
 }
