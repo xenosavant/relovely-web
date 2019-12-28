@@ -205,7 +205,6 @@ export class AppComponent implements OnInit {
       );
 
       this.scrollSubscription$ = scroll.subscribe(result => {
-        console.log(result);
         if (result <= this.top) {
           if (result === 0) {
             this.scroll0 = true;

@@ -17,7 +17,7 @@ mat-sidenav-container {
   background-color: white;
   overflow-y: hidden !important;
   position:fixed;
-  top:0;
+  top:56px;
   bottom:0;
   left:0;
   right:0;
@@ -53,7 +53,7 @@ mat-toolbar {
 .topbar {
   position:fixed;
   top:0;
-  z-index:10;
+  z-index:1;
 }
 
 .toolbar {
@@ -189,7 +189,6 @@ mat-toolbar mat-toolbar-row.no-border::after
 // }
 
 mat-sidenav {
-  margin-top: 56px;
   width: 300px;
   background-color: $medium-gray-background !important;
 

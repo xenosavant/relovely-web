@@ -11,14 +11,36 @@
     width:100vw;
     background-color: $background-gray;
     .modal-container {
+        @media (max-width: $mobile-breakpoint) {
+            margin: 16px;
+        }
         max-width: $modal-width;
         margin: -0 auto;
 
         .modal-header {
             margin-top:16px;
+            margin-bottom:16px;
             display:grid;
             grid-template-rows: auto;
-            grid-template-columns: auto 100px;
+            grid-template-columns: auto 25px;
+            align-items: center;
+            h1 {
+                color: $light-gray;
+                margin: 0;
+            }
+            .close {
+                display: grid;
+                align-content: center;
+                img {
+                    width:25px;
+                    cursor: pointer;
+                }
+            }
+            .modal-header {
+                display: grid;
+                align-content: center;
+            }
+
         }
     }
 }

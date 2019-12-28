@@ -5,7 +5,7 @@ export const womensSizes: SizeFilterGroup[] = [
     {
         id: '1',
         name: `Women's Standard Numeric`,
-        categoryId: 4,
+        categoryId: '4',
         filters: [
             { key: '1', value: '00' },
             { key: '2', value: '0' },
@@ -25,7 +25,7 @@ export const womensSizes: SizeFilterGroup[] = [
     },
     {
         id: '2',
-        categoryId: 4,
+        categoryId: '4',
         name: `Women's Standard`,
         filters: [
             { key: '15', value: 'XXS' },
@@ -41,7 +41,7 @@ export const womensSizes: SizeFilterGroup[] = [
     },
     {
         id: '3',
-        categoryId: 4,
+        categoryId: '4',
         name: `Women's Petite`,
         filters: [
             { key: '23', value: '00P' },
@@ -62,7 +62,7 @@ export const womensSizes: SizeFilterGroup[] = [
     },
     {
         id: '4',
-        categoryId: 4,
+        categoryId: '4',
         name: `Women's Tall`,
         filters: [
             { key: '37', value: '00T' },
@@ -83,7 +83,7 @@ export const womensSizes: SizeFilterGroup[] = [
     },
     {
         id: '5',
-        categoryId: 4,
+        categoryId: '4',
         name: `Women's Maternity`,
         filters: [
             { key: '51', value: '00 Maternity' },
@@ -111,7 +111,7 @@ export const womensSizes: SizeFilterGroup[] = [
     },
     {
         id: '6',
-        categoryId: 13,
+        categoryId: '13',
         name: `Women's Shoes`,
         filters: [
             { key: '72', value: '4' },

@@ -1,6 +1,70 @@
 <app-modal *ngIf="!crop" (close)="onClose($event)" title="List A Product">
-    <div class="add-image" (click)="input.click()"></div>
+    <div class="thumbnails">
+        <div class="image-wrapper" *ngFor="let image of images">
+            <img [src]="image.src">
+        </div>
+        <div class="add-image" (click)="input.click()"><img src="./assets/images/plus.png"></div>
+    </div>
     <input #input type="file" style="visibility:hidden" (change)="imageChanged($event)" />
+    <form (submit)="onSave()" [formGroup]="form">
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Product Title" formControlName="title" />
+            </mat-form-field>
+        </div>
+        <div class="description">
+            <mat-form-field>
+                <textarea matInput placeholder="Product Description" formControlName="description"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="categories">
+            <ng-container formArrayName="categories" *ngFor="let item of categoryArray['controls']; let i = index;">
+                <div [formGroupName]="i">
+                    <mat-form-field>
+                        <mat-select placeholder="Category" class="form-control"
+                            (selectionChange)="selectCategory($event, i)" formControlName="id">
+                            <mat-option *ngFor="let cat of categories[i]" [value]="cat.id">{{cat.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </ng-container>
+        </div>
+        <div class="brand">
+            <mat-form-field>
+                <input matInput placeholder="Brand" formControlName="brand" />
+            </mat-form-field>
+        </div>
+        <div class="size">
+            <mat-form-field>
+                <mat-select placeholder="Size" class="form-control" formControlName="size">
+                    <mat-option *ngFor="let size of currentSizes" [value]="size.key">{{size.value}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="tags">
+            <mat-form-field>
+                <mat-chip-list #chipList>
+                    <mat-chip [selectable]="false" (removed)="onRemoveTag(tag)" [removable]="true"
+                        *ngFor="let tag of tags">
+                        {{tag}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                    <input matInput [matChipInputFor]="chipList" type="text" class="form-control" formControlName="tag"
+                        (keyup.enter)="onAddTag()" placeholder="Tags (up to 16)" />
+                </mat-chip-list>
+            </mat-form-field>
+        </div>
+        <div class="price">
+            <mat-form-field>
+                <input type="number" matInput placeholder="Price" formControlName="price" />
+            </mat-form-field>
+        </div>
+        <button mat-stroked-button [disabled]="!form.valid" (click)="onSave()" [class.primary]="true">
+            List
+        </button>
+    </form>
 </app-modal>
 
 <ng-container *ngIf="crop">

@@ -253,25 +253,25 @@ mat-basic-chip {
     background-color: $dark-blue !important;
   }
 }
-
-div.mat-chip-list-wrapper {
-  width:fit-content;
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  position: absolute;
-  top:0;
-  bottom:40px;
-  margin: 0 !important;
-  height:40px;
-}
-
-mat-chip-list {
-  position: absolute;
-  top:0;
-  bottom:40px;
-  width:100%;
-  height:40px;
+.filter-bar {
+  div.mat-chip-list-wrapper {
+    width:fit-content;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    position: absolute;
+    top:0;
+    bottom:40px;
+    margin: 0 !important;
+    height:40px;
+    mat-chip-list {
+      position: absolute;
+      top:0;
+      bottom:40px;
+      width:100%;
+      height:40px;
+    }
+  }
 }
 
 
@@ -450,7 +450,7 @@ mat-chip-list {
 
 .desktop-bar {
    margin: 0 auto;
-   width:$desktop-width;
+   width:$header-width ;
    height: 56px;
   .desktop-bar-inner {
     align-content: center;
@@ -559,7 +559,7 @@ mat-toolbar-row.mega-menu-bar {
 
 .full-content {
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: $header-width;
     &.profile { @media(min-width: $desktop-breakpoint) {
       display:grid;
       grid-template-columns: 1fr 3fr;
@@ -727,5 +727,10 @@ div.filter-bar {
           }
         }
       }
-   
   }
+
+// div.mat-form-field-infix {
+//     background-color: white !important;
+//   }
+
+

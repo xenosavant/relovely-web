@@ -6,7 +6,7 @@ export const orders: Order[] = [
         product: {
             id: 'a1636ad1-5db1-49af-ad24-9e3ec7a4eb55',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            name: 'Striped Blue Top',
+            title: 'Striped Blue Top',
             asset: './assets/images/blue-shirt.jpeg',
             userImageUrl: './assets/images/influencer.jpeg',
             userId: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2',
@@ -29,7 +29,7 @@ export const orders: Order[] = [
         product: {
             id: 'a656ddce-a760-43c2-83d0-0bcb5eedf14b',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            name: 'Polkadot Dress',
+            title: 'Polkadot Dress',
             asset: './assets/images/polka-dress.jpeg',
             userImageUrl: 'https://bounceapp.s3.amazonaws.com/users/903248af-8e38-40bb-a102-79acd584f0f2/profile.jpeg',
             userId: 'd46ca468-ec86-4f91-a6b2-617edb79cb2a',
@@ -52,7 +52,7 @@ export const orders: Order[] = [
         product: {
             id: 'e4bbcc8f-b7bf-464c-a77e-f89c739aba9a',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            name: 'Black Top',
+            title: 'Black Top',
             asset: './assets/images/black_top.jpeg',
             userImageUrl: './assets/images/influencer.jpeg',
             userId: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2',

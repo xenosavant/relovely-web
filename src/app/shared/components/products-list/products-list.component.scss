@@ -6,7 +6,7 @@
     background-color:white;
 
     &.create-item {
-    
+      cursor: pointer;
       .inner-wrapper {
         background-color: $medium-dark-background;
         display:flex;

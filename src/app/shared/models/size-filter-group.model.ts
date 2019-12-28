@@ -3,7 +3,7 @@ import { Category } from './category.model';
 
 export class SizeFilterGroup {
     public id: string;
-    public categoryId: number;
+    public categoryId: string;
     public name: string;
     public filters: KeyValue[];
     public selectedKeys: string[];
