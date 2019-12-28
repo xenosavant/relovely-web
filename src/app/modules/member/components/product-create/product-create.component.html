@@ -1,9 +1,18 @@
-<app-modal *ngIf="!crop" (close)="onClose($event)" title="List A Product">
-    <div class="thumbnails">
-        <div class="image-wrapper" *ngFor="let image of images">
+<app-modal *ngIf="!crop" (close)="onClose($event)" title="List a Product">
+    <div *ngIf="images.length" class="info">
+        Cover Photo
+    </div>
+    <div class="thumbnails" dragula="images">
+        <div class="image-wrapper" *ngFor="let image of images; let i = index">
             <img [src]="image.src">
+            <div class="overlay">
+                <mat-icon (click)="onRemoveImage(image)">cancel</mat-icon>
+            </div>
         </div>
         <div class="add-image" (click)="input.click()"><img src="./assets/images/plus.png"></div>
+    </div>
+    <div class="info hint">
+        *We recommend at least one photo wearing the product
     </div>
     <input #input type="file" style="visibility:hidden" (change)="imageChanged($event)" />
     <form (submit)="onSave()" [formGroup]="form">
@@ -52,7 +61,7 @@
                         <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
                     <input matInput [matChipInputFor]="chipList" type="text" class="form-control" formControlName="tag"
-                        (keyup.enter)="onAddTag()" placeholder="Tags (up to 16)" />
+                        (keyup)="onKeyup($event)" placeholder="Tags (up to 16)" />
                 </mat-chip-list>
             </mat-form-field>
         </div>

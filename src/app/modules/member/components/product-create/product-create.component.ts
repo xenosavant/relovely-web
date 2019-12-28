@@ -93,6 +93,15 @@ export class ProductCreateComponent implements OnInit {
     this.crop = false;
   }
 
+  onRemoveImage(image) {
+    this.images.splice(this.images.indexOf(image), 1);
+  }
+
+  onKeyup(key: any) {
+    if (key.key === ',' || key.key === 'Enter') {
+      this.onAddTag();
+    }
+  }
 
 
   onAddTag() {

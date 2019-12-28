@@ -16,6 +16,7 @@ import { ProductModule } from './modules/product/product.module';
 import { NavigationService } from './shared/services/navigation.service';
 import { AppRoutingModule } from './app-routing.module';
 import { MatButtonModule } from '@angular/material';
+import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { MatButtonModule } from '@angular/material';
     MatButtonModule,
 
     // feature
-    ProductModule
+    ProductModule,
+    DragulaModule.forRoot()
   ],
   exports: [RouterModule],
   declarations: [AppComponent],

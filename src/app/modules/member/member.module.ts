@@ -11,6 +11,7 @@ import { SellerProfileComponent } from './containers/seller-profile/profile.comp
 import { ProfileComponent } from './containers/profile/profile.component';
 import { ProductCreateComponent } from './components/product-create/product-create.component';
 import { PortalModule } from '@angular/cdk/portal';
+import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
   declarations: [SellerProfileComponent, MemberProfileComponent, FavoritesComponent, PurchasesComponent, MemberProfileComponent, ProfileComponent, ProductCreateComponent],
@@ -19,7 +20,8 @@ import { PortalModule } from '@angular/cdk/portal';
     MemberRoutingModule,
     MatTabsModule,
     PortalModule,
-    SharedModule
+    SharedModule,
+    DragulaModule
   ],
   providers: [{
     provide: HAMMER_GESTURE_CONFIG,
