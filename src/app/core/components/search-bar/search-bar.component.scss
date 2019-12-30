@@ -11,7 +11,21 @@ form {
   border-radius: 8px;
   transition: box-shadow 0.15s, background 0.15s;
   display: grid;
-  grid-template-columns: 150px 40px;
+  @media( min-width:$desktop-breakpoint) {
+    grid-template-columns: 150px 40px;
+  }
+  @media(max-width: $mobile-breakpoint) {
+    margin-right:16px;
+    border-radius: 8px 8px 8px 8px;
+    & form {
+      border-radius: 8px 8px 8px 8px;
+       & input {
+        padding-left: 10px;
+         width:100%;
+         border-radius: 8px 8px 8px 8px;
+       }
+    }
+  }
   grid-template-rows: auto;
 }
 .search__form {

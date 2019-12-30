@@ -119,10 +119,11 @@ mat-paginator {
     color: black !important;
   }
   
-  &.search {
+  &.menu {
     display: grid;
     align-items: center;
     align-content: center;
+    width:100%;
     fa-icon {
       height:25px;
     }
@@ -178,7 +179,8 @@ div.left {
         height:32px;
       }
       &.profile {
-        height:30px;
+        height:28px;
+        margin-top:6px;
       }
     }
     svg {

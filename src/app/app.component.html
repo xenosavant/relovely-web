@@ -24,7 +24,7 @@
       </div>
     </mat-toolbar-row>
     <mat-toolbar-row *ngIf="showSearch" class="search-tool-bar">
-      <button class="mat-icon-button" (click)="onToggleSearchBar()">
+      <button class="mat-icon-button black" (click)="onToggleSearchBar()">
         <fa-icon icon="times"></fa-icon>
       </button>
       <app-search-bar></app-search-bar>
@@ -123,17 +123,16 @@
               <app-search-bar></app-search-bar>
             </div>
             <div class="icon-wrapper desktop">
-              <button class="mat-icon-button search">
+              <button class="mat-icon-button menu">
                 <fa-icon icon="search" [styles]="{'color': 'black'}"></fa-icon>
               </button>
-              <button class="mat-icon-button" (click)="onGoToFavorites()">
-                <img class="filters" src="./assets/images/heart.svg">
+              <button class="mat-icon-button menu" (click)="onGoToFavorites()">
+                <fa-icon icon="heart" [styles]="{'color': 'black'}"></fa-icon>
               </button>
               <!-- <button (click)="toggleProfile()" class="mat-icon-button" *ngIf="!showProfile">
                 <img class="filters" src="./assets/images/account.svg">
               </button> -->
-              <button #menuTrigger class="mat-icon-button account" style="z-index:1050"
-                [matMenuTriggerFor]="accountMenu">
+              <button #menuTrigger class="mat-icon-button menu" style="z-index:1050" [matMenuTriggerFor]="accountMenu">
                 <img class="profile" src="./assets/images/profile.png">
                 <!-- <img class="caret" src="./assets/images/caret.png"> -->
               </button>
