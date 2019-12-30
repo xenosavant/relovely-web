@@ -354,11 +354,30 @@ mat-chip-list mat-chip {
       app-profile-header {
         app-profile-stats {
         .stat-container {
-          grid-template-columns: auto 160px 160px auto !important;
+          display: grid;
           @media( min-width:$desktop-breakpoint) {
             grid-template-columns: 0px 1fr 1fr 0px !important;
+            display: grid;
             width:50% !important;
           }
+          @media( max-width: 599px) {
+            grid-template-columns: auto 105px 105px auto;
+          &:nth-child(2) {
+            width:105px;
+          }
+          &:nth-child(3) {
+            width:105px;
+          }
+         }
+         @media( min-width: 600px) {
+          grid-template-columns: auto 160px 160px auto;
+            &:nth-child(2) {
+              width:105px;
+            }
+            &:nth-child(3) {
+              width:105px;
+            }
+        }
         }
       }
     }
