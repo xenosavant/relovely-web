@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ElementRef, ViewChild } from '@angular/core';
 import { womensSizes } from '@app/data/sizes.data';
 import { colors } from '@app/data/colors.data';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { PriceFilter } from '@app/shared/models/price-filter.model';
 import { prices } from '@app/data/prices.data';
+import { MatMenuTrigger } from '@angular/material';
 
 
 @Component({
@@ -21,6 +22,12 @@ export class DesktopFiltersComponent implements OnInit {
   selectedPriceFilterIds: string[] = [];
   priceFilters = prices;
 
+  @ViewChild('sizeTrigger', { static: true }) sizeTrigger: MatMenuTrigger;
+  @ViewChild('colorTrigger', { static: true }) colorTrigger: MatMenuTrigger;
+  @ViewChild('priceTrigger', { static: true }) priceTrigger: MatMenuTrigger;
+  @ViewChild('listingsTrigger', { static: true }) listingsTrigger: MatMenuTrigger;
+
+  private _activeTrigger: MatMenuTrigger;
 
   constructor() { }
 
@@ -43,4 +50,68 @@ export class DesktopFiltersComponent implements OnInit {
     }
   }
 
+  onLeaveMenu(event: any, menu: string) {
+    this.closeActiveMenu();
+  }
+
+  onLeaveTrigger(event: any, menu: string) {
+    console.log(menu);
+    switch (menu) {
+      case 'size':
+        this._activeTrigger = this['sizeTrigger'];
+        break;
+      case 'color':
+        this._activeTrigger = this['colorTrigger'];
+        break;
+      case 'price':
+        this._activeTrigger = this['priceTrigger'];
+        break;
+    }
+    if (event.offsetX < 0 || event.offsetX > 80 || !(event.offsetY > 20)) {
+      this.closeActiveMenu();
+    }
+  }
+
+  onEnterTrigger(event: any, menu: string) {
+    this.closeActiveMenu();
+    switch (menu) {
+      case 'size':
+        this._activeTrigger = this['sizeTrigger'];
+        break;
+      case 'color':
+        this._activeTrigger = this['colorTrigger'];
+        break;
+      case 'price':
+        this._activeTrigger = this['priceTrigger'];
+        break;
+      // case 'listings':
+      //   this._activeTrigger = menuElement = this['listingsTrigger'];
+      //   break;
+    }
+
+    if (!this._activeTrigger.menuOpen) {
+      this._activeTrigger.openMenu();
+    }
+
+  }
+
+  onLeaveFilters(event: any) {
+    this.closeActiveMenu();
+  }
+
+  closeActiveMenu() {
+    console.log('close');
+    if (this.sizeTrigger.menuOpen) {
+      console.log('closing size');
+      this.sizeTrigger.closeMenu();
+    }
+    if (this.colorTrigger.menuOpen) {
+      console.log('closing color');
+      this.colorTrigger.closeMenu();
+    }
+    if (this.priceTrigger.menuOpen) {
+      console.log('closing price');
+      this.priceTrigger.closeMenu();
+    }
+  }
 }
