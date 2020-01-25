@@ -1,37 +1,157 @@
-# JavaScript Node CircleCI 2.0 configuration file
+
+# Javascript Node CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2
 jobs:
   build:
+    branches:
+      only:
+        - master
+
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
+      - image: circleci/node:10.12.0
 
     working_directory: ~/repo
 
     steps:
+
       - checkout
 
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
 
-      - run: yarn install
+      # let's install npm
+      - run: npm install --silent
+
+      # install angular cli latest globally
+      - run: sudo npm install -g @angular/cli@latest --silent
+
+      # update 
+      - run: ng update
+      
+      # ng build --prod
+      - run: ng build --prod
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+        
+      # copy dist files to digitalocean
+      - run: scp -o StrictHostKeyChecking=no -r ./dist/Playground/* username@example.com://home/username/playground/
 
-      # run tests!
-      - run: yarn test
+      ################ WARNING WARNING #####################
+      # doing no strict host key check is a security risk to some extent.
+      # But I haven't figured a way to add to ssh for both CI and DO to communicate without that
+      # message popping up 
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    branches:
+      only:
+        - master
+ 
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:12.14.1
+ 
+    working_directory: ~/relovely-app
+ 
+    steps:
+ 
+      - checkout
+ 
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+ 
+      # let's install npm
+      - run: npm install --silent
+ 
+      # install angular cli latest globally
+      - run: sudo npm install -g @angular/cli@latest --silent
+ 
+      # update 
+      - run: ng update
+      
+      # ng build --prod
+      - run: ng build --prod
+ 
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+        
+      # copy dist files to digitalocean
+      - run: scp -o StrictHostKeyChecking=no -r ./dist/* circleci@192.34.56.220://var/www/html/
+ 
+      ################ WARNING WARNING #####################
+      # doing no strict host key check is a security risk to some extent.
+      # But I haven't figured a way to add to ssh for both CI and DO to communicate without that
+      # message popping up 
