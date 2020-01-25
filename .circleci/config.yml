@@ -28,15 +28,9 @@ jobs:
  
       # let's install npm
       - run: npm install --silent
- 
-      # install angular cli latest globally
-      - run: sudo npm install -g @angular/cli@latest --silent
- 
-      # update 
-      - run: ng update
       
       # ng build --prod
-      - run: ng build --prod
+      - run: npm run build-prod
  
       - save_cache:
           paths:
