@@ -10,9 +10,10 @@
             </image-cropper>
         </div>
         <div *ngIf="ready" class="button-wrapper">
-            <app-button (click)="onCancel()" type="primary" text="Cancel">
+            <app-button (click)="onCancel()" type="primary">
+                Cancel
             </app-button>
-            <app-button (click)="onImageCropped()" type="primary" text="Crop">
+            <app-button (click)="onImageCropped()" type="primary"> Crop
             </app-button>
         </div>
     </div>

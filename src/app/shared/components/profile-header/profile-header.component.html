@@ -12,8 +12,8 @@
     </div>
   </div>
   <div class="button-wrapper">
-    <app-button *ngIf="!owner" [type]="'primary'" text="Follow"></app-button>
-    <app-button *ngIf="owner" [type]="'primary'" text="Edit"></app-button>
+    <app-button *ngIf="!owner" [type]="'primary'">Follow</app-button>
+    <app-button *ngIf="owner" [type]="'primary'">Edit</app-button>
   </div>
 </div>
 <app-profile-stats [statItems]="statItems"></app-profile-stats>

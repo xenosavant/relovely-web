@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="action">
-                <app-button type="accent" text="Buy Now"></app-button>
+                <app-button type="accent">Buy Now!</app-button>
             </div>
         </div>
         <div class="product-details">
@@ -76,7 +76,9 @@
                     Size: <strong>M</strong>
                 </div>
                 <div class="button-wrapper">
-                    <app-button type="accent" text="Buy Now" (click)="onClose($event)"></app-button>
+                    <app-button type="accent" (click)="onClose($event)">
+                        Buy Now
+                    </app-button>
                 </div>
                 <div class="description">
                     {{product.description}}
