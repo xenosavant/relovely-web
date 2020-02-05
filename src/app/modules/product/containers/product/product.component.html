@@ -2,7 +2,7 @@
     <ng-container *ngIf="mobile">
         <div class="profile-container" (click)="goToProfile($event)">
             <div class="profile-image-wrapper">
-                <app-avatar [image]="product.userImageUrl"></app-avatar>
+                <app-avatar [image]="product.seller.imageUrl"></app-avatar>
             </div>
             <div class="product-user-name">
                 {{product.sellerUsername}}
@@ -62,7 +62,7 @@
             <div class="desktop-info-wrapper">
                 <h1>{{product.name}}</h1>
                 <div class="user-wrapper">
-                    <app-avatar [image]="product.userImageUrl">
+                    <app-avatar [image]="product.seller.imageUrl">
 
                     </app-avatar>
                     <div>

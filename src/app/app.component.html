@@ -126,7 +126,7 @@
               <button class="mat-icon-button menu">
                 <fa-icon icon="search" [styles]="{'color': 'black'}"></fa-icon>
               </button>
-              <button class="mat-icon-button menu" (click)="onGoToFavorites()">
+              <button class="mat-icon-button menu" (click)="showSignUpModal()">
                 <fa-icon icon="heart" [styles]="{'color': 'black'}"></fa-icon>
               </button>
               <!-- <button (click)="toggleProfile()" class="mat-icon-button" *ngIf="!showProfile">
@@ -172,4 +172,8 @@
 <ng-template #footer>
   <div class="footer">
   </div>
+</ng-template>
+
+<ng-template cdkPortal #signUpModal="cdkPortal">
+  <app-signup (close)="close($event)"></app-signup>
 </ng-template>

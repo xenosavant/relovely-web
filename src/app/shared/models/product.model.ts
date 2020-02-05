@@ -13,9 +13,6 @@ export class Product {
     public sizeId?: string;
     public size: string;
     public asset: string;
-    public userImageUrl: string;
-    public userId: string;
-    public sellerUsername: string;
     public price: number;
     public moreItems?: Product[];
     public similarItems?: Product[];

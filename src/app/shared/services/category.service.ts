@@ -23,7 +23,4 @@ export class CategoryService {
     public getCatgories(): Observable<Category[]> {
         return of(this._categories);
     }
-
-
-
 }

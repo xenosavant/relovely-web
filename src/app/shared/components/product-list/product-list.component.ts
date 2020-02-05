@@ -40,7 +40,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
 
   goToProfile(event: any) {
-    this.navigationService.navigate({ path: '/member/' + this.product.userId })
+    this.navigationService.navigate({ path: '/member/' + this.product.seller.id })
   }
 
   goToProduct(event: any) {

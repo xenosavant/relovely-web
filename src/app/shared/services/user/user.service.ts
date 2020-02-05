@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserDetail } from '../models/user-detail.model';
+import { BaseService } from '../base.service';
+import { UserDetail } from '@app/shared/models/user-detail.model';
+import { catchError, map } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class UserService extends BaseService {
 
     private _currentUser: UserDetail = {
         id: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2',
@@ -23,8 +26,11 @@ export class UserService {
         return this._currentUser;
     }
 
-    constructor(private router: Router) {
-
+    getUser(userId: string): Observable<UserDetail> {
+        return this.httpClient.get<UserDetail>(`users/${userId}`).pipe(
+            map((user: UserDetail) => {
+                return user;
+            })
+        );
     }
-
 }

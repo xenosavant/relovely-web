@@ -25,7 +25,7 @@ export class SellerProfileComponent implements OnInit {
 
   ngOnInit() {
     this.user.products = products.filter(p => {
-      return p.sellerUsername === this.user.username;
+      return p.seller.username === this.user.username;
     })
     this.users = users;
   }

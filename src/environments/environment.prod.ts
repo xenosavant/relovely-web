@@ -6,6 +6,7 @@ export const environment = {
   production: true,
   test: false,
   i18nPrefix: '/relovely',
+  apiUrl: '167.172.133.31/api/',
   versions: {
     app: packageJson.version,
     angular: packageJson.dependencies['@angular/core'],

@@ -1,0 +1,29 @@
+@import '../../../../styles-variables';
+
+.modal-wrapper {
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    z-index: 101;
+    overflow:scroll;
+    width:100vw;
+    background: gray; /* older browsers */
+    background: rgba(128,128,128,0.7); /* newer browsers */
+    .modal-inner {
+        margin: 0 auto;
+        width:400px;
+        display: grid;
+        align-content: center;
+        align-items: center;
+        height: 100%;
+        .modal-window {
+            background: $background-gray;
+            border: 1px $dark-blue;
+            border-radius: 6px;
+            opacity: 1;
+            height: 300px;
+        }
+    }
+}

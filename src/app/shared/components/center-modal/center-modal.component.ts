@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css'],
+  selector: 'app-center-modal',
+  templateUrl: './center-modal.component.html',
+  styleUrls: ['./center-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SignupComponent implements OnInit {
+export class CenterModalComponent implements OnInit {
 
   constructor() { }
 

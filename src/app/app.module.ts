@@ -17,6 +17,7 @@ import { NavigationService } from './shared/services/navigation.service';
 import { AppRoutingModule } from './app-routing.module';
 import { MatButtonModule } from '@angular/material';
 import { DragulaModule } from 'ng2-dragula';
+import { PortalModule } from '@angular/cdk/portal';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { DragulaModule } from 'ng2-dragula';
     BrowserModule,
     CommonModule,
     AppRoutingModule,
+    PortalModule,
 
     // core & shared
     CoreModule,

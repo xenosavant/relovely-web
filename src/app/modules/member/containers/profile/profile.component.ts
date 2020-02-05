@@ -3,7 +3,7 @@ import { UserDetail } from '../../../../shared/models/user-detail.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { users } from '@app/data/users.data';
 import { products } from '@app/data/products.data';
-import { UserService } from '@app/shared/services/user.service';
+import { UserService } from '@app/shared/services/user/user.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({

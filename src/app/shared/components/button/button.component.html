@@ -1,17 +1,3 @@
-<ng-container [ngSwitch]="type">
-  <ng-container *ngSwitchCase="'primary'">
-    <button mat-stroked-button [class.primary]="true">
-      {{text}}
-    </button>
-  </ng-container>
-  <ng-container *ngSwitchCase="'accent'">
-    <button mat-flat-button [color]="'accent'">
-      {{text}}
-    </button>
-  </ng-container>
-  <ng-container *ngSwitchCase="'warn'">
-    <button mat-flat-button [color]="warn">
-      {{text}}
-    </button>
-  </ng-container>
-</ng-container>
+<button mat-stroked-button [class.primary]="primary" [color]="color">
+  <ng-content></ng-content>
+</button>

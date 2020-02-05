@@ -81,6 +81,8 @@ import { ClickDirective } from './directives/click.directive';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
+import { CenterModalComponent } from './components/center-modal/center-modal.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 library.add(
   faBars,
@@ -123,6 +125,7 @@ library.add(
 @NgModule({
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     FormsModule,
     MatButtonModule,
     MatToolbarModule,
@@ -159,7 +162,9 @@ library.add(
     UsersListComponent,
     BreadcrumbsComponent,
     ModalComponent,
-    ImageCropperComponent],
+    ImageCropperComponent,
+    CenterModalComponent,
+    SignupComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -200,7 +205,9 @@ library.add(
     ClickDirective,
     BreadcrumbsComponent,
     ModalComponent,
-    ImageCropperComponent
+    ImageCropperComponent,
+    CenterModalComponent,
+    SignupComponent
   ]
 })
 export class SharedModule { }

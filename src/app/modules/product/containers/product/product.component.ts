@@ -83,7 +83,7 @@ export class ProductComponent implements OnInit {
   }
 
   goToProfile($event: any) {
-    this.navigationService.navigate({ path: '/member/' + this.product.userId });
+    this.navigationService.navigate({ path: '/member/' + this.product.seller.id });
   }
 
   carouselTranslated(event: any) {

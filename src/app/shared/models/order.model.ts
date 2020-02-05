@@ -8,7 +8,7 @@ export class Order {
     public deliveryDate?: string;
     public status: 'shipped' | 'unshipped' | 'cancelled' | 'delivered';
     public trackingNumber?: string;
-    public shippingCarrerName: string;
+    public shippingCarrierName: string;
     public shippingCarrerId: string;
     public total: number;
     public shippingCost: number;

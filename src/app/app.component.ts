@@ -19,12 +19,14 @@ import { CategoryService } from './shared/services/category.service';
 import { KeyValue, DOCUMENT } from '@angular/common';
 import { Router, Navigation, ActivatedRoute } from '@angular/router';
 import { NavigationService } from './shared/services/navigation.service';
-import { UserService } from './shared/services/user.service';
+import { UserService } from './shared/services/user/user.service';
 import { Category } from './shared/models/category.model';
 import { products } from './data/products.data';
 import { timeInterval, timeout, throttleTime, map, pairwise, tap } from 'rxjs/operators';
 import { Direction } from '@angular/cdk/bidi/typings/directionality';
 import { MatSidenavContainer, MatMenuTrigger } from '@angular/material';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { OverlayService } from './shared/services/overlay.service';
 
 @Component({
   selector: 'app-root',
@@ -69,6 +71,7 @@ export class AppComponent implements OnInit {
     return ((this.showFilterBar ? 70 : 0) + (this.showNavBar ? 44 : 0));
   }
 
+  @ViewChild('signUpModal', { static: true }) signUpModal: TemplatePortal<any>;
   @ViewChild('offsetContent', { static: false }) content: ElementRef;
   @ViewChild(MatSidenavContainer, { static: true }) container: MatSidenavContainer;
   @ViewChild('menuTrigger', { read: MatMenuTrigger, static: false }) trigger: MatMenuTrigger;
@@ -82,6 +85,7 @@ export class AppComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private zone: NgZone,
     private userService: UserService,
+    private overlayService: OverlayService,
     private route: ActivatedRoute,
     @Inject(DOCUMENT) private document: any
   ) {
@@ -304,5 +308,14 @@ export class AppComponent implements OnInit {
 
   public goBack(item: NavigationItem) {
     this.navigationService.setCurrentNavigationItems(this.navigationService.rootNavigationItems);
+  }
+
+  public showSignUpModal() {
+    console.log(this.signUpModal);
+    this.overlayService.open(this.signUpModal);
+  }
+
+  public closeModal() {
+    this.overlayService.close();
   }
 }

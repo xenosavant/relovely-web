@@ -1,0 +1,12 @@
+<app-center-modal (close)="onClose($event)">
+  <div class="form-wrapper">
+    <form (submit)="onSave()" [formGroup]="form">
+      <app-button type="accent">
+        Sign Up
+      </app-button>
+    </form>
+    <button mat-stroked-button (click)="signUpInstagram()" [class.primary]="true">
+      Sign up with Instagram
+    </button>
+  </div>
+</app-center-modal>

@@ -9,12 +9,16 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 export class ButtonComponent implements OnInit {
 
   @Input() type: string;
-  @Input() text: string;
+
+  public primary: boolean;
+  public color: string;
 
   constructor() { }
 
   ngOnInit() {
-
+    if (this.type === 'primary') {
+      this.primary = true;
+    }
+    this.color = this.type;
   }
-
 }
