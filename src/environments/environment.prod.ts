@@ -6,7 +6,12 @@ export const environment = {
   production: true,
   test: false,
   i18nPrefix: '/relovely',
-  apiUrl: '167.172.133.31/api/',
+  apiUrl: 'https://167.172.133.31',
+  instagramAuthUrl: `https://api.instagram.com/oauth/authorize?scope=user_profile,user_media&response_type=code`,
+  instagramAccessTokenUrl: 'https://api.instagram.com/oauth/access_token',
+  instagramGraphUrl: 'https://graph.instagram.com',
+  instagramClientId: '600076470775068',
+  instagramRedirectUrl: 'https://192.34.56.220/account/instagram',
   versions: {
     app: packageJson.version,
     angular: packageJson.dependencies['@angular/core'],

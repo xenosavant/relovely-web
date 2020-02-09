@@ -11,7 +11,12 @@ export const environment = {
   production: false,
   test: false,
   i18nPrefix: '',
-  apiUrl: 'localhost:3001/api/',
+  apiUrl: '/api',
+  instagramAuthUrl: `https://api.instagram.com/oauth/authorize?scope=user_profile,user_media&response_type=code`,
+  instagramAccessTokenUrl: 'https://api.instagram.com/oauth/access_token',
+  instagramGraphUrl: 'https://graph.instagram.com',
+  instagramClientId: '600076470775068',
+  instagramRedirectUrl: 'https://192.34.56.220/account/instagram',
   versions: {
     app: packageJson.version,
     angular: packageJson.dependencies['@angular/core'],

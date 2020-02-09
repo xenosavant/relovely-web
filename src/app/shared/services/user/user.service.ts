@@ -4,6 +4,8 @@ import { BaseService } from '../base.service';
 import { UserDetail } from '@app/shared/models/user-detail.model';
 import { catchError, map } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
+import { environment } from '@env/environment';
 
 @Injectable({ providedIn: 'root' })
 export class UserService extends BaseService {
@@ -27,7 +29,15 @@ export class UserService extends BaseService {
     }
 
     getUser(userId: string): Observable<UserDetail> {
-        return this.httpClient.get<UserDetail>(`users/${userId}`).pipe(
+        return this.httpClient.get<UserDetail>(`${this.apiBaseUrl}/users/${userId}`).pipe(
+            map((user: UserDetail) => {
+                return user;
+            })
+        );
+    }
+
+    signupWithInstagram(code: string): Observable<UserDetail> {
+        return this.httpClient.post<UserDetail>(`${this.apiBaseUrl}/instagram/signup`, { code: code }).pipe(
             map((user: UserDetail) => {
                 return user;
             })
