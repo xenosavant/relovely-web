@@ -7,7 +7,7 @@ export const products: Product[] = [
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         title: 'Striped Blue Top',
         asset: './assets/images/blue-shirt.jpeg',
-        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '', imageUrl: './assets/images/influencer.jpeg' }, size: 'M', price: 50.00,
+        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2', imageUrl: './assets/images/influencer.jpeg' }, size: 'M', price: 50.00,
         similarItems: [],
         moreItems: [],
         auction: true
@@ -17,7 +17,7 @@ export const products: Product[] = [
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         title: 'Round Straw Crossbody Bag',
         asset: './assets/images/hand-bag.jpeg',
-        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '', imageUrl: './assets/images/influencer.jpeg' },
+        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2', imageUrl: './assets/images/influencer.jpeg' },
         size: 'OS', price: 80.00,
         similarItems: [],
         moreItems: []
@@ -27,7 +27,7 @@ export const products: Product[] = [
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         title: 'Polkadot Dress',
         asset: './assets/images/polka-dress.jpeg',
-        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '', imageUrl: './assets/images/influencer.jpeg' },
+        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2', imageUrl: './assets/images/influencer.jpeg' },
         size: 'OS', price: 80.00,
         similarItems: [],
         moreItems: []
@@ -37,7 +37,7 @@ export const products: Product[] = [
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         title: 'Black Top',
         asset: './assets/images/black_top.jpeg',
-        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '', imageUrl: './assets/images/influencer.jpeg' },
+        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2', imageUrl: './assets/images/influencer.jpeg' },
         size: 'M', price: 15.00,
         similarItems: [],
         moreItems: [],
@@ -48,7 +48,7 @@ export const products: Product[] = [
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         title: 'Sun Hat',
         asset: './assets/images/hat.jpeg',
-        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '', imageUrl: './assets/images/influencer.jpeg' }, size: 'L', price: 25.00,
+        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2', imageUrl: './assets/images/influencer.jpeg' }, size: 'L', price: 25.00,
         similarItems: [],
         moreItems: []
     },
@@ -56,7 +56,7 @@ export const products: Product[] = [
         id: '0a01991e-cec0-4a3c-8c9f-50ee32e9a9cd',
         title: 'Designer Bag',
         asset: './assets/images/purse.jpeg',
-        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '', imageUrl: './assets/images/influencer.jpeg' },
+        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2', imageUrl: './assets/images/influencer.jpeg' },
         size: 'OS', price: 50.00,
         similarItems: [],
         moreItems: []
@@ -65,7 +65,7 @@ export const products: Product[] = [
         id: '17b6d07e-e19f-435a-8413-308559f02713',
         title: 'Green Dress',
         asset: './assets/images/green_dress.jpeg',
-        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '', imageUrl: './assets/images/influencer.jpeg' }, size: '0', price: 50.00,
+        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2', imageUrl: './assets/images/influencer.jpeg' }, size: '0', price: 50.00,
         similarItems: [],
         moreItems: []
     },
@@ -73,7 +73,7 @@ export const products: Product[] = [
         id: '7298a728-8189-4722-af85-fa8c821f85f6',
         title: 'White Tank Top',
         asset: './assets/images/top.jpeg',
-        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '', imageUrl: './assets/images/influencer.jpeg' }, size: 'S', price: 150.00,
+        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2', imageUrl: './assets/images/influencer.jpeg' }, size: 'S', price: 150.00,
         similarItems: [],
         moreItems: []
     },
@@ -82,7 +82,7 @@ export const products: Product[] = [
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         title: 'Yellow Blazer',
         asset: './assets/images/yellow-jacket.jpeg',
-        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '', imageUrl: './assets/images/influencer.jpeg' }, size: 'L', price: 50.00,
+        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2', imageUrl: './assets/images/influencer.jpeg' }, size: 'L', price: 50.00,
         similarItems: [],
         moreItems: []
     },
@@ -91,7 +91,7 @@ export const products: Product[] = [
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         title: 'Tan BLazer',
         asset: './assets/images/blazer.jpeg',
-        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '', imageUrl: './assets/images/influencer.jpeg' },
+        seller: { username: 'influencer1987', firstName: '', lastName: '', id: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2', imageUrl: './assets/images/influencer.jpeg' },
         size: '40L', price: 175.00,
         similarItems: [],
         moreItems: []

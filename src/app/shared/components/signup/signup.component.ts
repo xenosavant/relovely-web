@@ -13,7 +13,8 @@ export class SignupComponent implements OnInit {
 
   public signInForm: FormGroup;
   public signUpForm: FormGroup;
-  public url: string;
+  public signupInstagramUrl: string;
+  public signinInstagramUrl: string;
 
   constructor(private sanitizer: DomSanitizer) { }
 
@@ -27,10 +28,15 @@ export class SignupComponent implements OnInit {
       password: new FormControl('', [Validators.required]),
       verifyPassword: new FormControl('', [Validators.required])
     });
-    this.url = environment.instagramAuthUrl + `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramRedirectUrl}&scope=user_profile,user_media&response_type=code`;
+    this.signupInstagramUrl = environment.instagramAuthUrl + `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSigninRedirectUrl}&scope=user_profile,user_media&response_type=code`;
+    this.signinInstagramUrl = environment.instagramAuthUrl + `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSignupRedirectUrl}&scope=user_profile,user_media&response_type=code`;
   }
 
   signUpInstagram() {
-    location.replace(this.url);
+    location.replace(this.signupInstagramUrl);
+  }
+
+  signInInstagram() {
+    location.replace(this.signinInstagramUrl);
   }
 }
