@@ -18,12 +18,15 @@
         align-content: center;
         align-items: center;
         height: 100%;
+        @media (max-width: $mobile-breakpoint) {
+            width: 100%;
+        }
         .modal-window {
             background: $background-gray;
             border: 1px $dark-blue;
             border-radius: 6px;
             opacity: 1;
-            height: 300px;
+            height: auto;
         }
     }
 }

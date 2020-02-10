@@ -11,14 +11,19 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 })
 export class SignupComponent implements OnInit {
 
-  public form: FormGroup;
+  public signInForm: FormGroup;
+  public signUpForm: FormGroup;
   public url: string;
 
   constructor(private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.form = new FormGroup({
-      username: new FormControl('', [Validators.required]),
+    this.signInForm = new FormGroup({
+      email: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+    });
+    this.signUpForm = new FormGroup({
+      email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
       verifyPassword: new FormControl('', [Validators.required])
     });

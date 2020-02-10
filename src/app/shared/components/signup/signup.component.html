@@ -1,12 +1,70 @@
 <app-center-modal>
-  <div class="form-wrapper">
-    <form [formGroup]="form">
-      <app-button type="accent">
-        Sign Up
-      </app-button>
-    </form>
-    <button mat-stroked-button (click)="signUpInstagram()" [class.primary]="true">
-      Sign up with Instagram
-    </button>
+  <div class="outer-wrapper">
+    <mat-tab-group mat-stretch-tabs>
+      <mat-tab label="SIGN IN">
+        <div class="form-wrapper">
+          <form [formGroup]="signInForm">
+            <div>
+              <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email" />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <input matInput placeholder="Password" formControlName="password" />
+              </mat-form-field>
+            </div>
+            <div class="spacer"></div>
+            <app-button type="primary">
+              <strong>
+                SIGN IN
+              </strong>
+            </app-button>
+          </form>
+          <div class="sign-in-divider">
+            Or
+          </div>
+          <button class="instagram primary" mat-stroked-button (click)="signUpInstagram()">
+            <img src="./assets/images/instagram-white.png" /><strong>Sign in with Instagram </strong> </button>
+          <div class="spacer"></div>
+          <button class="facebook primary" mat-stroked-button>
+            <img src="./assets/images/facebook-color.png" /> <strong>Sign in with Facebook </strong> </button>
+        </div>
+      </mat-tab>
+      <mat-tab label="SIGN UP">
+        <div class="form-wrapper">
+          <form [formGroup]="signUpForm">
+            <div>
+              <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email" />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <input matInput placeholder="Password" formControlName="password" />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <input matInput placeholder="Verify Password" formControlName="verifyPassword" />
+              </mat-form-field>
+            </div>
+            <app-button type="primary">
+              <strong>
+                SIGN UP
+              </strong>
+            </app-button>
+            <div class="sign-up-divider">
+              Or
+            </div>
+          </form>
+          <button class="instagram primary" mat-stroked-button (click)="signInInstagram()">
+            <img src="./assets/images/instagram-white.png" /> <strong>Sign up with Instagram </strong> </button>
+          <div class="spacer"></div>
+          <button class="facebook primary" mat-stroked-button>
+            <img src="./assets/images/facebook-color.png" /> <strong>Sign up with Facebook </strong> </button>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </app-center-modal>

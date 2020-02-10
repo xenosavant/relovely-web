@@ -1,6 +1,60 @@
-.form-wrapper{ 
-    form app-button {
-    display: block;
-    height: 40px;
+.form-wrapper{
+    margin-top: 32px;
+    form {
+        app-button {
+            display: block;
+            height: 40px;
+        }
+        mat-form-field {
+            width: 100%;
+        }
     }
+    margin-left:16px;
+    margin-right:16px;
+}
+
+.outer-wrapper {
+    height:475px;
+}
+
+.sign-up-divider {
+    height: 40px;
+    padding-top:10px;
+    text-align: center;
+}
+
+.sign-in-divider {
+    height:80px;
+    padding-top:30px;
+    text-align: center;
+}
+
+button.instagram {
+    margin-bottom: 16px;
+    display: grid;
+    width: 235px;
+    grid-template-columns: 40px auto;
+    background-color: #3f729b !important;
+    margin: 0 auto;
+    img {
+        height:24px;
+        margin-right: 16px;
+    }
+}
+
+button.facebook {
+    width: 235px;
+    display: grid;
+    background-color:  #4267B2 !important;
+    margin: 0 auto;
+    grid-template-columns: 40px auto;
+    img {
+        height:30px;
+        margin-right: 16px;
+        margin-left:-5px;
+    }
+}
+
+.spacer {
+    height:16px;
 }
