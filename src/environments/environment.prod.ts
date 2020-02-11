@@ -6,7 +6,7 @@ export const environment = {
   production: true,
   test: false,
   i18nPrefix: '/relovely',
-  apiUrl: 'https://167.172.133.31',
+  apiUrl: 'http://167.172.133.31',
   instagramAuthUrl: `https://api.instagram.com/oauth/authorize?scope=user_profile,user_media&response_type=code`,
   instagramAccessTokenUrl: 'https://api.instagram.com/oauth/access_token',
   instagramGraphUrl: 'https://graph.instagram.com',
