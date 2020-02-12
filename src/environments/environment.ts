@@ -16,7 +16,8 @@ export const environment = {
   instagramAccessTokenUrl: 'https://api.instagram.com/oauth/access_token',
   instagramGraphUrl: 'https://graph.instagram.com',
   instagramClientId: '600076470775068',
-  instagramRedirectUrl: 'https://192.34.56.220/account/instagram',
+  instagramSignupRedirectUrl: 'https://192.34.56.220/account/instagram?signup=true',
+  instagramSigninRedirectUrl: 'https://192.34.56.220/account/instagram',
   versions: {
     app: packageJson.version,
     angular: packageJson.dependencies['@angular/core'],
