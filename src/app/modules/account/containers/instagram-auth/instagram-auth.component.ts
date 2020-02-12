@@ -18,9 +18,9 @@ export class InstagramAuthComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.code = params['code'];
       if (this.code) {
-        // this.userService.signupWithInstagram(this.code).subscribe(result => {
-        //   console.log(result);
-        // })
+        this.userService.signupWithInstagram(this.code).subscribe(result => {
+          console.log(result);
+        });
       } else {
         console.log('failed');
       }
