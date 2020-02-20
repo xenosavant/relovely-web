@@ -262,7 +262,6 @@ export class AppComponent implements OnInit {
   }
 
   public onAccountMenuAction(path: string) {
-    console.log(path);
     this.navigationService.navigate({ path: path })
   }
 
@@ -292,8 +291,12 @@ export class AppComponent implements OnInit {
   }
 
   public openSidenav() {
-    this.sidenavOpen = true;
-    this.showOverlay = true;
+    if (this.userService.currentUser) {
+      this.sidenavOpen = true;
+      this.showOverlay = true;
+    } else {
+      this.showSignUpModal();
+    }
   }
 
   public closeSidenav() {
