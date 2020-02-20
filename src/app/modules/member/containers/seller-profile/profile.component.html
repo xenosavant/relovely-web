@@ -7,11 +7,11 @@
     <mat-tab-group>
         <mat-tab label="Listings">
             <app-products-list (create)="showCreateModal($event)" [showCreate]="true" [showGrid]="true"
-                [showHeader]="false" [products]="user.products">
+                [showHeader]="false" [products]="user.listings">
             </app-products-list>
         </mat-tab>
         <mat-tab label="Sales">
-            <app-products-list [showGrid]="true" [showHeader]="false" [products]="user.products">
+            <app-products-list [showGrid]="true" [showHeader]="false" [products]="user.listings">
             </app-products-list>
         </mat-tab>
         <mat-tab label="Followers">
