@@ -9,10 +9,12 @@ import { AccountRoutingModule } from './account-routing.module';
 import { SharedModule } from '@app/shared';
 import { AddAddressComponent } from './components/add-address/add-address.component';
 import { InstagramAuthComponent } from './containers/instagram-auth/instagram-auth.component';
+import { SignoutComponent } from './containers/signout/signout.component';
 @NgModule({
   declarations: [SigninComponent, ResetPasswordComponent, PaymentsComponent,
     AddressesComponent, InstagramAuthComponent,
-    AddAddressComponent],
+    AddAddressComponent,
+    SignoutComponent],
   imports: [
     CommonModule,
     PortalModule,

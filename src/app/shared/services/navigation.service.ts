@@ -28,11 +28,12 @@ export class NavigationService {
     private navConfigSubject$ = new Subject<INavigationState>();
     public navConfig$ = this.navConfigSubject$.asObservable();
 
+
     private currentNavSubject$ = new Subject<NavigationItem>();
     public currentNavConfig$ = this.currentNavSubject$.asObservable();
 
     private authWindowSubject$ = new Subject<boolean>();
-    public showAuthWindow$ = this.currentNavSubject$.asObservable();
+    public showAuthWindow$ = this.authWindowSubject$.asObservable();
 
     public rootNavigationItems: NavigationItem[];
 
@@ -178,5 +179,9 @@ export class NavigationService {
 
     public closeAuthWindow() {
         this.authWindowSubject$.next(false);
+    }
+
+    public resetNavigation() {
+        this._navigationStack = [];
     }
 }

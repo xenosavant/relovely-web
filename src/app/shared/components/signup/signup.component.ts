@@ -4,6 +4,7 @@ import { environment } from '@env/environment';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { UserService } from '@app/shared/services/user/user.service';
+import { NavigationService } from '@app/shared/services/navigation.service';
 
 @Component({
   selector: 'app-signup',
@@ -24,6 +25,7 @@ export class SignupComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer,
     private authService: AuthService,
     private userService: UserService,
+    private navigationService: NavigationService,
     private zone: NgZone,
     private ref: ChangeDetectorRef) { }
 
@@ -54,6 +56,7 @@ export class SignupComponent implements OnInit {
     this.authService.signup({ email: this.signUpForm.value['email'], password: this.signUpForm.value['password'] })
       .subscribe(response => {
         this.userService.setLogin(response.jwt, response.user);
+        this.navigationService.closeAuthWindow();
       }, err => {
         if (err.status === 409) {
           this.emailError = err.error.error.message;
@@ -69,6 +72,7 @@ export class SignupComponent implements OnInit {
     this.authService.signin({ email: this.signInForm.value['email'], password: this.signInForm.value['password'] })
       .subscribe(response => {
         this.userService.setLogin(response.jwt, response.user);
+        this.navigationService.closeAuthWindow();
       }, err => {
         if (err.status === 401) {
           this.signinError = 'Incorrect login credentials';

@@ -126,22 +126,28 @@
               <button class="mat-icon-button menu">
                 <fa-icon icon="search" [styles]="{'color': 'black'}"></fa-icon>
               </button>
-              <button class="mat-icon-button menu" (click)="showSignUpModal()">
+              <button class="mat-icon-button menu" (click)="onFavoritesClicked()">
                 <fa-icon icon="heart" [styles]="{'color': 'black'}"></fa-icon>
               </button>
-              <!-- <button (click)="toggleProfile()" class="mat-icon-button" *ngIf="!showProfile">
-                <img class="filters" src="./assets/images/account.svg">
-              </button> -->
-              <button #menuTrigger class="mat-icon-button menu" style="z-index:1050" [matMenuTriggerFor]="accountMenu">
-                <img class="profile" src="./assets/images/profile.png">
+              <button #menuTrigger class="mat-icon-button menu" style="z-index:1050" *ngIf="userService.currentUser"
+                [matMenuTriggerFor]="accountMenu">
+                <ng-container *ngIf="userService.currentUser">
+                  <img *ngIf="userService.currentUser.imageUrl" class="profile" src="userService.currentUser.imageUrl">
+                  <img *ngIf="!userService.currentUser.imageUrl" class="profile" src="./assets/images/account.png">
+                </ng-container>
                 <!-- <img class="caret" src="./assets/images/caret.png"> -->
+              </button>
+              <button class="mat-icon-button menu" (click)="showSignUpModal()" *ngIf="!userService.currentUser">
+                <strong>
+                  Sign In
+                </strong>
               </button>
             </div>
           </div>
           <mat-menu #accountMenu="matMenu" yPosition="below" xPosition="before" [overlapTrigger]="false">
             <span class="menu-wrapper" (mouseleave)="onLeaveAccountMenu($event)">
               <div class="menu-item-wrapper" *ngFor="let item of accountNav.subItems">
-                <div class="menu-item"> {{item.name}}</div>
+                <div class="menu-item" (click)="onAccountMenuAction(item.path)"> {{item.name}}</div>
               </div>
             </span>
           </mat-menu>

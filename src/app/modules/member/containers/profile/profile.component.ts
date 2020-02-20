@@ -21,12 +21,20 @@ export class ProfileComponent implements OnInit {
     private userService: UserService, private zone: NgZone, private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+
     this.route.paramMap.subscribe(param => {
       const id = param.get('id');
-      this.user = users.find(u => u.id === id);
-      this.zone.run(() => {
-        this.ref.markForCheck();
-      });
+      if (id !== 'profile') {
+        this.user = users.find(u => u.id === id);
+        this.zone.run(() => {
+          this.ref.markForCheck();
+        });
+      } else {
+        this.user = this.userService.currentUser;
+        this.zone.run(() => {
+          this.ref.markForCheck();
+        });
+      }
     })
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;

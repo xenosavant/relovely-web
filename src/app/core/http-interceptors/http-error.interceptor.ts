@@ -10,11 +10,12 @@ import {
 import { Observable, from } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { UserService } from '@app/shared/services/user/user.service';
+import { NavigationService } from '@app/shared/services/navigation.service';
 
 /** Passes HttpErrorResponse to application-wide error handler */
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector, private userSerice: UserService) { }
+  constructor(private injector: Injector, private userSerice: UserService, private navigationService: NavigationService) { }
 
   intercept(
     request: HttpRequest<any>,
@@ -41,10 +42,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     });
     return next.handle(request).pipe(
       tap((next) => {
-        console.log(next)
+        // do we need to do anythuing here?
       }, (err: any) => {
         if (err instanceof HttpErrorResponse) {
-          console.log(err);
+          if (err.status === 401) {
+            this.userSerice.logout();
+            this.navigationService.openAuthWindow();
+          }
           const appErrorHandler = this.injector.get(ErrorHandler);
           appErrorHandler.handleError(err);
         }

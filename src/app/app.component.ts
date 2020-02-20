@@ -60,7 +60,6 @@ export class AppComponent implements OnInit {
   public scrolledToTop = true;
   public scroll0 = true;
   public showOverlay = false;
-  public showProfile = false;
   public showHeader = false;
   public showMegaMenu = false;
 
@@ -168,7 +167,7 @@ export class AppComponent implements OnInit {
       });
       this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'Blog', 0, [], [], null));
       this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'About', 0, [], [], null));
-      if (this.userService.currentUser.isSeller) {
+      if (this.userService.currentUser && this.userService.currentUser.isSeller) {
         this.accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', 0, [], [], null),
           new NavigationItem([], '/sales/listings', 'Listings', 0, [], [], null),
         );
@@ -176,15 +175,16 @@ export class AppComponent implements OnInit {
       this.accountNav.subItems.push(new NavigationItem([], '/account/settings', 'Settings', 0, [], [], null),
         new NavigationItem([], '/account/terms', 'Terms of Service', 0, [], [], null),
         new NavigationItem([], '/account/help', 'Help', 0, [], [], null),
+        new NavigationItem([], '/account/signout', 'Log Out', 0, [], [], null),
       );
       navigationItems.push(this.accountNav);
-      // this.navigationService.showAuthWindow$.subscribe(open => {
-      //   if (open) {
-      //     this.showSignUpModal()
-      //   } else {
-      //     this.closeModal();
-      //   }
-      // });
+      this.navigationService.showAuthWindow$.subscribe(open => {
+        if (open) {
+          this.showSignUpModal()
+        } else {
+          this.closeModal();
+        }
+      });
       this.navigationService.rootNavigationItems = navigationItems;
       this.navigationService.setCurrentNavigationItems(navigationItems);
       // if (RegExp('^/member/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$')
@@ -241,8 +241,16 @@ export class AppComponent implements OnInit {
     this.showSearch = !this.showSearch;
   }
 
-  public onGoToFavorites() {
+  public goToFavorites() {
     this.navigationService.navigate({ path: '/member/favorites' })
+  }
+
+  public onFavoritesClicked() {
+    if (this.userService.currentUser) {
+      this.goToFavorites();
+    } else {
+      this.showSignUpModal();
+    }
   }
 
   public onGoToCart() {
@@ -251,6 +259,11 @@ export class AppComponent implements OnInit {
 
   public onGoHome() {
     this.navigationService.navigate({ path: '/' })
+  }
+
+  public onAccountMenuAction(path: string) {
+    console.log(path);
+    this.navigationService.navigate({ path: path })
   }
 
   public onOpenMegaMenu(item: NavigationItem) {
@@ -272,10 +285,6 @@ export class AppComponent implements OnInit {
 
   public onLeaveAccountMenu(event: any) {
     this.trigger.closeMenu();
-  }
-
-  public toggleProfile() {
-    this.showProfile = !this.showProfile;
   }
 
   public toggleHeader() {

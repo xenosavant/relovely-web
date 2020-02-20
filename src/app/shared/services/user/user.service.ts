@@ -16,8 +16,9 @@ export class UserService extends BaseService {
 
     constructor(private localStorageService: LocalStorageService, httpClient: HttpClient) {
         super(httpClient);
-        const user = this.localStorageService.getItem('user');
+        const user = this.localStorageService.getItem('currentUser');
         const jwt = this.localStorageService.getItem('jwt');
+        console.log(user, jwt);
         if (user && jwt) {
             this._currentUser = user;
             this._jwt = jwt;
@@ -27,19 +28,7 @@ export class UserService extends BaseService {
         }
     }
 
-    private _currentUser: UserDetail = {
-        id: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2',
-        firstName: 'Samantha',
-        lastName: 'Heintzelman',
-        username: 'influencer1987',
-        imageUrl: './assets/images/influencer.jpeg',
-        numberListings: 12,
-        numberSales: 15,
-        numberFollowers: 1150,
-        numberFollowing: 246,
-        products: [],
-        isSeller: true
-    };
+    private _currentUser: UserDetail;
 
     private _jwt: string;
 
@@ -62,6 +51,8 @@ export class UserService extends BaseService {
     public logout() {
         this.localStorageService.removeItem('jwt');
         this.localStorageService.removeItem('currentUser');
+        this._currentUser = null;
+        this._jwt = null;
         this.loggedInSubject$.next(false);
     }
 
