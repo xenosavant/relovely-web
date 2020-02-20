@@ -6,13 +6,12 @@ export const users: UserDetail[] = [
         firstName: 'Samantha',
         lastName: 'Heintzelman',
         username: 'influencer1987',
-        imageUrl: './assets/images/influencer.jpeg',
-        numberListings: 12,
-        numberSales: 15,
-        numberFollowers: 1150,
-        numberFollowing: 246,
-        products: [],
-        isSeller: true
+        profileImageUrl: './assets/images/influencer.jpeg',
+        listings: [],
+        sales: [],
+        followers: [],
+        following: [],
+        type: 'seller'
     },
 
     {
@@ -20,13 +19,12 @@ export const users: UserDetail[] = [
         firstName: 'Jane',
         lastName: 'Park',
         username: 'fashionista',
-        imageUrl: 'https://bounceapp.s3.amazonaws.com/users/903248af-8e38-40bb-a102-79acd584f0f2/profile.jpeg',
-        numberListings: 25,
-        numberSales: 100,
-        numberFollowers: 500,
-        numberFollowing: 15,
-        products: [],
-        isSeller: false
+        profileImageUrl: './assets/images/influencer.jpeg',
+        listings: [],
+        sales: [],
+        followers: [],
+        following: [],
+        type: 'member'
     }
 
 

@@ -1,7 +1,8 @@
 export class UserList {
-    public id?: string;
-    public firstName?: string;
-    public lastName?: string;
-    public username: string;
-    public imageUrl: string;
+    id?: string;
+    firstName?: string;
+    lastName?: string;
+    username: string;
+    imageUrl: string;
+    type: string;
 }

@@ -24,7 +24,7 @@ export class SellerProfileComponent implements OnInit {
   constructor(private route: ActivatedRoute, private overlayService: OverlayService) { }
 
   ngOnInit() {
-    this.user.products = products.filter(p => {
+    this.user.listings = products.filter(p => {
       return p.seller.username === this.user.username;
     })
     this.users = users;

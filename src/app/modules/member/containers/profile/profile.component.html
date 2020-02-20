@@ -1,7 +1,7 @@
 <div *ngIf="!mobile" class="header-bar">
 
 </div>
-<div class="full-content profile">
+<div class="full-content profile" *ngIf="!loading">
   <div class="sidebar-wrapper" *ngIf="!mobile">
     <div class="desktop-inner">
       <div class="info-wrapper">
@@ -16,12 +16,12 @@
       </div>
     </div>
   </div>
-  <ng-container [ngSwitch]="user.isSeller">
-    <ng-container *ngSwitchCase="true">
-      <app-seller-profile [owner]=true [user]="user"></app-seller-profile>
+  <ng-container [ngSwitch]="user.type">
+    <ng-container *ngSwitchCase="'seller'">
+      <app-seller-profile [owner]="owner" [user]="user"></app-seller-profile>
     </ng-container>
-    <ng-container *ngSwitchCase="false">
-      <app-member-profile [owner]=true [user]="user"></app-member-profile>
+    <ng-container *ngSwitchCase="'member'">
+      <app-member-profile [owner]="owner" [user]="user"></app-member-profile>
     </ng-container>
   </ng-container>
 </div>

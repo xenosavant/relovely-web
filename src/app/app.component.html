@@ -132,8 +132,10 @@
               <button #menuTrigger class="mat-icon-button menu" style="z-index:1050" *ngIf="userService.currentUser"
                 [matMenuTriggerFor]="accountMenu">
                 <ng-container *ngIf="userService.currentUser">
-                  <img *ngIf="userService.currentUser.imageUrl" class="profile" src="userService.currentUser.imageUrl">
-                  <img *ngIf="!userService.currentUser.imageUrl" class="profile" src="./assets/images/account.png">
+                  <img *ngIf="userService.currentUser.profileImageUrl" class="profile"
+                    src="userService.currentuser.profileImageUrl">
+                  <img *ngIf="!userService.currentUser.profileImageUrl" class="profile"
+                    src="./assets/images/account.png">
                 </ng-container>
                 <!-- <img class="caret" src="./assets/images/caret.png"> -->
               </button>

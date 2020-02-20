@@ -19,16 +19,17 @@ export class ProfileHeaderComponent implements OnInit {
   constructor(private ref: ChangeDetectorRef, private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() {
+    console.log(this.user);
     this.statItems = [];
-    if (this.user.isSeller) {
-      this.statItems.push({ name: 'Listings', count: this.user.numberListings });
-      this.statItems.push({ name: 'Sales', count: this.user.numberSales });
-      this.statItems.push({ name: 'Followers', count: this.user.numberFollowers });
-      this.statItems.push({ name: 'Following', count: this.user.numberFollowing });
+    if (this.user.type === 'seller') {
+      this.statItems.push({ name: 'Listings', count: this.user.listings.length });
+      this.statItems.push({ name: 'Sales', count: this.user.sales.length });
+      this.statItems.push({ name: 'Followers', count: this.user.followers.length });
+      this.statItems.push({ name: 'Following', count: this.user.following.length });
     } else {
       this.statItems.push({ name: '', count: -1 });
-      this.statItems.push({ name: 'Favorites', count: this.user.numberSales });
-      this.statItems.push({ name: 'Following', count: this.user.numberFollowing });
+      this.statItems.push({ name: 'Favorites', count: this.user.favorites.length });
+      this.statItems.push({ name: 'Following', count: this.user.following.length });
       this.statItems.push({ name: '', count: -1 });
     }
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {

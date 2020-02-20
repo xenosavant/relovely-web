@@ -17,27 +17,34 @@ export class ProfileComponent implements OnInit {
   user: UserDetail;
   users: UserDetail[];
   mobile: boolean;
+  owner = false;
+  loading = true;
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private userService: UserService, private zone: NgZone, private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-
     this.route.paramMap.subscribe(param => {
       const id = param.get('id');
-      if (id !== 'profile') {
-        this.user = users.find(u => u.id === id);
-        this.zone.run(() => {
-          this.ref.markForCheck();
-        });
-      } else {
-        this.user = this.userService.currentUser;
-        this.zone.run(() => {
-          this.ref.markForCheck();
-        });
+      if (!this.user || (this.user && id !== this.user.id)) {
+        if (id !== 'profile') {
+          this.user = users.find(u => u.id === id);
+          this.zone.run(() => {
+            this.ref.markForCheck();
+            this.loading = false;
+          });
+        } else {
+          this.userService.getUser(this.userService.currentUser.id).subscribe(user => {
+            console.log(user);
+            this.owner = true;
+            this.user = user;
+            this.loading = false;
+            this.ref.markForCheck();
+          });
+          this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
+            this.mobile = result.matches;
+          });
+        }
       }
-    })
-    this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
-      this.mobile = result.matches;
     });
   }
 }

@@ -167,7 +167,7 @@ export class AppComponent implements OnInit {
       });
       this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'Blog', 0, [], [], null));
       this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'About', 0, [], [], null));
-      if (this.userService.currentUser && this.userService.currentUser.isSeller) {
+      if (this.userService.currentUser && this.userService.currentUser.type === 'seller') {
         this.accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', 0, [], [], null),
           new NavigationItem([], '/sales/listings', 'Listings', 0, [], [], null),
         );

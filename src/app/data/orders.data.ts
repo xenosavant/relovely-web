@@ -8,7 +8,7 @@ export const orders: Order[] = [
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             title: 'Striped Blue Top',
             asset: './assets/images/blue-shirt.jpeg',
-            seller: { imageUrl: './assets/images/influencer.jpeg', username: 'fashionista', id: 'd46ca468-ec86-4f91-a6b2-617edb79cb2a' },
+            seller: { imageUrl: './assets/images/influencer.jpeg', username: 'fashionista', id: 'd46ca468-ec86-4f91-a6b2-617edb79cb2a', type: 'seller' },
             size: 'M', price: 50.00,
             similarItems: [],
             moreItems: []
@@ -31,6 +31,7 @@ export const orders: Order[] = [
             title: 'Polkadot Dress',
             asset: './assets/images/polka-dress.jpeg',
             seller: {
+                type: 'seller',
                 imageUrl: 'https://bounceapp.s3.amazonaws.com/users/903248af-8e38-40bb-a102-79acd584f0f2/profile.jpeg',
                 id: 'd46ca468-ec86-4f91-a6b2-617edb79cb2a', username: 'fashionista'
             },
@@ -56,6 +57,7 @@ export const orders: Order[] = [
             title: 'Black Top',
             asset: './assets/images/black_top.jpeg',
             seller: {
+                type: 'seller',
                 imageUrl: './assets/images/influencer.jpeg', id: '43dfbf0c-d29f-4074-9315-d8d434c5a8f2',
                 username: 'influencer1987'
             },
