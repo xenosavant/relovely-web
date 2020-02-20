@@ -1,9 +1,10 @@
 .form-wrapper{
-    margin-top: 32px;
+    margin-top: 16px;
     form {
-        app-button {
+        button {
             display: block;
             height: 40px;
+            width:100%;
         }
         mat-form-field {
             width: 100%;
@@ -11,6 +12,9 @@
     }
     margin-left:16px;
     margin-right:16px;
+}
+.errors {
+    padding: 8px 16px 0px 16px;
 }
 
 .outer-wrapper {

@@ -39,7 +39,6 @@ import { SizeFilterGroupComponent } from './components/size-filter/size-filter-g
   declarations: [SearchBarComponent, ToolbarComponent, HomeComponent, NotFoundComponent, FilterBarComponent, SizeFilterComponent, ColorFilterComponent, SizeFilterGroupComponent],
   providers: [
     NotificationService,
-    LocalStorageService,
     httpInterceptorProviders
   ],
   exports: [SearchBarComponent, ToolbarComponent, RouterModule, FilterBarComponent]

@@ -84,6 +84,10 @@ $custom-typography: mat-typography-config(
   }
 }
 
+.form-error {
+  color: red;
+}
+
 button.mat-accent {
   background-color: $pink-button !important;
   font-weight: 500;
@@ -675,6 +679,9 @@ button.mat-stroked-button {
 button.primary {
   background-color: $light-gray !important;
   color:white !important;
+  &:disabled {
+    background-color: $dark-gray-background !important;
+  }
 }
 
 button.mat-flat-button.mat-accent {

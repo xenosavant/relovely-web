@@ -1,6 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
+import { ObservableInput } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -25,6 +26,10 @@ export class BaseService {
         this.instagramBaseUrl = environment.instagramGraphUrl;
         this.instagramAuthUrl = environment.instagramAuthUrl;
         this.instagramAccessTokenUrl = environment.instagramAccessTokenUrl;
+    }
+
+    protected errorHandler(error: any): ObservableInput<any> {
+        throw error;
     }
 
 }

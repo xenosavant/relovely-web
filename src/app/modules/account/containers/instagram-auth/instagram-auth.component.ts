@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '@app/shared/services/user/user.service';
+import { AuthService } from '@app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-instagram-auth',
@@ -12,14 +13,14 @@ export class InstagramAuthComponent implements OnInit {
 
   private code: string;
 
-  constructor(private activatedRoute: ActivatedRoute, private userService: UserService) { }
+  constructor(private activatedRoute: ActivatedRoute, private authService: AuthService) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
       this.code = params['code'];
       if (this.code) {
-        this.userService.signupWithInstagram(this.code).subscribe(result => {
-          console.log(result);
+        this.authService.signupWithInstagram(this.code).subscribe(result => {
+          // set user and jwt
         });
       } else {
         console.log('failed');

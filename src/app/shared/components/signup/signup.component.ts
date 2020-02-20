@@ -1,7 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy, Sanitizer } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Sanitizer, NgZone, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { environment } from '@env/environment';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { AuthService } from '@app/shared/services/auth/auth.service';
+import { UserService } from '@app/shared/services/user/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +18,14 @@ export class SignupComponent implements OnInit {
   public signupInstagramUrl: string;
   public signinInstagramUrl: string;
 
-  constructor(private sanitizer: DomSanitizer) { }
+  public emailError: string = null;
+  public signinError: string = null;
+
+  constructor(private sanitizer: DomSanitizer,
+    private authService: AuthService,
+    private userService: UserService,
+    private zone: NgZone,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.signInForm = new FormGroup({
@@ -38,5 +47,35 @@ export class SignupComponent implements OnInit {
 
   signInInstagram() {
     location.replace(this.signinInstagramUrl);
+  }
+
+  signup() {
+    this.emailError = null;
+    this.authService.signup({ email: this.signUpForm.value['email'], password: this.signUpForm.value['password'] })
+      .subscribe(response => {
+        this.userService.setLogin(response.jwt, response.user);
+      }, err => {
+        if (err.status === 409) {
+          this.emailError = err.error.error.message;
+          this.zone.run(() => {
+            this.ref.detectChanges();
+          });
+        }
+      });
+  }
+
+  signin() {
+    this.signinError = null;
+    this.authService.signin({ email: this.signInForm.value['email'], password: this.signInForm.value['password'] })
+      .subscribe(response => {
+        this.userService.setLogin(response.jwt, response.user);
+      }, err => {
+        if (err.status === 401) {
+          this.signinError = 'Incorrect login credentials';
+          this.zone.run(() => {
+            this.ref.detectChanges();
+          });
+        }
+      });
   }
 }

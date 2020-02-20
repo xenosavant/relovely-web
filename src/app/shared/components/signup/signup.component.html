@@ -2,6 +2,9 @@
   <div class="outer-wrapper">
     <mat-tab-group mat-stretch-tabs>
       <mat-tab label="SIGN IN">
+        <div class="errors">
+          <div *ngIf="signinError !== null" class="form-error">{{signinError}}</div>
+        </div>
         <div class="form-wrapper">
           <form [formGroup]="signInForm">
             <div>
@@ -11,15 +14,15 @@
             </div>
             <div>
               <mat-form-field>
-                <input matInput placeholder="Password" formControlName="password" />
+                <input matInput placeholder="Password" type="password" formControlName="password" />
               </mat-form-field>
             </div>
             <div class="spacer"></div>
-            <app-button type="primary">
+            <button mat-stroked-button class="primary" (click)="signin()" [disabled]="!signInForm.valid">
               <strong>
                 SIGN IN
               </strong>
-            </app-button>
+            </button>
           </form>
           <div class="sign-in-divider">
             Or
@@ -32,6 +35,9 @@
         </div>
       </mat-tab>
       <mat-tab label="SIGN UP">
+        <div class="errors">
+          <div *ngIf="emailError !== null" class="form-error">{{emailError}}</div>
+        </div>
         <div class="form-wrapper">
           <form [formGroup]="signUpForm">
             <div>
@@ -41,19 +47,19 @@
             </div>
             <div>
               <mat-form-field>
-                <input matInput placeholder="Password" formControlName="password" />
+                <input matInput type="password" placeholder="Password" formControlName="password" />
               </mat-form-field>
             </div>
             <div>
               <mat-form-field>
-                <input matInput placeholder="Verify Password" formControlName="verifyPassword" />
+                <input matInput type="password" placeholder="Verify Password" formControlName="verifyPassword" />
               </mat-form-field>
             </div>
-            <app-button type="primary">
+            <button mat-stroked-button class="primary" (click)="signup()" [disabled]="!signUpForm.valid">
               <strong>
                 SIGN UP
               </strong>
-            </app-button>
+            </button>
             <div class="sign-up-divider">
               Or
             </div>

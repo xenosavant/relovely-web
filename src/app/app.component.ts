@@ -1,10 +1,6 @@
 import browser from 'browser-detect';
 import { Component, OnInit, ChangeDetectorRef, NgZone, ViewChild, ElementRef, Inject } from '@angular/core';
 import { Observable, BehaviorSubject, fromEvent, Subscription } from 'rxjs';
-
-import {
-  LocalStorageService
-} from '@app/core';
 import { environment as env } from '@env/environment';
 
 import {
@@ -27,6 +23,7 @@ import { Direction } from '@angular/cdk/bidi/typings/directionality';
 import { MatSidenavContainer, MatMenuTrigger } from '@angular/material';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from './shared/services/overlay.service';
+import { LocalStorageService } from './shared/services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -181,6 +178,13 @@ export class AppComponent implements OnInit {
         new NavigationItem([], '/account/help', 'Help', 0, [], [], null),
       );
       navigationItems.push(this.accountNav);
+      // this.navigationService.showAuthWindow$.subscribe(open => {
+      //   if (open) {
+      //     this.showSignUpModal()
+      //   } else {
+      //     this.closeModal();
+      //   }
+      // });
       this.navigationService.rootNavigationItems = navigationItems;
       this.navigationService.setCurrentNavigationItems(navigationItems);
       // if (RegExp('^/member/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$')
@@ -311,7 +315,6 @@ export class AppComponent implements OnInit {
   }
 
   public showSignUpModal() {
-    console.log(this.signUpModal);
     this.overlayService.open(this.signUpModal);
   }
 

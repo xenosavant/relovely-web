@@ -31,6 +31,9 @@ export class NavigationService {
     private currentNavSubject$ = new Subject<NavigationItem>();
     public currentNavConfig$ = this.currentNavSubject$.asObservable();
 
+    private authWindowSubject$ = new Subject<boolean>();
+    public showAuthWindow$ = this.currentNavSubject$.asObservable();
+
     public rootNavigationItems: NavigationItem[];
 
     constructor(private router: Router) {
@@ -167,5 +170,13 @@ export class NavigationService {
     public init(item: NavigationItem) {
         this._currentNavigationItem = item;
         this.currentNavSubject$.next(this._currentNavigationItem);
+    }
+
+    public openAuthWindow() {
+        this.authWindowSubject$.next(true);
+    }
+
+    public closeAuthWindow() {
+        this.authWindowSubject$.next(false);
     }
 }

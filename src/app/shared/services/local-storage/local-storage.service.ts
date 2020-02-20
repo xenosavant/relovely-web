@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
-const APP_PREFIX = 'app-';
+const APP_PREFIX = 'relovely';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LocalStorageService {
-  constructor() {}
+  constructor() { }
 
   static loadInitialState() {
     return Object.keys(localStorage).reduce((state: any, storageKey) => {
