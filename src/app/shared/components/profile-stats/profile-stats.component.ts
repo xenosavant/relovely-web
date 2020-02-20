@@ -12,9 +12,11 @@ export class ProfileStatsComponent implements OnInit {
   @Input() statItems: StatItem[];
 
   constructor() {
+
   }
 
   ngOnInit() {
+    console.log(this.statItems);
   }
 
 }

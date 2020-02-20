@@ -1,6 +1,6 @@
 <app-center-modal>
   <div class="outer-wrapper">
-    <mat-tab-group mat-stretch-tabs>
+    <mat-tab-group *ngIf="!loading" mat-stretch-tabs>
       <mat-tab label="SIGN IN">
         <div class="errors">
           <div *ngIf="signinError !== null" class="form-error">{{signinError}}</div>
@@ -72,5 +72,10 @@
         </div>
       </mat-tab>
     </mat-tab-group>
+    <div *ngIf="loading" class="loading">
+      <div>
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+    </div>
   </div>
 </app-center-modal>

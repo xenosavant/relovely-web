@@ -21,6 +21,7 @@ export class SignupComponent implements OnInit {
 
   public emailError: string = null;
   public signinError: string = null;
+  public loading = false;
 
   constructor(private sanitizer: DomSanitizer,
     private authService: AuthService,
@@ -62,6 +63,7 @@ export class SignupComponent implements OnInit {
           this.emailError = err.error.error.message;
           this.zone.run(() => {
             this.ref.detectChanges();
+            this.loading = false;
           });
         }
       });
@@ -69,13 +71,16 @@ export class SignupComponent implements OnInit {
 
   signin() {
     this.signinError = null;
+    this.loading = true;
     this.authService.signin({ email: this.signInForm.value['email'], password: this.signInForm.value['password'] })
       .subscribe(response => {
         this.userService.setLogin(response.jwt, response.user);
         this.navigationService.closeAuthWindow();
+        this.loading = false;
       }, err => {
-        if (err.status === 401) {
+        if (err.status === 403) {
           this.signinError = 'Incorrect login credentials';
+          this.loading = false;
           this.zone.run(() => {
             this.ref.detectChanges();
           });

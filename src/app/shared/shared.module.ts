@@ -145,7 +145,8 @@ library.add(
     MatSlideToggleModule,
     MatDividerModule,
     FontAwesomeModule,
-    ImageCropperModule
+    ImageCropperModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     AvatarComponent,

@@ -1,6 +1,6 @@
 <div class="stat-container">
   <div class="item-wrapper" *ngFor="let stat of statItems">
-    <div class="number" *ngIf="stat.count > 0">
+    <div class="number" *ngIf="stat.count > -1">
       {{stat.count}}
     </div>
   </div>
