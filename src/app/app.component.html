@@ -139,11 +139,9 @@
                 </ng-container>
                 <!-- <img class="caret" src="./assets/images/caret.png"> -->
               </button>
-              <button class="mat-icon-button menu" (click)="showSignUpModal()" *ngIf="!userService.currentUser">
-                <strong>
-                  SIGN IN
-                </strong>
-              </button>
+              <div class="signin" (click)="showSignUpModal()" *ngIf="!userService.currentUser">
+                <div> SIGN IN</div>
+              </div>
             </div>
           </div>
           <mat-menu #accountMenu="matMenu" yPosition="below" xPosition="before" [overlapTrigger]="false">

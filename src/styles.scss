@@ -183,12 +183,28 @@ div.left {
     grid-template-columns: 1fr 1fr !important;
   }
   grid-template-rows: 30px;
+  div.signin {
+    margin: unset !important;
+    vertical-align: unset;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font: 500 15px Roboto, sans-serif !important;
+    color: $dark-gray;
+    div {
+      margin-bottom: 3px;
+    }
+    &:hover {
+      color:black;
+    }
+  }
   button {
     height: 30px;
     &.menu {
 
       img.profile {
         vertical-align: unset;
+        margin: unset !important;
         width:22px !important;
         height:22px !important;
         margin-bottom:1px;
@@ -196,6 +212,7 @@ div.left {
     }
     svg {
       vertical-align: unset;
+      margin: unset !important;
       color: black !important;
       margin:0 auto;
       height:26px !important;
@@ -486,7 +503,9 @@ mat-chip-list mat-chip {
 
 .desktop-bar {
    margin: 0 auto;
-   width:$header-width ;
+   width:$header-width;
+   padding-right: 16px;
+   padding-left:16px;
    height: 56px;
   .desktop-bar-inner {
     align-content: center;

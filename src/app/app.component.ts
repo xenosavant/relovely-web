@@ -291,12 +291,8 @@ export class AppComponent implements OnInit {
   }
 
   public openSidenav() {
-    if (this.userService.currentUser) {
-      this.sidenavOpen = true;
-      this.showOverlay = true;
-    } else {
-      this.showSignUpModal();
-    }
+    this.sidenavOpen = true;
+    this.showOverlay = true;
   }
 
   public closeSidenav() {
@@ -316,9 +312,13 @@ export class AppComponent implements OnInit {
   }
 
   public sideNavigate(item: NavigationItem) {
-    const close = this.navigationService.sideNavigate(item);
-    if (close) {
-      this.closeSidenav();
+    if (!this.userService.currentUser && item.name === 'Account') {
+      this.showSignUpModal();
+    } else {
+      const close = this.navigationService.sideNavigate(item);
+      if (close) {
+        this.closeSidenav();
+      }
     }
   }
 
