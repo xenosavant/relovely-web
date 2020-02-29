@@ -56,13 +56,17 @@ export class SignupComponent implements OnInit {
 
   signup() {
     this.emailError = null;
+    this.emailError = null;
+    this.loading = true;
     this.authService.signup({ email: this.signUpForm.value['email'], password: this.signUpForm.value['password'] })
       .subscribe(response => {
         this.userService.setLogin(response.jwt, response.user);
         this.navigationService.closeAuthWindow();
+        this.loading = false;
       }, err => {
         if (err.status === 409) {
           this.emailError = err.error.error.message;
+          this.loading = false;
           this.zone.run(() => {
             this.ref.detectChanges();
             this.loading = false;
@@ -93,5 +97,9 @@ export class SignupComponent implements OnInit {
   switch() {
     this.showSignin = this.showSignin ? false : true;
     this.title = this.showSignin ? 'SIGN IN' : 'SIGN UP';
+  }
+
+  close() {
+    this.navigationService.closeAuthWindow();
   }
 }
