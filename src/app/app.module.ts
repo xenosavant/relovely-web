@@ -20,6 +20,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { PortalModule } from '@angular/cdk/portal';
 import { CloudinaryModule } from '@cloudinary/angular-5.x';
 import * as  Cloudinary from 'cloudinary-core';
+import { environment } from '@env/environment';
 
 @NgModule({
   imports: [
@@ -38,7 +39,7 @@ import * as  Cloudinary from 'cloudinary-core';
     // feature
     ProductModule,
     DragulaModule.forRoot(),
-    CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'relovely' })
+    CloudinaryModule.forRoot(Cloudinary, { cloud_name: environment.cloudinaryCloudName, upload_preset: environment.cloudinaryUploadPreset })
   ],
   exports: [RouterModule],
   declarations: [AppComponent],

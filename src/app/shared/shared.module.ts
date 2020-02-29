@@ -24,6 +24,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-5.x';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -84,6 +86,8 @@ import { ModalComponent } from './components/modal/modal.component';
 import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
 import { CenterModalComponent } from './components/center-modal/center-modal.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { VideoPlayerComponent } from './components/video-player/video-player.component';
+import { VideoUploaderComponent } from './components/video-uploader/video-uploader.component';
 
 library.add(
   faBars,
@@ -148,7 +152,9 @@ library.add(
     FontAwesomeModule,
     ImageCropperModule,
     MatProgressSpinnerModule,
-    ClickOutsideModule
+    ClickOutsideModule,
+    CloudinaryModule,
+    FileUploadModule
   ],
   declarations: [
     AvatarComponent,
@@ -167,7 +173,9 @@ library.add(
     ModalComponent,
     ImageCropperComponent,
     CenterModalComponent,
-    SignupComponent],
+    SignupComponent,
+    VideoPlayerComponent,
+    VideoUploaderComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -210,7 +218,9 @@ library.add(
     ModalComponent,
     ImageCropperComponent,
     CenterModalComponent,
-    SignupComponent
+    SignupComponent,
+    VideoPlayerComponent,
+    VideoUploaderComponent
   ]
 })
 export class SharedModule { }

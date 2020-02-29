@@ -1,0 +1,65 @@
+@import '../../../../styles-variables';
+
+.add-image {
+    background-color: $medium-dark-background;
+    height:100%;
+    cursor: pointer;
+    img {
+        height: 100%;
+        width: 100%;
+    }
+    &::before {
+        content: "";
+        padding-bottom: 100%;
+        display: inline-block;
+        vertical-align: top;
+    }
+}
+
+.uploading {
+    background-color: $medium-dark-background;
+    height:100%;
+    width:100%;
+    display:flex;
+    align-content: center;
+    align-items: center;
+    .text {
+        font-size: 25px;
+        font-weight: 500;
+        width: fit-content;
+        margin:0 auto;
+    }
+}
+
+.video-preview {
+    position: absolute;
+    height:140px;
+    app-video-player {
+        height:100%;
+    }
+    .overlay {
+        position: absolute;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5); /* Black see-through */
+        color: #f1f1f1;
+        height: 100%;
+        width:100%;
+        color: white;
+        font-size: 20px;
+        padding: 20px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        cursor: pointer;
+        img {
+            height:100%;
+        }
+        mat-icon {
+            top:-12px;
+            right:-12px;
+            position: absolute;
+            cursor: pointer;
+        }
+     }
+}

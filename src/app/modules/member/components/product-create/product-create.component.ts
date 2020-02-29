@@ -8,6 +8,7 @@ import { guid } from '../../../../shared/utils/rand';
 import { FileUploadService } from '../../../../shared/services/file-upload.service'
 import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 import { forkJoin } from 'rxjs';
+import { Video } from '@app/shared/interfaces/video';
 
 @Component({
   selector: 'app-product-create',
@@ -23,6 +24,7 @@ export class ProductCreateComponent implements OnInit {
   public crop = false;
   public form: FormGroup;
   public categories: Array<Category[]> = [];
+  public video: Video;
   public images: ImageSet[] = [];
   public rootCategories = [];
   public currentSizes = womensSizes.map((value) => value.filters).reduce((previous, current) => previous.concat(current), []);
@@ -97,11 +99,14 @@ export class ProductCreateComponent implements OnInit {
     this.crop = false;
   }
 
+  public videoUploaded($event: any) {
+    this.video = $event;
+  }
+
   onImageCropped(imageSet: ImageSet) {
     forkJoin(this.uploadService.upload('data:image/jpeg;base64,' + imageSet.cropped, this.id, 'image'),
       this.uploadService.upload('data:image/jpeg;base64,' + imageSet.original, this.id, 'image'))
       .subscribe(([cropped, original]) => {
-        console.log(cropped, original);
         if (cropped.secure_url && original.secure_url) {
           this.images.push({ cropped: cropped.secure_url, original: original.secure_url });
         }

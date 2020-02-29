@@ -1,0 +1,18 @@
+<ng-container *ngIf="!uploading">
+    <div *ngIf="!video" class="add-image" (click)="fileUpload.click()">
+        <img src="./assets/images/plus.png">
+    </div>
+    <div class="video-preview" *ngIf="video">
+        <app-video-player [publicId]="video.publicId" (click)="fileUpload.click()" [controls]="false">
+        </app-video-player>
+        <div class="overlay">
+            <img src="./assets/images/plus.png">
+            <mat-icon (click)="onRemoveImage()">cancel</mat-icon>
+        </div>
+    </div>
+</ng-container>
+<div *ngIf="uploading" class="uploading">
+    <div class="text">{{percentage}}%</div>
+</div>
+<input type="file" #fileUpload #fileInput ng2FileSelect [style.display]="'none'" [uploader]="uploader"
+    (change)="fileInput.value=''" multiple />

@@ -44,6 +44,13 @@ $custom-typography: mat-typography-config(
   }
 }
 
+cl-video {
+  height:100%;
+    video {
+        height:100%;
+    }
+}
+
 .icon-wrapper, .search__form {
   button.mat-icon-button {
 
@@ -123,15 +130,15 @@ mat-paginator {
     color: black !important;
   }
   
-  &.menu {
-    display: grid;
-    align-items: center;
-    align-content: center;
-    width:100%;
-    fa-icon {
-      height:30px;
-    }
-  }
+  // &.menu {
+  //   display: grid;
+  //   align-items: center;
+  //   align-content: center;
+  //   width:100%;
+  //   fa-icon {
+  //     height:30px;
+  //   }
+  // }
 }
 
 div.left {
@@ -175,24 +182,25 @@ div.left {
   &.mobile {
     grid-template-columns: 1fr 1fr !important;
   }
-  grid-template-rows: auto;
+  grid-template-rows: 30px;
   button {
-    img {
-      margin: 0 auto;
-      &.filters {
-        height:20px;
-      }
-      &.profile {
-        height:20px;
+    height: 30px;
+    &.menu {
+
+      img.profile {
+        vertical-align: unset;
+        width:22px !important;
+        height:22px !important;
+        margin-bottom:1px;
       }
     }
     svg {
-      color: $light-gray !important;
+      vertical-align: unset;
+      color: black !important;
       margin:0 auto;
-      width:15px !important;
-      height:15px !important;
+      height:26px !important;
   }
-  }
+ }
 }
 
 
@@ -492,6 +500,7 @@ mat-chip-list mat-chip {
     app-search-bar {
       display: grid;
       align-items: center;
+      margin-bottom:8px;
       .search {
         // border: solid black 1px;
       }
