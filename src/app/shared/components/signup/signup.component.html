@@ -1,7 +1,16 @@
 <app-center-modal>
   <div class="outer-wrapper">
-    <mat-tab-group *ngIf="!loading" mat-stretch-tabs>
-      <mat-tab label="SIGN IN">
+    <div class="header">
+      <div></div>
+      <div class="title">
+        <div>{{title}}</div>
+      </div>
+      <div class="close">
+        <img (click)="close()" src="./assets/images/close.svg" />
+      </div>
+    </div>
+    <ng-container *ngIf="!loading" mat-stretch-tabs>
+      <ng-container *ngIf="showSignin">
         <div class="errors">
           <div *ngIf="signinError !== null" class="form-error">{{signinError}}</div>
         </div>
@@ -32,9 +41,15 @@
           <div class="spacer"></div>
           <button class="facebook primary" mat-stroked-button>
             <img src="./assets/images/facebook-color.png" /> <strong>Sign in with Facebook </strong> </button>
+          <div class="linkText">
+            Don't have an account?
+            <a (click)="switch()" class="link" appClick target="_blank">
+              Sign Up
+            </a>
+          </div>
         </div>
-      </mat-tab>
-      <mat-tab label="SIGN UP">
+      </ng-container>
+      <ng-container *ngIf="!showSignin">
         <div class="errors">
           <div *ngIf="emailError !== null" class="form-error">{{emailError}}</div>
         </div>
@@ -68,10 +83,17 @@
             <img src="./assets/images/instagram-white.png" /> <strong>Sign up with Instagram </strong> </button>
           <div class="spacer"></div>
           <button class="facebook primary" mat-stroked-button>
-            <img src="./assets/images/facebook-color.png" /> <strong>Sign up with Facebook </strong> </button>
+            <img src="./assets/images/facebook-color.png" /> <strong>Sign up with Facebook </strong>
+          </button>
+          <div class="linkText">
+            Already have an account?
+            <a (click)="switch()" class="link" appClick target="_blank">
+              Sign In
+            </a>
+          </div>
         </div>
-      </mat-tab>
-    </mat-tab-group>
+      </ng-container>
+    </ng-container>
     <div *ngIf="loading" class="loading">
       <div>
         <mat-spinner diameter="50"></mat-spinner>

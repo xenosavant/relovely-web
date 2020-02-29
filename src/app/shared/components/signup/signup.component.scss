@@ -74,3 +74,39 @@ button.facebook {
         height:50px !important;
     }
 }
+.header {
+    display: grid;
+    grid-template-columns: 40px 1fr 40px;
+    grid-template-rows: 40px;
+    .title {
+        display: grid;
+         align-content: center;
+         div {
+             text-align: center;
+             font: 500 20px Roboto, sans-serif !important;
+         }
+    }
+    .close {
+        display: grid;
+        align-content: center;
+        img {
+            width:40px;
+            cursor: pointer;
+        }
+    }
+}
+
+.linkText {
+    width:100%;
+    text-align: center;
+    margin-top:16px;
+}
+
+.link {
+    text-decoration:underline;
+    font-weight: 500;
+    cursor: pointer;
+    &:hover {
+        text-decoration:underline !important;
+    }
+}

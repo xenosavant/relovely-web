@@ -22,6 +22,8 @@ export class SignupComponent implements OnInit {
   public emailError: string = null;
   public signinError: string = null;
   public loading = false;
+  public showSignin = true;
+  public title = 'SIGN IN';
 
   constructor(private sanitizer: DomSanitizer,
     private authService: AuthService,
@@ -86,5 +88,10 @@ export class SignupComponent implements OnInit {
           });
         }
       });
+  }
+
+  switch() {
+    this.showSignin = this.showSignin ? false : true;
+    this.title = this.showSignin ? 'SIGN IN' : 'SIGN UP';
   }
 }
