@@ -180,17 +180,17 @@ div.left {
     img {
       margin: 0 auto;
       &.filters {
-        height:30px;
+        height:20px;
       }
       &.profile {
-        height:30px;
+        height:20px;
       }
     }
     svg {
       color: $light-gray !important;
       margin:0 auto;
-      width:25px !important;
-      height:25px !important;
+      width:15px !important;
+      height:15px !important;
   }
   }
 }

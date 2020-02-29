@@ -18,6 +18,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatButtonModule } from '@angular/material';
 import { DragulaModule } from 'ng2-dragula';
 import { PortalModule } from '@angular/cdk/portal';
+import { CloudinaryModule } from '@cloudinary/angular-5.x';
+import * as  Cloudinary from 'cloudinary-core';
 
 @NgModule({
   imports: [
@@ -35,7 +37,8 @@ import { PortalModule } from '@angular/cdk/portal';
 
     // feature
     ProductModule,
-    DragulaModule.forRoot()
+    DragulaModule.forRoot(),
+    CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'relovely' })
   ],
   exports: [RouterModule],
   declarations: [AppComponent],

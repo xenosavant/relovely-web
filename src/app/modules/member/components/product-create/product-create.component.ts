@@ -1,9 +1,13 @@
-import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, NgZone, ChangeDetectorRef } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormArray, FormBuilder, AbstractControl } from '@angular/forms';
 import { Category } from '@app/shared/models/category.model';
 import { CategoryService } from '@app/shared/services/category.service';
 import { womensSizes } from '../../../../data/sizes.data';
 import { KeyValue } from '@angular/common';
+import { guid } from '../../../../shared/utils/rand';
+import { FileUploadService } from '../../../../shared/services/file-upload.service'
+import { ImageSet } from '@app/shared/interfaces/image-set.interface';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-product-create',
@@ -17,17 +21,22 @@ export class ProductCreateComponent implements OnInit {
 
   public imageChangedEvent: any = null;
   public crop = false;
-  public images: any[] = [];
   public form: FormGroup;
   public categories: Array<Category[]> = [];
+  public images: ImageSet[] = [];
   public rootCategories = [];
   public currentSizes = womensSizes.map((value) => value.filters).reduce((previous, current) => previous.concat(current), []);
   public tags: string[] = [];
   public selectable = true;
   public removable = true;
+  public id: string;
 
 
-  constructor(private formBuilder: FormBuilder, private categoryService: CategoryService) {
+  constructor(private formBuilder: FormBuilder,
+    private categoryService: CategoryService,
+    private uploadService: FileUploadService,
+    private readonly zone: NgZone,
+    private ref: ChangeDetectorRef) {
     this.categoryService.getCatgories().subscribe(cats => {
       this.form = new FormGroup({
         title: new FormControl('', [Validators.required]),
@@ -48,7 +57,7 @@ export class ProductCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.id = guid();
   }
 
   public selectCategory(category: any, index: any) {
@@ -65,6 +74,10 @@ export class ProductCreateComponent implements OnInit {
         id: null
       }))
     }
+  }
+
+  log() {
+    console.log(this.images);
   }
 
   get categoryArray() {
@@ -84,17 +97,24 @@ export class ProductCreateComponent implements OnInit {
     this.crop = false;
   }
 
-  onImageCropped(image: string) {
-    this.images.push(
-      {
-        src: 'data:image/jpeg;base64,' + image
-      }
-    )
+  onImageCropped(imageSet: ImageSet) {
+    forkJoin(this.uploadService.upload('data:image/jpeg;base64,' + imageSet.cropped, this.id, 'image'),
+      this.uploadService.upload('data:image/jpeg;base64,' + imageSet.original, this.id, 'image'))
+      .subscribe(([cropped, original]) => {
+        console.log(cropped, original);
+        if (cropped.secure_url && original.secure_url) {
+          this.images.push({ cropped: cropped.secure_url, original: original.secure_url });
+        }
+        this.zone.run(() => {
+          this.ref.detectChanges();
+        });
+      });
+
     this.crop = false;
   }
 
-  onRemoveImage(image) {
-    this.images.splice(this.images.indexOf(image), 1);
+  onRemoveImage(url) {
+    this.images.splice(this.images.indexOf(url), 1);
   }
 
   onKeyup(key: any) {

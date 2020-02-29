@@ -11,7 +11,8 @@ export class BaseService {
     apiBaseUrl: string;
     instagramBaseUrl: string;
     instagramAuthUrl: string;
-    instagramAccessTokenUrl: string
+    instagramAccessTokenUrl: string;
+    cloudinaryUploadUrl: string;
 
     public formContentOptions = {
         headers: new HttpHeaders({
@@ -26,6 +27,7 @@ export class BaseService {
         this.instagramBaseUrl = environment.instagramGraphUrl;
         this.instagramAuthUrl = environment.instagramAuthUrl;
         this.instagramAccessTokenUrl = environment.instagramAccessTokenUrl;
+        this.cloudinaryUploadUrl = `https://api.cloudinary.com/v1_1/${environment.cloudinaryCloudName}/upload`;
     }
 
     protected errorHandler(error: any): ObservableInput<any> {

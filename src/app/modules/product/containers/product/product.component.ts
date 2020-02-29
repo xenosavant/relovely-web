@@ -49,8 +49,8 @@ export class ProductComponent implements OnInit {
       this.zone.run(() => {
         this.ref.markForCheck();
       });
-      this.product.imageUrls = [this.product.asset, this.product.asset, this.product.asset];
-      this.currentImage = this.product.imageUrls[0];
+      this.product.images = [{ cropped: this.product.asset, original: this.product.asset }, { cropped: this.product.asset, original: this.product.asset }, { cropped: this.product.asset, original: this.product.asset }];
+      this.currentImage = this.product.images[0].cropped;
     });
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;

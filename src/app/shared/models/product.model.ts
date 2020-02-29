@@ -1,11 +1,13 @@
 import { UserList } from "./user-list.model";
 import { Size } from "./size.model";
+import { ImageSet } from "../interfaces/image-set.interface";
 
 export class Product {
     public id?: string;
     public seller?: UserList;
     public title?: string;
-    public imageUrls?: string[];
+    public images?: ImageSet[];
+    public videos?: string[];
     public description?: string;
     public auctionStart?: Date;
     public currentBid?: number;

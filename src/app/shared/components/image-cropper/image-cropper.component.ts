@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 
 @Component({
   selector: 'app-image-cropper',
@@ -10,10 +11,11 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 export class ImageCropperComponent implements OnInit {
 
   private currentImage: string = null;
+  private originalImage: string;
   public ready = false;
   public visibilty = 'hidden';
 
-  @Output() public crop: EventEmitter<string> = new EventEmitter<string>();
+  @Output() public crop: EventEmitter<ImageSet> = new EventEmitter<ImageSet>();
   @Output() public cancel: EventEmitter<boolean> = new EventEmitter();
 
   @Input() public imageChangedEvent: any;
@@ -21,6 +23,7 @@ export class ImageCropperComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.originalImage = this.currentImage;
   }
 
   public imageLoaded(): void {
@@ -36,7 +39,7 @@ export class ImageCropperComponent implements OnInit {
   }
 
   public onImageCropped(): void {
-    this.crop.emit(this.currentImage);
+    this.crop.emit({ cropped: this.currentImage, original: this.originalImage });
   }
 
   public onCancel(): void {

@@ -10,10 +10,10 @@
         </div>
         <owl-carousel-o [options]="carouselOptions" (changed)="carouselTranslated($event)" appOwlPreventClick
             #featuredCarousel>
-            <ng-container *ngFor="let image of product.imageUrls, let i = index">
+            <ng-container *ngFor="let image of product.images, let i = index">
                 <ng-template carouselSlide [id]="i">
                     <a appClick target="_blank">
-                        <img [src]="image" alt="" #imageElement>
+                        <img [src]="image.cropped" alt="" #imageElement>
                     </a>
                 </ng-template>
             </ng-container>
@@ -51,7 +51,7 @@
                 <img [src]="currentImage">
             </div>
             <div class="preview">
-                <ng-container *ngFor="let image of product.imageUrls">
+                <ng-container *ngFor="let image of product.images">
                     <span class="product-gallery__carousel-item" appClick (click)="setActiveImage(image)">
                         <img class="product-gallery__carousel-image" [src]="image" alt="">
                     </span>

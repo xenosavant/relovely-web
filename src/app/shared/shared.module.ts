@@ -23,6 +23,7 @@ import { MatSliderModule, MatPaginatorModule } from '@angular/material/';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -146,7 +147,8 @@ library.add(
     MatDividerModule,
     FontAwesomeModule,
     ImageCropperModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ClickOutsideModule
   ],
   declarations: [
     AvatarComponent,

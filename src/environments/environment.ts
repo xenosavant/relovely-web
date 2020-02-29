@@ -18,6 +18,8 @@ export const environment = {
   instagramClientId: '600076470775068',
   instagramSignupRedirectUrl: 'https://192.34.56.220/account/instagram?signup=true',
   instagramSigninRedirectUrl: 'https://192.34.56.220/account/instagram',
+  cloudinaryCloudName: 'relovely',
+  cloudinaryUploadPreset: 'edd6ppmi',
   versions: {
     app: packageJson.version,
     angular: packageJson.dependencies['@angular/core'],

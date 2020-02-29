@@ -2,11 +2,11 @@
     <div *ngIf="images.length" class="info">
         Cover Photo
     </div>
-    <div class="thumbnails" dragula="images">
+    <div class="thumbnails" dragula="images" [(dragulaModel)]="images" (dragulaModelChange)="log()">
         <div class="image-wrapper" *ngFor="let image of images; let i = index">
-            <img [src]="image.src">
+            <img [src]="image.cropped">
             <div class="overlay">
-                <mat-icon (click)="onRemoveImage(image)">cancel</mat-icon>
+                <mat-icon (click)="onRemoveImage(url)">cancel</mat-icon>
             </div>
         </div>
         <div class="add-image" (click)="input.click()"><img src="./assets/images/plus.png"></div>
