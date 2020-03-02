@@ -18,7 +18,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatButtonModule } from '@angular/material';
 import { DragulaModule } from 'ng2-dragula';
 import { PortalModule } from '@angular/cdk/portal';
-import { CloudinaryModule, Cloudinary, CloudinaryConfiguration } from '@cloudinary/angular-5.x';
+import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-5.x';
+import { Cloudinary } from '@cloudinary/angular-5.x/src/cloudinary.service';
 import { environment } from '@env/environment';
 export const cloudinaryLib = {
   Cloudinary: Cloudinary
