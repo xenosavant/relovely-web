@@ -34,7 +34,7 @@ export const colors: ColorFilter[] = [
     {
         key: '7',
         value: 'Purple',
-        color: '#E28451'
+        color: '#800080'
     },
     {
         key: '8',
