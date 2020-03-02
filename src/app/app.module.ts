@@ -18,11 +18,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatButtonModule } from '@angular/material';
 import { DragulaModule } from 'ng2-dragula';
 import { PortalModule } from '@angular/cdk/portal';
-import { CloudinaryModule, Cloudinary } from '@cloudinary/angular-5.x';
+import { CloudinaryModule, Cloudinary, CloudinaryConfiguration } from '@cloudinary/angular-5.x';
 import { environment } from '@env/environment';
 export const cloudinaryLib = {
   Cloudinary: Cloudinary
 };
+
+export const config: CloudinaryConfiguration = { cloud_name: environment.cloudinaryCloudName, upload_preset: environment.cloudinaryUploadPreset };
 
 @NgModule({
   imports: [
@@ -41,7 +43,7 @@ export const cloudinaryLib = {
     // feature
     ProductModule,
     DragulaModule.forRoot(),
-    CloudinaryModule.forRoot(cloudinaryLib, { cloud_name: environment.cloudinaryCloudName, upload_preset: environment.cloudinaryUploadPreset })
+    CloudinaryModule.forRoot(cloudinaryLib, config)
   ],
   exports: [RouterModule],
   declarations: [AppComponent],
