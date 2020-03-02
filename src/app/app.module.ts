@@ -19,7 +19,7 @@ import { MatButtonModule } from '@angular/material';
 import { DragulaModule } from 'ng2-dragula';
 import { PortalModule } from '@angular/cdk/portal';
 import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-5.x';
-import * as Cloudinary from '@cloudinary/angular-5.x/src/cloudinary.service';
+import { Cloudinary } from './../../node_modules/@cloudinary/angular-5.x';
 import { environment } from '@env/environment';
 export const cloudinaryLib = {
   Cloudinary: Cloudinary
