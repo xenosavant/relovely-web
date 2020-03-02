@@ -12,7 +12,8 @@
   </div>
   <div class="bottom-icons">
     <div class="left">
-      <app-button [type]="'primary'" [innerHtml]="product.auction === true ? 'Buy Now' : 'Bid'"></app-button>
+      <button mat-stroked-button class="primary" *ngIf="!product.auction">Buy Now</button>
+      <button mat-stroked-button class="primary" *ngIf="product.auction">Bid</button>
     </div>
     <div class="right" (click)="favorite()">
       <fa-icon [class.fa-lg]="!grid" [class.favorited]="product.favorited" icon="heart"></fa-icon>

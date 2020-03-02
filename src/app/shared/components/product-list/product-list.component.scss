@@ -23,13 +23,28 @@
     align-items: end;
     div.right {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         justify-content: flex-end;
-        height:20px;
+        height:30px;
+        @media( min-width:$desktop-breakpoint) { 
+            font-size: 20px;
+        }
+        @media( max-width:$mobile-breakpoint) {
+            font-size: 18px;
+        }
         fa-icon {
+            cursor: pointer;
             color:lightgray;
             &.favorited {
-                color: #D6AEBB;
+                color: $pink-button;
+            }
+            &:hover {
+                @media( min-width:$desktop-breakpoint) { 
+                    font-size: 22px;
+                }
+                @media( max-width:$mobile-breakpoint) {
+                    font-size: 20px;
+                }
             }
         }
     } 
@@ -37,7 +52,17 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
-    }
+            button {
+                @media( min-width:$desktop-breakpoint) {
+                    height:25px;
+                    font-size: 16px;
+                }
+                @media( max-width:$mobile-breakpoint) {
+                    height:20px;
+                    font-size:12px;
+                }
+            }
+        }
 }
 
 .profile-image-wrapper {
