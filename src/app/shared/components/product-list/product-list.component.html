@@ -1,5 +1,5 @@
 <div class="product-container" [class.grid]="grid" [class.headless]="!showHeader">
-  <div *ngIf="showHeader" class="profile-header" (click)="goToProfile($event)">
+  <div *ngIf="showHeader" class="profile-header" (click)="goToProduct($event)">
     <span class="profile-image-wrapper">
       <app-avatar [image]="product.seller.profileImageUrl"></app-avatar>
     </span>

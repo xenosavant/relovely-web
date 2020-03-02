@@ -45,7 +45,10 @@
             z-index:2;
             border-radius: 8px;
             padding: 8px;
-            box-shadow:none;
+            &.hover {
+              border: solid $medium-dark-background 1px;
+              background-color: $medium-gray-background;
+            }
             background-color: $background-gray;
         }
     }

@@ -1,3 +1,5 @@
+@import '../../../../styles-variables.scss';
+
 .product-container {
     grid-template-rows: 45px auto 35px;
     display: grid;
@@ -54,8 +56,10 @@
     justify-content: left;
     overflow: hidden;
     flex: 1;
+    cursor: pointer;
 }
 
 .product-image {
     flex: 1;
+    cursor: pointer;
 }
