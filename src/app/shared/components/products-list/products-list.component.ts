@@ -20,7 +20,7 @@ export class ProductsListComponent implements OnInit {
   constructor(private navigationService: NavigationService) { }
 
   ngOnInit() {
-
+    // set showCreate here if current user is seller
   }
 
   onCreate($event: any) {

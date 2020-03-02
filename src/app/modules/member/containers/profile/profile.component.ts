@@ -5,6 +5,8 @@ import { users } from '@app/data/users.data';
 import { products } from '@app/data/products.data';
 import { UserService } from '@app/shared/services/user/user.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { ImageSet } from '@app/shared/interfaces/image-set.interface';
+import { FileUploadService } from '@app/shared/services/file-upload.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,13 +16,16 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 })
 export class ProfileComponent implements OnInit {
 
+  public imageChangedEvent: any = null;
+  crop = false;
   user: UserDetail;
   users: UserDetail[];
   mobile: boolean;
   owner = false;
   loading = true;
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
-    private userService: UserService, private zone: NgZone, private ref: ChangeDetectorRef) { }
+    private userService: UserService, private zone: NgZone, private ref: ChangeDetectorRef,
+    private uploadService: FileUploadService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(param => {
@@ -34,7 +39,6 @@ export class ProfileComponent implements OnInit {
           });
         } else {
           this.userService.getUser(this.userService.currentUser.id).subscribe(user => {
-            console.log(user);
             this.owner = true;
             this.user = user;
             this.loading = false;
@@ -46,5 +50,19 @@ export class ProfileComponent implements OnInit {
         }
       }
     });
+  }
+
+  onCloseCropper($event: any) {
+    this.crop = false;
+  }
+
+  onImageCropped(imageSet: ImageSet) {
+    this.uploadService.upload('data:image/jpeg;base64,' + imageSet.cropped, this.user.id, 'image');
+    this.crop = false;
+  }
+
+  public onUpdateImage($event: any): void {
+    this.imageChangedEvent = $event;
+    this.crop = true;
   }
 }

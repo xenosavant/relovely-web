@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output } from '@angular/core';
 import { UserDetail } from '@app/shared/models/user-detail.model';
 import { users } from '@app/data/users.data';
 import { Product } from '@app/shared/models/product.model';
@@ -16,6 +16,7 @@ export class MemberProfileComponent implements OnInit {
   user: UserDetail;
   @Input()
   owner = false;
+  @Output() updateImage: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   users: UserDetail[];
   products: Product[];
@@ -25,6 +26,10 @@ export class MemberProfileComponent implements OnInit {
   ngOnInit() {
     this.users = users;
     this.products = products;
+  }
+
+  update() {
+    this.updateImage.emit(true);
   }
 
 }

@@ -1,7 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, SimpleChanges, ChangeDetectorRef, Output } from '@angular/core';
 import { UserDetail } from '@app/shared/models/user-detail.model';
 import { StatItem } from '@app/shared/models/stat-item.model';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-profile-header',
@@ -13,8 +14,10 @@ export class ProfileHeaderComponent implements OnInit {
 
   @Input() user: UserDetail;
   @Input() owner = false;
+  @Output() update: EventEmitter<boolean> = new EventEmitter<boolean>();
   public statItems: StatItem[];
   public desktop: boolean;
+
 
   constructor(private ref: ChangeDetectorRef, private breakpointObserver: BreakpointObserver) { }
 
@@ -36,6 +39,11 @@ export class ProfileHeaderComponent implements OnInit {
       this.desktop = !result.matches;
       this.ref.markForCheck();
     })
+  }
+
+  onUpdate() {
+    console.log('header');
+    this.update.emit(true);
   }
 
 }

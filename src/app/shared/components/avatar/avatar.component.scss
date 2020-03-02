@@ -1,9 +1,32 @@
 @import '../../../../../src/styles-variables.scss';
 
 .avatar-wrapper {
+    position: relative;
     img {
         width:100%;
         border-radius:50%;
         background-color: $background-gray;
+    }
+    mat-icon {
+        visibility: hidden;
+        position: absolute;
+    }
+    &:hover {
+        .overlay {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.75); /* Black see-through */
+            border-radius:50%;
+            bottom: 0;
+            cursor: pointer;
+            mat-icon {
+                visibility: visible;
+                color: white;
+                top:50px;
+                right:120px;
+                font-size: 100px;
+            }
+        }
     }
 }

@@ -1,5 +1,5 @@
 <div class="member-profile-container">
-  <app-profile-header [owner]="owner" [user]="user"></app-profile-header>
+  <app-profile-header (update)="update()" [owner]="owner" [user]="user"></app-profile-header>
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Favorites">
       <app-products-list class="users-wrapper" [showGrid]="true" [showHeader]="true" [products]="products">

@@ -286,6 +286,16 @@ export class AppComponent implements OnInit {
     this.trigger.closeMenu();
   }
 
+  public onTriggerAccountMenu(event: any) {
+    this.trigger.openMenu();
+  }
+
+  public onLeaveAccountTrigger(event: any) {
+    if (event.offsetY < 60) {
+      this.trigger.closeMenu();
+    }
+  }
+
   public toggleHeader() {
     this.showHeader = !this.showHeader;
   }

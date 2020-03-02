@@ -18,10 +18,16 @@
   </div>
   <ng-container [ngSwitch]="user.type">
     <ng-container *ngSwitchCase="'seller'">
-      <app-seller-profile [owner]="owner" [user]="user"></app-seller-profile>
+      <app-seller-profile (updateImage)="input.click()" [owner]="owner" [user]="user"></app-seller-profile>
     </ng-container>
     <ng-container *ngSwitchCase="'member'">
-      <app-member-profile [owner]="owner" [user]="user"></app-member-profile>
+      <app-member-profile (updateImage)="input.click()" [owner]="owner" [user]="user"></app-member-profile>
     </ng-container>
   </ng-container>
 </div>
+<input #input type="file" style="visibility:hidden" (change)="onUpdateImage($event)" />
+<ng-container *ngIf="crop">
+  <app-image-cropper (cancel)="onCloseCropper($event)" (crop)="onImageCropped($event)"
+    [imageChangedEvent]="imageChangedEvent">
+  </app-image-cropper>
+</ng-container>

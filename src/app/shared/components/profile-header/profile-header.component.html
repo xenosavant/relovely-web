@@ -1,6 +1,6 @@
 <div class="header-container" [class.desktop]="desktop">
   <div class="avatar-wrapper">
-    <app-avatar [image]="user.profileImageUrl"></app-avatar>
+    <app-avatar (select)="onUpdate()" [editable]="owner" [image]="user.profileImageUrl"></app-avatar>
   </div>
   <div class="title-wrapper">
     <div>{{user.username}}</div>

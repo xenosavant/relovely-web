@@ -33,26 +33,31 @@ export const colors: ColorFilter[] = [
     },
     {
         key: '7',
+        value: 'Purple',
+        color: '#E28451'
+    },
+    {
+        key: '8',
         value: 'Brown / Taupe',
         color: '#927D71'
     },
     {
-        key: '8',
+        key: '9',
         value: 'Grey',
         color: '#888888'
     },
     {
-        key: '9',
+        key: '10',
         value: 'Black',
         color: '#0B0B0B'
     },
     {
-        key: '10',
+        key: '11',
         value: 'White',
         color: '#ffffff'
     },
     {
-        key: '11',
+        key: '12',
         value: 'Cream',
         color: '#EDE6E1'
     }

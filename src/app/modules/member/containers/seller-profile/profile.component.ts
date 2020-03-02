@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { UserDetail } from '../../../../shared/models/user-detail.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { users } from '@app/data/users.data';
@@ -16,11 +16,12 @@ export class SellerProfileComponent implements OnInit {
 
   @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
 
-  @Input()
-  user: UserDetail;
-  @Input()
-  owner = false;
+  @Input() user: UserDetail;
+  @Input() owner = true;
+  @Output() updateImage: EventEmitter<boolean> = new EventEmitter<boolean>();
   users: UserDetail[];
+  showCreate = true;
+
   constructor(private route: ActivatedRoute, private overlayService: OverlayService) { }
 
   ngOnInit() {
@@ -36,5 +37,9 @@ export class SellerProfileComponent implements OnInit {
 
   close() {
     this.overlayService.close();
+  }
+
+  update() {
+    this.updateImage.emit(true);
   }
 }

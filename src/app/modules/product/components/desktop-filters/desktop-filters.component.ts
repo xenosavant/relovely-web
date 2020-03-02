@@ -1,3 +1,4 @@
+
 import { Component, OnInit, ChangeDetectionStrategy, ElementRef, ViewChild } from '@angular/core';
 import { womensSizes } from '@app/data/sizes.data';
 import { colors } from '@app/data/colors.data';
@@ -55,7 +56,6 @@ export class DesktopFiltersComponent implements OnInit {
   }
 
   onLeaveTrigger(event: any, menu: string) {
-    console.log(menu);
     switch (menu) {
       case 'size':
         this._activeTrigger = this['sizeTrigger'];
@@ -100,17 +100,13 @@ export class DesktopFiltersComponent implements OnInit {
   }
 
   closeActiveMenu() {
-    console.log('close');
     if (this.sizeTrigger.menuOpen) {
-      console.log('closing size');
       this.sizeTrigger.closeMenu();
     }
     if (this.colorTrigger.menuOpen) {
-      console.log('closing color');
       this.colorTrigger.closeMenu();
     }
     if (this.priceTrigger.menuOpen) {
-      console.log('closing price');
       this.priceTrigger.closeMenu();
     }
   }

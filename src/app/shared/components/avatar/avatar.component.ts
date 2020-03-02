@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output } from '@angular/core';
-import { EventEmitter } from 'events';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-avatar',
@@ -9,8 +9,9 @@ import { EventEmitter } from 'events';
 })
 export class AvatarComponent implements OnInit {
 
-  @Output() select: EventEmitter = new EventEmitter
+  @Output() select: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() image: string
+  @Input() editable: boolean;
 
   constructor() { }
 
@@ -18,6 +19,7 @@ export class AvatarComponent implements OnInit {
   }
 
   onSelect($event: any) {
+    console.log('avatar');
     this.select.emit($event);
   }
 

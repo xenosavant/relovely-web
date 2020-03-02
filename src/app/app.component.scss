@@ -293,7 +293,7 @@ mat-nav-list {
 }
 
 .overlay:after {
-  content: " ";
+  content: "";
   z-index: 100;
   display: block;
   position: absolute;
@@ -318,4 +318,12 @@ mat-nav-list {
       button  {   
         margin:auto;
     }
+}
+
+.account-trigger-wrapper {
+  right: -50px;
+  height: 60px;
+  position: absolute;
+  width: 200px;
+  top: -50px;
 }
