@@ -11,7 +11,7 @@ import { Video } from '@app/shared/interfaces/video';
 })
 export class VideoUploaderComponent implements OnInit {
 
-  private uploader: FileUploader;
+  public uploader: FileUploader;
   public uploading = false;
   public percentage = 0;
   public video: Video;
