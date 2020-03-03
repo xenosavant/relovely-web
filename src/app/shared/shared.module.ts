@@ -24,8 +24,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ClickOutsideModule } from 'ng-click-outside';
-import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-5.x';
 import { FileUploadModule } from 'ng2-file-upload';
+import { CloudinaryModule } from '../../../node_modules/@cloudinary/angular-5.x'
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -88,6 +88,7 @@ import { CenterModalComponent } from './components/center-modal/center-modal.com
 import { SignupComponent } from './components/signup/signup.component';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 import { VideoUploaderComponent } from './components/video-uploader/video-uploader.component';
+
 
 library.add(
   faBars,
@@ -153,8 +154,8 @@ library.add(
     ImageCropperModule,
     MatProgressSpinnerModule,
     ClickOutsideModule,
-    CloudinaryModule,
-    FileUploadModule
+    FileUploadModule,
+    CloudinaryModule
   ],
   declarations: [
     AvatarComponent,
