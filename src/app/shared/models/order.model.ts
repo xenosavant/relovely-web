@@ -13,4 +13,5 @@ export class Order {
     public total: number;
     public shippingCost: number;
     public tax: number;
+    public seller: string;
 }

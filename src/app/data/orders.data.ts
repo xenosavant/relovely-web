@@ -21,7 +21,8 @@ export const orders: Order[] = [
         shippingCarrerId: 'fedex',
         total: 10.50,
         shippingCost: 5.00,
-        tax: 1.00
+        tax: 1.00,
+        seller: 'influencer1988'
     },
     {
         id: '85c6964a-8198-4a00-bfa1-24b114ffj73j',
@@ -47,7 +48,8 @@ export const orders: Order[] = [
         shippingCarrerId: 'fedex',
         total: 56.00,
         shippingCost: 5.00,
-        tax: 1.00
+        tax: 1.00,
+        seller: 'influencer1988'
     },
     {
         id: '85c6964a-7178-4a00-bfa1-24b114ffj73j',
@@ -74,6 +76,7 @@ export const orders: Order[] = [
         shippingCarrerId: 'fedex',
         total: 20.50,
         shippingCost: 5.00,
-        tax: 1.00
+        tax: 1.00,
+        seller: 'influencer1988'
     }
 ]

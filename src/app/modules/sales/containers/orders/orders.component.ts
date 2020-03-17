@@ -12,6 +12,8 @@ import { NavigationService } from '@app/shared/services/navigation.service';
 export class OrdersComponent implements OnInit {
 
   public orders: Order[];
+  public hoverIndex: number;
+
   constructor(private navigationService: NavigationService) {
     this.orders = orders;
     this.orders = orders.concat(orders);
@@ -21,6 +23,14 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  onEnter(index) {
+    this.hoverIndex = index;
+  }
+
+  onLeave() {
+    this.hoverIndex = -1;
   }
 
 }
