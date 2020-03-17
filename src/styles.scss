@@ -573,7 +573,6 @@ mat-toolbar-row.mega-menu-bar {
       display:grid;
       align-items: center;
       height: 45px;
-
       grid-template-rows: auto;
       grid-template-columns: repeat(3, 144px);
         span {
@@ -589,9 +588,9 @@ mat-toolbar-row.mega-menu-bar {
             display: inline-block;
             font-size: 1.1em;
             font-weight: inherit;
-            &:hover {
+            &.current {
               font-weight: 400 !important;
-              // background-color: #1b2121;
+              text-decoration: underline !important;
             }
           }
       }
@@ -676,6 +675,9 @@ html {
             color: black;
             font-size:1.2em;
             cursor:pointer;
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
         .mega-menu-body {
@@ -689,6 +691,9 @@ html {
               margin: 0 0 12px 0;
               list-style-type: none;
               cursor:pointer;
+              &:hover {
+                text-decoration: underline;
+              }
             }
           }
     }

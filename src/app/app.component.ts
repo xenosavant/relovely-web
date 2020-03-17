@@ -62,6 +62,7 @@ export class AppComponent implements OnInit {
   public showOverlay = false;
   public showHeader = false;
   public showMegaMenu = false;
+  public selectedMenuItem = -1;
 
   get top(): number {
     return ((this.showFilterBar ? 70 : 0) + (this.showNavBar ? 44 : 0));
@@ -268,17 +269,20 @@ export class AppComponent implements OnInit {
   public onOpenMegaMenu(item: NavigationItem) {
     this.showMegaMenu = true;
     this.selectedDesktopNavSubItems = item.subItems;
+    this.selectedMenuItem = this.desktopNavigationItems.indexOf(item);
   }
 
   public onLeaveMenuBar(event: any) {
     if (event.offsetY < 0 || event.offsetX <= 0 || event.offsetX >= 432) {
       this.showMegaMenu = false;
+      this.selectedMenuItem = -1;
     }
   }
 
   public onLeaveMegaMenu(event: any) {
     if (event.offsetY >= 100 || event.offsetX <= 0 || event.offsetX >= 432) {
       this.showMegaMenu = false;
+      this.selectedMenuItem = -1;
     }
   }
 

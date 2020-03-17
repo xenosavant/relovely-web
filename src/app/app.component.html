@@ -158,8 +158,8 @@
         <div class="menu-bar-container">
           <div class="menu-wrapper" style="z-index:1050" (mouseleave)="onLeaveMenuBar($event)">
             <span class="menu">
-              <span *ngFor="let item of desktopNavigationItems" class="menu-item">
-                <h1 (mouseenter)="onOpenMegaMenu(item)">{{item.name}}</h1>
+              <span *ngFor="let item of desktopNavigationItems; let i = index" class="menu-item">
+                <h1 [class.current]="selectedMenuItem === i" (mouseenter)="onOpenMegaMenu(item)">{{item.name}}</h1>
               </span>
             </span>
           </div>
