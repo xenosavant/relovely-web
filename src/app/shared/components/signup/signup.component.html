@@ -36,11 +36,10 @@
           <div class="sign-in-divider">
             Or
           </div>
-          <button class="instagram primary" mat-stroked-button (click)="signUpInstagram()">
-            <img src="./assets/images/instagram-white.png" /><strong>Sign in with Instagram </strong> </button>
           <div class="spacer"></div>
-          <button class="facebook primary" mat-stroked-button>
+          <button class="facebook primary" mat-stroked-button (click)="signInFacebook()">
             <img src="./assets/images/facebook-color.png" /> <strong>Sign in with Facebook </strong> </button>
+          <div class="spacer"></div>
           <div class="linkText">
             Don't have an account?
             <a (click)="switch()" class="link" appClick target="_blank">
@@ -79,10 +78,10 @@
               Or
             </div>
           </form>
-          <button class="instagram primary" mat-stroked-button (click)="signInInstagram()">
+          <button class="instagram primary" mat-stroked-button (click)="signUpInstagram()">
             <img src="./assets/images/instagram-white.png" /> <strong>Sign up with Instagram </strong> </button>
           <div class="spacer"></div>
-          <button class="facebook primary" mat-stroked-button>
+          <button class="facebook primary" mat-stroked-button (click)="signUpFacebook()">
             <img src="./assets/images/facebook-color.png" /> <strong>Sign up with Facebook </strong>
           </button>
           <div class="linkText">

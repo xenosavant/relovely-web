@@ -40,9 +40,13 @@ button.instagram {
     grid-template-columns: 40px auto;
     background-color: #3f729b !important;
     margin: 0 auto;
+    height:35px;
     img {
         height:24px;
         margin-right: 16px;
+    }
+    &:hover {
+        background-color: #2e4b65 !important;
     }
 }
 
@@ -52,10 +56,14 @@ button.facebook {
     background-color:  #4267B2 !important;
     margin: 0 auto;
     grid-template-columns: 40px auto;
+    height:35px;
     img {
         height:30px;
         margin-right: 16px;
         margin-left:-5px;
+    }
+    &:hover {
+        background-color: #283E6B !important;
     }
 }
 
@@ -103,7 +111,6 @@ button.facebook {
 }
 
 .link {
-    text-decoration:underline;
     font-weight: 500;
     cursor: pointer;
     &:hover {

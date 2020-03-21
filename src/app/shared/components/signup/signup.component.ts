@@ -18,6 +18,8 @@ export class SignupComponent implements OnInit {
   public signUpForm: FormGroup;
   public signupInstagramUrl: string;
   public signinInstagramUrl: string;
+  public signupFacebookUrl: string;
+  public signinFacebookUrl: string;
 
   public emailError: string = null;
   public signinError: string = null;
@@ -42,8 +44,9 @@ export class SignupComponent implements OnInit {
       password: new FormControl('', [Validators.required]),
       verifyPassword: new FormControl('', [Validators.required])
     });
-    this.signupInstagramUrl = environment.instagramAuthUrl + `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSigninRedirectUrl}&scope=user_profile,user_media&response_type=code`;
-    this.signinInstagramUrl = environment.instagramAuthUrl + `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSignupRedirectUrl}&scope=user_profile,user_media&response_type=code`;
+    this.signupInstagramUrl = environment.instagramAuthUrl + `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSigninRedirectUrl}&scope=user_profile,user_media&response_type=code`
+    this.signupFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSignupRedirectUrl}&response_type=code`;
+    this.signinFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSigninRedirectUrl}&response_type=code`;
   }
 
   signUpInstagram() {
@@ -52,6 +55,14 @@ export class SignupComponent implements OnInit {
 
   signInInstagram() {
     location.replace(this.signinInstagramUrl);
+  }
+
+  signUpFacebook() {
+    location.replace(this.signupFacebookUrl);
+  }
+
+  signInFacebook() {
+    location.replace(this.signinFacebookUrl);
   }
 
   signup() {

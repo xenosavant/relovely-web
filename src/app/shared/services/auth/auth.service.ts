@@ -26,10 +26,26 @@ export class AuthService extends BaseService {
         );
     }
 
-    signupWithInstagram(code: string): Observable<UserDetail> {
-        return this.httpClient.post<UserDetail>(`${this.apiBaseUrl}/instagram/signup`, { code: code }).pipe(
-            map((user: UserDetail) => {
-                return user;
+    signupWithInstagram(code: string): Observable<SignupResponse> {
+        return this.httpClient.post<SignupResponse>(`${this.apiBaseUrl}/instagram/signup`, { code: code }).pipe(
+            map((response: SignupResponse) => {
+                return response;
+            })
+        );
+    }
+
+    signupWithFacebook(code: string): Observable<SignupResponse> {
+        return this.httpClient.post<SignupResponse>(`${this.apiBaseUrl}/facebook/signup`, { code: code }).pipe(
+            map((response: SignupResponse) => {
+                return response;
+            })
+        );
+    }
+
+    signinWithFacebook(code: string): Observable<SignupResponse> {
+        return this.httpClient.post<SignupResponse>(`${this.apiBaseUrl}/facebook/signin`, { code: code }).pipe(
+            map((response: SignupResponse) => {
+                return response;
             })
         );
     }

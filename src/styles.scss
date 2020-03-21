@@ -170,7 +170,9 @@ div.left {
  min-width: 25px !important;
  line-height:unset !important;
  &.primary:hover {
-   background-color: $dark-blue !important;
+   &.enabled {
+    background-color: $dark-blue !important;
+   }
  }
 }
 
