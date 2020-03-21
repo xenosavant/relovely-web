@@ -9,6 +9,7 @@ import { FileUploadService } from '../../../../shared/services/file-upload.servi
 import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 import { forkJoin } from 'rxjs';
 import { Video } from '@app/shared/interfaces/video';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-product-create',
@@ -32,6 +33,7 @@ export class ProductCreateComponent implements OnInit {
   public selectable = true;
   public removable = true;
   public id: string;
+  public originalImage: string;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -79,7 +81,6 @@ export class ProductCreateComponent implements OnInit {
   }
 
   log() {
-    console.log(this.images);
   }
 
   get categoryArray() {
@@ -88,6 +89,11 @@ export class ProductCreateComponent implements OnInit {
 
   public imageChanged($event: any): void {
     this.imageChangedEvent = $event;
+    const fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      this.originalImage = fileReader.result as string;
+    }
+    fileReader.readAsDataURL($event.target.files[0]);
     this.crop = true;
   }
 
@@ -103,12 +109,14 @@ export class ProductCreateComponent implements OnInit {
     this.video = $event;
   }
 
-  onImageCropped(imageSet: ImageSet) {
-    forkJoin(this.uploadService.upload('data:image/jpeg;base64,' + imageSet.cropped, this.id, 'image'),
-      this.uploadService.upload('data:image/jpeg;base64,' + imageSet.original, this.id, 'image'))
+  onImageCropped(cropped: string) {
+
+    forkJoin(this.uploadService.upload('data:image/jpeg;base64,' + cropped, `${this.id}/images`, 'image'),
+      this.uploadService.upload('data:image/jpeg;base64,' + this.originalImage, `${this.id}/images`, 'image'))
       .subscribe(([cropped, original]) => {
         if (cropped.secure_url && original.secure_url) {
           this.images.push({ cropped: cropped.secure_url, original: original.secure_url });
+          console.log(this.images);
         }
         this.zone.run(() => {
           this.ref.detectChanges();

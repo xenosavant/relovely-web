@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
 import { FileUploader, FileUploaderOptions, ParsedResponseHeaders } from 'ng2-file-upload';
 import { environment } from '@env/environment';
 import { Video } from '@app/shared/interfaces/video';
+import { FileUploadService } from '@app/shared/services/file-upload.service';
 
 @Component({
   selector: 'app-video-uploader',
@@ -15,71 +16,84 @@ export class VideoUploaderComponent implements OnInit {
   public uploading = false;
   public percentage = 0;
   public video: Video;
+  public timestamp = Date.now().toString();
 
   @Input() id: string;
   @Output() completed: EventEmitter<Video> = new EventEmitter<Video>();
 
   constructor(
     private ref: ChangeDetectorRef,
-    private zone: NgZone) { }
+    private zone: NgZone,
+    private uploadService: FileUploadService) { }
 
   ngOnInit(): void {
-    // Create the file uploader, wire it to upload to your account
-    const uploaderOptions: FileUploaderOptions = {
-      url: `https://api.cloudinary.com/v1_1/${environment.cloudinaryCloudName}/upload`,
-      // Upload files automatically upon addition to upload queue
-      autoUpload: true,
-      // Use xhrTransport in favor of iframeTransport
-      isHTML5: true,
-      // Calculate progress independently for each uploaded file
-      removeAfterUpload: true,
-      // XHR request headers
-      headers: [
-        {
-          name: 'X-Requested-With',
-          value: 'XMLHttpRequest'
-        }
-      ]
-    };
-    this.uploader = new FileUploader(uploaderOptions);
 
-    this.uploader.onBuildItemForm = (fileItem: any, form: FormData): any => {
-      // Add Cloudinary's unsigned upload preset to the upload form
-      form.append('upload_preset', environment.cloudinaryUploadPreset);
-      form.append('folder', `${this.id}/video`);
-      form.append('file', fileItem);
+    console.log('video init');
 
-      // Use default "withCredentials" value for CORS requests
-      fileItem.withCredentials = false;
-      return { fileItem, form };
-    };
-    // Update model on completion of uploading a file
-    this.uploader.onCompleteItem = (item: any, response: string, status: number, headers: ParsedResponseHeaders) => {
-      const parsedResponse = JSON.parse(response);
-      const video = {
-        width: parsedResponse.width,
-        height: parsedResponse.height,
-        url: parsedResponse.url,
-        publicId: parsedResponse.public_id,
-        bytes: parsedResponse.bytes
+
+    this.uploadService.getSignature(`${this.id}/videos`, this.timestamp).subscribe(signature => {
+
+      // Create the file uploader, wire it to upload to your account
+      const uploaderOptions: FileUploaderOptions = {
+        url: `${environment.cloudinaryUploadUrl}/video/upload`,
+        // Upload files automatically upon addition to upload queue
+        autoUpload: true,
+        // Use xhrTransport in favor of iframeTransport
+        isHTML5: true,
+        // Calculate progress independently for each uploaded file
+        removeAfterUpload: true,
+        // XHR request headers
+        headers: [
+          {
+            name: 'X-Requested-With',
+            value: 'XMLHttpRequest'
+          }
+        ]
       };
-      this.completed.emit(video);
-      this.zone.run(() => {
-        this.video = video;
-        this.percentage = 0;
-        this.uploading = false;
-        this.ref.detectChanges();
-      });
-    }
-    this.uploader.onProgressItem = (fileItem: any, progress: any) => {
-      this.zone.run(() => {
-        this.uploading = true;
-        this.percentage = progress;
-        this.ref.detectChanges();
-      });
+      this.uploader = new FileUploader(uploaderOptions);
 
-    }
+      this.uploader.onBuildItemForm = (fileItem: any, form: FormData): any => {
+        // Add Cloudinary's unsigned upload preset to the upload form
+        form.append('upload_preset', environment.cloudinaryUploadPreset);
+        form.append('folder', `${this.id}/videos`);
+        form.append('file', fileItem);
+        form.append('timestamp', this.timestamp);
+        form.append('api_key', environment.cloudinaryApiKey);
+        form.append('signature', signature);
+
+        // Use default "withCredentials" value for CORS requests
+        fileItem.withCredentials = false;
+        return { fileItem, form };
+      };
+      // Update model on completion of uploading a file
+      this.uploader.onCompleteItem = (item: any, response: string, status: number, headers: ParsedResponseHeaders) => {
+        const parsedResponse = JSON.parse(response);
+        const video = {
+          width: parsedResponse.width,
+          height: parsedResponse.height,
+          url: parsedResponse.url,
+          publicId: parsedResponse.public_id,
+          bytes: parsedResponse.bytes
+        };
+        this.completed.emit(video);
+        this.zone.run(() => {
+          this.video = video;
+          this.percentage = 0;
+          this.uploading = false;
+          this.ref.detectChanges();
+        });
+      }
+      this.uploader.onProgressItem = (fileItem: any, progress: any) => {
+        this.zone.run(() => {
+          this.uploading = true;
+          this.percentage = progress;
+          this.ref.detectChanges();
+        });
+
+      }
+    })
   }
+
   onRemoveImage() {
     this.video = null;
     this.completed.emit(null);

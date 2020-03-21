@@ -1,4 +1,4 @@
-<app-modal *ngIf="!crop" (close)="onClose($event)">
+<app-modal (close)="onClose($event)">
     <div class="info hint">
         *We recommend at least one photo wearing the product
     </div>
@@ -21,7 +21,6 @@
         <app-video-uploader (completed)="videoUploaded($event)" [id]="id"></app-video-uploader>
     </div>
     <input #input type="file" style="visibility:hidden" (change)="imageChanged($event)" />
-    <input #video type="file" style="visibility:hidden" (change)="videoChanged($event)" />
     <form (submit)="onSave()" [formGroup]="form">
         <div>
             <mat-form-field>

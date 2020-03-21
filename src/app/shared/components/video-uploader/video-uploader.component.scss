@@ -51,7 +51,6 @@
         display: flex;
         align-items: center;
         align-content: center;
-        cursor: pointer;
         img {
             height:100%;
         }
@@ -59,6 +58,8 @@
             top:-12px;
             right:-12px;
             position: absolute;
+            opacity: .5;
+            color: #212529;
             cursor: pointer;
         }
      }

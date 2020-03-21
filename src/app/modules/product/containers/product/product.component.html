@@ -62,14 +62,14 @@
             <div class="desktop-info-wrapper">
                 <h1>{{product.name}}</h1>
                 <div class="user-wrapper">
-                    <app-avatar [image]="product.seller.profileImageUrl">
+                    <app-avatar [image]="product.seller.imageUrl" (click)="goToProfile()">
 
                     </app-avatar>
                     <div>
-                        @{{product.sellerUsername}}
+                        @{{product.seller.username}}
                     </div>
                 </div>
-                <div class="product-price">
+                <div class=" product-price">
                     {{product.price | currency}}
                 </div>
                 <div class="size-wrapper">
