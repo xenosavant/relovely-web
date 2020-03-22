@@ -10,13 +10,15 @@ import { SharedModule } from '@app/shared';
 import { AddAddressComponent } from './components/add-address/add-address.component';
 import { InstagramAuthComponent } from './containers/instagram-auth/instagram-auth.component';
 import { SignoutComponent } from './containers/signout/signout.component';
-import { FacebookAuthComponent } from './containers/facebook-auth/facebook-auth/facebook-auth.component';
+import { FacebookAuthComponent } from './containers/facebook-auth/facebook-auth.component';
+import { VerifyComponent } from './containers/verify/verify.component';
 @NgModule({
   declarations: [SigninComponent, ResetPasswordComponent, PaymentsComponent,
     AddressesComponent, InstagramAuthComponent,
     AddAddressComponent,
     SignoutComponent,
-    FacebookAuthComponent],
+    FacebookAuthComponent,
+    VerifyComponent],
   imports: [
     CommonModule,
     PortalModule,

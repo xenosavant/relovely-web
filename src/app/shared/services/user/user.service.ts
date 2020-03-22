@@ -46,6 +46,7 @@ export class UserService extends BaseService {
         this._currentUser = user;
         this.localStorageService.setItem('currentUser', user);
         this.loggedInSubject$.next(true);
+        console.log(this.currentUser);
     }
 
     public logout() {

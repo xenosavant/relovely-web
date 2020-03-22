@@ -59,8 +59,8 @@
 }
 
 .video {
-    height:140px;
-    width: 140px;;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 form {

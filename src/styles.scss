@@ -210,9 +210,10 @@ div.left {
 
       img.profile {
         vertical-align: unset;
-        width:23px !important;
-        height:23px !important;
+        width:22px !important;
+        height:22px !important;
         margin-top:2px;
+        border-radius: 11px;
       }
     }
     font-size:18px;
@@ -640,8 +641,12 @@ html {
     background: transparent; /* make scrollbar transparent */
 }
 
-.account-menu-wrapper {
-
+.desktop-wrapper {
+  padding:16px;
+  max-width: $desktop-width;
+  margin: 0 auto;
+  min-height:100%;
+  background-color: $background-gray;
 }
 
 

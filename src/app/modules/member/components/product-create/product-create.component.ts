@@ -116,7 +116,6 @@ export class ProductCreateComponent implements OnInit {
       .subscribe(([cropped, original]) => {
         if (cropped.secure_url && original.secure_url) {
           this.images.push({ cropped: cropped.secure_url, original: original.secure_url });
-          console.log(this.images);
         }
         this.zone.run(() => {
           this.ref.detectChanges();

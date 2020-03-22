@@ -21,7 +21,7 @@ export class BaseService {
         protected httpClient: HttpClient
     ) {
         this.apiBaseUrl = environment.apiUrl;
-        this.cloudinaryUploadUrl = `https://api.cloudinary.com/v1_1/${environment.cloudinaryCloudName}`;
+        this.cloudinaryUploadUrl = environment.cloudinaryUploadUrl;
     }
 
     protected errorHandler(error: any): ObservableInput<any> {

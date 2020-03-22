@@ -6,12 +6,13 @@ import { SignupResponse } from './signup.response'
 import { SignupRequest } from './signup.request';
 import { SigninRequest } from './signin.request';
 import { UserDetail } from '@app/shared/models/user-detail.model';
+import { VerifyRequest } from './verify.request';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends BaseService {
 
     signup(request: SignupRequest): Observable<SignupResponse> {
-        return this.httpClient.post(`${this.apiBaseUrl}/signup`, request).pipe(
+        return this.httpClient.post(`${this.apiBaseUrl}/auth/signup`, request).pipe(
             map((response: SignupResponse) => {
                 return response;
             }), catchError(this.errorHandler)
@@ -19,7 +20,15 @@ export class AuthService extends BaseService {
     }
 
     signin(request: SigninRequest): Observable<SignupResponse> {
-        return this.httpClient.post(`${this.apiBaseUrl}/signin`, request).pipe(
+        return this.httpClient.post(`${this.apiBaseUrl}/auth/signin`, request).pipe(
+            map((response: SignupResponse) => {
+                return response;
+            }), catchError(this.errorHandler)
+        );
+    }
+
+    verifyEmail(request: VerifyRequest): Observable<SignupResponse> {
+        return this.httpClient.post(`${this.apiBaseUrl}/auth/verify`, request).pipe(
             map((response: SignupResponse) => {
                 return response;
             }), catchError(this.errorHandler)

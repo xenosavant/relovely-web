@@ -5,6 +5,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { UserService } from '@app/shared/services/user/user.service';
 import { NavigationService } from '@app/shared/services/navigation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -32,7 +33,8 @@ export class SignupComponent implements OnInit {
     private userService: UserService,
     private navigationService: NavigationService,
     private zone: NgZone,
-    private ref: ChangeDetectorRef) { }
+    private ref: ChangeDetectorRef,
+    private router: Router) { }
 
   ngOnInit() {
     this.signInForm = new FormGroup({
@@ -41,6 +43,7 @@ export class SignupComponent implements OnInit {
     });
     this.signUpForm = new FormGroup({
       email: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
       verifyPassword: new FormControl('', [Validators.required])
     });
@@ -69,11 +72,11 @@ export class SignupComponent implements OnInit {
     this.emailError = null;
     this.emailError = null;
     this.loading = true;
-    this.authService.signup({ email: this.signUpForm.value['email'], password: this.signUpForm.value['password'] })
+    this.authService.signup({ email: this.signUpForm.value['email'], password: this.signUpForm.value['password'], username: this.signUpForm.value['username'] })
       .subscribe(response => {
-        this.userService.setLogin(response.jwt, response.user);
-        this.navigationService.closeAuthWindow();
+        this.router.navigate(['/account/verify'], { queryParams: { type: 'email' } });
         this.loading = false;
+        this.navigationService.closeAuthWindow();
       }, err => {
         if (err.status === 409) {
           this.emailError = err.error.error.message;

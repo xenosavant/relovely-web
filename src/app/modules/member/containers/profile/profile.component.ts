@@ -44,10 +44,11 @@ export class ProfileComponent implements OnInit {
             this.loading = false;
             this.ref.markForCheck();
           });
-          this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
-            this.mobile = result.matches;
-          });
         }
+        this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
+          this.mobile = result.matches;
+          console.log(this.mobile);
+        });
       }
     });
   }
