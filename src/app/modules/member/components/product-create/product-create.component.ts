@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, NgZone, ChangeDetectorRef } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormArray, FormBuilder, AbstractControl } from '@angular/forms';
 import { Category } from '@app/shared/models/category.model';
-import { CategoryService } from '@app/shared/services/category.service';
+import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { womensSizes } from '../../../../data/sizes.data';
 import { KeyValue } from '@angular/common';
 import { guid } from '../../../../shared/utils/rand';
@@ -37,26 +37,24 @@ export class ProductCreateComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder,
-    private categoryService: CategoryService,
+    private categoryService: LookupService,
     private uploadService: FileUploadService,
     private readonly zone: NgZone,
     private ref: ChangeDetectorRef) {
-    this.categoryService.getCatgories().subscribe(cats => {
-      this.form = new FormGroup({
-        title: new FormControl('', [Validators.required]),
-        description: new FormControl('', [Validators.required]),
-        categories: new FormArray([
-          this.formBuilder.group({
-            id: null
-          })]),
-        brand: new FormControl('', [Validators.required]),
-        size: new FormControl('', [Validators.required]),
-        tag: new FormControl(''),
-        price: new FormControl(null, [Validators.required])
-      });
-      this.rootCategories = cats;
-      this.categories.push(cats);
+    this.form = new FormGroup({
+      title: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
+      categories: new FormArray([
+        this.formBuilder.group({
+          id: null
+        })]),
+      brand: new FormControl('', [Validators.required]),
+      size: new FormControl('', [Validators.required]),
+      tag: new FormControl(''),
+      price: new FormControl(null, [Validators.required])
     });
+    this.rootCategories = this.categoryService.categories;
+    this.categories.push(this.categoryService.categories);
 
   }
 

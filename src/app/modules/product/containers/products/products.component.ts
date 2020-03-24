@@ -3,7 +3,7 @@ import { Product } from '@app/shared/models/product.model';
 import { products } from '@app/data/products.data';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NavigationService } from '@app/shared/services/navigation.service';
-import { CategoryService } from '@app/shared/services/category.service';
+import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { NavigationItem } from '@app/shared/models/navigation-item.model';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
@@ -27,7 +27,7 @@ export class ProductsComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private navigationService: NavigationService,
     private zone: NgZone,
-    private categoryService: CategoryService,
+    private categoryService: LookupService,
     private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() {

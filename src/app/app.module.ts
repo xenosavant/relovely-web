@@ -10,7 +10,7 @@ import { StaticModule } from './static';
 
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
-import { CategoryService } from './shared/services/category.service';
+import { LookupService } from './shared/services/lookup/lookup.service';
 import { RouterModule } from '@angular/router';
 import { ProductModule } from './modules/product/product.module';
 import { NavigationService } from './shared/services/navigation.service';
@@ -48,7 +48,7 @@ export const config: CloudinaryConfiguration = { cloud_name: environment.cloudin
   ],
   exports: [RouterModule],
   declarations: [AppComponent],
-  providers: [CategoryService, NavigationService],
+  providers: [LookupService, NavigationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,4 +5,5 @@ export class Category {
     public id: number;
     public parent: Category;
     public children: Category[];
+    public plural?: string;
 }

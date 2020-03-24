@@ -11,7 +11,7 @@ import {
 } from './settings';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { NavigationItem } from './shared/models/navigation-item.model';
-import { CategoryService } from './shared/services/category.service';
+import { LookupService } from './shared/services/lookup/lookup.service';
 import { KeyValue, DOCUMENT } from '@angular/common';
 import { Router, Navigation, ActivatedRoute } from '@angular/router';
 import { NavigationService } from './shared/services/navigation.service';
@@ -40,6 +40,7 @@ export class AppComponent implements OnInit {
 
 
   showSearch: boolean = false;
+  public loading = true;
   public mobile: boolean = true;
   public sidenavOpen: boolean = false;
   public header: string;
@@ -76,7 +77,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private storageService: LocalStorageService,
-    private categoryService: CategoryService,
+    private lookupService: LookupService,
     private breakpointObserver: BreakpointObserver,
     private navigationService: NavigationService,
     private ref: ChangeDetectorRef,
@@ -89,20 +90,6 @@ export class AppComponent implements OnInit {
     this.showFilterBar = false;
     this.showNavBar = false;
     this.showTopLevel = true;
-    this.navigationService.navConfig$.subscribe(val => {
-      this.categoryFilters = val.categoryItems;
-      this.navHeader = val.navigationHeader;
-      this.header = val.pageHeader;
-      this.showNavBar = val.showNavBar;
-      this.showFilterBar = val.showFilterBar;
-      this.showProductGrid = val.showProductGrid;
-      this.showTopLevel = val.showTopLeveNavigation;
-      this.chipItems = val.chipItems;
-      this.currentNavigationItems = val.currentNavigationItems;
-      this.zone.run(() => {
-        this.ref.detectChanges();
-      });
-    });
   }
 
   ngOnInit(): void {
@@ -125,7 +112,8 @@ export class AppComponent implements OnInit {
         this.scrollSubscription$.unsubscribe();
       }
     })
-    this.categoryService.getCatgories().subscribe(cats => {
+    this.lookupService.getLookupData().subscribe(response => {
+      const cats = JSON.parse(response.categories.json);
       const navigationItems = cats.map(cat => {
         return new NavigationItem([], '/products/' + cat.id.toString(), cat.name, cat.id,
           cat.children.map(c1 => {
@@ -188,14 +176,24 @@ export class AppComponent implements OnInit {
       });
       this.navigationService.rootNavigationItems = navigationItems;
       this.navigationService.setCurrentNavigationItems(navigationItems);
-      // if (RegExp('^/member/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$')
-      //   .test(this.route.snapshot.url.join(''))) {
-      //   this.showExtendedHeader = true;
-      // } else {
-      //   this.showExtendedHeader = false;
-      // }
+
     })
     this.storageService.testLocalStorage();
+    this.navigationService.navConfig$.subscribe(val => {
+      this.categoryFilters = val.categoryItems;
+      this.navHeader = val.navigationHeader;
+      this.header = val.pageHeader;
+      this.showNavBar = val.showNavBar;
+      this.showFilterBar = val.showFilterBar;
+      this.showProductGrid = val.showProductGrid;
+      this.showTopLevel = val.showTopLeveNavigation;
+      this.chipItems = val.chipItems;
+      this.currentNavigationItems = val.currentNavigationItems;
+      this.loading = false;
+      this.zone.run(() => {
+        this.ref.detectChanges();
+      });
+    });
   }
 
   ngAfterViewInit() {
@@ -229,7 +227,7 @@ export class AppComponent implements OnInit {
 
 
   setParents(parent: NavigationItem, child?: NavigationItem) {
-    this.categoryService.categoryLookup[parent.id.toString()] = parent;
+    this.lookupService.categoryLookup[parent.id.toString()] = parent;
     if (parent.subItems) {
       parent.subItems.forEach(item => {
         item.parent = parent;
