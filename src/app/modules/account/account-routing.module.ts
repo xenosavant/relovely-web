@@ -7,6 +7,7 @@ import { InstagramAuthComponent } from './containers/instagram-auth/instagram-au
 import { SignoutComponent } from './containers/signout/signout.component';
 import { FacebookAuthComponent } from './containers/facebook-auth/facebook-auth.component';
 import { VerifyComponent } from './containers/verify/verify.component';
+import { ResetPasswordComponent } from './containers/reset-password/reset-password.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,10 @@ const routes: Routes = [
     {
         path: 'verify',
         component: VerifyComponent
+    },
+    {
+        path: 'reset-password',
+        component: ResetPasswordComponent
     },
     {
         path: 'signout',

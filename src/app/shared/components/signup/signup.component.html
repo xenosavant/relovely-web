@@ -10,96 +10,134 @@
       </div>
     </div>
     <ng-container *ngIf="!loading" mat-stretch-tabs>
-      <ng-container *ngIf="showSignin">
-        <div class="errors">
-          <div *ngIf="signinError !== null" class="form-error">{{signinError}}</div>
-        </div>
-        <div class="form-wrapper">
-          <form [formGroup]="signInForm">
-            <div>
-              <mat-form-field>
-                <input matInput placeholder="Email" formControlName="email" />
-              </mat-form-field>
-            </div>
-            <div>
-              <mat-form-field>
-                <input matInput placeholder="Password" type="password" formControlName="password" />
-              </mat-form-field>
-            </div>
-            <div class="spacer"></div>
-            <button mat-stroked-button class="primary" (click)="signin()" [disabled]="!signInForm.valid">
-              <strong>
-                SIGN IN
-              </strong>
-            </button>
-          </form>
-          <div class="sign-in-divider">
-            Or
+      <ng-container [ngSwitch]="state">
+        <ng-container *ngSwitchCase="'signin'">
+          <div class="errors">
+            <div *ngIf="signinError !== null" class="form-error">{{signinError}}</div>
           </div>
-          <div class="spacer"></div>
-          <button class="facebook primary" mat-stroked-button (click)="signInFacebook()">
-            <img src="./assets/images/facebook-color.png" /> <strong>Sign in with Facebook </strong> </button>
-          <div class="spacer"></div>
-          <div class="linkText">
-            Don't have an account?
-            <a (click)="switch()" class="link" appClick target="_blank">
-              Sign Up
-            </a>
-          </div>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="!showSignin">
-        <div class="errors">
-          <div *ngIf="emailError !== null" class="form-error">{{emailError}}</div>
-        </div>
-        <div class="form-wrapper">
-          <form [formGroup]="signUpForm">
-            <div>
-              <mat-form-field>
-                <input matInput placeholder="Email" formControlName="email" />
-              </mat-form-field>
-            </div>
-            <div>
-              <mat-form-field>
-                <input matInput placeholder="Username" formControlName="username" />
-              </mat-form-field>
-            </div>
-            <div>
-              <mat-form-field>
-                <input matInput type="password" placeholder="Password" formControlName="password" />
-              </mat-form-field>
-            </div>
-            <div>
-              <mat-form-field>
-                <input matInput type="password" placeholder="Verify Password" formControlName="verifyPassword" />
-              </mat-form-field>
-            </div>
-            <button mat-stroked-button class="primary" (click)="signup()" [disabled]="!signUpForm.valid">
-              <strong>
-                SIGN UP
-              </strong>
-            </button>
-            <div class="sign-up-divider">
+          <div class="form-wrapper">
+            <form [formGroup]="signInForm">
+              <div>
+                <mat-form-field>
+                  <input matInput placeholder="Email" formControlName="email" />
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <input matInput placeholder="Password" type="password" formControlName="password" />
+                </mat-form-field>
+              </div>
+              <div class="spacer"></div>
+              <button mat-stroked-button class="primary" (click)="signin()" [disabled]="!signInForm.valid">
+                <strong>
+                  SIGN IN
+                </strong>
+              </button>
+            </form>
+            <div class="sign-in-divider">
               Or
             </div>
-          </form>
-          <button class="instagram primary" mat-stroked-button (click)="signUpInstagram()">
-            <img src="./assets/images/instagram-white.png" /> <strong>Sign up with Instagram </strong> </button>
-          <div class="spacer"></div>
-          <button class="facebook primary" mat-stroked-button (click)="signUpFacebook()">
-            <img src="./assets/images/facebook-color.png" /> <strong>Sign up with Facebook </strong>
-          </button>
-          <div class="linkText">
-            Already have an account?
-            <a (click)="switch()" class="link" appClick target="_blank">
-              Sign In
-            </a>
+            <div class="spacer"></div>
+            <button class="facebook primary" mat-stroked-button (click)="signInFacebook()">
+              <img src="./assets/images/facebook-color.png" /> <strong>Sign in with Facebook </strong> </button>
+            <div class="spacer"></div>
+            <div class="link-text">
+              Don't have an account?
+              <a (click)="goTo('signup')" class="link" appClick target="_blank">
+                Sign Up
+              </a>
+            </div>
+            <div class="spacer"></div>
+            <div class="forgot">
+              <a class="link" (click)="forgot()">Forgot Password</a>
+            </div>
           </div>
-        </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'signup'">
+          <div class="errors">
+            <div *ngIf="emailError !== null" class="form-error">{{emailError}}</div>
+          </div>
+          <div class="form-wrapper">
+            <form [formGroup]="signUpForm">
+              <div>
+                <mat-form-field>
+                  <input matInput placeholder="Email" formControlName="email" />
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <input matInput placeholder="Username" formControlName="username" />
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <input matInput type="password" placeholder="Password" formControlName="password" />
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <input matInput type="password" placeholder="Verify Password" formControlName="verifyPassword" />
+                </mat-form-field>
+              </div>
+              <button mat-stroked-button class="primary" (click)="signup()" [disabled]="!signUpForm.valid">
+                <strong>
+                  SIGN UP
+                </strong>
+              </button>
+              <div class="sign-up-divider">
+                Or
+              </div>
+            </form>
+            <button class="instagram primary" mat-stroked-button (click)="signUpInstagram()">
+              <img src="./assets/images/instagram-white.png" /> <strong>Sign up with Instagram </strong> </button>
+            <div class="spacer"></div>
+            <button class="facebook primary" mat-stroked-button (click)="signUpFacebook()">
+              <img src="./assets/images/facebook-color.png" /> <strong>Sign up with Facebook </strong>
+            </button>
+            <div class="link-text">
+              Already have an account?
+              <a (click)="goTo('signin')" class="link" appClick target="_blank">
+                Sign In
+              </a>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'reset'">
+          <div class="form-wrapper reset">
+            <div class="reset-text"> {{resetText}}</div>
+            <form [formGroup]="resetForm">
+              <div class="email-input">
+                <mat-form-field>
+                  <input matInput placeholder="Email" formControlName="identifier" />
+                </mat-form-field>
+              </div>
+              <button mat-stroked-button class="primary" (click)="reset()" [disabled]="!resetForm.valid">
+                <strong>
+                  SUBMIT
+                </strong>
+              </button>
+            </form>
+            <div class="spacer"></div>
+            <div class="links">
+              <div class="link-text">
+                Already have an account?
+                <a (click)="goTo('signin')" class="link" appClick target="_blank">
+                  Sign In
+                </a>
+              </div>
+              <div class="link-text">
+                Don't have an account?
+                <a (click)="goTo('signup')" class="link" appClick target="_blank">
+                  Sign Up
+                </a>
+              </div>
+            </div>
+          </div>
+        </ng-container>
       </ng-container>
     </ng-container>
-    <div *ngIf="loading" class="loading">
-      <div>
+    <div *ngIf="loading" class="loading-wrapper">
+      <div class="loading">
         <mat-spinner diameter="50"></mat-spinner>
       </div>
     </div>

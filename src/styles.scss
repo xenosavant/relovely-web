@@ -34,6 +34,21 @@ $custom-typography: mat-typography-config(
   }
 }
 
+.loading {
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  div {           
+      width: 50px !important;
+      height:50px !important;
+  }
+}
+
 .cdk-overlay-container {
   background-color: transparent !important;
   .cdk-overlay-pane {
@@ -675,7 +690,7 @@ html {
           display: grid;
           width: $mega-menu-width;
           height:55px;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(4, 1fr);
           .menu-item h1 {
             margin-top:16px;
             font-weight: 400px;
@@ -689,7 +704,7 @@ html {
         }
         .mega-menu-body {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(4, 1fr);
           height:261px;
           div ul { 
             padding-inline-start: 0px !important;
@@ -722,6 +737,7 @@ button.mat-stroked-button {
 button.primary {
   background-color: $light-gray !important;
   color:white !important;
+  min-height: 35px;
   &:disabled {
     background-color: $dark-gray-background !important;
   }

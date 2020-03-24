@@ -23,8 +23,7 @@
         }
         .modal-window {
             background: $background-gray;
-            border: 1px $dark-blue;
-            border-radius: 6px;
+            border: 1px solid $medium-dark-background;
             opacity: 1;
             height: auto;
         }

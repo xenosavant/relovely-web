@@ -321,6 +321,7 @@ export class AppComponent implements OnInit {
   public navigate(item: NavigationItem) {
     if (this.showMegaMenu) {
       this.showMegaMenu = false;
+      this.selectedMenuItem = -1;
     }
     this.navigationService.navigate(item);
   }

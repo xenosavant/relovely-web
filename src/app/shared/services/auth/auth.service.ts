@@ -7,6 +7,8 @@ import { SignupRequest } from './signup.request';
 import { SigninRequest } from './signin.request';
 import { UserDetail } from '@app/shared/models/user-detail.model';
 import { VerifyRequest } from './verify.request';
+import { EmailPasswordRequest } from './email-password.request';
+import { ResetPasswordRequest } from './reset-password.request';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends BaseService {
@@ -29,6 +31,22 @@ export class AuthService extends BaseService {
 
     verifyEmail(request: VerifyRequest): Observable<SignupResponse> {
         return this.httpClient.post(`${this.apiBaseUrl}/auth/verify`, request).pipe(
+            map((response: SignupResponse) => {
+                return response;
+            }), catchError(this.errorHandler)
+        );
+    }
+
+    emailPasswordReset(request: EmailPasswordRequest): Observable<SignupResponse> {
+        return this.httpClient.post(`${this.apiBaseUrl}/auth/password/email`, request).pipe(
+            map((response: SignupResponse) => {
+                return response;
+            }), catchError(this.errorHandler)
+        );
+    }
+
+    resetPassword(request: ResetPasswordRequest): Observable<SignupResponse> {
+        return this.httpClient.post(`${this.apiBaseUrl}/auth/password/reset`, request).pipe(
             map((response: SignupResponse) => {
                 return response;
             }), catchError(this.errorHandler)

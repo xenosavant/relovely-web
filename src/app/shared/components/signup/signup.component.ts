@@ -17,16 +17,19 @@ export class SignupComponent implements OnInit {
 
   public signInForm: FormGroup;
   public signUpForm: FormGroup;
+  public resetForm: FormGroup;
   public signupInstagramUrl: string;
   public signinInstagramUrl: string;
   public signupFacebookUrl: string;
   public signinFacebookUrl: string;
+  private originalResetText = 'Enter your email below to reset your password:';
 
   public emailError: string = null;
   public signinError: string = null;
   public loading = false;
-  public showSignin = true;
+  public state: 'signin' | 'signup' | 'reset' = 'signin';
   public title = 'SIGN IN';
+  public resetText = this.originalResetText;
 
   constructor(private sanitizer: DomSanitizer,
     private authService: AuthService,
@@ -46,6 +49,9 @@ export class SignupComponent implements OnInit {
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
       verifyPassword: new FormControl('', [Validators.required])
+    });
+    this.resetForm = new FormGroup({
+      identifier: new FormControl('', [Validators.required])
     });
     this.signupInstagramUrl = environment.instagramAuthUrl + `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSigninRedirectUrl}&scope=user_profile,user_media&response_type=code`
     this.signupFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSignupRedirectUrl}&response_type=code`;
@@ -108,9 +114,26 @@ export class SignupComponent implements OnInit {
       });
   }
 
-  switch() {
-    this.showSignin = this.showSignin ? false : true;
-    this.title = this.showSignin ? 'SIGN IN' : 'SIGN UP';
+  reset() {
+    this.loading = true;
+    this.authService.emailPasswordReset({ identifier: this.signInForm.value['identifier'] as string })
+      .subscribe(response => {
+        this.navigationService.closeAuthWindow();
+        this.loading = false;
+        this.router.navigate(['/account/reset-password'])
+      }, err => {
+        console.log(err);
+      });
+  }
+
+  forgot() {
+    this.state = 'reset';
+    this.title = 'RESET PASSWORD';
+  }
+
+  goTo(state) {
+    this.state = state;
+    this.title = this.state === 'signin' ? 'SIGN IN' : this.state === 'signup' ? 'SIGN UP' : 'FORGOT PASSWORD';
   }
 
   close() {

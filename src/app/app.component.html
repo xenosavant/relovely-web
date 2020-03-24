@@ -82,8 +82,8 @@
 </div>
 
 <div class="theme-wrapper light-theme" *ngIf="!mobile">
-  <ng-container *ngTemplateOutlet="desktopToolbar"></ng-container>
-  <div class="content-wrapper">
+  <div class="content-wrapper" [class.content-noscroll]="overlayService.isOpen">
+    <ng-container *ngTemplateOutlet="desktopToolbar"></ng-container>
     <ng-container *ngTemplateOutlet="content"></ng-container>
   </div>
   <div class="mega-menu-wrapper" *ngIf="showMegaMenu">

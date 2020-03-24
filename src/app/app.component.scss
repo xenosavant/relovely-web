@@ -46,8 +46,12 @@ mat-toolbar {
 .content-wrapper {
   height:auto;
   overflow: hidden;
+  min-height: 100%;
   background-color: $background-gray;
-  min-height:100%;
+}
+
+.content-noscroll {
+  height: 100%;
 }
 
 .topbar {
