@@ -38,8 +38,8 @@
     </div>
     <div (mouseover)="$event.stopPropagation()" (mouseleave)="onLeaveMenu($event, 'size')" class="size-filter-wrapper"
         (click)="$event.stopPropagation()">
-        <div *ngFor=" let category of sizeFilters">
-            <li *ngFor="let filter of category.filters">
+        <div *ngFor=" let size of currentSizeFilters">
+            <li *ngFor="let filter of size.filters">
                 <input [class.selected]="filter.selected" (click)="filter.selected=true" type="checkbox">
                 {{filter.value}}
             </li>

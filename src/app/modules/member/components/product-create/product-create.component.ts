@@ -2,7 +2,6 @@ import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, NgZon
 import { FormControl, Validators, FormGroup, FormArray, FormBuilder, AbstractControl } from '@angular/forms';
 import { Category } from '@app/shared/models/category.model';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
-import { womensSizes } from '../../../../data/sizes.data';
 import { KeyValue } from '@angular/common';
 import { guid } from '../../../../shared/utils/rand';
 import { FileUploadService } from '../../../../shared/services/file-upload.service'
@@ -28,7 +27,7 @@ export class ProductCreateComponent implements OnInit {
   public video: Video;
   public images: ImageSet[] = [];
   public rootCategories = [];
-  public currentSizes = womensSizes.map((value) => value.filters).reduce((previous, current) => previous.concat(current), []);
+  public currentSizes;
   public tags: string[] = [];
   public selectable = true;
   public removable = true;
@@ -40,6 +39,7 @@ export class ProductCreateComponent implements OnInit {
     private categoryService: LookupService,
     private uploadService: FileUploadService,
     private readonly zone: NgZone,
+    private lookupService: LookupService,
     private ref: ChangeDetectorRef) {
     this.form = new FormGroup({
       title: new FormControl('', [Validators.required]),
@@ -53,13 +53,17 @@ export class ProductCreateComponent implements OnInit {
       tag: new FormControl(''),
       price: new FormControl(null, [Validators.required])
     });
-    this.rootCategories = this.categoryService.categories;
-    this.categories.push(this.categoryService.categories);
-
+    this.lookupService.getState().then(state => {
+      this.rootCategories = state.categories;
+      this.categories.push(state.categories);
+    })
   }
 
   ngOnInit() {
     this.id = guid();
+    this.lookupService.state$.subscribe(state => {
+      this.currentSizes = state.sizes.map((value) => value.filters).reduce((previous, current) => previous.concat(current), []);
+    })
   }
 
   public selectCategory(category: any, index: any) {

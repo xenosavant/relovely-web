@@ -139,32 +139,35 @@ export class AppComponent implements OnInit {
           [],
           null)
       });
+
       navigationItems.forEach(item => {
         this.setParents(item);
       });
 
+      console.log(navigationItems);
+
       this.accountNav = {
         name: 'Account', path: null, subItems: [
-          new NavigationItem([], '/member/profile', 'Profile', 0, [], [], null),
-          new NavigationItem([], '/sales/orders', 'Orders', 0, [], [], null),
-          new NavigationItem([], '/account/payments', 'Payment Methods', 0, [], [], null),
-          new NavigationItem([], '/account/addresses', 'Addresses', 0, [], [], null),
+          new NavigationItem([], '/member/profile', 'Profile', '0', [], [], null),
+          new NavigationItem([], '/sales/orders', 'Orders', '0', [], [], null),
+          new NavigationItem([], '/account/payments', 'Payment Methods', '0', [], [], null),
+          new NavigationItem([], '/account/addresses', 'Addresses', '0', [], [], null),
         ]
       }
       navigationItems.forEach(item => {
         this.desktopNavigationItems.push(item);
       });
-      this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'Blog', 0, [], [], null));
-      this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'About', 0, [], [], null));
+      this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'Blog', '0', [], [], null));
+      this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'About', '0', [], [], null));
       if (this.userService.currentUser && this.userService.currentUser.type === 'seller') {
-        this.accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', 0, [], [], null),
-          new NavigationItem([], '/sales/listings', 'Listings', 0, [], [], null),
+        this.accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', '0', [], [], null),
+          new NavigationItem([], '/sales/listings', 'Listings', '0', [], [], null),
         );
       }
-      this.accountNav.subItems.push(new NavigationItem([], '/account/settings', 'Settings', 0, [], [], null),
-        new NavigationItem([], '/account/terms', 'Terms of Service', 0, [], [], null),
-        new NavigationItem([], '/account/help', 'Help', 0, [], [], null),
-        new NavigationItem([], '/account/signout', 'Log Out', 0, [], [], null),
+      this.accountNav.subItems.push(new NavigationItem([], '/account/settings', 'Settings', '0', [], [], null),
+        new NavigationItem([], '/account/terms', 'Terms of Service', '0', [], [], null),
+        new NavigationItem([], '/account/help', 'Help', '0', [], [], null),
+        new NavigationItem([], '/account/signout', 'Log Out', '0', [], [], null),
       );
       navigationItems.push(this.accountNav);
       this.navigationService.showAuthWindow$.subscribe(open => {
@@ -226,8 +229,8 @@ export class AppComponent implements OnInit {
   }
 
 
-  setParents(parent: NavigationItem, child?: NavigationItem) {
-    this.lookupService.categoryLookup[parent.id.toString()] = parent;
+  setParents(parent: NavigationItem) {
+    this.lookupService.navLookup[parent.id] = parent;
     if (parent.subItems) {
       parent.subItems.forEach(item => {
         item.parent = parent;

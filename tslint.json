@@ -65,10 +65,6 @@
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "prefer-const": true,
-    "quotemark": [
-      true,
-      "single"
-    ],
     "radix": true,
     "triple-equals": [
       true,

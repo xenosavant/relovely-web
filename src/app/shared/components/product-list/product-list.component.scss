@@ -55,13 +55,13 @@
             button {
                 @media( min-width:$desktop-breakpoint) {
                     height:25px !important;
-                    min-height:25px !important;
                     font-size: 16px;
                 }
                 @media( max-width:$mobile-breakpoint) {
                     height:20px;
                     font-size:12px;
                 }
+                min-height:20px !important;
             }
         }
 }

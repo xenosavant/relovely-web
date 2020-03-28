@@ -5,15 +5,14 @@ export class NavigationItem {
     queryStrings?: KeyValue<string, string>[];
     path: string;
     name?: string;
-    id?: number;
+    id?: string;
     subItems?: NavigationItem[];
     subCategories?: Category[];
     parent?: NavigationItem;
-
-    constructor(queryStrings: KeyValue<string, string>[], path: string, name: string, id: number,
+    constructor(queryStrings: KeyValue<string, string>[], path: string, name: string, id: string,
         subItems: NavigationItem[], subCategories: Category[], parent: NavigationItem) {
         this.queryStrings = queryStrings;
-        this.path = path;
+        this.path = path || `/products/${this.id}`;
         this.subItems = subItems;
         this.subCategories = subCategories;
         this.parent = parent;

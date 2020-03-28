@@ -6,6 +6,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { trigger } from '@angular/animations';
 import { INavigationState } from '../interfaces/navigation-state.interface';
+import { LookupService } from './lookup/lookup.service';
 
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
@@ -23,7 +24,8 @@ export class NavigationService {
         categoryItems: [],
         chipItems: [],
         selectedCategoryId: null,
-        currentNavigationItems: []
+        currentNavigationItems: [],
+        selectedCategory: null
     }
     private navConfigSubject$ = new Subject<INavigationState>();
     public navConfig$ = this.navConfigSubject$.asObservable();
@@ -37,7 +39,7 @@ export class NavigationService {
 
     public rootNavigationItems: NavigationItem[];
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private lookupService: LookupService) {
         this.router.events.pipe(
             filter(
                 (event: any) => {
@@ -63,13 +65,15 @@ export class NavigationService {
     }
 
     public navigate(item: NavigationItem, back = false): boolean {
-        if (item.id === -1) {
+        console.log(item);
+        if (item.id === "-1") {
             this._navConfig.pageHeader = 'All Products';
             this._navConfig.showFilterBar = true;
             this._navConfig.chipItems = item.subItems.slice(0, 3);
             this.goto(item, back);
         }
         else if (item.id) {
+            this._navConfig.selectedCategory = this.lookupService.getCategory(item.id);
             this._navConfig.selectedCategoryId = item.id;
             if (item.subItems && item.subItems.length) {
                 this._navConfig.pageHeader = item.parent ? item.parent.name + '\'s' + ' ' + item.name : item.name;
@@ -81,10 +85,10 @@ export class NavigationService {
                 this._navConfig.pageHeader = item.parent.parent.name + '\'s ' + item.parent.name;
             }
             const params = {};
-            if (item.queryStrings.length) {
-                item.queryStrings.forEach(q =>
-                    params[q.key] = q.value);
-            }
+            // if (item.queryStrings.length) {
+            //     item.queryStrings.forEach(q =>
+            //         params[q.key] = q.value);
+            // }
             this.goto(item, back);
             this._navConfig.showTopLeveNavigation = true;
             this.navConfigSubject$.next(this._navConfig);
@@ -97,6 +101,7 @@ export class NavigationService {
 
     public sideNavigate(item: NavigationItem) {
         this._navConfig.selectedCategoryId = item.id;
+        this._navConfig.selectedCategory = this.lookupService.getCategory(item.id);
         if (item.subItems && item.subItems.length) {
             this._navConfig.currentNavigationItems = item.subItems;
             this._navConfig.navigationHeader = item.parent ? item.parent.name : item.name;
@@ -128,7 +133,8 @@ export class NavigationService {
                 this.currentNavSubject$.next(this._currentNavigationItem);
             }
             // const queryParamsHandling = this._currentNavigationItem.id && navigationItem.id === this._currentNavigationItem.id ?  'preserve';
-            this.router.navigate([navigationItem.path], { queryParams: params, queryParamsHandling: 'preserve', replaceUrl: false });
+
+            this.router.navigate([navigationItem.path]);
         }
         this._navConfig.showTopLeveNavigation = true;
         this._navConfig.currentNavigationItems = this.rootNavigationItems;

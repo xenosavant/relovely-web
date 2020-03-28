@@ -6,6 +6,7 @@ import { NavigationService } from '@app/shared/services/navigation.service';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { NavigationItem } from '@app/shared/models/navigation-item.model';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { Category } from '@app/shared/models/category.model';
 
 @Component({
   selector: 'app-products',
@@ -27,13 +28,14 @@ export class ProductsComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private navigationService: NavigationService,
     private zone: NgZone,
-    private categoryService: LookupService,
+    private lookupService: LookupService,
     private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() {
     this.products = products;
     this.navigationService.navConfig$.subscribe(state => {
       this.grid = state.showProductGrid;
+      this.title = state.pageHeader;
       this.zone.run(() => {
         this.ref.markForCheck();
       })
@@ -41,18 +43,18 @@ export class ProductsComponent implements OnInit {
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
     });
-    this.navigationService.navConfig$.subscribe(result => {
-      this.title = result.pageHeader;
-    });
     this.route.params.subscribe(params => {
-      if (params['categoryId']) {
-        this.currentNavItem = this.categoryService.categoryLookup[params['categoryId']];
-      } else {
-        const root = this.navigationService.rootNavigationItems;
-        this.currentNavItem = new NavigationItem([{ key: 'category', value: '0' }], '/products', 'All Products', -1, root, [], null);
-      }
-      this.navigationService.navigate(this.currentNavItem);
-      this.ref.markForCheck();
+      this.lookupService.getState().then(state => {
+        console.log(state)
+        if (params['categoryId']) {
+          this.currentNavItem = this.lookupService.navLookup[params['categoryId']];
+        } else {
+          const root = this.navigationService.rootNavigationItems;
+          this.currentNavItem = new NavigationItem([{ key: 'category', value: '0' }], '/products', 'All Products', "-1", root, [], null);
+        }
+        this.navigationService.navigate(this.currentNavItem);
+        this.ref.markForCheck();
+      })
     });
   }
 

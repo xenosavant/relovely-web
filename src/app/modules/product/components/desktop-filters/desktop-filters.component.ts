@@ -1,11 +1,13 @@
 
-import { Component, OnInit, ChangeDetectionStrategy, ElementRef, ViewChild } from '@angular/core';
-import { womensSizes } from '@app/data/sizes.data';
+import { Component, OnInit, ChangeDetectionStrategy, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { colors } from '@app/data/colors.data';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { PriceFilter } from '@app/shared/models/price-filter.model';
 import { prices } from '@app/data/prices.data';
 import { MatMenuTrigger } from '@angular/material';
+import { NavigationService } from '@app/shared/services/navigation.service';
+import { LookupService } from '@app/shared/services/lookup/lookup.service';
+import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
 
 
 @Component({
@@ -16,7 +18,8 @@ import { MatMenuTrigger } from '@angular/material';
 })
 export class DesktopFiltersComponent implements OnInit {
 
-  sizeFilters = womensSizes;
+  sizeFilters: SizeFilterGroup[];
+  currentSizeFilters: SizeFilterGroup[];
   colors = colors;
   selectedColors: string[] = [];
 
@@ -30,9 +33,22 @@ export class DesktopFiltersComponent implements OnInit {
 
   private _activeTrigger: MatMenuTrigger;
 
-  constructor() { }
+  constructor(private navigationService: NavigationService,
+    private ref: ChangeDetectorRef,
+    private lookupService: LookupService) { }
 
   ngOnInit() {
+    this.navigationService.navConfig$.subscribe(navigationState => {
+      console.log(navigationState);
+      this.lookupService.getState().then(state => {
+        this.sizeFilters = state.sizes;
+        console.log(this.sizeFilters);
+        this.currentSizeFilters = this.sizeFilters.filter(size => {
+          return size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
+        });
+        this.ref.markForCheck();
+      })
+    });
   }
 
   selectColor(color: ColorFilter) {

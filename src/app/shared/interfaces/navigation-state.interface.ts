@@ -10,7 +10,8 @@ export interface INavigationState {
     showProductGrid: boolean;
     categoryItems: Category[];
     chipItems: NavigationItem[];
-    selectedCategoryId: number;
+    selectedCategoryId: string;
+    selectedCategory: Category;
     currentNavigationItems: NavigationItem[];
 }
 
