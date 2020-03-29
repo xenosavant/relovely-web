@@ -26,11 +26,8 @@ export class ImageCropperComponent implements OnInit {
     this.originalImage = this.currentImage;
   }
 
-  public imageLoaded(): void {
-    this.visibilty = 'visible';
-  }
-
   public cropperReady(): void {
+    this.visibilty = 'visible';
     this.ready = true;
   }
 

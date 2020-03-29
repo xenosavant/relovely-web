@@ -2,13 +2,14 @@ import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, NgZon
 import { FormControl, Validators, FormGroup, FormArray, FormBuilder, AbstractControl } from '@angular/forms';
 import { Category } from '@app/shared/models/category.model';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
-import { KeyValue } from '@angular/common';
+import { KeyValue } from '../../../../shared/interfaces/key-value.interface';
 import { guid } from '../../../../shared/utils/rand';
 import { FileUploadService } from '../../../../shared/services/file-upload.service'
 import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 import { forkJoin } from 'rxjs';
 import { Video } from '@app/shared/interfaces/video';
 import { ThrowStmt } from '@angular/compiler';
+import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
 
 @Component({
   selector: 'app-product-create',
@@ -27,12 +28,13 @@ export class ProductCreateComponent implements OnInit {
   public video: Video;
   public images: ImageSet[] = [];
   public rootCategories = [];
-  public currentSizes;
   public tags: string[] = [];
   public selectable = true;
   public removable = true;
   public id: string;
   public originalImage: string;
+  public sizes: SizeFilterGroup[];
+  public currentSizes: KeyValue[] = [];
 
 
   constructor(private formBuilder: FormBuilder,
@@ -61,8 +63,20 @@ export class ProductCreateComponent implements OnInit {
 
   ngOnInit() {
     this.id = guid();
-    this.lookupService.state$.subscribe(state => {
-      this.currentSizes = state.sizes.map((value) => value.filters).reduce((previous, current) => previous.concat(current), []);
+    this.form.get('categories').valueChanges.subscribe(val => {
+      this.currentSizes = [];
+      if (val.length === 3) {
+        this.sizes.forEach(size => {
+          if (size.categoryIds.indexOf(val[2].id) > -1) {
+            size.filters.forEach(filter => {
+              this.currentSizes.push(filter);
+            })
+          }
+        })
+      }
+    })
+    this.lookupService.getState().then(state => {
+      this.sizes = state.sizes; //.map((value) => value.filters).reduce((previous, current) => previous.concat(current), []);
     })
   }
 
