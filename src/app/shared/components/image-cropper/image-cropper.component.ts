@@ -31,6 +31,10 @@ export class ImageCropperComponent implements OnInit {
     this.ready = true;
   }
 
+  public imageLoaded() {
+
+  }
+
   public loadImageFailed(): void {
     // show message
   }
