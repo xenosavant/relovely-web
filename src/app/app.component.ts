@@ -137,8 +137,11 @@ export class AppComponent implements OnInit {
             )
           }),
           [],
-          null)
+          null,
+          cat.plural)
       });
+
+      console.log(navigationItems);
 
       navigationItems.forEach(item => {
         this.setParents(item);

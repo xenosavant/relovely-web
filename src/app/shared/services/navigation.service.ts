@@ -76,13 +76,13 @@ export class NavigationService {
             this._navConfig.selectedCategory = this.lookupService.getCategory(item.id);
             this._navConfig.selectedCategoryId = item.id;
             if (item.subItems && item.subItems.length) {
-                this._navConfig.pageHeader = item.parent ? item.parent.name + '\'s' + ' ' + item.name : item.name;
+                this._navConfig.pageHeader = item.parent ? item.parent.plural + ' ' + item.name : item.name;
                 this._navConfig.showFilterBar = true;
                 this._navConfig.chipItems = item.subItems;
             }
             else {
                 this._navConfig.chipItems = item.parent.subItems;
-                this._navConfig.pageHeader = item.parent.parent.name + '\'s ' + item.parent.name;
+                this._navConfig.pageHeader = item.parent.parent.plural + ' ' + item.parent.name;
             }
             const params = {};
             // if (item.queryStrings.length) {
