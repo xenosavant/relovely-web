@@ -1,0 +1,66 @@
+<div class="page-wrapper">
+    <div class="order-wrapper mat-elevation-z2">
+        <app-order-list [order]="order"></app-order-list>
+        <div class="divider"></div>
+        <div class="grid-wrapper">
+            <div class="left">
+                <div class="order-number">Order Number: 213421423</div>
+                <div class="payment">
+                    <div>
+                        <strong>Payment Method:</strong>
+                    </div>
+                    <div>Visa ending in 3456</div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="line-items">
+                    <div class="line-item">
+                        <span class="label">Price </span>
+                        <span class="value">{{order.price / 100 | currency}} </span>
+                    </div>
+                    <div class="line-item">
+                        <span class="label">Tax</span>
+                        <span class="value">{{order.tax / 100 | currency}} </span>
+                    </div>
+                    <div class="line-item">
+                        <span class="label">Shipping</span>
+                        <span class="value">{{order.shippingCost / 100 | currency}} </span>
+                    </div>
+                </div>
+                <div class="total">
+                    <span class="label total">TOTAL</span>
+                    <span class="value">{{order.total / 100 | currency}} </span>
+                </div>
+            </div>
+        </div>
+        <div class="divider light"></div>
+        <div class="grid-wrapper">
+            <div class="left">
+                <span class="title">
+                    Order Status:
+                </span>
+                <span [class]="'status ' + order.status">
+                    {{order.status | titlecase}}
+                </span>
+            </div>
+            <div class="right">
+                <span class="title">
+                    Ship To:
+                </span>
+                <div class="address">
+                    <app-address [address]="order.address" name="Domenick Packett"></app-address>
+                </div>
+            </div>
+        </div>
+        <div class="links">
+            <div class="inner">
+                <div class="review">
+                    <a href="#">Write a Review</a>
+                </div>
+                <div class="problem">
+                    <a href="#">Problem with order</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

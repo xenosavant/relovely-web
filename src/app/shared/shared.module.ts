@@ -88,6 +88,7 @@ import { CenterModalComponent } from './components/center-modal/center-modal.com
 import { SignupComponent } from './components/signup/signup.component';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 import { VideoUploaderComponent } from './components/video-uploader/video-uploader.component';
+import { AddressComponent } from './components/address/address.component';
 
 
 library.add(
@@ -176,7 +177,8 @@ library.add(
     CenterModalComponent,
     SignupComponent,
     VideoPlayerComponent,
-    VideoUploaderComponent],
+    VideoUploaderComponent,
+    AddressComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -221,7 +223,8 @@ library.add(
     CenterModalComponent,
     SignupComponent,
     VideoPlayerComponent,
-    VideoUploaderComponent
+    VideoUploaderComponent,
+    AddressComponent
   ]
 })
 export class SharedModule { }

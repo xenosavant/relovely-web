@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Order } from '@app/shared/models/order.model';
 import { orders } from '@app/data/orders.data';
 import { NavigationService } from '@app/shared/services/navigation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -31,6 +32,10 @@ export class OrdersComponent implements OnInit {
 
   onLeave() {
     this.hoverIndex = -1;
+  }
+
+  goToOrder(id: string) {
+    this.navigationService.navigate({ path: `/sales/orders/${id}` });
   }
 
 }

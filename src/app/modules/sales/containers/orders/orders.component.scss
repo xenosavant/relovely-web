@@ -1,97 +1,19 @@
 @import '../../../../../styles-variables';
 
 .orders-wrapper {
-    min-height: calc(100vh - 108px);
     margin: 0 auto;
     max-width: $desktop-breakpoint;
+    display: grid;
+    grid-gap: 5px;
  }
  
  .order-card {
      border-radius: 4px;
      background-color: white;
-     padding-bottom:16px;
+     cursor: pointer;
  }
  .pagination {
      width:100%;
      position: relative;
      bottom:0;
- }
- 
- .order-wrapper {
-    @media( min-width:$desktop-breakpoint) {
-        border-radius: 4px;
-        margin:8px;
-        grid-template-columns: 200px 1fr;
-        display: grid;
-        cursor: pointer;
-    }
-    @media( max-width:$mobile-breakpoint) {
-        border-radius: 4px;
-        margin:8px;
-        grid-template-columns: 1fr 2fr;
-        display: grid;
-    }
-    grid-template-rows: auto;
-    
-     .product-image {
-         margin:8px;
-         .image-wrapper {
-             padding: 2px;
-             background-color: #efefef;
-             border-radius: 2px;
-             img {
-                 width:100%;
-             }
-         }
-     }
-     .product-info {
-        margin:8px;
-        @media( min-width:$desktop-breakpoint) {
-         margin:8px 32px 8px 8px;
-        }
-         display: flex;
-         align-items: center;
-         .details {
-             
-             width:100%;
-            .mobile-title {
-                .info-wrapper {
-                    width: fit-content;
-                    margin: 0 auto;
-                    font-size: 3vw;
-                }
-                @media(min-width:$desktop-breakpoint) {
-                    visibility: hidden;
-                    height:0px;
-                    width: 0px;
-                }
-            }
-             .info {
-                @media( min-width:$desktop-breakpoint) {
-                    padding-top: 4px;
-                    float:right;
-                }
-                @media( max-width:$mobile-breakpoint) {
-                    visibility: hidden;
-                    height:0px;
-                    width: 0px;
-                }
-                .info-inner {
-                    .title {
-                        font-weight: 500;
-                        font-size: 1.2em;
-                        line-height: 1.3em;
-                    }
-                    .status {
-                        font-size: .9em;
-                        line-height: 1.3em;
-                    }
-                    .seller {
-                        font-size: .9em;
-                        line-height: 1.3em;
-                    }
-                }
-             }
-         }
-     }
  }

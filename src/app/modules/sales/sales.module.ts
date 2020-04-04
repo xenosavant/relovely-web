@@ -6,9 +6,11 @@ import { SalesRoutingModule } from './sales-routing.module';
 import { SharedModule } from '@app/shared';
 import { MatButtonModule } from '@angular/material';
 import { OrdersComponent } from './containers/orders/orders.component';
+import { OrderComponent } from './containers/order/order.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
 
 @NgModule({
-  declarations: [CheckoutComponent, CartComponent, OrdersComponent],
+  declarations: [CheckoutComponent, CartComponent, OrdersComponent, OrderComponent, OrderListComponent],
   imports: [
     CommonModule,
     SharedModule,

@@ -1,4 +1,5 @@
 import { Product } from "./product.model";
+import { Address } from "../interfaces/address.interface";
 
 export class Order {
     public id?: string;
@@ -6,12 +7,14 @@ export class Order {
     public purchaseDate: string;
     public shipDate?: string;
     public deliveryDate?: string;
-    public status: 'shipped' | 'unshipped' | 'cancelled' | 'delivered';
+    public status: 'paid' | 'shipped' | 'delivered' | 'review' | 'cancelled';
     public trackingNumber?: string;
     public shippingCarrierName: string;
     public shippingCarrerId: string;
+    public price: number;
     public total: number;
     public shippingCost: number;
     public tax: number;
     public seller: string;
+    public address: Address;
 }

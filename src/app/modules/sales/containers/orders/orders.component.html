@@ -1,51 +1,9 @@
 <div class="orders-wrapper">
-  <div *ngFor="let order of orders; let i = index" class="order-wrapper" (mouseenter)="onEnter(i)"
-    (mouseleave)="onLeave()" [class.mat-elevation-z2]="hoverIndex !== i" [class.mat-elevation-z5]="hoverIndex === i">
-    <div class="product-image">
-      <div class="image-wrapper" [class.mat-elevation--z2]="true">
-        <img class="product" [src]="order.product.asset">
-      </div>
-    </div>
-    <div class="product-info">
-      <div class=details>
-        <div class="mobile-title mat-body">
-          <div class="info-wrapper">
-            <div *ngIf="order.status === 'shipped'">
-              Shipped {{order.shipDate | date}}
-            </div>
-            <div *ngIf="order.status === 'unshipped'">
-              Ordered {{order.orderDate | date}}
-            </div>
-            <div *ngIf="order.status === 'delivered'">
-              Delivered {{order.deliveryDate | date}}
-            </div>
-          </div>
-        </div>
-        <div class="info">
-          <div class="info-inner">
-            <div class="title">
-              {{order.product.title}}
-            </div>
-            <div class="status">
-              <div *ngIf="order.status === 'shipped'">
-                Shipped {{order.shipDate | date}}
-              </div>
-              <div *ngIf="order.status === 'unshipped'">
-                Ordered {{order.orderDate | date}}
-              </div>
-              <div *ngIf="order.status === 'delivered'">
-                Delivered {{order.deliveryDate | date}}
-              </div>
-            </div>
-            <div class="seller">
-              Seller: {{order.seller}}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div *ngFor="let order of orders; let i = index" class="order-card" (mouseenter)="onEnter(i)"
+    (click)="goToOrder(order.id)" (mouseleave)="onLeave()" [class.mat-elevation-z2]="hoverIndex !== i"
+    [class.mat-elevation-z5]="hoverIndex === i">
+    <app-order-list [order]="order"></app-order-list>
   </div>
   <div *ngIf="orders.length > 10" class="pagination">
-    <mat-paginator [length]="1" [hidePageSize]="true"></mat-paginator>
   </div>
 </div>

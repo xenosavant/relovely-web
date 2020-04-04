@@ -65,7 +65,6 @@ export class NavigationService {
     }
 
     public navigate(item: NavigationItem, back = false): boolean {
-        console.log(item);
         if (item.id === "-1") {
             this._navConfig.pageHeader = 'All Products';
             this._navConfig.showFilterBar = true;
@@ -75,14 +74,16 @@ export class NavigationService {
         else if (item.id) {
             this._navConfig.selectedCategory = this.lookupService.getCategory(item.id);
             this._navConfig.selectedCategoryId = item.id;
-            if (item.subItems && item.subItems.length) {
-                this._navConfig.pageHeader = item.parent ? item.parent.plural + ' ' + item.name : item.name;
-                this._navConfig.showFilterBar = true;
-                this._navConfig.chipItems = item.subItems;
-            }
-            else {
-                this._navConfig.chipItems = item.parent.subItems;
-                this._navConfig.pageHeader = item.parent.parent.plural + ' ' + item.parent.name;
+            this._navConfig.showFilterBar = true;
+            if (item.parent) {
+                if (item.subItems && item.subItems.length) {
+                    this._navConfig.pageHeader = item.parent ? item.parent.plural + ' ' + item.name : item.name;
+                    this._navConfig.chipItems = item.subItems;
+                }
+                else {
+                    this._navConfig.chipItems = item.parent.subItems;
+                    this._navConfig.pageHeader = item.parent.parent.plural + ' ' + item.parent.name;
+                }
             }
             const params = {};
             // if (item.queryStrings.length) {
@@ -90,10 +91,11 @@ export class NavigationService {
             //         params[q.key] = q.value);
             // }
             this.goto(item, back);
-            this._navConfig.showTopLeveNavigation = true;
+
             this.navConfigSubject$.next(this._navConfig);
             return true;
         } else {
+            this._navConfig.showFilterBar = false;
             this.goto(item, back);
             return true;
         }

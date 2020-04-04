@@ -8,8 +8,6 @@
 
 @import 'themes/light-theme.scss';
 
-@import 'styles-reset.scss-theme';
-
 @import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
 @import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
 
@@ -31,6 +29,14 @@ $custom-typography: mat-typography-config(
 @media (max-width: 899px) {
   .mat-toolbar-multiple-rows {
     min-height:44px !important;
+  }
+}
+
+a {
+  color: $dark-gray !important;
+  &:hover {
+    text-decoration: underline;
+    
   }
 }
 

@@ -151,26 +151,26 @@ export class AppComponent implements OnInit {
 
       this.accountNav = {
         name: 'Account', path: null, subItems: [
-          new NavigationItem([], '/member/profile', 'Profile', '0', [], [], null),
-          new NavigationItem([], '/sales/orders', 'Orders', '0', [], [], null),
-          new NavigationItem([], '/account/payments', 'Payment Methods', '0', [], [], null),
-          new NavigationItem([], '/account/addresses', 'Addresses', '0', [], [], null),
+          new NavigationItem([], '/member/profile', 'Profile', null, [], [], null),
+          new NavigationItem([], '/sales/orders', 'Orders', null, [], [], null),
+          new NavigationItem([], '/account/payments', 'Payment Methods', null, [], [], null),
+          new NavigationItem([], '/account/addresses', 'Addresses', null, [], [], null),
         ]
       }
       navigationItems.forEach(item => {
         this.desktopNavigationItems.push(item);
       });
-      this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'Blog', '0', [], [], null));
-      this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'About', '0', [], [], null));
+      this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'Blog', null, [], [], null));
+      this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'About', null, [], [], null));
       if (this.userService.currentUser && this.userService.currentUser.type === 'seller') {
-        this.accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', '0', [], [], null),
-          new NavigationItem([], '/sales/listings', 'Listings', '0', [], [], null),
+        this.accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', null, [], [], null),
+          new NavigationItem([], '/sales/listings', 'Listings', null, [], [], null),
         );
       }
       this.accountNav.subItems.push(new NavigationItem([], '/account/settings', 'Settings', '0', [], [], null),
-        new NavigationItem([], '/account/terms', 'Terms of Service', '0', [], [], null),
-        new NavigationItem([], '/account/help', 'Help', '0', [], [], null),
-        new NavigationItem([], '/account/signout', 'Log Out', '0', [], [], null),
+        new NavigationItem([], '/account/terms', 'Terms of Service', null, [], [], null),
+        new NavigationItem([], '/account/help', 'Help', null, [], [], null),
+        new NavigationItem([], '/account/signout', 'Log Out', null, [], [], null),
       );
       navigationItems.push(this.accountNav);
       this.navigationService.showAuthWindow$.subscribe(open => {

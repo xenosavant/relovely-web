@@ -1,0 +1,46 @@
+<div class="order-wrapper">
+
+    <div class="product-image">
+        <div class="image-wrapper mat-elevation-z2">
+            <img class="product" [src]="order.product.asset">
+        </div>
+    </div>
+    <div class="product-info">
+        <div class=details>
+            <div class="mobile-title mat-body">
+                <div class="info-wrapper">
+                    <div *ngIf="order.status === 'shipped'">
+                        Shipped {{order.shipDate | date}}
+                    </div>
+                    <div *ngIf="order.status === 'unshipped'">
+                        Ordered {{order.orderDate | date}}
+                    </div>
+                    <div *ngIf="order.status === 'delivered'">
+                        Delivered {{order.deliveryDate | date}}
+                    </div>
+                </div>
+            </div>
+            <div class="info">
+                <div class="info-inner">
+                    <div class="title">
+                        {{order.product.title}}
+                    </div>
+                    <div class="status">
+                        <div *ngIf="order.status === 'shipped'">
+                            Shipped {{order.shipDate | date}}
+                        </div>
+                        <div *ngIf="order.status === 'unshipped'">
+                            Ordered {{order.orderDate | date}}
+                        </div>
+                        <div *ngIf="order.status === 'delivered'">
+                            Delivered {{order.deliveryDate | date}}
+                        </div>
+                    </div>
+                    <div class="seller">
+                        Seller: {{order.seller}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
