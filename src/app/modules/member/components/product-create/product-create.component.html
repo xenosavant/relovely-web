@@ -8,7 +8,7 @@
     <div *ngIf="images.length" class="info">
         Cover Photo
     </div>
-    <div class="thumbnails" dragula="images" [(dragulaModel)]="images" (dragulaModelChange)="log()">
+    <div class="thumbnails" dragula="images" [(dragulaModel)]="images">
         <div class="image-wrapper" *ngFor="let image of images; let i = index">
             <img [src]="image.cropped">
             <div class="overlay">
