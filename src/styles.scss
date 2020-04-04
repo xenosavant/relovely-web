@@ -855,3 +855,25 @@ div.filter-bar {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
   filter: alpha(opacity=20);
 }
+
+// VIDEO PLAYER 
+
+.video {
+  .video-preview {
+    @media (max-width: 599px) {
+      height: calc((100vw - 48px) / 3);
+  }
+  @media (min-width: 600px) {
+      height: 195px;
+  }
+      app-video-player {
+        @media (max-width: 599px) {
+          height: calc((100vw - 48px) / 3);
+      }
+      @media (min-width: 600px) {
+          height: 195px;
+      }
+
+      }
+  }
+}

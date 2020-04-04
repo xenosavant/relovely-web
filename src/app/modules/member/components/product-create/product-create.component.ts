@@ -10,6 +10,7 @@ import { forkJoin } from 'rxjs';
 import { Video } from '@app/shared/interfaces/video';
 import { ThrowStmt } from '@angular/compiler';
 import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
+import { Product } from '@app/shared/models/product.model';
 
 @Component({
   selector: 'app-product-create',
@@ -34,11 +35,12 @@ export class ProductCreateComponent implements OnInit {
   public id: string;
   public originalImage: string;
   public sizes: SizeFilterGroup[];
+  public showSize = true;
+  public imageError = false;
   public currentSizes: KeyValue[] = [];
 
 
   constructor(private formBuilder: FormBuilder,
-    private categoryService: LookupService,
     private uploadService: FileUploadService,
     private readonly zone: NgZone,
     private lookupService: LookupService,
@@ -72,16 +74,25 @@ export class ProductCreateComponent implements OnInit {
               this.currentSizes.push(filter);
             })
           }
-        })
+        });
+        if (!this.currentSizes.length) {
+          // remove size field;
+          this.showSize = false;
+          this.form.get('size').setValue({ size: new FormControl(''), });
+        } else {
+          if (!this.showSize) {
+            this.form.get('size').setValue({ size: new FormControl('', [Validators.required]) });
+            this.showSize = true;
+          }
+        }
       }
     })
     this.lookupService.getState().then(state => {
-      this.sizes = state.sizes; //.map((value) => value.filters).reduce((previous, current) => previous.concat(current), []);
+      this.sizes = state.sizes;
     })
   }
 
   public selectCategory(category: any, index: any) {
-
     for (let i = this.categoryArray['controls'].length - 1; i > index; i--) {
       this.categoryArray.removeAt(i);
     }
@@ -93,10 +104,9 @@ export class ProductCreateComponent implements OnInit {
       this.categoryArray.push(this.formBuilder.group({
         id: null
       }))
+    } else {
+      console.log(this.categories[index][targetIndex]);
     }
-  }
-
-  log() {
   }
 
   get categoryArray() {
@@ -111,6 +121,7 @@ export class ProductCreateComponent implements OnInit {
     }
     fileReader.readAsDataURL($event.target.files[0]);
     this.crop = true;
+    console.log(this.crop);
   }
 
   onClose($event: any) {
@@ -126,7 +137,6 @@ export class ProductCreateComponent implements OnInit {
   }
 
   onImageCropped(cropped: string) {
-
     forkJoin(this.uploadService.upload('data:image/jpeg;base64,' + cropped, `${this.id}/images`, 'image'),
       this.uploadService.upload('data:image/jpeg;base64,' + this.originalImage, `${this.id}/images`, 'image'))
       .subscribe(([cropped, original]) => {
@@ -134,11 +144,12 @@ export class ProductCreateComponent implements OnInit {
           this.images.push({ cropped: cropped.secure_url, original: original.secure_url });
         }
         this.zone.run(() => {
+          this.crop = false;
           this.ref.detectChanges();
         });
+      }, (err) => {
+        this.crop = false;
       });
-
-    this.crop = false;
   }
 
   onRemoveImage(url) {
@@ -150,7 +161,6 @@ export class ProductCreateComponent implements OnInit {
       this.onAddTag();
     }
   }
-
 
   onAddTag() {
     const tag = this.form.get('tag').value;
@@ -165,14 +175,27 @@ export class ProductCreateComponent implements OnInit {
   }
 
   public onSave() {
-    console.log({
-      title: this.form.get('title').value,
-      description: this.form.get('description').value,
-      categories: this.categoryArray['controls'].map(c => c.value.id),
-      brand: this.form.get('brand').value,
-      tags: this.tags,
-      price: this.form.get('price').value
-    })
+    if (!this.images.length) {
+      this.imageError = true;
+    } else {
+      this.imageError = false;
+      let product: Product;
+      const size = this.lookupService.getSize(this.form.get('size').value);
+      product = {
+        title: this.form.get('title').value,
+        description: this.form.get('description').value,
+        categories: this.categoryArray['controls'].map(c => c.value.id),
+        images: this.images,
+        videos: this.video ? [this.video] : [],
+        size: size.value,
+        sizeId: size.key,
+        brand: this.form.get('brand').value,
+        tags: this.tags,
+        price: this.form.get('price').value
+      };
+      console.log(product);
+    }
+
   }
 
 }

@@ -1,20 +1,22 @@
 import { UserList } from "./user-list.model";
 import { Size } from "./size.model";
 import { ImageSet } from "../interfaces/image-set.interface";
+import { VideoMetaData } from "../interfaces/video-meta-data";
 
 export class Product {
     public id?: string;
     public seller?: UserList;
     public title?: string;
     public images?: ImageSet[];
-    public videos?: string[];
+    public videos?: VideoMetaData[];
     public description?: string;
     public auctionStart?: Date;
     public currentBid?: number;
     public categories?: string[];
+    public brand?: string;
     public sizeId?: string;
     public size: string;
-    public asset: string;
+    public asset?: string;
     public price: number;
     public moreItems?: Product[];
     public similarItems?: Product[];

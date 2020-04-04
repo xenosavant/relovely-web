@@ -14,6 +14,7 @@ export class LookupService extends BaseService {
 
     private _state: LookupState;
     private _catMap = {};
+    private _sizeMap = {};
 
     private _stateSubject$ = new Subject<LookupState>();
     public state$ = this._stateSubject$.asObservable();
@@ -36,7 +37,10 @@ export class LookupService extends BaseService {
                     sizes: JSON.parse(response.sizes.json)
                 }
                 this._state.categories.forEach(cat => {
-                    this.populate(cat);
+                    this.populateParents(cat);
+                });
+                this._state.sizes.forEach(sizes => {
+                    this.buildSizeDictionary(sizes);
                 });
                 this._stateSubject$.next(this._state);
                 return response;
@@ -48,13 +52,23 @@ export class LookupService extends BaseService {
         return this._catMap[id];
     }
 
-    private populate(category: Category) {
+    public getSize(id: string) {
+        return this._sizeMap[id];
+    }
+
+    private populateParents(category: Category) {
         this._catMap[category.id] = category;
         if (category.children) {
             category.children.forEach(cat => {
                 cat.parent = category;
-                this.populate(cat);
+                this.populateParents(cat);
             });
         }
+    }
+
+    private buildSizeDictionary(group: SizeFilterGroup) {
+        group.filters.forEach(filter => {
+            this._sizeMap[filter.key] = filter.value;
+        })
     }
 }
