@@ -24,7 +24,7 @@
         <app-video-uploader (completed)="videoUploaded($event)" [id]="id"></app-video-uploader>
     </div>
     <input #input type="file" style="visibility:hidden" (change)="imageChanged($event)" />
-    <form (submit)="onSave()" [formGroup]="form">
+    <form [formGroup]="form">
         <div>
             <mat-form-field>
                 <input matInput placeholder="Product Title" formControlName="title" />

@@ -1,5 +1,5 @@
 <ng-template cdkPortal #productCreateModal="cdkPortal">
-    <app-product-create (close)="close($event)"></app-product-create>
+    <app-product-create [sellerId]="user.id" (close)="close($event)"></app-product-create>
 </ng-template>
 <div class="profile-container">
     <app-profile-header (update)="update()" [owner]="owner" [user]="user"></app-profile-header>

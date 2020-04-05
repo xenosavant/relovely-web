@@ -6,6 +6,7 @@ import { VideoMetaData } from "../interfaces/video-meta-data";
 export class Product {
     public id?: string;
     public seller?: UserList;
+    public sellerId?: string;
     public title?: string;
     public images?: ImageSet[];
     public videos?: VideoMetaData[];

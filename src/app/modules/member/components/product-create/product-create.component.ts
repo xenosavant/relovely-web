@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, NgZone, ChangeDetectorRef, Input } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormArray, FormBuilder, AbstractControl } from '@angular/forms';
 import { Category } from '@app/shared/models/category.model';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
@@ -11,6 +11,7 @@ import { Video } from '@app/shared/interfaces/video';
 import { ThrowStmt } from '@angular/compiler';
 import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
 import { Product } from '@app/shared/models/product.model';
+import { ProductService } from '@app/shared/services/product/product.service';
 
 @Component({
   selector: 'app-product-create',
@@ -20,6 +21,8 @@ import { Product } from '@app/shared/models/product.model';
 })
 export class ProductCreateComponent implements OnInit {
 
+
+  @Input() sellerId: string;
   @Output() close: EventEmitter<any> = new EventEmitter;
 
   public imageChangedEvent: any = null;
@@ -44,7 +47,8 @@ export class ProductCreateComponent implements OnInit {
     private uploadService: FileUploadService,
     private readonly zone: NgZone,
     private lookupService: LookupService,
-    private ref: ChangeDetectorRef) {
+    private ref: ChangeDetectorRef,
+    private productService: ProductService) {
     this.form = new FormGroup({
       title: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
@@ -181,19 +185,26 @@ export class ProductCreateComponent implements OnInit {
       this.imageError = false;
       let product: Product;
       const size = this.lookupService.getSize(this.form.get('size').value);
+      console.log(this.form.get('size').value, size);
       product = {
         title: this.form.get('title').value,
         description: this.form.get('description').value,
         categories: this.categoryArray['controls'].map(c => c.value.id),
         images: this.images,
         videos: this.video ? [this.video] : [],
-        size: size.value,
-        sizeId: size.key,
+        size: size,
+        sizeId: this.form.get('size').value,
         brand: this.form.get('brand').value,
         tags: this.tags,
-        price: this.form.get('price').value
+        price: this.form.get('price').value * 100,
+        auction: false,
+        sellerId: this.sellerId,
+        sold: false
       };
       console.log(product);
+      this.productService.postProduct(product).subscribe(response => {
+        console.log(response);
+      })
     }
 
   }
