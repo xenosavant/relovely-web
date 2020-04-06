@@ -1,6 +1,6 @@
 <div (click)="onClicked($event)">
   <div class="image-wrapper">
-    <img class="product" [src]="product.asset">
+    <img class="product" [src]="product.images[0].cropped">
   </div>
   <div class="info-footer">
     <div class="product-name">

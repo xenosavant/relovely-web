@@ -60,6 +60,7 @@ export class UserService extends BaseService {
     getUser(userId: string): Observable<UserDetail> {
         return this.httpClient.get<UserDetail>(`${this.apiBaseUrl}/users/${userId}`).pipe(
             map((user: UserDetail) => {
+                console.log(user);
                 return user;
             })
         );

@@ -4,8 +4,17 @@ import { Product } from "@app/shared/models/product.model";
 @Injectable({ providedIn: 'root' })
 export class ProductService extends BaseService {
 
-    postProduct(product: Product): Observable<Product> {
-        return this.httpClient.post<Product>(`${this.apiBaseUrl}/products/`, product).pipe(
+
+    getProduct(productId: string): Observable<Product> {
+        return this.httpClient.get<Product>(`${this.apiBaseUrl}/products/${productId}/`).pipe(
+            map((result: Product) => {
+                return result;
+            })
+        );
+    }
+
+    postProduct(product: Product, userId: string): Observable<Product> {
+        return this.httpClient.post<Product>(`${this.apiBaseUrl}/users/${userId}/products/`, product).pipe(
             map((result: Product) => {
                 return result;
             })

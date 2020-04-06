@@ -24,7 +24,7 @@
     <div class="product-list">
       <div *ngFor="let product of products">
         <div class="product-card" (click)="onClicked(product.id)">
-          <img [src]="product.asset">
+          <img [src]="product.images[0].cropped">
         </div>
       </div>
     </div>

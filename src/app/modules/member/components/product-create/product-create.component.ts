@@ -198,11 +198,10 @@ export class ProductCreateComponent implements OnInit {
         tags: this.tags,
         price: this.form.get('price').value * 100,
         auction: false,
-        sellerId: this.sellerId,
         sold: false
       };
       console.log(product);
-      this.productService.postProduct(product).subscribe(response => {
+      this.productService.postProduct(product, this.sellerId).subscribe(response => {
         console.log(response);
       })
     }

@@ -1,5 +1,5 @@
 <div class="product-container-wrapper">
-    <ng-container *ngIf="mobile">
+    <ng-container *ngIf="mobile && !loading">
         <div class="profile-container" (click)="goToProfile($event)">
             <div class="profile-image-wrapper">
                 <app-avatar [image]="product.seller.profileImageUrl"></app-avatar>
@@ -45,7 +45,7 @@
             [products]="product.similarItems">
         </app-horizontal-product-list>
     </ng-container>
-    <div *ngIf="!mobile" class="grid-wrapper">
+    <div *ngIf="!mobile && !loading" class="grid-wrapper">
         <div class="image-wrapper">
             <div class="product">
                 <img [src]="currentImage">
@@ -69,7 +69,7 @@
                         @{{product.seller.username}}
                     </div>
                 </div>
-                <div class=" product-price">
+                <div class="product-price">
                     {{product.price | currency}}
                 </div>
                 <div class="size-wrapper">

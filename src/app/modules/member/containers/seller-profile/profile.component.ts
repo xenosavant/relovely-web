@@ -5,6 +5,7 @@ import { users } from '@app/data/users.data';
 import { products } from '@app/data/products.data';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from '@app/shared/services/overlay.service';
+import { UserService } from '@app/shared/services/user/user.service';
 
 @Component({
   selector: 'app-seller-profile',
@@ -20,14 +21,17 @@ export class SellerProfileComponent implements OnInit {
   @Input() owner = true;
   @Output() updateImage: EventEmitter<boolean> = new EventEmitter<boolean>();
   users: UserDetail[];
-  showCreate = true;
+  showCreate = false;
 
-  constructor(private route: ActivatedRoute, private overlayService: OverlayService) { }
+  constructor(private route: ActivatedRoute, private overlayService: OverlayService, private userService: UserService) { }
 
   ngOnInit() {
-    this.user.listings = products.filter(p => {
-      return p.seller.username === this.user.username;
-    })
+    // this.user.listings = products.filter(p => {
+    //   return p.seller.username === this.user.username;
+    // })
+    if (this.owner) {
+      this.showCreate = true;
+    }
     this.users = users;
   }
 

@@ -3,7 +3,7 @@
     <div *ngFor="let product of cartProducts" class="product-wrapper">
       <div class="product-image">
         <div class="image-wrapper" [class.mat-elevation-z2]="true">
-          <img class="product" [src]="product.asset">
+          <img class="product" [src]="product.images[0].cropped">
         </div>
       </div>
       <div class="product-info">
