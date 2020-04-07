@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, ChangeDetectorRef, NgZone } from '@angular/core';
 import { FileUploader, FileUploaderOptions, ParsedResponseHeaders } from 'ng2-file-upload';
 import { environment } from '@env/environment';
-import { Video } from '@app/shared/interfaces/video';
 import { FileUploadService } from '@app/shared/services/file-upload.service';
+import { VideoMetaData } from '@app/shared/interfaces/video-meta-data';
 
 @Component({
   selector: 'app-video-uploader',
@@ -15,11 +15,11 @@ export class VideoUploaderComponent implements OnInit {
   public uploader: FileUploader;
   public uploading = false;
   public percentage = 0;
-  public video: Video;
+  public video: VideoMetaData;
   public timestamp = Date.now().toString();
 
   @Input() id: string;
-  @Output() completed: EventEmitter<Video> = new EventEmitter<Video>();
+  @Output() completed: EventEmitter<VideoMetaData> = new EventEmitter<VideoMetaData>();
 
   constructor(
     private ref: ChangeDetectorRef,
@@ -27,10 +27,6 @@ export class VideoUploaderComponent implements OnInit {
     private uploadService: FileUploadService) { }
 
   ngOnInit(): void {
-
-    console.log('video init');
-
-
     this.uploadService.getSignature(`${this.id}/videos`, this.timestamp).subscribe(signature => {
 
       // Create the file uploader, wire it to upload to your account
@@ -73,7 +69,8 @@ export class VideoUploaderComponent implements OnInit {
           height: parsedResponse.height,
           url: parsedResponse.url,
           publicId: parsedResponse.public_id,
-          bytes: parsedResponse.bytes
+          bytes: parsedResponse.bytes,
+          format: parsedResponse.format
         };
         this.completed.emit(video);
         this.zone.run(() => {

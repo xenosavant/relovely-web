@@ -10,8 +10,14 @@
         </div>
         <owl-carousel-o [options]="carouselOptions" (changed)="carouselTranslated($event)" appOwlPreventClick
             #featuredCarousel>
+            <ng-template *ngIf="product.videos[0]" carouselSlide>
+                <div class="video-slide-wrapper">
+                    <app-video-player [publicId]="product.videos[0].publicId" [controls]="true">
+                    </app-video-player>
+                </div>
+            </ng-template>
             <ng-container *ngFor="let image of product.images, let i = index">
-                <ng-template carouselSlide [id]="i">
+                <ng-template carouselSlide>
                     <a appClick target="_blank">
                         <img [src]="image.cropped" alt="" #imageElement>
                     </a>
@@ -48,22 +54,31 @@
     <div *ngIf="!mobile && !loading" class="grid-wrapper">
         <div class="image-wrapper">
             <div class="product">
-                <img [src]="currentImage">
+                <div *ngIf="currentItem.publicId">
+                    <div class="video-desktop-wrapper" [style.padding-bottom.%]="videoPadding"
+                        [style.padding-top.%]="videoPadding">
+                        <app-video-player [publicId]="product.videos[0].publicId" [controls]="true">
+                        </app-video-player>
+                    </div>
+                </div>
+                <img *ngIf="!currentItem.publicId" [src]="currentItem">
             </div>
             <div class="preview">
+                <div *ngIf="product.videos[0]" class="video-desktop-wrapper">
+                    <img (click)="setActiveItem(product.videos[0])" [src]="videoThumbnail">
+                </div>
                 <ng-container *ngFor="let image of product.images">
-                    <span class="product-gallery__carousel-item" appClick (click)="setActiveImage(image)">
-                        <img class="product-gallery__carousel-image" [src]="image" alt="">
+                    <span class="product-gallery__carousel-item" appClick (click)="setActiveItem(image.cropped)">
+                        <img class="product-gallery__carousel-image" [src]="image.cropped" alt="">
                     </span>
                 </ng-container>
             </div>
         </div>
         <div class="desktop-wrapper" *ngIf="!mobile">
             <div class="desktop-info-wrapper">
-                <h1>{{product.name}}</h1>
+                <h1>{{product.title}}</h1>
                 <div class="user-wrapper">
                     <app-avatar [image]="product.seller.imageUrl" (click)="goToProfile()">
-
                     </app-avatar>
                     <div>
                         @{{product.seller.username}}
@@ -73,7 +88,7 @@
                     {{product.price | currency}}
                 </div>
                 <div class="size-wrapper">
-                    Size: <strong>M</strong>
+                    Size: <strong>{{product.size || 'One Size'}}</strong>
                 </div>
                 <div class="button-wrapper">
                     <app-button type="accent" (click)="onClose($event)">

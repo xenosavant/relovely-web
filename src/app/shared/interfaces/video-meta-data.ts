@@ -4,4 +4,5 @@ export interface VideoMetaData {
     url: string;
     publicId: string;
     bytes: number;
+    format: string;
 }

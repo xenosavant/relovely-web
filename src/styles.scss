@@ -66,10 +66,12 @@ a {
 }
 
 cl-video {
-  height:100%;
-    video {
-        height:100%;
-    }
+  max-height:100%;
+  max-width: 100%;
+  video {
+      max-height: 100% !important;
+      max-width: 100% !important;
+  }
 }
 
 .icon-wrapper, .search__form {
@@ -740,13 +742,15 @@ button.mat-stroked-button {
 }
 
 
-button.primary {
+button {
+  min-height: 30px;
+  &.primary {
   background-color: $light-gray !important;
   color:white !important;
-  min-height: 35px;
   &:disabled {
     background-color: $dark-gray-background !important;
   }
+ }
 }
 
 button.mat-flat-button.mat-accent {

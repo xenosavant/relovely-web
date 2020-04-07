@@ -32,7 +32,7 @@ export class ProductsComponent implements OnInit {
     private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() {
-    this.products = products;
+    this.products = [];
     this.navigationService.navConfig$.subscribe(state => {
       this.grid = state.showProductGrid;
       this.title = state.pageHeader;

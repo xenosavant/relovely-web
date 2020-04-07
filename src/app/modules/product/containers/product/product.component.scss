@@ -149,11 +149,19 @@
     border-radius:8px;
     // background-color: white;
     .desktop-info-wrapper {
-        margin:16px 16px;
         height: 100%;
         .product-price {
             font-size:1.5em;
             font-weight: 400;
+        }
+
+        .user-wrapper {
+            margin-top: 16px;
+        }
+
+        .video-wrapper {
+            height: 200px;
+            position: absolute;
         }
 
         .description {
@@ -191,4 +199,24 @@
     display:grid;
     grid-template-columns: 50px auto;
     align-items: center;
+}
+
+.video-slide-wrapper {
+    width: calc(100vw - 32px);
+    height: calc(100vw - 32px);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    background-color: black;
+}
+
+.video-desktop-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: black;
+    img {
+        object-fit: cover;
+        width: 100%;
+        max-height: 100%;
+  }
 }

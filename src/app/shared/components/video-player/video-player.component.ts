@@ -14,6 +14,7 @@ export class VideoPlayerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.publicId);
   }
 
 }

@@ -7,11 +7,11 @@ import { guid } from '../../../../shared/utils/rand';
 import { FileUploadService } from '../../../../shared/services/file-upload.service'
 import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 import { forkJoin } from 'rxjs';
-import { Video } from '@app/shared/interfaces/video';
 import { ThrowStmt } from '@angular/compiler';
 import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
 import { Product } from '@app/shared/models/product.model';
 import { ProductService } from '@app/shared/services/product/product.service';
+import { VideoMetaData } from '@app/shared/interfaces/video-meta-data';
 
 @Component({
   selector: 'app-product-create',
@@ -29,7 +29,7 @@ export class ProductCreateComponent implements OnInit {
   public crop = false;
   public form: FormGroup;
   public categories: Array<Category[]> = [];
-  public video: Video;
+  public video: VideoMetaData;
   public images: ImageSet[] = [];
   public rootCategories = [];
   public tags: string[] = [];
