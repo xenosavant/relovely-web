@@ -16,7 +16,7 @@ export class ProfileStatsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.statItems);
+
   }
 
 }

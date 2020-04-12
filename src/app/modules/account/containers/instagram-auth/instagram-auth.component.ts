@@ -26,7 +26,7 @@ export class InstagramAuthComponent implements OnInit {
           this.router.navigate(['/']);
         });
       } else {
-        console.log('failed');
+
       }
     });
   }

@@ -39,10 +39,8 @@ export class DesktopFiltersComponent implements OnInit {
 
   ngOnInit() {
     this.navigationService.navConfig$.subscribe(navigationState => {
-      console.log(navigationState);
       this.lookupService.getState().then(state => {
         this.sizeFilters = state.sizes;
-        console.log(this.sizeFilters);
         this.currentSizeFilters = this.sizeFilters.filter(size => {
           return size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
         });

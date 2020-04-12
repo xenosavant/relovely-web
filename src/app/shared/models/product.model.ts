@@ -16,7 +16,7 @@ export class Product {
     public categories?: string[];
     public brand?: string;
     public sizeId?: string;
-    public size: string;
+    public size?: string;
     public asset?: string;
     public price: number;
     public moreItems?: Product[];

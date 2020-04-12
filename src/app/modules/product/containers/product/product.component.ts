@@ -8,6 +8,7 @@ import { OwlCarouselOConfig } from 'ngx-owl-carousel-o/lib/carousel/owl-carousel
 import { ProductService } from '@app/shared/services/product/product.service';
 import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 import { VideoMetaData } from '@app/shared/interfaces/video-meta-data';
+import { OrderService } from '@app/shared/services/order/order.service';
 
 @Component({
   selector: 'app-product',
@@ -21,7 +22,7 @@ export class ProductComponent implements OnInit {
   mobile: boolean;
   loading = true;
   videoThumbnail: string;
-  videoPadding: number = 0;
+  videoPadding = 0;
   currentItem: string | VideoMetaData;
   id: string;
   public carouselOptions: Partial<OwlCarouselOConfig> = {
@@ -49,7 +50,8 @@ export class ProductComponent implements OnInit {
     private navigationService: NavigationService,
     private zone: NgZone,
     private ref: ChangeDetectorRef,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private orderService: OrderService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -105,10 +107,25 @@ export class ProductComponent implements OnInit {
   }
 
   carouselTranslated(event: any) {
-    console.log(event);
+
   }
 
   setActiveItem(item: VideoMetaData | string) {
     this.currentItem = item;
+  }
+
+  purchase(event: any) {
+    this.orderService.postOrder({
+      address: {
+        line1: '298 6th St',
+        line2: 'Apt 1',
+        city: 'Jersey City',
+        state: 'NJ',
+        zip: '07302',
+        country: 'US'
+      }
+    }, this.product.id).subscribe(response => {
+
+    })
   }
 }

@@ -1,89 +1,110 @@
 <app-modal title="List A Product" (close)="onClose($event)">
-    <div class="info hint">
-        *We recommend at least one photo wearing the product
-    </div>
-    <div *ngIf="imageError" class="image-error">
-        Please upload at least one photo
-    </div>
-    <div *ngIf="images.length" class="info">
-        Cover Photo
-    </div>
-    <div class="thumbnails" dragula="images" [(dragulaModel)]="images">
-        <div class="image-wrapper" *ngFor="let image of images; let i = index">
-            <img [src]="image.cropped">
-            <div class="overlay">
-                <mat-icon (click)="onRemoveImage(url)">cancel</mat-icon>
+    <ng-container *ngIf="!loading">
+        <div class="info hint">
+            *We recommend at least one photo wearing the product
+        </div>
+        <div *ngIf="imageError" class="image-error">
+            Please upload at least one photo
+        </div>
+        <div *ngIf="imageUploadError" class="image-error">
+            An error occured upoloading the image, please try again
+        </div>
+        <div *ngIf="images.length" class="info">
+            Cover Photo
+        </div>
+        <div *ngIf="saveError" class="image-error">
+            Unable to create listing. Check your internet connection and try again.
+        </div>
+        <div class="thumbnails" dragula="images" [(dragulaModel)]="images">
+            <div class="image-wrapper" *ngFor="let image of images; let i = index">
+                <img [src]="image.cropped">
+                <div class="overlay">
+                    <mat-icon (click)="onRemoveImage(url)">cancel</mat-icon>
+                </div>
+            </div>
+            <div class="add-image" (click)="input.click()"><img src="./assets/images/plus.png"></div>
+        </div>
+        <div class="info hint">
+            *Upload a video wearing the product
+        </div>
+        <div *ngIf="!video" class="video">
+            <app-video-uploader (completed)="videoUploaded($event)" [id]="id"></app-video-uploader>
+        </div>
+        <div class="thumbnails" *ngIf="video">
+            <div class="image-wrapper">
+                <img [src]="videoThumbnail">
+                <div class="overlay">
+                    <mat-icon (click)="onRemoveVideo()">cancel</mat-icon>
+                </div>
             </div>
         </div>
-        <div class="add-image" (click)="input.click()"><img src="./assets/images/plus.png"></div>
-    </div>
-    <div class="info hint">
-        *Upload a video wearing the product
-    </div>
-    <div class="video">
-        <app-video-uploader (completed)="videoUploaded($event)" [id]="id"></app-video-uploader>
-    </div>
-    <input #input type="file" style="visibility:hidden" (change)="imageChanged($event)" />
-    <form [formGroup]="form">
-        <div>
-            <mat-form-field>
-                <input matInput placeholder="Product Title" formControlName="title" />
-            </mat-form-field>
-        </div>
-        <div class="description">
-            <mat-form-field>
-                <textarea matInput placeholder="Product Description" formControlName="description"></textarea>
-            </mat-form-field>
-        </div>
-        <div class="categories">
-            <ng-container formArrayName="categories" *ngFor="let item of categoryArray['controls']; let i = index;">
-                <div [formGroupName]="i">
-                    <mat-form-field>
-                        <mat-select placeholder="Category" class="form-control"
-                            (selectionChange)="selectCategory($event, i)" formControlName="id">
-                            <mat-option *ngFor="let cat of categories[i]" [value]="cat.id">{{cat.name}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-            </ng-container>
-        </div>
-        <div class="size" *ngIf="showSize">
-            <mat-form-field>
-                <mat-select placeholder="Size" class="form-control" formControlName="size">
-                    <mat-option *ngFor="let size of currentSizes" [value]="size.key">{{size.value}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="brand">
-            <mat-form-field>
-                <input matInput placeholder="Brand" formControlName="brand" />
-            </mat-form-field>
-        </div>
-        <div class="tags">
-            <mat-form-field>
-                <mat-chip-list #chipList>
-                    <mat-chip [selectable]="false" (removed)="onRemoveTag(tag)" [removable]="true"
-                        *ngFor="let tag of tags">
-                        {{tag}}
-                        <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                    <input matInput [matChipInputFor]="chipList" type="text" class="form-control" formControlName="tag"
-                        (keyup)="onKeyup($event)" placeholder="Tags (up to 16)" />
-                </mat-chip-list>
-            </mat-form-field>
-        </div>
-        <div class="price">
-            <mat-form-field>
-                <input type="number" matInput placeholder="Price" formControlName="price" />
-            </mat-form-field>
-        </div>
-        <button mat-stroked-button [disabled]="!form.valid" (click)="onSave()" [class.primary]="true">
-            List
-        </button>
-    </form>
+        <input #input type="file" style="visibility:hidden" (change)="imageChanged($event)" />
+        <form [formGroup]="form">
+            <div>
+                <mat-form-field>
+                    <input matInput placeholder="Product Title" formControlName="title" />
+                </mat-form-field>
+            </div>
+            <div class="description">
+                <mat-form-field>
+                    <textarea matInput placeholder="Product Description" formControlName="description"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="categories">
+                <ng-container formArrayName="categories" *ngFor="let item of categoryArray['controls']; let i = index;">
+                    <div [formGroupName]="i">
+                        <mat-form-field>
+                            <mat-select placeholder="Category" class="form-control"
+                                (selectionChange)="selectCategory($event, i)" formControlName="id">
+                                <mat-option *ngFor="let cat of categories[i]" [value]="cat.id">{{cat.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="size">
+                <mat-form-field>
+                    <mat-select placeholder="Size" class="form-control" formControlName="size">
+                        <mat-option *ngFor="let size of currentSizes" [value]="size.key">{{size.value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="brand">
+                <mat-form-field>
+                    <input matInput placeholder="Brand" formControlName="brand" />
+                </mat-form-field>
+            </div>
+            <div class="tags">
+                <mat-form-field>
+                    <mat-chip-list #chipList>
+                        <mat-chip [selectable]="false" (removed)="onRemoveTag(tag)" [removable]="true"
+                            *ngFor="let tag of tags">
+                            {{tag}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                        <input matInput [matChipInputFor]="chipList" type="text" class="form-control"
+                            formControlName="tag" (keyup)="onKeyup($event)" placeholder="Tags (up to 16)" />
+                    </mat-chip-list>
+                </mat-form-field>
+            </div>
+            <div class="price">
+                <mat-form-field>
+                    <input type="number" matInput placeholder="Price" formControlName="price" />
+                </mat-form-field>
+            </div>
+            <button mat-stroked-button [disabled]="!form.valid" (click)="onSave()" [class.primary]="true">
+                List
+            </button>
+        </form>
+    </ng-container>
 </app-modal>
+<div class="loading-wrapper" *ngIf="loading">
+    <div class="loading">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+</div>
 
 <ng-container *ngIf="crop">
     <app-image-cropper (cancel)="onCloseCropper($event)" (crop)="onImageCropped($event)"

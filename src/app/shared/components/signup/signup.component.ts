@@ -103,10 +103,10 @@ export class SignupComponent implements OnInit {
         this.userService.setLogin(response.jwt, response.user);
         this.navigationService.closeAuthWindow();
         this.loading = false;
-      }, err => {
+      }, (err) => {
         if (err.status === 403) {
-          this.signinError = 'Incorrect login credentials';
-          this.loading = false;
+          this.signinError = err.error.error.message,
+            this.loading = false;
           this.zone.run(() => {
             this.ref.detectChanges();
           });
@@ -122,7 +122,7 @@ export class SignupComponent implements OnInit {
         this.loading = false;
         this.router.navigate(['/account/reset-password'])
       }, err => {
-        console.log(err);
+
       });
   }
 

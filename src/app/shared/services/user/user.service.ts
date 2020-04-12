@@ -18,7 +18,6 @@ export class UserService extends BaseService {
         super(httpClient);
         const user = this.localStorageService.getItem('currentUser');
         const jwt = this.localStorageService.getItem('jwt');
-        console.log(user, jwt);
         if (user && jwt) {
             this._currentUser = user;
             this._jwt = jwt;
@@ -46,7 +45,6 @@ export class UserService extends BaseService {
         this._currentUser = user;
         this.localStorageService.setItem('currentUser', user);
         this.loggedInSubject$.next(true);
-        console.log(this.currentUser);
     }
 
     public logout() {
@@ -60,7 +58,6 @@ export class UserService extends BaseService {
     getUser(userId: string): Observable<UserDetail> {
         return this.httpClient.get<UserDetail>(`${this.apiBaseUrl}/users/${userId}`).pipe(
             map((user: UserDetail) => {
-                console.log(user);
                 return user;
             })
         );

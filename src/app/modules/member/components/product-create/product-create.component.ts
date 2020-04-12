@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, NgZone, ChangeDetectorRef, Input } from '@angular/core';
-import { FormControl, Validators, FormGroup, FormArray, FormBuilder, AbstractControl } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormArray, FormBuilder, AbstractControl, ValidationErrors, FormArrayName } from '@angular/forms';
 import { Category } from '@app/shared/models/category.model';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { KeyValue } from '../../../../shared/interfaces/key-value.interface';
@@ -12,6 +12,8 @@ import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
 import { Product } from '@app/shared/models/product.model';
 import { ProductService } from '@app/shared/services/product/product.service';
 import { VideoMetaData } from '@app/shared/interfaces/video-meta-data';
+import { switchMap, map, tap, concatMap } from 'rxjs/operators';
+import { resolve } from 'dns';
 
 @Component({
   selector: 'app-product-create',
@@ -41,6 +43,10 @@ export class ProductCreateComponent implements OnInit {
   public showSize = true;
   public imageError = false;
   public currentSizes: KeyValue[] = [];
+  public videoThumbnail: string;
+  public imageUploadError = false;
+  public loading = false;
+  public saveError = false;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -60,7 +66,7 @@ export class ProductCreateComponent implements OnInit {
       size: new FormControl('', [Validators.required]),
       tag: new FormControl(''),
       price: new FormControl(null, [Validators.required])
-    });
+    }, this.validateCategories);
     this.lookupService.getState().then(state => {
       this.rootCategories = state.categories;
       this.categories.push(state.categories);
@@ -69,25 +75,23 @@ export class ProductCreateComponent implements OnInit {
 
   ngOnInit() {
     this.id = guid();
-    this.form.get('categories').valueChanges.subscribe(val => {
+    this.form.get('categories').valueChanges.subscribe((val: any) => {
       this.currentSizes = [];
-      if (val.length === 3) {
+      if (val.length === 3 && val[2].id) {
         this.sizes.forEach(size => {
           if (size.categoryIds.indexOf(val[2].id) > -1) {
             size.filters.forEach(filter => {
               this.currentSizes.push(filter);
-            })
+            });
           }
         });
+        const formField = this.form.get('size');
         if (!this.currentSizes.length) {
-          // remove size field;
-          this.showSize = false;
-          this.form.get('size').setValue({ size: new FormControl(''), });
+          formField.clearValidators();
+          formField.updateValueAndValidity();
         } else {
-          if (!this.showSize) {
-            this.form.get('size').setValue({ size: new FormControl('', [Validators.required]) });
-            this.showSize = true;
-          }
+          formField.setValidators([Validators.required]);
+          formField.updateValueAndValidity();
         }
       }
     })
@@ -109,7 +113,7 @@ export class ProductCreateComponent implements OnInit {
         id: null
       }))
     } else {
-      console.log(this.categories[index][targetIndex]);
+
     }
   }
 
@@ -125,7 +129,6 @@ export class ProductCreateComponent implements OnInit {
     }
     fileReader.readAsDataURL($event.target.files[0]);
     this.crop = true;
-    console.log(this.crop);
   }
 
   onClose($event: any) {
@@ -136,24 +139,30 @@ export class ProductCreateComponent implements OnInit {
     this.crop = false;
   }
 
-  public videoUploaded($event: any) {
+  videoUploaded($event: any) {
     this.video = $event;
+    this.videoThumbnail = this.video.url.replace(this.video.format, 'jpg');
+  }
+
+  onRemoveVideo($event: any) {
+    this.video = null;
   }
 
   onImageCropped(cropped: string) {
-    forkJoin(this.uploadService.upload('data:image/jpeg;base64,' + cropped, `${this.id}/images`, 'image'),
-      this.uploadService.upload('data:image/jpeg;base64,' + this.originalImage, `${this.id}/images`, 'image'))
-      .subscribe(([cropped, original]) => {
-        if (cropped.secure_url && original.secure_url) {
-          this.images.push({ cropped: cropped.secure_url, original: original.secure_url });
-        }
-        this.zone.run(() => {
+    this.uploadService.upload('data:image/jpeg;base64,' + cropped, `products/${this.id}/images`, 'image').pipe(
+      concatMap(croppedResult => this.uploadService.upload('data:image/jpeg;base64,' + cropped, `products/${this.id}/images`, 'image')
+        .pipe(map((originalResult: any) => {
+          this.images.push({ cropped: croppedResult.secure_url, original: originalResult.secure_url });
+        })))).subscribe(result => {
+          this.zone.run(() => {
+            this.crop = false;
+            this.imageUploadError = false;
+            this.ref.detectChanges();
+          });
+        }, err => {
+          this.imageUploadError = true;
           this.crop = false;
-          this.ref.detectChanges();
         });
-      }, (err) => {
-        this.crop = false;
-      });
   }
 
   onRemoveImage(url) {
@@ -182,30 +191,52 @@ export class ProductCreateComponent implements OnInit {
     if (!this.images.length) {
       this.imageError = true;
     } else {
-      this.imageError = false;
+      this.loading = true;
       let product: Product;
-      const size = this.lookupService.getSize(this.form.get('size').value);
-      console.log(this.form.get('size').value, size);
       product = {
+        id: this.id,
         title: this.form.get('title').value,
         description: this.form.get('description').value,
         categories: this.categoryArray['controls'].map(c => c.value.id),
         images: this.images,
         videos: this.video ? [this.video] : [],
-        size: size,
-        sizeId: this.form.get('size').value,
         brand: this.form.get('brand').value,
         tags: this.tags,
         price: this.form.get('price').value * 100,
         auction: false,
         sold: false
       };
-      console.log(product);
+      console.log(this.form.get('size'));
+      if (this.form.get('size').value) {
+        product.size = this.lookupService.getSize(this.form.get('size').value);
+        product.sizeId = this.form.get('size').value;
+      }
       this.productService.postProduct(product, this.sellerId).subscribe(response => {
-        console.log(response);
+        this.loading = false;
+        this.close.emit();
+      }, error => {
+        this.saveError = true;
       })
     }
 
   }
 
+  validateCategories(control: FormGroup): ValidationErrors {
+    const cats = control.get('categories');
+    let response: ValidationErrors = null;
+    if (cats) {
+      if (cats.value.length < 3) {
+        response = { categories: 'Please select a category' }
+      }
+      if (!response) {
+        cats.value.forEach(val => {
+          if (!val.id) {
+            response = { categories: 'Please select a category' }
+          }
+        });
+      }
+      return response;
+    }
+    return { categories: 'Please select a category' }
+  }
 }

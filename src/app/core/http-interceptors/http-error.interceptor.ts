@@ -27,20 +27,22 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   private handleAccess(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.userSerice.jwt;
     let changedRequest = request;
-    const headerSettings: { [name: string]: string | string[]; } = {};
+    if (request.url.indexOf('cloudinary') === -1) {
+      const headerSettings: { [name: string]: string | string[]; } = {};
 
-    for (const key of request.headers.keys()) {
-      headerSettings[key] = request.headers.getAll(key);
+      for (const key of request.headers.keys()) {
+        headerSettings[key] = request.headers.getAll(key);
+      }
+      if (token) {
+        headerSettings['Authorization'] = 'Bearer ' + token;
+      }
+      headerSettings['Content-Type'] = 'application/json';
+      const newHeader = new HttpHeaders(headerSettings);
+      changedRequest = request.clone({
+        headers: newHeader
+      });
     }
-    if (token) {
-      headerSettings['Authorization'] = 'Bearer ' + token;
-    }
-    headerSettings['Content-Type'] = 'application/json';
-    const newHeader = new HttpHeaders(headerSettings);
-    changedRequest = request.clone({
-      headers: newHeader
-    });
-    return next.handle(request).pipe(
+    return next.handle(changedRequest).pipe(
       tap((next) => {
         // do we need to do anythuing here?
       }, (err: any) => {

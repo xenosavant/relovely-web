@@ -30,36 +30,3 @@
         margin:0 auto;
     }
 }
-
-.video-preview {
-    position: absolute;
-    app-video-player {
-        height:100%;
-    }
-    .overlay {
-        position: absolute;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5); /* Black see-through */
-        color: #f1f1f1;
-        height: 100%;
-        width:100%;
-        color: white;
-        font-size: 20px;
-        padding: 20px;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        align-content: center;
-        img {
-            height:100%;
-        }
-        mat-icon {
-            top:-12px;
-            right:-12px;
-            position: absolute;
-            opacity: .5;
-            color: #212529;
-            cursor: pointer;
-        }
-     }
-}

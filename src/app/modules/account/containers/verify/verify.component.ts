@@ -29,7 +29,6 @@ export class VerifyComponent implements OnInit {
         switch (this.type) {
           case 'email':
             if (code) {
-              console.log(code);
               this.authService.verifyEmail({ code: code.replace(/ /g, '+') }).subscribe(response => {
                 this.userService.setLogin(response.jwt, response.user);
                 this.router.navigate(['/']);

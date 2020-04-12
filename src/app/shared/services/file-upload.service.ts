@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { BaseService } from './base.service';
 import { HttpClient, HttpEventType } from '@angular/common/http';
-import { map, flatMap, switchMap, tap } from 'rxjs/operators';
+import { map, flatMap, switchMap, tap, concatMap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { guid } from '../utils/rand';
 
@@ -26,13 +26,11 @@ export class FileUploadService extends BaseService {
         // formData.append('background_removal', 'cloudinary_ai');
 
         return this.httpClient.post<{ signature: string }>(`${this.apiBaseUrl}/storage/signature`, { folder: id, timestamp: timestamp }).pipe(
-            tap(response => formData.append('signature', response.signature)),
-            switchMap(response => this.httpClient.post<any>(`${this.cloudinaryUploadUrl}/${type}/upload`, formData, {
-                reportProgress: false,
-                observe: 'events'
-            }).pipe(map((event: any) => {
-                return event.body;
-            }))))
+            concatMap(response => {
+                formData.append('signature', response.signature);
+                return this.httpClient.post<any>(`${this.cloudinaryUploadUrl}/${type}/upload`, formData)
+                    .pipe(map((result: any) => result))
+            }))
     }
 
     public getSignature(id: string, timestamp: string) {

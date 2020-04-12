@@ -45,7 +45,6 @@ export class ProductsComponent implements OnInit {
     });
     this.route.params.subscribe(params => {
       this.lookupService.getState().then(state => {
-        console.log(state)
         if (params['categoryId']) {
           this.currentNavItem = this.lookupService.navLookup[params['categoryId']];
         } else {

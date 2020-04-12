@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Order } from '@app/shared/models/order.model';
-import { orders } from '../../../../data/orders.data';
 
 @Component({
   selector: 'app-order',
@@ -18,8 +17,7 @@ export class OrderComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.order = orders.find(item => item.id === params.id);
-      console.log(this.order);
+
     })
   }
 

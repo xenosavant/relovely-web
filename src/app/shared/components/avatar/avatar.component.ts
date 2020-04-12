@@ -19,7 +19,6 @@ export class AvatarComponent implements OnInit {
   }
 
   onSelect($event: any) {
-    console.log('avatar');
     this.select.emit($event);
   }
 

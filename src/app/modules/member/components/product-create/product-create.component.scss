@@ -95,3 +95,14 @@ form button {
     color: red;
     margin-bottom:8px;
 }
+
+.loading-wrapper {
+    display: grid;
+    align-items: center;
+    align-content: center;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+}

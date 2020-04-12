@@ -47,7 +47,6 @@ export class ProfileComponent implements OnInit {
         }
         this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
           this.mobile = result.matches;
-          console.log(this.mobile);
         });
       }
     });

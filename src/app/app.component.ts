@@ -93,17 +93,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    products.forEach(p => {
-      let indexArray = products.map((p, index) => index);
-      for (let i = 1; i < 6; i++) {
-        const index = indexArray.splice(Math.ceil(Math.random() * indexArray.length) - 1, 1)[0];
-        p.similarItems.push(products[index]);
-      }
-      for (let i = 1; i < 6; i++) {
-        const index = indexArray.splice(Math.ceil(Math.random() * indexArray.length) - 1, 1)[0];
-        p.moreItems.push(products[index]);
-      }
-    });
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
       if (this.mobile) {
@@ -112,6 +101,21 @@ export class AppComponent implements OnInit {
         this.scrollSubscription$.unsubscribe();
       }
     })
+    this.navigationService.navConfig$.subscribe(val => {
+      this.categoryFilters = val.categoryItems;
+      this.navHeader = val.navigationHeader;
+      this.header = val.pageHeader;
+      this.showNavBar = val.showNavBar;
+      this.showFilterBar = val.showFilterBar;
+      this.showProductGrid = val.showProductGrid;
+      this.showTopLevel = val.showTopLeveNavigation;
+      this.chipItems = val.chipItems;
+      this.currentNavigationItems = val.currentNavigationItems;
+      this.loading = false;
+      this.zone.run(() => {
+        this.ref.detectChanges();
+      });
+    });
     this.lookupService.getLookupData().subscribe(response => {
       const cats = JSON.parse(response.categories.json);
       const navigationItems = cats.map(cat => {
@@ -141,13 +145,9 @@ export class AppComponent implements OnInit {
           cat.plural)
       });
 
-      console.log(navigationItems);
-
       navigationItems.forEach(item => {
         this.setParents(item);
       });
-
-      console.log(navigationItems);
 
       this.accountNav = {
         name: 'Account', path: null, subItems: [
@@ -170,7 +170,7 @@ export class AppComponent implements OnInit {
       this.accountNav.subItems.push(new NavigationItem([], '/account/settings', 'Settings', '0', [], [], null),
         new NavigationItem([], '/account/terms', 'Terms of Service', null, [], [], null),
         new NavigationItem([], '/account/help', 'Help', null, [], [], null),
-        new NavigationItem([], '/account/signout', 'Log Out', null, [], [], null),
+        new NavigationItem([], '/account/signout', 'Sign Out', null, [], [], null),
       );
       navigationItems.push(this.accountNav);
       this.navigationService.showAuthWindow$.subscribe(open => {
@@ -182,28 +182,11 @@ export class AppComponent implements OnInit {
       });
       this.navigationService.rootNavigationItems = navigationItems;
       this.navigationService.setCurrentNavigationItems(navigationItems);
-
     })
-    this.storageService.testLocalStorage();
-    this.navigationService.navConfig$.subscribe(val => {
-      this.categoryFilters = val.categoryItems;
-      this.navHeader = val.navigationHeader;
-      this.header = val.pageHeader;
-      this.showNavBar = val.showNavBar;
-      this.showFilterBar = val.showFilterBar;
-      this.showProductGrid = val.showProductGrid;
-      this.showTopLevel = val.showTopLeveNavigation;
-      this.chipItems = val.chipItems;
-      this.currentNavigationItems = val.currentNavigationItems;
-      this.loading = false;
-      this.zone.run(() => {
-        this.ref.detectChanges();
-      });
-    });
   }
 
   ngAfterViewInit() {
-    this.resetScrollSubscription();
+    // this.resetScrollSubscription();
   }
 
   private resetScrollSubscription() {

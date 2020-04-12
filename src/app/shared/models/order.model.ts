@@ -1,20 +1,21 @@
 import { Product } from "./product.model";
 import { Address } from "../interfaces/address.interface";
+import { UserList } from "./user-list.model";
 
 export class Order {
     public id?: string;
-    public product: Product;
     public purchaseDate: string;
     public shipDate?: string;
     public deliveryDate?: string;
-    public status: 'paid' | 'shipped' | 'delivered' | 'review' | 'cancelled';
+    public status: 'ordered' | 'shipped' | 'delivered' | 'review' | 'cancelled';
     public trackingNumber?: string;
-    public shippingCarrierName: string;
-    public shippingCarrerId: string;
-    public price: number;
+    public shippingCarrierName?: string;
+    public shippingCarrerId?: string;
     public total: number;
-    public shippingCost: number;
+    public shippingCost?: number;
     public tax: number;
-    public seller: string;
+    public product: Product;
+    public seller?: UserList;
+    public buyer?: UserList;
     public address: Address;
 }

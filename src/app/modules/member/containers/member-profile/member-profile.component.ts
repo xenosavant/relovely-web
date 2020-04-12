@@ -24,8 +24,7 @@ export class MemberProfileComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.users = users;
-    this.products = products;
+
   }
 
   update() {

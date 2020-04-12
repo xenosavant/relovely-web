@@ -2,13 +2,6 @@
     <div *ngIf="!video" class="add-image" (click)="fileUpload.click()">
         <img src="./assets/images/plus.png">
     </div>
-    <div class="video-preview" *ngIf="video">
-        <app-video-player [publicId]="video.publicId" (click)="fileUpload.click()" [controls]="false">
-        </app-video-player>
-        <div class="overlay">
-            <mat-icon (click)="onRemoveImage()">cancel</mat-icon>
-        </div>
-    </div>
 </ng-container>
 <div *ngIf="uploading" class="uploading">
     <div class="text">{{percentage}}%</div>

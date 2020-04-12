@@ -22,7 +22,6 @@ export class ProfileHeaderComponent implements OnInit {
   constructor(private ref: ChangeDetectorRef, private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() {
-    console.log(this.user);
     this.statItems = [];
     if (this.user.type === 'seller') {
       this.statItems.push({ name: 'Listings', count: this.user.listings.length });
@@ -42,7 +41,6 @@ export class ProfileHeaderComponent implements OnInit {
   }
 
   onUpdate() {
-    console.log('header');
     this.update.emit(true);
   }
 
