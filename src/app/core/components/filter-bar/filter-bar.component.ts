@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PriceFilter } from '@app/shared/models/price-filter.model';
 import { prices } from '@app/data/prices.data';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
+import { FilterService } from '@app/shared/services/filter/filter.service';
+import { UserService } from '@app/shared/services/user/user.service';
 
 @Component({
   selector: 'app-filter-bar',
@@ -22,7 +24,7 @@ export class FilterBarComponent implements OnInit {
   categoryFilters: NavigationItem[];
 
   selectedCategoryFilterId: string;
-  selectedPriceFilterIds: string[] = [];
+  selectedPriceFilters: PriceFilter[] = [];
   sizeFilters: SizeFilterGroup[];
   currentSizeFilters: SizeFilterGroup[];
   colorFilters: ColorFilter[];
@@ -34,6 +36,8 @@ export class FilterBarComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private lookupService: LookupService,
+    private userService: UserService,
+    private filterService: FilterService,
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
@@ -41,73 +45,68 @@ export class FilterBarComponent implements OnInit {
     this.priceFilters = prices;
     this.navigationService.navConfig$.subscribe(navigationState => {
       this.lookupService.getState().then(lookupState => {
+        this.sizeFilters = lookupState.sizes;
         this.selectedCategoryFilterId = navigationState.selectedCategoryId;
         this.currentSizeFilters = lookupState.sizes.filter(size => {
           return size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
         });
+        if (this.userService.currentUser) {
+          const state = this.userService.currentUser.preferences;
+          if (state) {
+            state.sizes.forEach(sizeId => {
+              this.sizeFilters.forEach(filter => {
+                if (filter.filters.some(f =>
+                  f.key === sizeId
+                )) {
+                  if (!filter.selectedKeys.includes(sizeId)) {
+                    filter.selectedKeys.push(sizeId);
+                  }
+                }
+              })
+            });
+            console.log(this.sizeFilters);
+            // colors
+            // prices
+          }
+        }
         this.ref.markForCheck();
       });
-    });
-    const params = this.route.snapshot.queryParams;
-    if (params['size']) {
-      const selected = params['size'] as string[];
-      this.currentSizeFilters.forEach(size => {
-        const matches = size.filters.map(f => f.key).filter(keys => selected.includes(keys));
-        if (matches) {
-          size.selectedKeys = matches;
-        }
-      })
-    }
-  }
-
-  navigate(item: NavigationItem) {
-    this.selectedCategoryFilterId = item.id;
-    this.router.navigate(['/products/' + this.selectedCategoryFilterId], {
-      relativeTo: this.route,
-      queryParamsHandling: 'merge'
     });
   }
 
   setPriceFilter(filter: PriceFilter) {
-    if (this.selectedPriceFilterIds.indexOf(filter.id) > -1) {
-      this.selectedPriceFilterIds.splice(this.selectedPriceFilterIds.indexOf(filter.id), 1);
+    const index = this.selectedPriceFilters.indexOf(filter);
+    if (index > -1) {
+      this.selectedPriceFilters.splice(index, 1);
     } else {
-      this.selectedPriceFilterIds.push(filter.id);
+      this.selectedPriceFilters.push(filter);
     }
-    const params = {};
-    const existing = Object.assign({}, this.route.snapshot.queryParams);
-    if (this.selectedPriceFilterIds.length === 0) {
-      delete existing.price;
-    } else {
-      params['price'] = this.selectedPriceFilterIds;
-    }
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { ...existing, ...params },
-      replaceUrl: true
-    });
+    this.filterService.updatePrices(this.selectedPriceFilters.map(f => {
+      return {
+        min: f.minPrice,
+        max: f.minPrice
+      }
+    }))
   }
 
-  sizeFiltersChanged(ids: string[]) {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: {
-        size: ids,
-      },
-      queryParamsHandling: 'merge',
-      replaceUrl: true
+  sizeFiltersChanged(change: any) {
+    let sizeArray = [];
+    this.sizeFilters.forEach(filter => {
+      if (filter.id !== change.groupId) {
+        sizeArray.concat(filter.selectedKeys);
+      }
     });
+    sizeArray = sizeArray.concat(change.selectedIds);
+    this.filterService.updateSizes(sizeArray);
   }
 
   colorFiltersChanged(ids: string[]) {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: {
-        color: ids,
-      },
-      queryParamsHandling: 'merge',
-      replaceUrl: true
-    });
+    this.filterService.updateColors(ids);
+  }
+
+  navigate(item: NavigationItem) {
+    this.selectedCategoryFilterId = item.id;
+    this.navigationService.navigate(item);
   }
 
 }

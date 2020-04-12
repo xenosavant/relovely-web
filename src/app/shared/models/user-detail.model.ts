@@ -1,5 +1,6 @@
 import { Product } from "./product.model";
 import { UserList } from "./user-list.model";
+import { IUserPreferences } from "../services/filter/filter-state";
 
 export class UserDetail {
     id: string;
@@ -7,14 +8,11 @@ export class UserDetail {
     lastName: string;
     username: string;
     profileImageUrl: string;
-    totalListings?: number;
-    totalSales?: number;
-    totalFollowers?: number;
-    totalFollowing?: number;
     listings?: Product[];
     followers?: UserList[];
     following?: UserList[];
     sales?: Product[];
     favorites?: Product[];
     type: string;
+    preferences: IUserPreferences
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, NgZone, ChangeDetectorRef } from '@angular/core';
 import { UserDetail } from '../../../../shared/models/user-detail.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { users } from '@app/data/users.data';
 import { products } from '@app/data/products.data';
 import { UserService } from '@app/shared/services/user/user.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -32,11 +31,12 @@ export class ProfileComponent implements OnInit {
       const id = param.get('id');
       if (!this.user || (this.user && id !== this.user.id)) {
         if (id !== 'profile') {
-          this.user = users.find(u => u.id === id);
-          this.zone.run(() => {
+          this.userService.getUser(id).subscribe(user => {
+            this.owner = false;
+            this.user = user;
             this.ref.markForCheck();
             this.loading = false;
-          });
+          })
         } else {
           this.userService.getUser(this.userService.currentUser.id).subscribe(user => {
             this.owner = true;

@@ -38,9 +38,10 @@
     </div>
     <div (mouseover)="$event.stopPropagation()" (mouseleave)="onLeaveMenu($event, 'size')" class="size-filter-wrapper"
         (click)="$event.stopPropagation()">
-        <div *ngFor=" let size of currentSizeFilters">
+        <div *ngFor="let size of currentSizeFilters">
             <li *ngFor="let filter of size.filters">
-                <input [class.selected]="filter.selected" (click)="filter.selected=true" type="checkbox">
+                <input [class.selected]="size.selectedKeys.indexOf(filter.key) > -1"
+                    (click)="selectSize(size, filter.key)" type="checkbox">
                 {{filter.value}}
             </li>
         </div>
@@ -69,7 +70,7 @@
             (mouseleave)="onLeaveTrigger($event, 'size')"></span>
     </div>
     <div (mouseleave)="onLeaveMenu($event, 'price')" class="price-filter-wrapper" (click)="$event.stopPropagation()">
-        <mat-basic-chip disableRipple [class.selected]="selectedPriceFilterIds.indexOf(item.id) > -1"
+        <mat-basic-chip disableRipple [class.selected]="selectedPriceFilters.indexOf(item.id) > -1"
             (click)="setPriceFilter(item)" *ngFor="let item of priceFilters">
             <div> {{item.name}}</div>
         </mat-basic-chip>

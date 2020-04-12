@@ -22,10 +22,7 @@ export class SizeFilterComponent implements OnInit {
 
   }
 
-  selectSize(sizes: string[]) {
-    const c = this.filters.map(f => f.selectedKeys).reduce((acc, current) => {
-      return [...acc, ...current];
-    }, []);
-    this.filtersChanged.emit(c);
+  selectSize(sizes: any) {
+    this.filtersChanged.emit(sizes);
   }
 }

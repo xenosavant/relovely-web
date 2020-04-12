@@ -32,7 +32,6 @@ export class SellerProfileComponent implements OnInit {
     if (this.owner) {
       this.showCreate = true;
     }
-    this.users = users;
   }
 
   showCreateModal($event: any) {

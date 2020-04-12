@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ChangeDetectionStrategy, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ElementRef, ViewChild, ChangeDetectorRef, SimpleChanges } from '@angular/core';
 import { colors } from '@app/data/colors.data';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { PriceFilter } from '@app/shared/models/price-filter.model';
@@ -8,6 +8,8 @@ import { MatMenuTrigger } from '@angular/material';
 import { NavigationService } from '@app/shared/services/navigation.service';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
+import { FilterService } from '@app/shared/services/filter/filter.service';
+import { UserService } from '@app/shared/services/user/user.service';
 
 
 @Component({
@@ -23,7 +25,7 @@ export class DesktopFiltersComponent implements OnInit {
   colors = colors;
   selectedColors: string[] = [];
 
-  selectedPriceFilterIds: string[] = [];
+  selectedPriceFilters: PriceFilter[] = [];
   priceFilters = prices;
 
   @ViewChild('sizeTrigger', { static: true }) sizeTrigger: MatMenuTrigger;
@@ -35,7 +37,9 @@ export class DesktopFiltersComponent implements OnInit {
 
   constructor(private navigationService: NavigationService,
     private ref: ChangeDetectorRef,
-    private lookupService: LookupService) { }
+    private lookupService: LookupService,
+    private userService: UserService,
+    private filterService: FilterService) { }
 
   ngOnInit() {
     this.navigationService.navConfig$.subscribe(navigationState => {
@@ -44,9 +48,44 @@ export class DesktopFiltersComponent implements OnInit {
         this.currentSizeFilters = this.sizeFilters.filter(size => {
           return size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
         });
-        this.ref.markForCheck();
+        if (this.userService.currentUser) {
+          const state = this.userService.currentUser.preferences;
+          if (state) {
+            state.sizes.forEach(sizeId => {
+              this.sizeFilters.forEach(filter => {
+                if (filter.filters.some(f =>
+                  f.key === sizeId
+                )) {
+                  if (!filter.selectedKeys.includes(sizeId)) {
+                    filter.selectedKeys.push(sizeId);
+                  }
+                }
+              })
+            });
+          }
+          // colors
+          // prices
+          this.ref.markForCheck();
+        }
       })
     });
+  }
+
+  selectSize(group: SizeFilterGroup, key: string) {
+    let sizeArray = [];
+    this.sizeFilters.forEach(filter => {
+      if (filter.id !== group.id) {
+        sizeArray.concat(filter.selectedKeys);
+      }
+    });
+
+    if (group.selectedKeys.some(selectedKey => key === selectedKey)) {
+      group.selectedKeys.splice(group.selectedKeys.indexOf(key), 1);
+    } else {
+      group.selectedKeys.push(key);
+    }
+    sizeArray = sizeArray.concat(group.selectedKeys);
+    this.filterService.updateSizes(sizeArray);
   }
 
   selectColor(color: ColorFilter) {
@@ -55,14 +94,21 @@ export class DesktopFiltersComponent implements OnInit {
     } else {
       this.selectedColors.push(color.key);
     }
+    this.filterService.updateColors(this.selectedColors);
   }
 
   setPriceFilter(filter: PriceFilter) {
-    if (this.selectedPriceFilterIds.indexOf(filter.id) > -1) {
-      this.selectedPriceFilterIds.splice(this.selectedPriceFilterIds.indexOf(filter.id), 1);
+    if (this.selectedPriceFilters.indexOf(filter) > -1) {
+      this.selectedPriceFilters.splice(this.selectedPriceFilters.indexOf(filter), 1);
     } else {
-      this.selectedPriceFilterIds.push(filter.id);
+      this.selectedPriceFilters.push(filter);
     }
+    this.filterService.updatePrices(this.selectedPriceFilters.map(f => {
+      return {
+        min: f.minPrice,
+        max: f.minPrice
+      }
+    }))
   }
 
   onLeaveMenu(event: any, menu: string) {
@@ -98,9 +144,6 @@ export class DesktopFiltersComponent implements OnInit {
       case 'price':
         this._activeTrigger = this['priceTrigger'];
         break;
-      // case 'listings':
-      //   this._activeTrigger = menuElement = this['listingsTrigger'];
-      //   break;
     }
 
     if (!this._activeTrigger.menuOpen) {

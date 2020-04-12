@@ -30,7 +30,6 @@ export class NavigationService {
     private navConfigSubject$ = new Subject<INavigationState>();
     public navConfig$ = this.navConfigSubject$.asObservable();
 
-
     private currentNavSubject$ = new Subject<NavigationItem>();
     public currentNavConfig$ = this.currentNavSubject$.asObservable();
 

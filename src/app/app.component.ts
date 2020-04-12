@@ -122,13 +122,13 @@ export class AppComponent implements OnInit {
         return new NavigationItem([], '/products/' + cat.id.toString(), cat.name, cat.id,
           cat.children.map(c1 => {
             return new NavigationItem(
-              [{ key: 'category', value: c1.id.toString() }],
+              null,
               '/products/' + c1.id.toString(),
               c1.name,
               c1.id,
               c1.children.map(c2 => {
                 return new NavigationItem(
-                  [{ key: 'category', value: c2.id.toString() }],
+                  null,
                   '/products/' + c2.id.toString(),
                   c2.name,
                   c2.id,

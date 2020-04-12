@@ -21,6 +21,7 @@ export class ProductsComponent implements OnInit {
   grid: boolean;
   mobile: boolean;
   currentNavItem: NavigationItem;
+  categoryId: number;
 
   constructor(
     private router: Router,
@@ -44,17 +45,16 @@ export class ProductsComponent implements OnInit {
       this.mobile = result.matches;
     });
     this.route.params.subscribe(params => {
-      this.lookupService.getState().then(state => {
-        if (params['categoryId']) {
-          this.currentNavItem = this.lookupService.navLookup[params['categoryId']];
-        } else {
-          const root = this.navigationService.rootNavigationItems;
-          this.currentNavItem = new NavigationItem([{ key: 'category', value: '0' }], '/products', 'All Products', "-1", root, [], null);
-        }
-        this.navigationService.navigate(this.currentNavItem);
-        this.ref.markForCheck();
-      })
-    });
+      if (params['categoryId']) {
+        this.categoryId = params['categoryId'];
+        this.currentNavItem = this.lookupService.navLookup[params['categoryId']];
+      } else {
+        const root = this.navigationService.rootNavigationItems;
+        this.currentNavItem = new NavigationItem([{ key: 'category', value: '0' }], '/products', 'All Products', "-1", root, [], null);
+      }
+      this.navigationService.navigate(this.currentNavItem);
+      this.ref.markForCheck();
+    })
   }
 
   selectProduct(id: string) {

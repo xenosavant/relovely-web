@@ -18,7 +18,7 @@
     </mat-tab>
     <mat-tab label="Price">
       <mat-chip-list>
-        <mat-basic-chip [class.selected]="selectedPriceFilterIds.indexOf(item.id) > -1" (click)="setPriceFilter(item)"
+        <mat-basic-chip [class.selected]="selectedPriceFilters.indexOf(item) > -1" (click)="setPriceFilter(item)"
           *ngFor="let item of priceFilters">
           {{item.name}}
         </mat-basic-chip>

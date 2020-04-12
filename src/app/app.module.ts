@@ -21,6 +21,7 @@ import { PortalModule } from '@angular/cdk/portal';
 import { CloudinaryModule, CloudinaryConfiguration } from './../../node_modules/@cloudinary/angular-5.x';
 import { Cloudinary } from 'cloudinary-core';
 import { environment } from '@env/environment';
+import { FilterService } from './shared/services/filter/filter.service';
 export const cloudinaryLib = {
   Cloudinary: Cloudinary
 };
@@ -48,7 +49,7 @@ export const config: CloudinaryConfiguration = { cloud_name: environment.cloudin
   ],
   exports: [RouterModule],
   declarations: [AppComponent],
-  providers: [LookupService, NavigationService],
+  providers: [LookupService, NavigationService, FilterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
