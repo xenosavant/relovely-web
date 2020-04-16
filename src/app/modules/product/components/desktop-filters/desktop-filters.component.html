@@ -70,7 +70,7 @@
             (mouseleave)="onLeaveTrigger($event, 'size')"></span>
     </div>
     <div (mouseleave)="onLeaveMenu($event, 'price')" class="price-filter-wrapper" (click)="$event.stopPropagation()">
-        <mat-basic-chip disableRipple [class.selected]="selectedPriceFilters.indexOf(item.id) > -1"
+        <mat-basic-chip disableRipple [class.selected]="selectedPriceFilters.indexOf(item) > -1"
             (click)="setPriceFilter(item)" *ngFor="let item of priceFilters">
             <div> {{item.name}}</div>
         </mat-basic-chip>

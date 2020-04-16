@@ -51,20 +51,34 @@ export class DesktopFiltersComponent implements OnInit {
         if (this.userService.currentUser) {
           const state = this.userService.currentUser.preferences;
           if (state) {
-            state.sizes.forEach(sizeId => {
-              this.sizeFilters.forEach(filter => {
-                if (filter.filters.some(f =>
-                  f.key === sizeId
-                )) {
-                  if (!filter.selectedKeys.includes(sizeId)) {
-                    filter.selectedKeys.push(sizeId);
+            if (state.sizes) {
+              state.sizes.forEach(sizeId => {
+                this.sizeFilters.forEach(filter => {
+                  if (filter.filters.some(f =>
+                    f.key === sizeId
+                  )) {
+                    if (!filter.selectedKeys.includes(sizeId)) {
+                      filter.selectedKeys.push(sizeId);
+                    }
                   }
-                }
+                })
+              });
+            }
+            if (state.colors) {
+              state.colors.forEach(color => {
+                this.selectedColors.push(color)
               })
-            });
+            }
+            if (state.prices) {
+              const temp = [];
+              state.prices.forEach(pref => {
+                temp.push(
+                  this.priceFilters.find(price => price.id === pref.id)
+                )
+              })
+              this.selectedPriceFilters = temp;
+            }
           }
-          // colors
-          // prices
           this.ref.markForCheck();
         }
       })
@@ -105,8 +119,9 @@ export class DesktopFiltersComponent implements OnInit {
     }
     this.filterService.updatePrices(this.selectedPriceFilters.map(f => {
       return {
+        id: f.id,
         min: f.minPrice,
-        max: f.minPrice
+        max: f.maxPrice
       }
     }))
   }

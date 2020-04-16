@@ -28,6 +28,7 @@ export class FilterBarComponent implements OnInit {
   sizeFilters: SizeFilterGroup[];
   currentSizeFilters: SizeFilterGroup[];
   colorFilters: ColorFilter[];
+  selectedColors: string[] = [];
   priceFilters: PriceFilter[];
   buy = false;
   bid = false;
@@ -53,20 +54,29 @@ export class FilterBarComponent implements OnInit {
         if (this.userService.currentUser) {
           const state = this.userService.currentUser.preferences;
           if (state) {
-            state.sizes.forEach(sizeId => {
-              this.sizeFilters.forEach(filter => {
-                if (filter.filters.some(f =>
-                  f.key === sizeId
-                )) {
-                  if (!filter.selectedKeys.includes(sizeId)) {
-                    filter.selectedKeys.push(sizeId);
+            if (state.sizes) {
+              state.sizes.forEach(sizeId => {
+                this.sizeFilters.forEach(filter => {
+                  if (filter.filters.some(f =>
+                    f.key === sizeId
+                  )) {
+                    if (!filter.selectedKeys.includes(sizeId)) {
+                      filter.selectedKeys.push(sizeId);
+                    }
                   }
-                }
+                })
+              });
+            }
+            if (state.colors) {
+              this.selectedColors = state.colors;
+            }
+            if (state.prices) {
+              state.prices.forEach(pref => {
+                this.selectedPriceFilters.push(
+                  this.priceFilters.find(price => price.id === pref.id)
+                )
               })
-            });
-            console.log(this.sizeFilters);
-            // colors
-            // prices
+            }
           }
         }
         this.ref.markForCheck();
@@ -82,9 +92,11 @@ export class FilterBarComponent implements OnInit {
       this.selectedPriceFilters.push(filter);
     }
     this.filterService.updatePrices(this.selectedPriceFilters.map(f => {
+      console.log(f);
       return {
+        id: f.id,
         min: f.minPrice,
-        max: f.minPrice
+        max: f.maxPrice
       }
     }))
   }

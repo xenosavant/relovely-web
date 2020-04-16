@@ -11,6 +11,7 @@ export interface IUserPreferences {
 }
 
 export interface PriceRange {
+    id: string;
     min?: number;
     max?: number;
 }

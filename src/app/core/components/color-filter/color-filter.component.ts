@@ -10,11 +10,10 @@ import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 export class ColorFilterComponent implements OnInit {
 
   @Input() colors: ColorFilter[];
+  @Input() public selectedColors: string[] = [];
 
   @Output()
   filtersChanged: EventEmitter<string[]> = new EventEmitter();
-
-  public selectedColors: string[] = [];
 
   constructor() { }
 

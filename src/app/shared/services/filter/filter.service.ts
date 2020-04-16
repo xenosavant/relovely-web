@@ -31,7 +31,7 @@ export class FilterService extends BaseService {
     public updateColors(colors: string[]) {
         const user = this.localStorage.getItem('currentUser');
         if (user) {
-            this._state.colors = colors;
+            this._state.colors = colors || [];
             this.setPreferences(user.id, this._state).subscribe(result => {
                 user.preferences = this._state;
                 this.localStorage.setItem('currentUser', user);
@@ -44,7 +44,7 @@ export class FilterService extends BaseService {
         console.log(sizes);
         const user = this.localStorage.getItem('currentUser');
         if (user) {
-            this._state.sizes = sizes;
+            this._state.sizes = sizes || [];
             this.setPreferences(user.id, this._state).subscribe(result => {
                 user.preferences = this._state;
                 this.localStorage.setItem('currentUser', user);
@@ -56,7 +56,7 @@ export class FilterService extends BaseService {
     public updatePrices(prices: PriceRange[]) {
         const user = this.localStorage.getItem('currentUser');
         if (user) {
-            this._state.prices = prices;
+            this._state.prices = prices || [];
             this.setPreferences(user.id, this._state).subscribe(result => {
                 user.preferences = this._state;
                 this.localStorage.setItem('currentUser', user);

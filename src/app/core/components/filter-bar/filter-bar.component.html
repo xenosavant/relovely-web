@@ -14,7 +14,8 @@
       <app-size-filter [filters]="currentSizeFilters" (filtersChanged)="sizeFiltersChanged($event)"></app-size-filter>
     </mat-tab>
     <mat-tab label="Color">
-      <app-color-filter [colors]="colorFilters" (filtersChanged)="colorFiltersChanged($event)"></app-color-filter>
+      <app-color-filter [selectedColors]="selectedColors" [colors]="colorFilters"
+        (filtersChanged)="colorFiltersChanged($event)"></app-color-filter>
     </mat-tab>
     <mat-tab label="Price">
       <mat-chip-list>
