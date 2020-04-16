@@ -9,7 +9,8 @@ import { environment } from '@env/environment';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 
 @Injectable({ providedIn: 'root' })
-export class UserService extends BaseService {
+export class
+    UserService extends BaseService {
 
     private loggedInSubject$ = new Subject<boolean>();
     public loggedIn$ = this.loggedInSubject$.asObservable();
@@ -57,6 +58,14 @@ export class UserService extends BaseService {
 
     getUser(userId: string): Observable<UserDetail> {
         return this.httpClient.get<UserDetail>(`${this.apiBaseUrl}/users/${userId}`).pipe(
+            map((user: UserDetail) => {
+                return user;
+            })
+        );
+    }
+
+    updateUser(userId: string, updates: any): Observable<UserDetail> {
+        return this.httpClient.patch<UserDetail>(`${this.apiBaseUrl}/users/${userId}`, updates).pipe(
             map((user: UserDetail) => {
                 return user;
             })

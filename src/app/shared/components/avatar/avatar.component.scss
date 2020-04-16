@@ -20,11 +20,15 @@
             border-radius:50%;
             bottom: 0;
             cursor: pointer;
+            display: flex;
+            justify-content: center;
+            -ms-flex-align: center;
+            align-items: center;
             mat-icon {
+                height:100px;
+                width:100px;
                 visibility: visible;
                 color: white;
-                top:50px;
-                right:120px;
                 font-size: 100px;
             }
         }

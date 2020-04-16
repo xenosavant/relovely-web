@@ -67,7 +67,7 @@ export class FilterService extends BaseService {
 
 
     setPreferences(userId: string, preferences: IUserPreferences): Observable<boolean> {
-        return this.httpClient.patch<IUserPreferences>(`${this.apiBaseUrl}/users/${userId}/preferences`, preferences).pipe(
+        return this.httpClient.patch<IUserPreferences>(`${this.apiBaseUrl}/users/${userId}`, { preferences: 'preferences' }).pipe(
             map(() => {
                 return true;
             })

@@ -6,6 +6,7 @@ import { UserService } from '@app/shared/services/user/user.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 import { FileUploadService } from '@app/shared/services/file-upload.service';
+import { concatMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -56,9 +57,20 @@ export class ProfileComponent implements OnInit {
     this.crop = false;
   }
 
-  onImageCropped(imageSet: ImageSet) {
-    this.uploadService.upload('data:image/jpeg;base64,' + imageSet.cropped, this.user.id, 'image');
-    this.crop = false;
+  onImageCropped(image: ImageSet) {
+    let tempUrl: string;
+    this.uploadService.upload('data:image/jpeg;base64,' + image, `users/${this.user.id}/images`, 'image', 'profile').pipe(
+      tap(response => {
+        tempUrl = response.secure_url;
+      }),
+      concatMap(response =>
+        this.userService.updateUser(this.user.id, { profileImageUrl: response.secure_url })
+      )).subscribe(result => {
+        this.crop = false;
+        this.user = { ...this.user, profileImageUrl: tempUrl }
+      }, error => {
+        this.crop = false;
+      })
   }
 
   public onUpdateImage($event: any): void {

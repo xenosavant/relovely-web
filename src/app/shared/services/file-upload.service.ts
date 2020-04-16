@@ -14,7 +14,7 @@ export class FileUploadService extends BaseService {
         super(httpClient);
     }
 
-    public upload(data: any, id: string, type: string) {
+    public upload(data: any, id: string, type: string, publicId: string = null) {
 
         const formData = new FormData();
         const timestamp = Date.now().toString();
@@ -23,9 +23,16 @@ export class FileUploadService extends BaseService {
         formData.append('api_key', environment.cloudinaryApiKey);
         formData.append('timestamp', timestamp);
         formData.append('folder', id);
+        if (publicId) {
+            formData.append('public_id', publicId)
+        }
         // formData.append('background_removal', 'cloudinary_ai');
 
-        return this.httpClient.post<{ signature: string }>(`${this.apiBaseUrl}/storage/signature`, { folder: id, timestamp: timestamp }).pipe(
+        const payload: any = { folder: id, timestamp: timestamp }
+        if (publicId) {
+            payload.publicId = publicId;
+        }
+        return this.httpClient.post<{ signature: string }>(`${this.apiBaseUrl}/storage/signature`, payload).pipe(
             concatMap(response => {
                 formData.append('signature', response.signature);
                 return this.httpClient.post<any>(`${this.cloudinaryUploadUrl}/${type}/upload`, formData)
@@ -33,7 +40,7 @@ export class FileUploadService extends BaseService {
             }))
     }
 
-    public getSignature(id: string, timestamp: string) {
+    public getSignature(id: string, timestamp: string, publicId: string = null) {
         return this.httpClient.post<{ signature: string }>(`${this.apiBaseUrl}/storage/signature`, { folder: id, timestamp: timestamp }).pipe(map(response => {
             return response.signature;
         }));

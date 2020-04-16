@@ -41,7 +41,9 @@ export class ProfileHeaderComponent implements OnInit {
   }
 
   onUpdate() {
-    this.update.emit(true);
+    if (this.owner) {
+      this.update.emit(true);
+    }
   }
 
 }
