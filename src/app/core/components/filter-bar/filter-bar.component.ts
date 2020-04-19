@@ -2,12 +2,10 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, ChangeDetectorRef } 
 import { NavigationItem } from '@app/shared/models/navigation-item.model';
 import { categories } from '@app/data/filter-groups.data';
 import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
-import { colors } from '@app/data/colors.data';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { NavigationService } from '@app/shared/services/navigation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PriceFilter } from '@app/shared/models/price-filter.model';
-import { prices } from '@app/data/prices.data';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { FilterService } from '@app/shared/services/filter/filter.service';
 import { UserService } from '@app/shared/services/user/user.service';
@@ -42,20 +40,20 @@ export class FilterBarComponent implements OnInit {
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.colorFilters = colors;
-    this.priceFilters = prices;
     this.navigationService.navConfig$.subscribe(navigationState => {
       this.lookupService.getState().then(lookupState => {
         this.sizeFilters = lookupState.sizes;
+        this.colorFilters = lookupState.colors;
+        this.priceFilters = lookupState.prices;
         this.selectedCategoryFilterId = navigationState.selectedCategoryId;
         this.currentSizeFilters = lookupState.sizes.filter(size => {
           return size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
         });
         if (this.userService.currentUser) {
-          const state = this.userService.currentUser.preferences;
-          if (state) {
-            if (state.sizes) {
-              state.sizes.forEach(sizeId => {
+          const cache = this.userService.currentUser.preferences;
+          if (cache) {
+            if (cache.sizes) {
+              cache.sizes.forEach(sizeId => {
                 this.sizeFilters.forEach(filter => {
                   if (filter.filters.some(f =>
                     f.key === sizeId
@@ -67,11 +65,11 @@ export class FilterBarComponent implements OnInit {
                 })
               });
             }
-            if (state.colors) {
-              this.selectedColors = state.colors;
+            if (cache.colors) {
+              this.selectedColors = cache.colors;
             }
-            if (state.prices) {
-              state.prices.forEach(pref => {
+            if (cache.prices) {
+              cache.prices.forEach(pref => {
                 this.selectedPriceFilters.push(
                   this.priceFilters.find(price => price.id === pref.id)
                 )
@@ -95,8 +93,8 @@ export class FilterBarComponent implements OnInit {
       console.log(f);
       return {
         id: f.id,
-        min: f.minPrice,
-        max: f.maxPrice
+        min: f.min,
+        max: f.max
       }
     }))
   }

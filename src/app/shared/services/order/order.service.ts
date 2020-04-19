@@ -3,14 +3,14 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Order } from "@app/shared/models/order.model";
 import { PostOrderRequest } from "./post-order.request";
-import { OrderListResponse } from "./order-list.response";
+import { ListResponse } from "../list-response";
 
 @Injectable({ providedIn: 'root' })
 export class OrderService extends BaseService {
 
-    getOrders(): Observable<OrderListResponse> {
-        return this.httpClient.get<OrderListResponse>(`${this.apiBaseUrl}/orders/`).pipe(
-            map((result: OrderListResponse) => {
+    getOrders(): Observable<ListResponse<Order>> {
+        return this.httpClient.get<ListResponse<Order>>(`${this.apiBaseUrl}/orders/`).pipe(
+            map((result: ListResponse<Order>) => {
                 return result;
             })
         );

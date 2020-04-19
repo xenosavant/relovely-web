@@ -1,9 +1,7 @@
 
 import { Component, OnInit, ChangeDetectionStrategy, ElementRef, ViewChild, ChangeDetectorRef, SimpleChanges } from '@angular/core';
-import { colors } from '@app/data/colors.data';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { PriceFilter } from '@app/shared/models/price-filter.model';
-import { prices } from '@app/data/prices.data';
 import { MatMenuTrigger } from '@angular/material';
 import { NavigationService } from '@app/shared/services/navigation.service';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
@@ -22,11 +20,11 @@ export class DesktopFiltersComponent implements OnInit {
 
   sizeFilters: SizeFilterGroup[];
   currentSizeFilters: SizeFilterGroup[];
-  colors = colors;
+  colors: ColorFilter[];
   selectedColors: string[] = [];
 
   selectedPriceFilters: PriceFilter[] = [];
-  priceFilters = prices;
+  priceFilters: PriceFilter[];
 
   @ViewChild('sizeTrigger', { static: true }) sizeTrigger: MatMenuTrigger;
   @ViewChild('colorTrigger', { static: true }) colorTrigger: MatMenuTrigger;
@@ -45,14 +43,16 @@ export class DesktopFiltersComponent implements OnInit {
     this.navigationService.navConfig$.subscribe(navigationState => {
       this.lookupService.getState().then(state => {
         this.sizeFilters = state.sizes;
+        this.colors = state.colors;
+        this.priceFilters = state.prices;
         this.currentSizeFilters = this.sizeFilters.filter(size => {
           return size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
         });
         if (this.userService.currentUser) {
-          const state = this.userService.currentUser.preferences;
-          if (state) {
-            if (state.sizes) {
-              state.sizes.forEach(sizeId => {
+          const cache = this.userService.currentUser.preferences;
+          if (cache) {
+            if (cache.sizes) {
+              cache.sizes.forEach(sizeId => {
                 this.sizeFilters.forEach(filter => {
                   if (filter.filters.some(f =>
                     f.key === sizeId
@@ -64,14 +64,14 @@ export class DesktopFiltersComponent implements OnInit {
                 })
               });
             }
-            if (state.colors) {
-              state.colors.forEach(color => {
+            if (cache.colors) {
+              cache.colors.forEach(color => {
                 this.selectedColors.push(color)
               })
             }
-            if (state.prices) {
+            if (cache.prices) {
               const temp = [];
-              state.prices.forEach(pref => {
+              cache.prices.forEach(pref => {
                 temp.push(
                   this.priceFilters.find(price => price.id === pref.id)
                 )
@@ -120,8 +120,8 @@ export class DesktopFiltersComponent implements OnInit {
     this.filterService.updatePrices(this.selectedPriceFilters.map(f => {
       return {
         id: f.id,
-        min: f.minPrice,
-        max: f.maxPrice
+        min: f.min,
+        max: f.max
       }
     }))
   }
@@ -151,7 +151,11 @@ export class DesktopFiltersComponent implements OnInit {
     this.closeActiveMenu();
     switch (menu) {
       case 'size':
-        this._activeTrigger = this['sizeTrigger'];
+        if (this.currentSizeFilters.length) {
+          this._activeTrigger = this['sizeTrigger'];
+        } else {
+          this._activeTrigger = null;
+        }
         break;
       case 'color':
         this._activeTrigger = this['colorTrigger'];
@@ -161,7 +165,7 @@ export class DesktopFiltersComponent implements OnInit {
         break;
     }
 
-    if (!this._activeTrigger.menuOpen) {
+    if (this._activeTrigger && !this._activeTrigger.menuOpen) {
       this._activeTrigger.openMenu();
     }
 

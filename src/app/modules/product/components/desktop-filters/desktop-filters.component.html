@@ -1,6 +1,7 @@
 <div class="list-wrapper">
     <ul>
-        <li #sizeTrigger="matMenuTrigger" (mouseenter)="onEnterTrigger($event, 'size')" [matMenuTriggerFor]="sizeMenu">
+        <li #sizeTrigger="matMenuTrigger" (mouseenter)="onEnterTrigger($event, 'size')" [matMenuTriggerFor]="sizeMenu"
+            (click)="clickSizeMenu($event)">
             Size
             <img src="./assets/images/chevron-down.svg">
         </li>

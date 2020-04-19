@@ -1,114 +1,116 @@
-<div #mobileLayout class="theme-wrapper" *ngIf="mobile">
-  <mat-toolbar class="topbar" color="primary"
-    [class.mat-elevation-z2]="(!(showNavBar || showFilterBar) || !scrolledToTop) && !sidenavOpen">
-    <mat-toolbar-row [class.no-border]=" scrolledToTop && (showFilterBar || showNavBar)" class="top-bar gray"
-      *ngIf="!showSearch">
-      <button class="mat-icon-button black" *ngIf="!sidenavOpen" (click)="openSidenav()">
-        <fa-icon icon="bars"></fa-icon>
-      </button>
-      <button *ngIf="sidenavOpen && showTopLevel" class="mat-icon-button black" (click)="closeSidenav()">
-        <fa-icon icon="times"></fa-icon>
-      </button>
-      <button *ngIf="sidenavOpen && !showTopLevel" class="mat-icon-button black" (click)="goBack()">
-        <fa-icon icon="arrow-left"></fa-icon>
-      </button>
-      <div class="toolbar-filler"><img class="logo" src="./assets/images/logo.png" (click)="onGoHome()"> </div>
-      <div></div>
-      <div class="icon-wrapper mobile">
-        <button class="mat-icon-button black" (click)="onToggleSearchBar()">
-          <fa-icon icon="search"></fa-icon>
+<ng-container>
+  <div #mobileLayout class="theme-wrapper" *ngIf="mobile">
+    <mat-toolbar class="topbar" color="primary"
+      [class.mat-elevation-z2]="(!(showNavBar || showFilterBar) || !scrolledToTop) && !sidenavOpen">
+      <mat-toolbar-row [class.no-border]=" scrolledToTop && (showFilterBar || showNavBar)" class="top-bar gray"
+        *ngIf="!showSearch">
+        <button class="mat-icon-button black" *ngIf="!sidenavOpen" (click)="openSidenav()">
+          <fa-icon icon="bars"></fa-icon>
         </button>
-        <button class="mat-icon-button black" (click)="onFavoritesClicked()">
-          <fa-icon icon="heart"></fa-icon>
+        <button *ngIf="sidenavOpen && showTopLevel" class="mat-icon-button black" (click)="closeSidenav()">
+          <fa-icon icon="times"></fa-icon>
         </button>
-      </div>
-    </mat-toolbar-row>
-    <mat-toolbar-row *ngIf="showSearch" class="search-tool-bar">
-      <button class="mat-icon-button black" (click)="onToggleSearchBar()">
-        <fa-icon icon="times"></fa-icon>
-      </button>
-      <app-search-bar></app-search-bar>
-    </mat-toolbar-row>
-  </mat-toolbar>
-  <mat-sidenav-container>
-    <mat-toolbar class="toolbar" [class.sticky]="true" *ngIf="showNavBar || showFilterBar"
-      [class.mat-elevation-z2]="scrolledToTop && !sidenavOpen">
-      <mat-toolbar-row class="header" [hidden]="!showNavBar">
-        <div class="header-bar">
-          <h3 [class.center]="!showFilterBar">{{header}}</h3>
-        </div>
-        <div *ngIf="showFilterBar" class="grid-toggle" style="float:right;">
-          <button (click)="toggleProductMode()" *ngIf="showProductGrid" class="mat-icon-button">
-            <fa-icon icon="th-large"></fa-icon>
+        <button *ngIf="sidenavOpen && !showTopLevel" class="mat-icon-button black" (click)="goBack()">
+          <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+        <div class="toolbar-filler"><img class="logo" src="./assets/images/logo.png" (click)="onGoHome()"> </div>
+        <div></div>
+        <div class="icon-wrapper mobile">
+          <button class="mat-icon-button black" (click)="onToggleSearchBar()">
+            <fa-icon icon="search"></fa-icon>
           </button>
-          <button (click)="toggleProductMode()" *ngIf="!showProductGrid" class="mat-icon-button">
-            <fa-icon icon="square"></fa-icon>
+          <button class="mat-icon-button black" (click)="onFavoritesClicked()">
+            <fa-icon icon="heart"></fa-icon>
           </button>
         </div>
       </mat-toolbar-row>
-      <mat-toolbar-row style="width: 100%; height: 70px;" *ngIf="showFilterBar">
-        <app-filter-bar style="width: 100%; height: 70px;" [categoryFilters]="chipItems"> </app-filter-bar>
+      <mat-toolbar-row *ngIf="showSearch" class="search-tool-bar">
+        <button class="mat-icon-button black" (click)="onToggleSearchBar()">
+          <fa-icon icon="times"></fa-icon>
+        </button>
+        <app-search-bar></app-search-bar>
       </mat-toolbar-row>
     </mat-toolbar>
-    <mat-sidenav [opened]="sidenavOpen" mode="side">
-      <div class="sidenav-wrapper">
-        <div class="sidenav-inner">
-          <div *ngIf="!showTopLevel" [ngClass]="{'branding': true, 'border-bottom' : !showTopLevel}">
-            <span class="text-wrapper">
-              <span class="text">{{navHeader}}</span>
-            </span>
+    <mat-sidenav-container>
+      <mat-toolbar class="toolbar" [class.sticky]="true" *ngIf="showNavBar || showFilterBar"
+        [class.mat-elevation-z2]="scrolledToTop && !sidenavOpen">
+        <mat-toolbar-row class="header" [hidden]="!showNavBar">
+          <div class="header-bar">
+            <h3 [class.center]="!showFilterBar">{{header}}</h3>
           </div>
-          <mat-nav-list *ngIf="showTopLevel" class="top">
-            <a mat-list-item *ngFor="let item of currentNavigationItems" (click)="sideNavigate(item)"
-              routerLinkActive="nav-item-active">
-              <div class="top-level">
-                <span>{{ item.name }}</span>
-              </div>
-            </a>
-          </mat-nav-list>
-          <mat-nav-list *ngIf="!showTopLevel" class="sub">
-            <a mat-list-item *ngFor="let item of currentNavigationItems" (click)="sideNavigate(item)"
-              routerLinkActive="nav-item-active">
-              <div class="nested">
-                <span>{{ showTopLevel ? item.name.ToUpper() : item.name }}</span>
-              </div>
-            </a>
-          </mat-nav-list>
+          <div *ngIf="showFilterBar" class="grid-toggle" style="float:right;">
+            <button (click)="toggleProductMode()" *ngIf="showProductGrid" class="mat-icon-button">
+              <fa-icon icon="th-large"></fa-icon>
+            </button>
+            <button (click)="toggleProductMode()" *ngIf="!showProductGrid" class="mat-icon-button">
+              <fa-icon icon="square"></fa-icon>
+            </button>
+          </div>
+        </mat-toolbar-row>
+        <mat-toolbar-row style="width: 100%; height: 70px;" *ngIf="showFilterBar">
+          <app-filter-bar style="width: 100%; height: 70px;" [categoryFilters]="chipItems"> </app-filter-bar>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <mat-sidenav [opened]="sidenavOpen" mode="side">
+        <div class="sidenav-wrapper">
+          <div class="sidenav-inner">
+            <div *ngIf="!showTopLevel" [ngClass]="{'branding': true, 'border-bottom' : !showTopLevel}">
+              <span class="text-wrapper">
+                <span class="text">{{navHeader}}</span>
+              </span>
+            </div>
+            <mat-nav-list *ngIf="showTopLevel" class="top">
+              <a mat-list-item *ngFor="let item of currentNavigationItems" (click)="sideNavigate(item)"
+                routerLinkActive="nav-item-active">
+                <div class="top-level">
+                  <span>{{ item.name }}</span>
+                </div>
+              </a>
+            </mat-nav-list>
+            <mat-nav-list *ngIf="!showTopLevel" class="sub">
+              <a mat-list-item *ngFor="let item of currentNavigationItems" (click)="sideNavigate(item)"
+                routerLinkActive="nav-item-active">
+                <div class="nested">
+                  <span>{{ showTopLevel ? item.name.ToUpper() : item.name }}</span>
+                </div>
+              </a>
+            </mat-nav-list>
+          </div>
         </div>
-      </div>
-    </mat-sidenav>
-    <ng-container *ngIf="!loading">
-      <ng-container *ngTemplateOutlet="content"></ng-container>
-    </ng-container>
-  </mat-sidenav-container>
-</div>
-
-<div class="theme-wrapper light-theme" *ngIf="!mobile">
-  <div class="content-wrapper" [class.content-noscroll]="overlayService.isOpen">
-    <ng-container *ngTemplateOutlet="desktopToolbar"></ng-container>
-    <ng-container *ngIf="!loading">
-      <ng-container *ngTemplateOutlet="content"></ng-container>
-    </ng-container>
+      </mat-sidenav>
+      <ng-container *ngIf="!loading">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+      </ng-container>
+    </mat-sidenav-container>
   </div>
-  <div class="mega-menu-wrapper" *ngIf="showMegaMenu">
-    <div class="mega-menu">
-      <div class="mega-menu-inner-wrapper" (mouseleave)="onLeaveMegaMenu($event)">
-        <div class="mega-menu-header">
-          <div (click)="navigate(item)" *ngFor="let item of selectedDesktopNavSubItems" class="menu-item">
-            <h1>{{item.name}}</h1>
+
+  <div class="theme-wrapper light-theme" *ngIf="!mobile">
+    <div class="content-wrapper" [class.content-noscroll]="overlayService.isOpen">
+      <ng-container *ngTemplateOutlet="desktopToolbar"></ng-container>
+      <ng-container *ngIf="!loading">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+      </ng-container>
+    </div>
+    <div class="mega-menu-wrapper" *ngIf="showMegaMenu">
+      <div class="mega-menu">
+        <div class="mega-menu-inner-wrapper" (mouseleave)="onLeaveMegaMenu($event)">
+          <div class="mega-menu-header">
+            <div (click)="navigate(item)" *ngFor="let item of selectedDesktopNavSubItems" class="menu-item">
+              <h1>{{item.name}}</h1>
+            </div>
           </div>
-        </div>
-        <div class="mega-menu-body">
-          <div *ngFor="let item of selectedDesktopNavSubItems">
-            <ul>
-              <li (click)="navigate(subItem)" *ngFor="let subItem of item.subItems">{{subItem.name}}</li>
-            </ul>
+          <div class="mega-menu-body">
+            <div *ngFor="let item of selectedDesktopNavSubItems">
+              <ul>
+                <li (click)="navigate(subItem)" *ngFor="let subItem of item.subItems">{{subItem.name}}</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>
 
 
 <ng-template #content>
@@ -151,9 +153,11 @@
           <mat-menu #accountMenu="matMenu" yPosition="below" xPosition="before" [overlapTrigger]="false">
             <div class="account-trigger-wrapper" (mouseleave)="onLeaveAccountTrigger($event)"></div>
             <span class="menu-wrapper" (mouseleave)="onLeaveAccountMenu($event)">
-              <div class="menu-item-wrapper" *ngFor="let item of accountNav.subItems">
-                <div class="menu-item" (click)="onAccountMenuAction(item.path)"> {{item.name}}</div>
-              </div>
+              <ng-container *ngIf="accountNav">
+                <div class="menu-item-wrapper" *ngFor="let item of accountNav.subItems">
+                  <div class="menu-item" (click)="onAccountMenuAction(item.path)"> {{item.name}}</div>
+                </div>
+              </ng-container>
             </span>
           </mat-menu>
         </div>

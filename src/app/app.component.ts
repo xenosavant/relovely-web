@@ -1,6 +1,6 @@
 import browser from 'browser-detect';
 import { Component, OnInit, ChangeDetectorRef, NgZone, ViewChild, ElementRef, Inject } from '@angular/core';
-import { Observable, BehaviorSubject, fromEvent, Subscription } from 'rxjs';
+import { Observable, BehaviorSubject, fromEvent, Subscription, forkJoin, concat, of, from } from 'rxjs';
 import { environment as env } from '@env/environment';
 
 import {
@@ -18,12 +18,14 @@ import { NavigationService } from './shared/services/navigation.service';
 import { UserService } from './shared/services/user/user.service';
 import { Category } from './shared/models/category.model';
 import { products } from './data/products.data';
-import { timeInterval, timeout, throttleTime, map, pairwise, tap } from 'rxjs/operators';
+import { timeInterval, timeout, throttleTime, map, pairwise, tap, switchMap, concatMap, mergeMap, concatAll } from 'rxjs/operators';
 import { Direction } from '@angular/cdk/bidi/typings/directionality';
 import { MatSidenavContainer, MatMenuTrigger } from '@angular/material';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from './shared/services/overlay.service';
 import { LocalStorageService } from './shared/services/local-storage/local-storage.service';
+import { LookupResponse } from './shared/services/lookup/lookup.response';
+import { IUserPreferences } from './shared/services/filter/filter-state';
 
 @Component({
   selector: 'app-root',
@@ -84,6 +86,7 @@ export class AppComponent implements OnInit {
     private zone: NgZone,
     private userService: UserService,
     private overlayService: OverlayService,
+    private localStorageService: LocalStorageService,
     private route: ActivatedRoute,
     @Inject(DOCUMENT) private document: any
   ) {
@@ -101,88 +104,114 @@ export class AppComponent implements OnInit {
         this.scrollSubscription$.unsubscribe();
       }
     })
-    this.navigationService.navConfig$.subscribe(val => {
-      this.categoryFilters = val.categoryItems;
-      this.navHeader = val.navigationHeader;
-      this.header = val.pageHeader;
-      this.showNavBar = val.showNavBar;
-      this.showFilterBar = val.showFilterBar;
-      this.showProductGrid = val.showProductGrid;
-      this.showTopLevel = val.showTopLeveNavigation;
-      this.chipItems = val.chipItems;
-      this.currentNavigationItems = val.currentNavigationItems;
-      this.loading = false;
+    this.navigationService.navConfig$.subscribe(nav => {
+      this.categoryFilters = nav.categoryItems;
+      this.navHeader = nav.navigationHeader;
+      this.header = nav.pageHeader;
+      this.showNavBar = nav.showNavBar;
+      this.showFilterBar = nav.showFilterBar;
+      this.showProductGrid = nav.showProductGrid;
+      this.showTopLevel = nav.showTopLeveNavigation;
+      this.chipItems = nav.chipItems;
+      this.currentNavigationItems = nav.currentNavigationItems;
       this.zone.run(() => {
         this.ref.detectChanges();
       });
     });
-    this.lookupService.getLookupData().subscribe(response => {
-      const cats = JSON.parse(response.categories.json);
-      const navigationItems = cats.map(cat => {
-        return new NavigationItem([], '/products/' + cat.id.toString(), cat.name, cat.id,
-          cat.children.map(c1 => {
-            return new NavigationItem(
-              null,
-              '/products/' + c1.id.toString(),
-              c1.name,
-              c1.id,
-              c1.children.map(c2 => {
-                return new NavigationItem(
-                  null,
-                  '/products/' + c2.id.toString(),
-                  c2.name,
-                  c2.id,
-                  [],
-                  [],
-                  null)
-              }),
-              c1.children,
-              null
-            )
-          }),
-          [],
-          null,
-          cat.plural)
+    const jwt = this.localStorageService.getItem('jwt');
+    if (jwt) {
+      console.log(jwt);
+      this.userService.jwt = jwt;
+      this.userService.me().pipe(tap(me => {
+        console.log(me);
+        this.userService.setLogin(jwt, me);
+      }), mergeMap(value => this.getLookup()))
+        .subscribe(final => {
+          console.log(final)
+        });
+    } else {
+      this.userService.logout();
+      this.getLookup().subscribe(value => {
+        console.log(value);
       });
+    }
+  }
 
-      navigationItems.forEach(item => {
-        this.setParents(item);
-      });
+  getLookup(): Observable<LookupResponse> {
+    return from(this.lookupService.getLookupData().toPromise().then(lookup => {
+      console.log(lookup);
+      this.navSetup(JSON.parse(lookup.categories.json));
+      this.loading = false;
+      return lookup;
+    }))
+  }
 
-      this.accountNav = {
-        name: 'Account', path: null, subItems: [
-          new NavigationItem([], '/member/profile', 'Profile', null, [], [], null),
-          new NavigationItem([], '/sales/orders', 'Orders', null, [], [], null),
-          new NavigationItem([], '/account/payments', 'Payment Methods', null, [], [], null),
-          new NavigationItem([], '/account/addresses', 'Addresses', null, [], [], null),
-        ]
-      }
-      navigationItems.forEach(item => {
-        this.desktopNavigationItems.push(item);
-      });
-      this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'Blog', null, [], [], null));
-      this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'About', null, [], [], null));
-      if (this.userService.currentUser && this.userService.currentUser.type === 'seller') {
-        this.accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', null, [], [], null),
-          new NavigationItem([], '/sales/listings', 'Listings', null, [], [], null),
-        );
-      }
-      this.accountNav.subItems.push(new NavigationItem([], '/account/settings', 'Settings', '0', [], [], null),
-        new NavigationItem([], '/account/terms', 'Terms of Service', null, [], [], null),
-        new NavigationItem([], '/account/help', 'Help', null, [], [], null),
-        new NavigationItem([], '/account/signout', 'Sign Out', null, [], [], null),
+  navSetup(cats: Category[]) {
+    const navigationItems = cats.map(cat => {
+      return new NavigationItem([], '/products/' + cat.id.toString(), cat.name, cat.id,
+        cat.children.map(c1 => {
+          return new NavigationItem(
+            null,
+            '/products/' + c1.id.toString(),
+            c1.name,
+            c1.id,
+            c1.children.map(c2 => {
+              return new NavigationItem(
+                null,
+                '/products/' + c2.id.toString(),
+                c2.name,
+                c2.id,
+                [],
+                [],
+                null)
+            }),
+            c1.children,
+            null
+          )
+        }),
+        [],
+        null,
+        cat.plural)
+    });
+
+    navigationItems.forEach(item => {
+      this.setParents(item);
+    });
+
+    this.accountNav = {
+      name: 'Account', path: null, subItems: [
+        new NavigationItem([], '/member/profile', 'Profile', null, [], [], null),
+        new NavigationItem([], '/sales/orders', 'Orders', null, [], [], null),
+        new NavigationItem([], '/account/payments', 'Payment Methods', null, [], [], null),
+        new NavigationItem([], '/account/addresses', 'Addresses', null, [], [], null),
+      ]
+    }
+    navigationItems.forEach(item => {
+      this.desktopNavigationItems.push(item);
+    });
+    this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'Blog', null, [], [], null));
+    this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'About', null, [], [], null));
+    if (this.userService.currentUser && this.userService.currentUser.type === 'seller') {
+      this.accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', null, [], [], null),
+        new NavigationItem([], '/sales/listings', 'Listings', null, [], [], null),
       );
-      navigationItems.push(this.accountNav);
-      this.navigationService.showAuthWindow$.subscribe(open => {
-        if (open) {
-          this.showSignUpModal()
-        } else {
-          this.closeModal();
-        }
-      });
-      this.navigationService.rootNavigationItems = navigationItems;
-      this.navigationService.setCurrentNavigationItems(navigationItems);
-    })
+    }
+    this.accountNav.subItems.push(new NavigationItem([], '/account/settings', 'Settings', '0', [], [], null),
+      new NavigationItem([], '/account/terms', 'Terms of Service', null, [], [], null),
+      new NavigationItem([], '/account/help', 'Help', null, [], [], null),
+      new NavigationItem([], '/account/signout', 'Sign Out', null, [], [], null),
+    );
+    navigationItems.push(this.accountNav);
+
+    this.navigationService.showAuthWindow$.subscribe(open => {
+      if (open) {
+        this.showSignUpModal()
+      } else {
+        this.closeModal();
+      }
+    });
+    this.navigationService.rootNavigationItems = navigationItems;
+    this.navigationService.setCurrentNavigationItems(navigationItems);
   }
 
   ngAfterViewInit() {

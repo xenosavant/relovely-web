@@ -10,7 +10,7 @@
         </mat-chip-list>
       </div>
     </mat-tab>
-    <mat-tab label="Size">
+    <mat-tab *ngIf="!currentSizeFilters || currentSizeFilters.length" label="Size">
       <app-size-filter [filters]="currentSizeFilters" (filtersChanged)="sizeFiltersChanged($event)"></app-size-filter>
     </mat-tab>
     <mat-tab label="Color">

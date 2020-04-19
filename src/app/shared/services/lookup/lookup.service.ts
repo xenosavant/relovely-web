@@ -34,7 +34,9 @@ export class LookupService extends BaseService {
             map((response: LookupResponse) => {
                 this._state = {
                     categories: JSON.parse(response.categories.json),
-                    sizes: JSON.parse(response.sizes.json)
+                    sizes: JSON.parse(response.sizes.json),
+                    colors: JSON.parse(response.colors.json),
+                    prices: JSON.parse(response.prices.json),
                 }
                 this._state.categories.forEach(cat => {
                     this.populateParents(cat);
