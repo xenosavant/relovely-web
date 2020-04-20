@@ -50,17 +50,11 @@
 
     &.desktop {
         @media(max-width:999px) {
-            margin-left:-210px !important;
+            margin-left:-250px !important;
         }
         @media(min-width:1000px) {
             margin-left:-250px;
         }
-        // @media(min-width:1100px) {
-        //     margin-left:-350px;
-        // }
-        // @media(min-width:1200px) {
-        //     margin-left:-450px;
-        // }
         position:absolute;
         top:200px;
         .avatar-wrapper {

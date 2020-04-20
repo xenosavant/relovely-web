@@ -646,7 +646,7 @@ mat-toolbar-row.mega-menu-bar {
       grid-template-rows:auto;
       display:grid;
       @media(min-width: $desktop-breakpoint) {
-      grid-template-columns: 1fr 3fr;
+      grid-template-columns: 35% 1fr;
       @media(min-width: 1000px) {
         grid-template-columns: 25% 75%;;
       }
