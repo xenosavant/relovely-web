@@ -46,7 +46,7 @@ mat-toolbar {
 .content-wrapper {
   height:auto;
   overflow: hidden;
-  min-height: 100%;
+  min-height: calc(100vh - 200px);
   background-color: $background-gray;
 }
 
@@ -129,41 +129,41 @@ mat-toolbar mat-toolbar-row.no-border::after
   //     overflow: hidden;
   //   }
 
-    .footer {
-      flex: 0 0 auto;
-      padding: 0 15px;
-      text-align: center;
+  //   .footer {
+  //     flex: 0 0 auto;
+  //     padding: 0 15px;
+  //     text-align: center;
 
-      .row {
-        padding: 10px 0;
+  //     .row {
+  //       padding: 10px 0;
 
-        .links {
-          a {
-            transition: padding 0.5s;
-            display: inline-block;
-            padding: 20px 5px;
+  //       .links {
+  //         a {
+  //           transition: padding 0.5s;
+  //           display: inline-block;
+  //           padding: 20px 5px;
 
-            &:hover {
-              text-decoration: none;
-            }
+  //           &:hover {
+  //             text-decoration: none;
+  //           }
 
-            fa-icon {
-              width: 35px;
-            }
+  //           fa-icon {
+  //             width: 35px;
+  //           }
 
-            span {
-              display: inline-block;
-              width: 75px;
-              padding: 0 0 0 3px;
-              overflow: hidden;
-              text-align: left;
-              white-space: nowrap;
-              transition: width 0.5s;
-            }
-          }
-      }
-    }
-  }
+  //           span {
+  //             display: inline-block;
+  //             width: 75px;
+  //             padding: 0 0 0 3px;
+  //             overflow: hidden;
+  //             text-align: left;
+  //             white-space: nowrap;
+  //             transition: width 0.5s;
+  //           }
+  //         }
+  //     }
+  //   }
+  // }
 
 .mega-menu-bar {
   margin: 0 auto;
@@ -330,4 +330,19 @@ mat-nav-list {
   position: absolute;
   width: 150px;
   top: -50px;
+}
+
+.footer {
+  width: 100%;
+  color: $background-gray;
+  @media (max-width: $mobile-breakpoint) {
+  }
+  @media (min-width: $desktop-breakpoint) {
+    height: $footer-height;
+    position: relative;
+    bottom:0;
+    background-color: $background-gray;
+    border-top: solid 1px $header-border;
+    display: grid;
+  }
 }

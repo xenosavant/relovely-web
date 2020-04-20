@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <input #input type="file" style="visibility:hidden" (change)="imageChanged($event)" />
+        <input #input type="file" style="visibility:hidden; height:0px;" (change)="imageChanged($event)" />
         <form [formGroup]="form">
             <div>
                 <mat-form-field>

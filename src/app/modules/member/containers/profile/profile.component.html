@@ -13,6 +13,7 @@
           <li><img src="./assets/images/location.png"> Newark, NJ</li>
           <li></li>
         </ul>
+        <input #input type="file" style="visibility:hidden" (change)="onUpdateImage($event)" />
       </div>
     </div>
   </div>
@@ -25,7 +26,6 @@
     </ng-container>
   </ng-container>
 </div>
-<input #input type="file" style="visibility:hidden" (change)="onUpdateImage($event)" />
 <ng-container *ngIf="crop">
   <app-image-cropper (cancel)="onCloseCropper($event)" (crop)="onImageCropped($event)"
     [imageChangedEvent]="imageChangedEvent">

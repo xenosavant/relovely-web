@@ -12,41 +12,6 @@
     margin-top: 64px;
     overflow: hidden;
   }
-
-  .footer {
-    flex: 0 0 auto;
-    padding: 0 15px;
-    text-align: center;
-
-    .row {
-      padding: 10px 0;
-
-      .links {
-        a {
-          transition: padding 0.5s;
-          display: inline-block;
-          padding: 20px 5px;
-
-          text-decoration: none;
-
-          fa-icon {
-            font-size: 30px;
-            width: 35px;
-          }
-
-          span {
-            display: inline-block;
-            width: 75px;
-            padding: 0 0 0 3px;
-            overflow: hidden;
-            text-align: left;
-            white-space: nowrap;
-            transition: width 0.5s;
-          }
-        }
-      }
-    }
-  }
 }
 
 .toolbar-filler {

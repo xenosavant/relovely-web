@@ -1,5 +1,10 @@
 @import '../../../../../styles-variables';
 
+
+.header-bar {
+    height:16px;
+}
+
 .orders-wrapper {
     margin: 0 auto;
     max-width: $desktop-breakpoint;
@@ -12,8 +17,18 @@
      background-color: white;
      cursor: pointer;
  }
+
  .pagination {
      width:100%;
      position: relative;
      bottom:0;
  }
+
+.title {
+    padding: 16px 0px;
+    margin: 0 auto;
+    width: fit-content;
+    h1 {
+        font-weight: 300;
+    }
+}

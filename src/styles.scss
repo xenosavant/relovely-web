@@ -443,8 +443,8 @@ mat-chip-list mat-chip {
 
 .profile-container {
   overflow: hidden;
+  min-height: calc(100vh - 511px);F
   .mat-tab-body-wrapper {
-    min-height: calc(100vh - 146px) !important;
     margin-top: -25px;
   }
 
@@ -585,9 +585,9 @@ mat-toolbar-row.mega-menu-bar {
 .menu-bar-container {
   margin: 0 auto;
   height: 45px;
-  width: $mega-menu-width;
+  width: 576px;
   .menu-wrapper {
-    width:432px;
+    width:288px;
     display: inline-block;
     &.links {
       width:288px;
@@ -598,7 +598,7 @@ mat-toolbar-row.mega-menu-bar {
       align-items: center;
       height: 45px;
       grid-template-rows: auto;
-      grid-template-columns: repeat(3, 144px);
+      grid-template-columns: repeat(2, 144px);
         span {
           height: 45px;
           display: grid;
@@ -642,11 +642,16 @@ mat-toolbar-row.mega-menu-bar {
 .full-content {
   margin: 0 auto;
   max-width: $header-width;
-    &.profile { @media(min-width: $desktop-breakpoint) {
-      display:grid;
-      grid-template-columns: 1fr 3fr;
+    &.profile { 
       grid-template-rows:auto;
+      display:grid;
+      @media(min-width: $desktop-breakpoint) {
+      grid-template-columns: 1fr 3fr;
+      @media(min-width: 1000px) {
+        grid-template-columns: 25% 75%;;
+      }
     }
+   
   }
 }
 

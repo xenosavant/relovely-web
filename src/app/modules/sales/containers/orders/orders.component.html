@@ -1,3 +1,10 @@
+<ng-container *ngIf="!mobile">
+  <div class="title">
+    <h1>{{title}}</h1>
+  </div>
+
+</ng-container>
+
 <div class="orders-wrapper" *ngIf="orders">
   <div *ngFor="let order of orders; let i = index" class="order-card" (mouseenter)="onEnter(i)"
     (click)="goToOrder(order.id)" (mouseleave)="onLeave()" [class.mat-elevation-z2]="hoverIndex !== i"
