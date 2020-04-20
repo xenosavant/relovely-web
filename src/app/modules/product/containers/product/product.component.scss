@@ -31,29 +31,6 @@
     flex-direction: row;
     .info {
         flex-grow: 1;
-        .product-name {
-            font-size: .9em;
-            font-weight:500;
-        }
-        .product-price {
-            font-size: .8em;
-            font-weight:500;
-            .retail {
-                color: $pink-text;
-                text-decoration: line-through;
-            }
-        }
-        .product-size {
-            font-size: .8em;
-            .title {
-                color: #a4a4a4;
-                padding-right:8px;
-            }
-        }
-    }
-
-    .action {
-        
     }
 }
 

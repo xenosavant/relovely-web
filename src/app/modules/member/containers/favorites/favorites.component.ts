@@ -1,5 +1,4 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { products } from '@app/data/products.data';
 import { Product } from '@app/shared/models/product.model';
 import { NavigationService } from '@app/shared/services/navigation.service';
 
@@ -17,7 +16,6 @@ export class FavoritesComponent implements OnInit {
   public products: Product[];
 
   ngOnInit() {
-    this.products = products;
     this.navigationService.showNavBar(true, 'YOUR FAVORITES');
   }
 }

@@ -1,16 +1,15 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Order } from '@app/shared/models/order.model';
 import { NavigationService } from '@app/shared/services/navigation.service';
-import { Router } from '@angular/router';
 import { OrderService } from '@app/shared/services/order/order.service';
 
 @Component({
-  selector: 'app-orders',
-  templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss'],
+  selector: 'app-sales',
+  templateUrl: '../orders/orders.component.html',
+  styleUrls: ['../orders/orders.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OrdersComponent implements OnInit {
+export class SalesComponent implements OnInit {
 
   public orders: Order[];
   public hoverIndex: number;
@@ -21,7 +20,7 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.orderServive.getOrders().subscribe(orders => {
+    this.orderServive.getOrders(true).subscribe(orders => {
       this.orders = orders.items;
       this.ref.markForCheck();
     });
@@ -36,7 +35,7 @@ export class OrdersComponent implements OnInit {
   }
 
   goToOrder(id: string) {
-    this.navigationService.navigate({ path: `/sales/orders/${id}` });
+    this.navigationService.navigate({ path: `/sales/orders/${id}?sales=true` });
   }
 
 }

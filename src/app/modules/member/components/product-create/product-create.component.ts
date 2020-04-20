@@ -14,6 +14,7 @@ import { ProductService } from '@app/shared/services/product/product.service';
 import { VideoMetaData } from '@app/shared/interfaces/video-meta-data';
 import { switchMap, map, tap, concatMap } from 'rxjs/operators';
 import { resolve } from 'dns';
+import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 
 @Component({
   selector: 'app-product-create',
@@ -40,6 +41,7 @@ export class ProductCreateComponent implements OnInit {
   public id: string;
   public originalImage: string;
   public sizes: SizeFilterGroup[];
+  public colors: ColorFilter[];
   public showSize = true;
   public imageError = false;
   public currentSizes: KeyValue[] = [];
@@ -65,7 +67,9 @@ export class ProductCreateComponent implements OnInit {
       brand: new FormControl('', [Validators.required]),
       size: new FormControl('', [Validators.required]),
       tag: new FormControl(''),
-      price: new FormControl(null, [Validators.required])
+      price: new FormControl(null, [Validators.required]),
+      retailPrice: new FormControl(null),
+      color: new FormControl(null)
     }, this.validateCategories);
     this.lookupService.getState().then(state => {
       this.rootCategories = state.categories;
@@ -97,6 +101,8 @@ export class ProductCreateComponent implements OnInit {
     })
     this.lookupService.getState().then(state => {
       this.sizes = state.sizes;
+      this.colors = state.colors;
+      console.log(this.colors);
     })
   }
 
@@ -202,14 +208,17 @@ export class ProductCreateComponent implements OnInit {
         videos: this.video ? [this.video] : [],
         brand: this.form.get('brand').value,
         tags: this.tags,
-        price: this.form.get('price').value * 100,
-        auction: false,
-        sold: false
+        price: this.form.get('price').value * 100
       };
       console.log(this.form.get('size'));
       if (this.form.get('size').value) {
-        product.size = this.lookupService.getSize(this.form.get('size').value);
         product.sizeId = this.form.get('size').value;
+      }
+      if (this.form.get('color').value) {
+        product.colorId = this.form.get('color').value;
+      }
+      if (this.form.get('retailPrice').value) {
+        product.retailPrice = this.form.get('retailPrice').value;
       }
       this.productService.postProduct(product, this.sellerId).subscribe(response => {
         this.loading = false;

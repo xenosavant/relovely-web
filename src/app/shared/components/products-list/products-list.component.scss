@@ -26,11 +26,7 @@
   }
 
 
-  grid-template-columns: repeat(2, 1fr);
-
-  @media (min-width:$desktop-breakpoint) {
-    grid-template-columns: repeat(4, 1fr);
-  }
+  
     grid-template-rows: auto;
     display: grid;
     margin: auto;
@@ -39,6 +35,7 @@
 
 
     @media (min-width:$desktop-breakpoint) {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 285px));
         .product-wrapper {
             flex: 1 21%;
             margin:4%;
@@ -55,6 +52,7 @@
 
     &.grid {
       @media (max-width: $mobile-breakpoint) {
+        grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
         .product-wrapper {
           flex: 1 40%;
           margin-bottom:5%;

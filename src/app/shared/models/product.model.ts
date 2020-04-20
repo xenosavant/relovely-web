@@ -16,9 +16,10 @@ export class Product {
     public categories?: string[];
     public brand?: string;
     public sizeId?: string;
-    public size?: string;
+    public colorId?: string;
     public asset?: string;
     public price: number;
+    public retailPrice?: number;
     public moreItems?: Product[];
     public similarItems?: Product[];
     public favorited?: boolean;

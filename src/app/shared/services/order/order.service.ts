@@ -8,9 +8,21 @@ import { ListResponse } from "../list-response";
 @Injectable({ providedIn: 'root' })
 export class OrderService extends BaseService {
 
-    getOrders(): Observable<ListResponse<Order>> {
-        return this.httpClient.get<ListResponse<Order>>(`${this.apiBaseUrl}/orders/`).pipe(
+    getOrders(sales: boolean = false): Observable<ListResponse<Order>> {
+        let uri = `${this.apiBaseUrl}/orders`;
+        if (sales) {
+            uri += '?sales=true';
+        }
+        return this.httpClient.get<ListResponse<Order>>(uri).pipe(
             map((result: ListResponse<Order>) => {
+                return result;
+            })
+        );
+    }
+
+    getOrder(id: string): Observable<Order> {
+        return this.httpClient.get<Order>(`${this.apiBaseUrl}/orders/${id}`).pipe(
+            map((result: Order) => {
                 return result;
             })
         );

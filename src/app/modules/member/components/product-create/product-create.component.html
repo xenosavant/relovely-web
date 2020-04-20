@@ -63,14 +63,29 @@
                     </div>
                 </ng-container>
             </div>
-            <div class="size">
-                <mat-form-field>
-                    <mat-select placeholder="Size" class="form-control" formControlName="size">
-                        <mat-option *ngFor="let size of currentSizes" [value]="size.key">{{size.value}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <div class="double-field">
+                <div class="size">
+                    <mat-form-field>
+                        <mat-select placeholder="Size" class="form-control" formControlName="size">
+                            <mat-option *ngFor="let size of currentSizes" [value]="size.key">{{size.value}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="color">
+                    <mat-form-field>
+                        <mat-select placeholder="Color" class="form-control" formControlName="color">
+                            <mat-option *ngFor="let color of colors" [value]="color.key">
+                                <div class="dot-wrapper">
+                                    <div class="dot" [style.background-color]="color.color"></div>
+                                    <div>{{color.value}}</div>
+                                </div>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
             </div>
+
             <div class="brand">
                 <mat-form-field>
                     <input matInput placeholder="Brand" formControlName="brand" />
@@ -89,11 +104,19 @@
                     </mat-chip-list>
                 </mat-form-field>
             </div>
-            <div class="price">
-                <mat-form-field>
-                    <input type="number" matInput placeholder="Price" formControlName="price" />
-                </mat-form-field>
+            <div class="double-field">
+                <div class="price">
+                    <mat-form-field>
+                        <input type="number" matInput placeholder="Price" formControlName="price" />
+                    </mat-form-field>
+                </div>
+                <div class="retail-price">
+                    <mat-form-field>
+                        <input type="number" matInput placeholder="Retail Price" formControlName="retailPrice" />
+                    </mat-form-field>
+                </div>
             </div>
+
             <button mat-stroked-button [disabled]="!form.valid" (click)="onSave()" [class.primary]="true">
                 List
             </button>

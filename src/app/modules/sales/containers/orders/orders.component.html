@@ -1,4 +1,4 @@
-<div class="orders-wrapper">
+<div class="orders-wrapper" *ngIf="orders">
   <div *ngFor="let order of orders; let i = index" class="order-card" (mouseenter)="onEnter(i)"
     (click)="goToOrder(order.id)" (mouseleave)="onLeave()" [class.mat-elevation-z2]="hoverIndex !== i"
     [class.mat-elevation-z5]="hoverIndex === i">
