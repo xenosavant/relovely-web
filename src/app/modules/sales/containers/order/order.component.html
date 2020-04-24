@@ -16,20 +16,20 @@
                 <div class="line-items">
                     <div class="line-item">
                         <span class="label">Price </span>
-                        <span class="value">{{order.product.price / 100 | currency}} </span>
+                        <span class="value">{{order.product.price / 100 | appCurrency}} </span>
                     </div>
                     <div class="line-item">
                         <span class="label">Tax</span>
-                        <span class="value">{{order.tax / 100 | currency}} </span>
+                        <span class="value">{{order.tax / 100 | appCurrency}} </span>
                     </div>
                     <div class="line-item">
                         <span class="label">Shipping</span>
-                        <span class="value">{{order.shippingCost / 100 | currency}} </span>
+                        <span class="value">{{order.shippingCost / 100 | appCurrency}} </span>
                     </div>
                 </div>
                 <div class="total">
                     <span class="label total">TOTAL</span>
-                    <span class="value">{{order.total / 100 | currency}} </span>
+                    <span class="value">{{order.total / 100 | appCurrency}} </span>
                 </div>
             </div>
         </div>

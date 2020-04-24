@@ -10,7 +10,7 @@ import { Order } from '@app/shared/models/order.model';
 export class OrderListComponent implements OnInit {
 
   @Input() order: Order;
-  @Input() seller: boolean;
+  @Input() seller: boolean = false;
 
   constructor() { }
 

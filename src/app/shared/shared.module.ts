@@ -89,6 +89,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 import { VideoUploaderComponent } from './components/video-uploader/video-uploader.component';
 import { AddressComponent } from './components/address/address.component';
+import { AppCurrencyPipe } from './pipes/currency.pipe';
 
 
 library.add(
@@ -178,7 +179,8 @@ library.add(
     SignupComponent,
     VideoPlayerComponent,
     VideoUploaderComponent,
-    AddressComponent],
+    AddressComponent,
+    AppCurrencyPipe],
   exports: [
     CommonModule,
     FormsModule,
@@ -224,7 +226,8 @@ library.add(
     SignupComponent,
     VideoPlayerComponent,
     VideoUploaderComponent,
-    AddressComponent
+    AddressComponent,
+    AppCurrencyPipe
   ]
 })
 export class SharedModule { }

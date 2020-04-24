@@ -18,13 +18,13 @@ export class MemberProfileComponent implements OnInit {
   owner = false;
   @Output() updateImage: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  @Input() currentUserId: string;
   users: UserDetail[];
   products: Product[];
 
   constructor() { }
 
   ngOnInit() {
-
   }
 
   update() {

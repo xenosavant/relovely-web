@@ -2,7 +2,8 @@
   <app-profile-header (update)="update()" [owner]="owner" [user]="user"></app-profile-header>
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Favorites">
-      <app-products-list class="users-wrapper" [showGrid]="true" [showHeader]="true" [products]="products">
+      <app-products-list class="users-wrapper" [userId]="currentUserId" [showGrid]="true" [showHeader]="true"
+        [products]="products">
       </app-products-list>
     </mat-tab>
     <mat-tab label="Following">

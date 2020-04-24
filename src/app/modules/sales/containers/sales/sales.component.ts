@@ -6,7 +6,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-sales',
-  templateUrl: '../orders/orders.component.html',
+  templateUrl: './sales.component.html',
   styleUrls: ['../orders/orders.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

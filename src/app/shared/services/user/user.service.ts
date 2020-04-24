@@ -25,13 +25,14 @@ export class
     private _currentUser: UserDetail;
 
     private _jwt: string;
+    private _notLoggedIn = false;
 
     public get currentUser() {
         return this._currentUser;
     }
 
     public async getCurrentUser(): Promise<UserDetail> {
-        if (this._currentUser) {
+        if (this._currentUser || this._notLoggedIn) {
             return this._currentUser;
         } else {
             return this.user$.toPromise();
@@ -51,6 +52,7 @@ export class
         this.localStorageService.setItem('jwt', jwt);
         this._currentUser = user;
         this.localStorageService.setItem('currentUser', user);
+        this._notLoggedIn = false;
         this.userSubject$.next(user);
         this.loggedInSubject$.next(true);
     }
@@ -60,6 +62,7 @@ export class
         this.localStorageService.removeItem('currentUser');
         this._currentUser = null;
         this._jwt = null;
+        this._notLoggedIn = true;
         this.loggedInSubject$.next(false);
         this.userSubject$.next(null);
     }

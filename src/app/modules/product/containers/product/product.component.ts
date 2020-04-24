@@ -9,6 +9,7 @@ import { ProductService } from '@app/shared/services/product/product.service';
 import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 import { VideoMetaData } from '@app/shared/interfaces/video-meta-data';
 import { OrderService } from '@app/shared/services/order/order.service';
+import { UserService } from '@app/shared/services/user/user.service';
 
 @Component({
   selector: 'app-product',
@@ -23,6 +24,7 @@ export class ProductComponent implements OnInit {
   loading = true;
   videoThumbnail: string;
   videoPadding = 0;
+  seller: boolean = false;
   currentItem: string | VideoMetaData;
   id: string;
   public carouselOptions: Partial<OwlCarouselOConfig> = {
@@ -51,7 +53,8 @@ export class ProductComponent implements OnInit {
     private zone: NgZone,
     private ref: ChangeDetectorRef,
     private productService: ProductService,
-    private orderService: OrderService) { }
+    private orderService: OrderService,
+    private userService: UserService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -88,10 +91,15 @@ export class ProductComponent implements OnInit {
                 }
               };
             }
-            this.loading = false;
-            this.zone.run(() => {
-              this.ref.markForCheck();
-            });
+            this.userService.getCurrentUser().then(user => {
+              if (user && user.id === this.product.sellerId) {
+                this.seller = true;
+              }
+              this.loading = false;
+              this.zone.run(() => {
+                this.ref.markForCheck();
+              });
+            })
           })
         }
       });
@@ -104,6 +112,10 @@ export class ProductComponent implements OnInit {
 
   goToProfile($event: any) {
     this.navigationService.navigate({ path: '/member/' + this.product.seller.id });
+  }
+
+  edit() {
+
   }
 
   carouselTranslated(event: any) {

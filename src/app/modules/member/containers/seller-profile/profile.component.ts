@@ -18,7 +18,8 @@ export class SellerProfileComponent implements OnInit {
   @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
 
   @Input() user: UserDetail;
-  @Input() owner = true;
+  @Input() currentUserId: string;
+  @Input() owner = false;
   @Output() updateImage: EventEmitter<boolean> = new EventEmitter<boolean>();
   users: UserDetail[];
   showCreate = false;

@@ -5,12 +5,12 @@
     <app-profile-header (update)="update()" [owner]="owner" [user]="user"></app-profile-header>
     <mat-tab-group>
         <mat-tab label="Listings">
-            <app-products-list (create)="showCreateModal($event)" [showCreate]="showCreate" [showGrid]="true"
-                [showHeader]="false" [products]="user.listings">
+            <app-products-list [userId]="currentUserId" (create)="showCreateModal($event)" [showCreate]="showCreate"
+                [showGrid]="true" [showHeader]="false" [products]="user.listings">
             </app-products-list>
         </mat-tab>
         <mat-tab label="Sales">
-            <app-products-list [showGrid]="true" [showHeader]="false" [products]="user.sales">
+            <app-products-list [userId]="currentUserId" [showGrid]="true" [showHeader]="false" [products]="user.sales">
             </app-products-list>
         </mat-tab>
         <mat-tab label="Followers">

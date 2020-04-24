@@ -30,7 +30,7 @@
                     {{product.title}}
                 </div>
                 <div class="product-price">
-                    {{product.price | currency}} <span class="retail">{{product.price + 50 | currency}}</span>
+                    {{product.price | appCurrency}} <span class="retail">{{product.price + 50 | appCurrency}}</span>
                 </div>
                 <div class="product-size">
                     <span class="title">Size:</span>
@@ -38,7 +38,8 @@
                 </div>
             </div>
             <div class="action">
-                <app-button type="accent">Buy Now!</app-button>
+                <app-button *ngIf="!seller" type="accent">Buy Now!</app-button>
+                <app-button *ngIf="seller" type="accent" (click)="edit()">Edit</app-button>
             </div>
         </div>
         <div class="product-details">
@@ -85,7 +86,7 @@
                     </div>
                 </div>
                 <div class="product-price">
-                    {{product.price | currency}}
+                    {{product.price | appCurrency}}
                 </div>
                 <div class="size-wrapper">
                     Size: <strong>{{product.size || 'One Size'}}</strong>

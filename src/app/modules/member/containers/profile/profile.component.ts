@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
   mobile: boolean;
   owner = false;
   loading = true;
+  currentUserId: string;
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private userService: UserService, private zone: NgZone, private ref: ChangeDetectorRef,
     private uploadService: FileUploadService) { }
@@ -32,13 +33,17 @@ export class ProfileComponent implements OnInit {
       const id = param.get('id');
       if (!this.user || (this.user && id !== this.user.id)) {
         if (id !== 'profile') {
-          this.userService.getUser(id).subscribe(user => {
-            this.owner = false;
-            this.user = user;
-            this.ref.markForCheck();
-            this.loading = false;
+          this.userService.getCurrentUser().then(user => {
+            this.currentUserId = user ? user.id : null;
+            this.userService.getUser(id).subscribe(user => {
+              this.owner = false;
+              this.user = user;
+              this.ref.markForCheck();
+              this.loading = false;
+            });
           })
         } else {
+          this.currentUserId = this.userService.currentUser.id;
           this.userService.getUser(this.userService.currentUser.id).subscribe(user => {
             this.owner = true;
             this.user = user;

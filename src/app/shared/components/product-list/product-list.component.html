@@ -12,10 +12,11 @@
   </div>
   <div class="bottom-icons">
     <div class="left">
-      <button mat-stroked-button class="primary" *ngIf="!product.auction">Buy Now</button>
-      <button mat-stroked-button class="primary" *ngIf="product.auction">Bid</button>
+      <button mat-stroked-button class="primary" *ngIf="!product.auction && !seller">Buy Now</button>
+      <button mat-stroked-button class="primary" *ngIf="product.auction && !seller">Bid</button>
+      <button mat-stroked-button class="primary" *ngIf="seller" (click)="edit()">Edit</button>
     </div>
-    <div class="right" (click)="favorite()">
+    <div *ngIf="!seller" class="right" (click)="favorite()">
       <fa-icon [class.fa-lg]="!grid" [class.favorited]="product.favorited" icon="heart"></fa-icon>
     </div>
   </div>

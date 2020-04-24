@@ -36,8 +36,11 @@
                             Delivered {{order.deliveryDate | date}}
                         </div>
                     </div>
-                    <div class="seller">
+                    <div *ngIf="!seller" class="seller">
                         Seller: {{order.seller.username}}
+                    </div>
+                    <div *ngIf="seller" class="seller">
+                        Buyer: {{order.buyer.username}}
                     </div>
                 </div>
             </div>

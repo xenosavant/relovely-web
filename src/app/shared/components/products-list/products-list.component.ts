@@ -14,6 +14,7 @@ export class ProductsListComponent implements OnInit {
   @Input() showGrid?: boolean;
   @Input() showHeader = true;
   @Input() showCreate = false;
+  @Input() userId: string;
 
   @Output() create: EventEmitter<any> = new EventEmitter;
 

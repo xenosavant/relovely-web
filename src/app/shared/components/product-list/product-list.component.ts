@@ -16,6 +16,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   @Input() product: Product;
   @Input() showGrid?: boolean;
   @Input() showHeader = true;
+  @Input() seller = false;
 
   subscriptions: Subscription[] = [];
 
@@ -47,6 +48,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.navigationService.navigate({ path: '/products/detail/' + this.product.id })
   }
 
+  edit() {
+
+  }
+
   favorite() {
     this.product.favorited = !this.product.favorited;
   }
@@ -56,5 +61,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       s.unsubscribe();
     })
   }
+
+
 
 }
