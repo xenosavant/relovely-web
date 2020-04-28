@@ -16,7 +16,6 @@ export class ProductService extends BaseService {
     }
 
     getProducts(categoryId: string, sizes: string[] = null, colors: string[] = null, prices: PriceRange[] = null): Observable<ListResponse<Product>> {
-
         let query = `?category=${categoryId}`;
         if (sizes) {
             let sizeArray = ''
@@ -60,6 +59,14 @@ export class ProductService extends BaseService {
     patchProduct(product: Partial<Product>, productId: string): Observable<Product> {
         return this.httpClient.patch<Product>(`${this.apiBaseUrl}/products/${productId}/`, product).pipe(
             map((result: Product) => {
+                return result;
+            })
+        );
+    }
+
+    getFavorites(): Observable<ListResponse<Product>> {
+        return this.httpClient.get<ListResponse<Product>>(`${this.apiBaseUrl}/products/favorites`).pipe(
+            map((result: ListResponse<Product>) => {
                 return result;
             })
         );
