@@ -14,6 +14,11 @@
     </div>
 </ng-container>
 <div class="products-content">
-    <app-products-list [products]="products" [showGrid]="grid" [showHeader]="true">
+    <app-products-list (edit)="editProduct($event)" [userId]="currentUserId" [products]="products" [showGrid]="grid"
+        [showHeader]="true">
     </app-products-list>
 </div>
+<ng-template cdkPortal #productCreateModal="cdkPortal">
+    <app-product-create [product]="product" [sellerId]="currentUserId" (close)="close($event)">
+    </app-product-create>
+</ng-template>

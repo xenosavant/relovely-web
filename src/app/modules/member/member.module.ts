@@ -9,19 +9,16 @@ import { SharedModule } from '@app/shared';
 import { MemberProfileComponent } from './containers/member-profile/member-profile.component';
 import { SellerProfileComponent } from './containers/seller-profile/profile.component';
 import { ProfileComponent } from './containers/profile/profile.component';
-import { ProductCreateComponent } from './components/product-create/product-create.component';
 import { PortalModule } from '@angular/cdk/portal';
-import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
-  declarations: [SellerProfileComponent, MemberProfileComponent, FavoritesComponent, PurchasesComponent, MemberProfileComponent, ProfileComponent, ProductCreateComponent],
+  declarations: [SellerProfileComponent, MemberProfileComponent, FavoritesComponent, PurchasesComponent, MemberProfileComponent, ProfileComponent],
   imports: [
     CommonModule,
     MemberRoutingModule,
     MatTabsModule,
     PortalModule,
-    SharedModule,
-    DragulaModule
+    SharedModule
   ],
   providers: [{
     provide: HAMMER_GESTURE_CONFIG,

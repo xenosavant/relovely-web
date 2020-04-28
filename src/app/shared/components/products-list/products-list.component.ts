@@ -17,13 +17,14 @@ export class ProductsListComponent implements OnInit {
   @Input() userId: string;
 
   @Output() create: EventEmitter<any> = new EventEmitter;
+  @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
 
   hoverIndex = -1;
 
   constructor(private navigationService: NavigationService) { }
 
   ngOnInit() {
-    // set showCreate here if current user is seller
+
   }
 
   onEnter(index) {
@@ -36,6 +37,10 @@ export class ProductsListComponent implements OnInit {
 
   onCreate($event: any) {
     this.create.emit($event);
+  }
+
+  onEdit(product: Product) {
+    this.edit.emit(product);
   }
 
 }

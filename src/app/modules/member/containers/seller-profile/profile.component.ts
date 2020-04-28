@@ -6,6 +6,7 @@ import { products } from '@app/data/products.data';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from '@app/shared/services/overlay.service';
 import { UserService } from '@app/shared/services/user/user.service';
+import { Product } from '@app/shared/models/product.model';
 
 @Component({
   selector: 'app-seller-profile',
@@ -23,6 +24,7 @@ export class SellerProfileComponent implements OnInit {
   @Output() updateImage: EventEmitter<boolean> = new EventEmitter<boolean>();
   users: UserDetail[];
   showCreate = false;
+  editProduct: Product;
 
   constructor(private route: ActivatedRoute, private overlayService: OverlayService, private userService: UserService) { }
 
@@ -36,6 +38,12 @@ export class SellerProfileComponent implements OnInit {
   }
 
   showCreateModal($event: any) {
+    this.editProduct = null;
+    this.overlayService.open(this.productCreateModal);
+  }
+
+  showEditModal(product: any) {
+    this.editProduct = product;
     this.overlayService.open(this.productCreateModal);
   }
 

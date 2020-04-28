@@ -57,4 +57,12 @@ export class ProductService extends BaseService {
         );
     }
 
+    patchProduct(product: Partial<Product>, productId: string): Observable<Product> {
+        return this.httpClient.patch<Product>(`${this.apiBaseUrl}/products/${productId}/`, product).pipe(
+            map((result: Product) => {
+                return result;
+            })
+        );
+    }
+
 }

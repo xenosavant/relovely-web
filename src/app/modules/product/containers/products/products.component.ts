@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, NgZone } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, NgZone, ViewChild } from '@angular/core';
 import { Product } from '@app/shared/models/product.model';
 import { products } from '@app/data/products.data';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,6 +10,9 @@ import { Category } from '@app/shared/models/category.model';
 import { ProductService } from '@app/shared/services/product/product.service';
 import { FilterService } from '@app/shared/services/filter/filter.service';
 import { IUserPreferences } from '@app/shared/services/filter/filter-state';
+import { UserService } from '@app/shared/services/user/user.service';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { OverlayService } from '@app/shared/services/overlay.service';
 
 @Component({
   selector: 'app-products',
@@ -20,11 +23,15 @@ import { IUserPreferences } from '@app/shared/services/filter/filter-state';
 export class ProductsComponent implements OnInit {
 
   public products: Product[];
+  public product: Product;
   public title: string;
   grid: boolean;
   mobile: boolean;
   currentNavItem: NavigationItem;
   categoryId: string;
+  currentUserId: string;
+
+  @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
 
   constructor(
     private router: Router,
@@ -35,7 +42,9 @@ export class ProductsComponent implements OnInit {
     private lookupService: LookupService,
     private breakpointObserver: BreakpointObserver,
     private productService: ProductService,
-    private filterService: FilterService) { }
+    private filterService: FilterService,
+    private userService: UserService,
+    private overlayService: OverlayService) { }
 
   ngOnInit() {
     this.products = [];
@@ -64,6 +73,10 @@ export class ProductsComponent implements OnInit {
       this.ref.markForCheck();
     })
 
+    this.userService.getCurrentUser().then(u => {
+      this.currentUserId = u ? u.id : null;
+    });
+
     this.filterService.filterState$.subscribe(state => {
       this.getProducts(state);
     });
@@ -72,6 +85,11 @@ export class ProductsComponent implements OnInit {
   selectProduct(id: string) {
     this.navigationService.hideAll();
     this.router.navigate(['/products/detail/' + id]);
+  }
+
+  editProduct(product: Product) {
+    this.product = product;
+    this.overlayService.open(this.productCreateModal);
   }
 
   getProducts(state: IUserPreferences) {

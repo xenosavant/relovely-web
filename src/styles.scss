@@ -443,7 +443,9 @@ mat-chip-list mat-chip {
 
 .profile-container {
   overflow: hidden;
-  min-height: calc(100vh - 511px);F
+  @media( min-width:$desktop-breakpoint) {
+    min-height: calc(100vh - 511px);
+  }
   .mat-tab-body-wrapper {
     margin-top: -25px;
   }
@@ -612,6 +614,9 @@ mat-toolbar-row.mega-menu-bar {
             display: inline-block;
             font-size: 1.1em;
             font-weight: inherit;
+            &:hover {
+              text-decoration: underline;
+            }
             &.current {
               font-weight: 400 !important;
               text-decoration: underline !important;

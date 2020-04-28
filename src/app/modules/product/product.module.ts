@@ -7,6 +7,7 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { SharedModule } from '@app/shared';
 import { DesktopFiltersComponent } from './components/desktop-filters/desktop-filters.component';
+import { PortalModule } from '@angular/cdk/portal';
 
 @NgModule({
   declarations: [ProductsComponent, ProductComponent, DesktopFiltersComponent],
@@ -14,7 +15,8 @@ import { DesktopFiltersComponent } from './components/desktop-filters/desktop-fi
     CommonModule,
     SharedModule,
     ProductRoutingModule,
-    CarouselModule
+    CarouselModule,
+    PortalModule
   ],
   exports: [ProductsComponent, ProductComponent]
 })

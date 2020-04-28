@@ -1,12 +1,13 @@
 <ng-template cdkPortal #productCreateModal="cdkPortal">
-    <app-product-create [sellerId]="user.id" (close)="close($event)"></app-product-create>
+    <app-product-create [product]="editProduct" [sellerId]="user.id" (close)="close($event)"></app-product-create>
 </ng-template>
 <div class="profile-container">
     <app-profile-header (update)="update()" [owner]="owner" [user]="user"></app-profile-header>
     <mat-tab-group>
         <mat-tab label="Listings">
-            <app-products-list [userId]="currentUserId" (create)="showCreateModal($event)" [showCreate]="showCreate"
-                [showGrid]="true" [showHeader]="false" [products]="user.listings">
+            <app-products-list [userId]="currentUserId" (edit)="showEditModal($event)"
+                (create)="showCreateModal($event)" [showCreate]="showCreate" [showGrid]="true" [showHeader]="false"
+                [products]="user.listings">
             </app-products-list>
         </mat-tab>
         <mat-tab label="Sales">

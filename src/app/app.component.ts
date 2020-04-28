@@ -289,7 +289,8 @@ export class AppComponent implements OnInit {
   }
 
   public onLeaveMenuBar(event: any) {
-    if (event.offsetY < 0 || event.offsetX <= 0 || event.offsetX >= 432) {
+    console.log(event);
+    if (event.offsetY < 0 || event.offsetX <= 0 || event.offsetX >= 288) {
       this.showMegaMenu = false;
       this.selectedMenuItem = -1;
     }

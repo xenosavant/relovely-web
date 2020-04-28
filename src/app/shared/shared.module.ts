@@ -90,6 +90,8 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
 import { VideoUploaderComponent } from './components/video-uploader/video-uploader.component';
 import { AddressComponent } from './components/address/address.component';
 import { AppCurrencyPipe } from './pipes/currency.pipe';
+import { ProductCreateComponent } from './components/product-create/product-create.component';
+import { DragulaModule } from 'ng2-dragula';
 
 
 library.add(
@@ -157,7 +159,8 @@ library.add(
     MatProgressSpinnerModule,
     ClickOutsideModule,
     FileUploadModule,
-    CloudinaryModule
+    CloudinaryModule,
+    DragulaModule
   ],
   declarations: [
     AvatarComponent,
@@ -180,7 +183,8 @@ library.add(
     VideoPlayerComponent,
     VideoUploaderComponent,
     AddressComponent,
-    AppCurrencyPipe],
+    AppCurrencyPipe,
+    ProductCreateComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -227,7 +231,8 @@ library.add(
     VideoPlayerComponent,
     VideoUploaderComponent,
     AddressComponent,
-    AppCurrencyPipe
+    AppCurrencyPipe,
+    ProductCreateComponent
   ]
 })
 export class SharedModule { }

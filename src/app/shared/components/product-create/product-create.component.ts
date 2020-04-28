@@ -2,9 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, NgZon
 import { FormControl, Validators, FormGroup, FormArray, FormBuilder, AbstractControl, ValidationErrors, FormArrayName } from '@angular/forms';
 import { Category } from '@app/shared/models/category.model';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
-import { KeyValue } from '../../../../shared/interfaces/key-value.interface';
-import { guid } from '../../../../shared/utils/rand';
-import { FileUploadService } from '../../../../shared/services/file-upload.service'
+import { guid } from '../../utils/rand';
 import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 import { forkJoin } from 'rxjs';
 import { ThrowStmt } from '@angular/compiler';
@@ -15,6 +13,8 @@ import { VideoMetaData } from '@app/shared/interfaces/video-meta-data';
 import { switchMap, map, tap, concatMap } from 'rxjs/operators';
 import { resolve } from 'dns';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
+import { KeyValue } from '@app/shared/interfaces/key-value.interface';
+import { FileUploadService } from '@app/shared/services/file-upload.service';
 
 @Component({
   selector: 'app-product-create',
@@ -26,6 +26,7 @@ export class ProductCreateComponent implements OnInit {
 
 
   @Input() sellerId: string;
+  @Input() product: Product;
   @Output() close: EventEmitter<any> = new EventEmitter;
 
   public imageChangedEvent: any = null;
@@ -49,6 +50,8 @@ export class ProductCreateComponent implements OnInit {
   public imageUploadError = false;
   public loading = false;
   public saveError = false;
+  edit = false;
+  title: string;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -57,27 +60,58 @@ export class ProductCreateComponent implements OnInit {
     private lookupService: LookupService,
     private ref: ChangeDetectorRef,
     private productService: ProductService) {
-    this.form = new FormGroup({
-      title: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      categories: new FormArray([
-        this.formBuilder.group({
-          id: null
-        })]),
-      brand: new FormControl('', [Validators.required]),
-      size: new FormControl('', [Validators.required]),
-      tag: new FormControl(''),
-      price: new FormControl(null, [Validators.required]),
-      retailPrice: new FormControl(null),
-      color: new FormControl(null)
-    }, this.validateCategories);
-    this.lookupService.getState().then(state => {
-      this.rootCategories = state.categories;
-      this.categories.push(state.categories);
-    })
+
+
   }
 
   ngOnInit() {
+    if (this.product) {
+      this.edit = true;
+      this.title = 'Edit Product';
+      console.log(this.product);
+      this.form = new FormGroup({
+        title: new FormControl(this.product.title, [Validators.required]),
+        description: new FormControl(this.product.description, [Validators.required]),
+        brand: new FormControl(this.product.brand, [Validators.required]),
+        categories: this.formBuilder.array(
+          [
+            this.formBuilder.group({
+              id: this.product.categories[0]
+            }),
+            this.formBuilder.group({
+              id: this.product.categories[1]
+            }),
+            this.formBuilder.group({
+              id: this.product.categories[2]
+            })
+          ]
+        ),
+        size: new FormControl(this.product.sizeId),
+        price: new FormControl(this.product.price, [Validators.required]),
+        retailPrice: new FormControl(this.product.retailPrice),
+        color: new FormControl(this.product.colorId),
+        tag: new FormControl('')
+      }, this.validateCategories);
+      this.tags = [...this.product.tags];
+      this.images = this.product.images;
+      this.video = this.product.videos.length ? this.product.videos[0] : null;
+    } else {
+      this.title = 'List A Product';
+      this.form = new FormGroup({
+        title: new FormControl('', [Validators.required]),
+        description: new FormControl('', [Validators.required]),
+        categories: new FormArray([
+          this.formBuilder.group({
+            id: null
+          })]),
+        brand: new FormControl('', [Validators.required]),
+        size: new FormControl('', [Validators.required]),
+        tag: new FormControl(''),
+        price: new FormControl(null, [Validators.required]),
+        retailPrice: new FormControl(null),
+        color: new FormControl(null)
+      }, this.validateCategories);
+    }
     this.id = guid();
     this.form.get('categories').valueChanges.subscribe((val: any) => {
       this.currentSizes = [];
@@ -102,7 +136,14 @@ export class ProductCreateComponent implements OnInit {
     this.lookupService.getState().then(state => {
       this.sizes = state.sizes;
       this.colors = state.colors;
-      console.log(this.colors);
+      this.rootCategories = state.categories;
+      this.categories.push(this.rootCategories);
+      if (this.edit) {
+        const second = this.categories[0].find(cat => cat.id === this.product.categories[0]);
+        this.categories.push(second.children);
+        const third = this.categories[1].find(cat => cat.id === this.product.categories[1]);
+        this.categories.push(third.children);
+      }
     })
   }
 
@@ -111,8 +152,11 @@ export class ProductCreateComponent implements OnInit {
       this.categoryArray.removeAt(i);
     }
     this.categories = this.categories.slice(0, index + 1);
+    console.log(this.categories[index], category.value);
     const valueAtIndex = this.categories[index].find(cat => cat.id === category.value);
+    console.log(valueAtIndex);
     const targetIndex = this.categories[index].indexOf(valueAtIndex);
+    console.log(targetIndex);
     if (this.categories[index][targetIndex].children.length) {
       this.categories.push(this.categories[index][targetIndex].children);
       this.categoryArray.push(this.formBuilder.group({
@@ -198,34 +242,57 @@ export class ProductCreateComponent implements OnInit {
       this.imageError = true;
     } else {
       this.loading = true;
-      let product: Product;
-      product = {
-        id: this.id,
-        title: this.form.get('title').value,
-        description: this.form.get('description').value,
-        categories: this.categoryArray['controls'].map(c => c.value.id),
-        images: this.images,
-        videos: this.video ? [this.video] : [],
-        brand: this.form.get('brand').value,
-        tags: this.tags,
-        price: this.form.get('price').value * 100
-      };
-      console.log(this.form.get('size'));
-      if (this.form.get('size').value) {
-        product.sizeId = this.form.get('size').value;
+      this.images.forEach(image => {
+        delete image.id;
+      });
+      if (this.edit) {
+        const patch: Partial<Product> = {
+          categories: this.categoryArray['controls'].map(c => c.value.id),
+          title: this.form.get('title').value,
+          price: this.form.get('price').value * 100,
+          images: this.images,
+          videos: this.video ? [this.video] : [],
+          brand: this.form.get('brand').value,
+          tags: this.tags,
+          sizeId: this.form.get('size').value,
+          colorId: this.form.get('color').value,
+          retailPrice: this.form.get('retailPrice').value
+        };
+        this.productService.patchProduct(patch, this.product.id).subscribe(response => {
+          this.loading = false;
+          this.close.emit();
+        }, error => {
+          this.saveError = true;
+        })
+      } else {
+        let product: Product;
+        product = {
+          title: this.form.get('title').value,
+          description: this.form.get('description').value,
+          categories: this.categoryArray['controls'].map(c => c.value.id),
+          images: this.images,
+          videos: this.video ? [this.video] : [],
+          brand: this.form.get('brand').value,
+          tags: this.tags,
+          price: this.form.get('price').value * 100
+        };
+        if (this.form.get('size').value) {
+          product.sizeId = this.form.get('size').value;
+        }
+        if (this.form.get('color').value) {
+          product.colorId = this.form.get('color').value;
+        }
+        if (this.form.get('retailPrice').value) {
+          product.retailPrice = this.form.get('retailPrice').value;
+        }
+        this.productService.postProduct(product, this.sellerId).subscribe(response => {
+          this.loading = false;
+          this.close.emit();
+        }, error => {
+          this.saveError = true;
+        })
       }
-      if (this.form.get('color').value) {
-        product.colorId = this.form.get('color').value;
-      }
-      if (this.form.get('retailPrice').value) {
-        product.retailPrice = this.form.get('retailPrice').value;
-      }
-      this.productService.postProduct(product, this.sellerId).subscribe(response => {
-        this.loading = false;
-        this.close.emit();
-      }, error => {
-        this.saveError = true;
-      })
+
     }
 
   }

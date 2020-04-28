@@ -18,6 +18,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   @Input() showHeader = true;
   @Input() seller = false;
 
+  @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
+
   subscriptions: Subscription[] = [];
 
   grid: boolean;
@@ -48,8 +50,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.navigationService.navigate({ path: '/products/detail/' + this.product.id })
   }
 
-  edit() {
-
+  onEdit() {
+    this.edit.emit(this.product);
   }
 
   favorite() {

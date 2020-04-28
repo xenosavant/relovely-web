@@ -1,4 +1,4 @@
-<app-modal title="List A Product" (close)="onClose($event)">
+<app-modal [title]="title" (close)="onClose($event)">
     <ng-container *ngIf="!loading">
         <div class="info hint">
             *We recommend at least one photo wearing the product
