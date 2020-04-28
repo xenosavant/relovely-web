@@ -5,7 +5,7 @@
                 <app-avatar [image]="product.seller.profileImageUrl"></app-avatar>
             </div>
             <div class="product-user-name">
-                {{product.sellerUsername}}
+                {{product.seller.username}}
             </div>
         </div>
         <owl-carousel-o [options]="carouselOptions" (changed)="carouselTranslated($event)" appOwlPreventClick
@@ -38,8 +38,13 @@
                 </div>
             </div>
             <div class="action">
-                <app-button *ngIf="!seller" type="accent">Buy Now!</app-button>
-                <app-button *ngIf="seller" type="accent" (click)="edit()">Edit</app-button>
+                <ng-container *ngIf="!product.sold">
+                    <app-button *ngIf="!seller" type="accent" (click)="purchase($event)">Buy Now!</app-button>
+                    <app-button *ngIf="seller" type="accent" (click)="edit($event)">Edit</app-button>
+                </ng-container>
+                <ng-container *ngIf="product.sold">
+                    <div class="sold">This product is no longer available</div>
+                </ng-container>
             </div>
         </div>
         <div class="product-details">
@@ -91,11 +96,15 @@
                 <div class="size-wrapper">
                     Size: <strong>{{product.size || 'One Size'}}</strong>
                 </div>
-                <div class="button-wrapper">
-                    <app-button type="accent" (click)="purchase($event)">
-                        Buy Now
-                    </app-button>
-                </div>
+                <ng-container *ngIf="!product.sold">
+                    <div class="button-wrapper">
+                        <app-button *ngIf="!seller" type="accent" (click)="purchase($event)">Buy Now!</app-button>
+                        <app-button *ngIf="seller" type="accent" (click)="edit($event)">Edit</app-button>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="product.sold">
+                    <div class="sold">This product is no longer available</div>
+                </ng-container>
                 <div class="description">
                     {{product.description}}
                 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Product } from '@app/shared/models/product.model';
 import { NavigationService } from '@app/shared/services/navigation.service';
 import { UserService } from '@app/shared/services/user/user.service';
@@ -14,7 +14,8 @@ export class FavoritesComponent implements OnInit {
 
   constructor(private navigationService: NavigationService,
     private userService: UserService,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private ref: ChangeDetectorRef) { }
 
 
   public products: Product[];
@@ -27,6 +28,7 @@ export class FavoritesComponent implements OnInit {
     });
     this.productService.getFavorites().subscribe(response => {
       this.products = response.items;
+      this.ref.markForCheck();
     })
   }
 }

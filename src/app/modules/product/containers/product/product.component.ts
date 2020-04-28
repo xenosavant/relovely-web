@@ -92,13 +92,13 @@ export class ProductComponent implements OnInit {
               };
             }
             this.userService.getCurrentUser().then(user => {
-              if (user && user.id === this.product.sellerId) {
+              if (user && user.id === this.product.seller.id) {
                 this.seller = true;
               }
-              this.loading = false;
               this.zone.run(() => {
+                this.loading = false;
                 this.ref.markForCheck();
-              });
+              })
             })
           })
         }
