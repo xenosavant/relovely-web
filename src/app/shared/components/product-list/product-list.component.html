@@ -10,7 +10,7 @@
   <div class="product-image">
     <app-product-body [product]="product" (click)="goToProduct($event)"></app-product-body>
   </div>
-  <div class="bottom-icons">
+  <div class="bottom-icons" *ngIf="!product.sold">
     <div class="left">
       <button mat-stroked-button class="primary" *ngIf="!product.auction && !seller">Buy Now</button>
       <button mat-stroked-button class="primary" *ngIf="product.auction && !seller">Bid</button>

@@ -1,6 +1,9 @@
 <div (click)="onClicked($event)">
   <div class="image-wrapper">
     <img class="product" [src]="product.images[0].cropped">
+    <div *ngIf="product.sold" class="sold-overlay">
+      <span class="sold">SOLD</span>
+    </div>
   </div>
   <div class="info-footer">
     <div class="product-name">
