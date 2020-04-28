@@ -26,4 +26,5 @@ export class Product {
     public sold?: boolean = false;
     public auction?: boolean = false;
     public tags?: string[];
+    public cloudId?: string;
 }

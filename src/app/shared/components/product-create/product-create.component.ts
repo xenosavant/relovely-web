@@ -61,14 +61,12 @@ export class ProductCreateComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private productService: ProductService) {
 
-
   }
 
   ngOnInit() {
     if (this.product) {
       this.edit = true;
       this.title = 'Edit Product';
-      console.log(this.product);
       this.form = new FormGroup({
         title: new FormControl(this.product.title, [Validators.required]),
         description: new FormControl(this.product.description, [Validators.required]),
@@ -245,46 +243,35 @@ export class ProductCreateComponent implements OnInit {
       this.images.forEach(image => {
         delete image.id;
       });
+      let product: Product;
+      product = {
+        cloudId: this.id,
+        title: this.form.get('title').value,
+        description: this.form.get('description').value,
+        categories: this.categoryArray['controls'].map(c => c.value.id),
+        images: this.images,
+        videos: this.video ? [this.video] : [],
+        brand: this.form.get('brand').value,
+        tags: this.tags,
+        price: this.form.get('price').value * 100
+      };
+      if (this.form.get('size').value) {
+        product.sizeId = this.form.get('size').value;
+      }
+      if (this.form.get('color').value) {
+        product.colorId = this.form.get('color').value;
+      }
+      if (this.form.get('retailPrice').value) {
+        product.retailPrice = this.form.get('retailPrice').value;
+      }
       if (this.edit) {
-        const patch: Partial<Product> = {
-          categories: this.categoryArray['controls'].map(c => c.value.id),
-          title: this.form.get('title').value,
-          price: this.form.get('price').value * 100,
-          images: this.images,
-          videos: this.video ? [this.video] : [],
-          brand: this.form.get('brand').value,
-          tags: this.tags,
-          sizeId: this.form.get('size').value,
-          colorId: this.form.get('color').value,
-          retailPrice: this.form.get('retailPrice').value
-        };
-        this.productService.patchProduct(patch, this.product.id).subscribe(response => {
+        this.productService.patchProduct(product, this.product.id).subscribe(response => {
           this.loading = false;
           this.close.emit();
         }, error => {
           this.saveError = true;
         })
       } else {
-        let product: Product;
-        product = {
-          title: this.form.get('title').value,
-          description: this.form.get('description').value,
-          categories: this.categoryArray['controls'].map(c => c.value.id),
-          images: this.images,
-          videos: this.video ? [this.video] : [],
-          brand: this.form.get('brand').value,
-          tags: this.tags,
-          price: this.form.get('price').value * 100
-        };
-        if (this.form.get('size').value) {
-          product.sizeId = this.form.get('size').value;
-        }
-        if (this.form.get('color').value) {
-          product.colorId = this.form.get('color').value;
-        }
-        if (this.form.get('retailPrice').value) {
-          product.retailPrice = this.form.get('retailPrice').value;
-        }
         this.productService.postProduct(product, this.sellerId).subscribe(response => {
           this.loading = false;
           this.close.emit();
