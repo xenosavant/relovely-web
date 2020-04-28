@@ -279,7 +279,6 @@ export class ProductCreateComponent implements OnInit {
           this.saveError = true;
         })
       }
-
     }
 
   }

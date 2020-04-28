@@ -33,27 +33,26 @@
     max-width:800px;
         height:100vh;
         display: grid;
-        align-content: center;
+        align-items: center;
         grid-template-rows: 1fr 1fr 1fr;
-    .cropper-inner {
-        width:100%;
-        image-cropper {
-            background-color: black;
-        }
+        .cropper-inner {
+            max-height: 90vh;
+            display: flex;
+            image-cropper {
+                background-color: black;
+            }
     }
     .button-wrapper {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto;
+        align-items: center;
         @media(max-width:$mobile-breakpoint) {
-            bottom: 16px;
-            position: absolute;
             width: 100%;
         }
         app-button {
             margin-left: 16px;
             margin-right: 16px;
-            margin-top: 16px;
         }
     }
 }

@@ -2,7 +2,12 @@
 
 .thumbnails {
     display:grid;
-    grid-template-columns: repeat(3, 1fr);
+    @media (max-width: 599px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (min-width: 600px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
     grid-template-rows: auto;
     grid-gap:8px;
 }
@@ -63,8 +68,8 @@
         height: calc((100vw - 48px) / 3);
     }
     @media (min-width: 600px) {
-        height: 195px;
-        grid-template-columns: repeat(3, 195px);
+        height: 144px;
+        grid-template-columns: repeat(4, 144px);
     }
 }
 
