@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -92,6 +92,7 @@ import { AddressComponent } from './components/address/address.component';
 import { AppCurrencyPipe } from './pipes/currency.pipe';
 import { ProductCreateComponent } from './components/product-create/product-create.component';
 import { DragulaModule } from 'ng2-dragula';
+import { CurrencyDirective } from './directives/currency';
 
 
 library.add(
@@ -163,6 +164,7 @@ library.add(
     DragulaModule
   ],
   declarations: [
+    CurrencyDirective,
     AvatarComponent,
     HorizontalProductListComponent,
     ButtonComponent,
@@ -223,6 +225,7 @@ library.add(
     UsersListComponent,
     FakeSlidesDirective,
     ClickDirective,
+    CurrencyDirective,
     BreadcrumbsComponent,
     ModalComponent,
     ImageCropperComponent,
@@ -233,6 +236,7 @@ library.add(
     AddressComponent,
     AppCurrencyPipe,
     ProductCreateComponent
-  ]
+  ],
+  providers: [DecimalPipe],
 })
 export class SharedModule { }

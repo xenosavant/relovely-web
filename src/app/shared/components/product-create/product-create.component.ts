@@ -52,6 +52,7 @@ export class ProductCreateComponent implements OnInit {
   public saveError = false;
   edit = false;
   title: string;
+  cuurencyChars = new RegExp('[\.,$]', 'g');
 
 
   constructor(private formBuilder: FormBuilder,
@@ -253,7 +254,7 @@ export class ProductCreateComponent implements OnInit {
         videos: this.video ? [this.video] : [],
         brand: this.form.get('brand').value,
         tags: this.tags,
-        price: this.form.get('price').value * 100
+        price: parseInt(this.form.get('price').value.replace(this.cuurencyChars, ''))
       };
       if (this.form.get('size').value) {
         product.sizeId = this.form.get('size').value;
@@ -262,8 +263,9 @@ export class ProductCreateComponent implements OnInit {
         product.colorId = this.form.get('color').value;
       }
       if (this.form.get('retailPrice').value) {
-        product.retailPrice = this.form.get('retailPrice').value;
+        product.retailPrice = parseInt(this.form.get('retailPrice').value.replace(this.cuurencyChars, ''))
       }
+      console.log(product)
       if (this.edit) {
         this.productService.patchProduct(product, this.product.id).subscribe(response => {
           this.loading = false;
