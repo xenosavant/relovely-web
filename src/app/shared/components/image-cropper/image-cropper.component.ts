@@ -11,7 +11,6 @@ import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 export class ImageCropperComponent implements OnInit {
 
   private currentImage: string = null;
-  private originalImage: string;
   public ready = false;
   public visibilty = 'hidden';
 
@@ -23,7 +22,7 @@ export class ImageCropperComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.originalImage = this.currentImage;
+
   }
 
   public cropperReady(): void {

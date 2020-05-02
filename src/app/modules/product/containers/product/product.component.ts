@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, NgZone, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Product } from '@app/shared/models/product.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { products } from '@app/data/products.data';
@@ -10,6 +10,9 @@ import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 import { VideoMetaData } from '@app/shared/interfaces/video-meta-data';
 import { OrderService } from '@app/shared/services/order/order.service';
 import { UserService } from '@app/shared/services/user/user.service';
+import { ThrowStmt } from '@angular/compiler';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { OverlayService } from '@app/shared/services/overlay.service';
 
 @Component({
   selector: 'app-product',
@@ -19,6 +22,8 @@ import { UserService } from '@app/shared/services/user/user.service';
 })
 export class ProductComponent implements OnInit {
 
+  @ViewChild('viewImage', { static: true }) viewImageElement: TemplatePortal<any>;
+
   product: Product;
   mobile: boolean;
   loading = true;
@@ -27,6 +32,8 @@ export class ProductComponent implements OnInit {
   seller: boolean = false;
   currentItem: string | VideoMetaData;
   id: string;
+  viewImage = false;
+  currentImage: string = null;
   public carouselOptions: Partial<OwlCarouselOConfig> = {
     dots: true,
     autoplay: false,
@@ -54,7 +61,8 @@ export class ProductComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private productService: ProductService,
     private orderService: OrderService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private overlayService: OverlayService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -66,6 +74,7 @@ export class ProductComponent implements OnInit {
           this.productService.getProduct(this.id).subscribe(response => {
             this.product = response;
             this.currentItem = this.product.videos[0] ? this.product.videos[0] : this.product.images[0].cropped;
+            this.currentImage = this.product.videos[0] ? null : this.product.images[0].original;
             if (this.product.videos[0]) {
               this.videoThumbnail = this.product.videos[0].url.replace(this.product.videos[0].format, 'jpg');
               const aspect = this.product.videos[0].height / this.product.videos[0].width;
@@ -122,8 +131,25 @@ export class ProductComponent implements OnInit {
 
   }
 
-  setActiveItem(item: VideoMetaData | string) {
-    this.currentItem = item;
+  setActiveItem(item: VideoMetaData | ImageSet) {
+    if ((item as VideoMetaData).url) {
+      this.currentItem = item as VideoMetaData;
+      this.currentImage = null;
+    } else {
+      this.currentItem = (item as ImageSet).cropped;
+      this.currentImage = (item as ImageSet).original;
+    }
+  }
+
+  viewCurrentImage(image: ImageSet) {
+    if (image) {
+      this.currentImage = image.original;
+    }
+    this.overlayService.open(this.viewImageElement);
+  }
+
+  closeImage() {
+    this.overlayService.close();
   }
 
   purchase(event: any) {

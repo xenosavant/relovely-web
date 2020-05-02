@@ -199,7 +199,7 @@ export class ProductCreateComponent implements OnInit {
 
   onImageCropped(cropped: string) {
     this.uploadService.upload('data:image/jpeg;base64,' + cropped, `products/${this.id}/images`, 'image').pipe(
-      concatMap(croppedResult => this.uploadService.upload('data:image/jpeg;base64,' + cropped, `products/${this.id}/images`, 'image')
+      concatMap(croppedResult => this.uploadService.upload('data:image/jpeg;base64,' + this.originalImage, `products/${this.id}/images`, 'image')
         .pipe(map((originalResult: any) => {
           this.images.push({ cropped: croppedResult.secure_url, original: originalResult.secure_url });
         })))).subscribe(result => {

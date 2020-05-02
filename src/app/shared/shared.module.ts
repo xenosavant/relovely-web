@@ -93,6 +93,7 @@ import { AppCurrencyPipe } from './pipes/currency.pipe';
 import { ProductCreateComponent } from './components/product-create/product-create.component';
 import { DragulaModule } from 'ng2-dragula';
 import { CurrencyDirective } from './directives/currency';
+import { ImageViewerComponent } from './components/image-viewer/image-viewer.component';
 
 
 library.add(
@@ -186,7 +187,8 @@ library.add(
     VideoUploaderComponent,
     AddressComponent,
     AppCurrencyPipe,
-    ProductCreateComponent],
+    ProductCreateComponent,
+    ImageViewerComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -235,7 +237,8 @@ library.add(
     VideoUploaderComponent,
     AddressComponent,
     AppCurrencyPipe,
-    ProductCreateComponent
+    ProductCreateComponent,
+    ImageViewerComponent
   ],
   providers: [DecimalPipe],
 })
