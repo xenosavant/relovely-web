@@ -1,24 +1,72 @@
-<div *ngIf="!mobile" class="header-bar">
-    <div class="header-inner">
-        <div class="text-wrapper">
-            Don't miss a thing! Stay in the know + subscribe to the relovely newsletter
+<div class="full-content">
+    <div *ngIf="!mobile" class="header-bar">
+        <div class="header-inner">
+            <div class="text-wrapper">
+                Don't miss a thing! Stay in the know + subscribe to the relovely newsletter
+            </div>
+            <div class="cta-wrapper">
+                <input class="email-input">
+                <app-button type="primary">
+                    Submit
+                </app-button>
+            </div>
         </div>
+    </div>
+    <div class="banner-wrapper">
+        <h1>AN INLFUENCER EXCLUSIVE RE-SELLING PLATFORM</h1>
+        <p>Giving great products new life</p>
+        <button mat-stroked-button>Join Now</button>
+    </div>
+    <div class="featured-sellers">
+        <div class="header">
+            <h1>FEATURED SELLERS</h1>
+        </div>
+        <div class="inner">
+            <div class="seller" *ngFor="let seller of featuredSellers">
+                <app-avatar [image]="seller.profileImageUrl"></app-avatar>
+                <div class="name">{{seller.username}}</div>
+                <div class="shop">SHOP NOW</div>
+            </div>
+        </div>
+    </div>
+    <div class="become">
+        <h1>Become a Seller!</h1>
+        <p>Calling all <strong>influencers, bloggers, and fasion gurus.</strong>
+            Apply to sell with us in just a few short steps. Once you apply, you will get
+            notified if you were approved as a seller! We are committed to providing an elevated, trustworthy
+            shopping experience, so <strong>choose our sellers wisely based on the following criteria:</strong>
+        </p>
+        <div class="rule-wrapper">
+            <div class="image-wrapper">
+                <img src="/assets/images/front-page-float.jpeg">
+            </div>
+            <div class="list">
+                <ul>
+                    <li><strong>1. Quality of Content + Photos</strong></li>
+                    <li><strong>2. Followers + Engagement</strong></li>
+                </ul>
+                <p class="info">If you are a growing influencer with a small but mighty following, don't let that
+                    discourage you from
+                    applying!
+                    We completely get it and will not base our decision solely on number of followers. After all, it's
+                    about quality not quantity!
+                </p>
+                <ul>
+                    <li><strong>3. Must have a fasion designated Instagram or blog</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="mobile" class="mobile-banner-wrapper">
+        <h1> Stay in the know!</h1>
         <div class="cta-wrapper">
             <input class="email-input">
             <app-button type="primary">
                 Submit
             </app-button>
         </div>
+        <p>Sign up for our newsletter to receive exclusive offers, and be the first to know about new product launches.
+            By subscribing, you are also agreeing to relovely's <a href="">privacy policy</a>
+        </p>
     </div>
-</div>
-<div class="banner-wrapper">
-    <img src="./assets/images/home-banner.png">
-    <div class="overlay">
-        <div class="text-wrapper">
-            <h1>AN INLFUENCER EXCLUSIVE RESELLING PLATFORM</h1>
-            <p>Giving great products new life</p>
-        </div>
-    </div>
-</div>
-<div class="full-content">
 </div>

@@ -3,6 +3,6 @@ export class UserList {
     firstName?: string;
     lastName?: string;
     username: string;
-    imageUrl: string;
+    profileImageUrl: string;
     type: string;
 }

@@ -19,65 +19,259 @@
             font-weight: 500;
             letter-spacing: .1em;
         }
-        .cta-wrapper {
-            margin-top:25px;
-            width: 400px;
+    }
+}
+.cta-wrapper {
+    margin-top:25px;
+    @media (min-width: $desktop-breakpoint) {
+        width: 400px;
+    }
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    .email-input {
+        margin-right:16px;
+        background-color: $dark-gray-background;
+        border: solid 1px gray;
+        &::placeholder {
+            color: $light-gray;
+            font-size: 18px;
+            font-weight: 300;
+        }
+    }
+}
+
+.banner-wrapper {
+    position:relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 16px;
+    background-image: url('../../../../assets/images/home-banner-mobile.jpeg');
+    @media (max-width: $mobile-breakpoint) {
+        min-height: 100vw;
+        margin: 16px 0px 0px 0px;
+    }
+    @media (min-width: $desktop-breakpoint) {
+        margin-top: 32px;
+        min-height: 400px;
+    }
+        display:grid;
+        align-content: center;
+        align-items: center;
+        color: white;
+        padding: 16px;
+        @media (max-width: $mobile-breakpoint) {
+            h1 {
+                font-size: 1.5em;
+            }
+            p {
+                font-size: 1em;
+            }
+
+        }
+        @media (min-width: $desktop-breakpoint) {
+            h1 {
+                font-size: 2.2em;
+            }
+            p {
+                font-size: 1.5em;
+            }
+        }
+        h1 {
+            font-family: "Helvetica Neue", sans-serif;
+            font-weight: 500;
+            letter-spacing: .1em;
+            text-align: center;
+            z-index: 100;
+           }
+        p {
+            font-family: "Helvetica Neue", sans-serif;
+            font-weight: 400;
+            letter-spacing: .1em;
+            text-align: center;
+            z-index: 100;
+        }
+        button {
+            border-color: white;
+            width: 100px;
+            z-index:100;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 3fr 1fr;
-            .email-input {
-                margin-right:16px;
-                background-color: $dark-gray-background;
-                border: solid 1px gray;
-                &::placeholder {
+            font-weight: 600;
+            &:hover {
+                background-color: white;
+                color: $dark-blue;
+            }
+        }
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom:0;
+        background: rgba(0, 0, 0, .5);
+    }
+}
+
+.featured-sellers {
+    margin-bottom: 32px;
+    @media (max-width: $mobile-breakpoint) {
+        margin-top: 48px;
+        .header {
+            margin-bottom: 16px;
+            h1 {
+                font-size: 1.3em;
+            }
+        }
+    }
+    @media (min-width: $desktop-breakpoint) {
+        margin-top: 64px;
+        .header {
+            margin-bottom: 32px;
+        }
+    }
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        h1 {
+            font-weight: 200;
+            color: $light-gray;
+        }
+    }
+    .inner {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 16px;
+        @media (min-width: $desktop-breakpoint) {
+            grid-gap: 6vw;
+            margin: 16px 6vw;
+        }
+        @media (min-width: $header-width) {
+            grid-gap: 90px;
+            margin: 16px 90px;
+        }
+        margin-top: 16px;
+        .seller {
+            text-align: center;
+            .name {
+                color: $light-gray;
+                font-size: .7em;
+            }
+            .shop {
+                font-size: .8em;
+                font-weight: 600;
+            }
+            @media (min-width: $desktop-breakpoint) {
+                .name {
                     color: $light-gray;
-                    font-size: 18px;
-                    font-weight: 300;
+                    font-size: 1em;
+                    line-height: 1.3em;
+                }
+                .shop {
+                    font-size: 1.1em;
+                    line-height: 1.5em;
+                    font-weight: 600;
                 }
             }
         }
     }
 }
 
-.banner-wrapper {
-    margin-top: 32px;
-    position:relative;
-    img {
-        width:100%;
-        display: block;   
-         min-height: 220px;
+.become {
+    border-top: solid 1px $header-border;
+    @media (min-width: $desktop-breakpoint) {
+        margin: 64px 32px 32px 32px;
     }
-    .overlay {
-        position: absolute;
-        bottom: 0;
-        background: rgb(0, 0, 0);
-        background: rgba(0, 0, 0, 0.5); /* Black see-through */
-        color: #f1f1f1;
-        width: 100%;
-        transition: .5s ease;
-        opacity:1;
-        color: white;
-        height:100%;
-        font-size: 20px;
-        padding: 20px;
+    h1 {
+        margin-top: 32px;
+        font-size: 1.5em;
         text-align: center;
-        
-        display:grid;
-        align-content: center;
-        align-items: center;
-        .text-wrapper {
-           h1 {
-            font-size: 1.9em;
-            font-family: "Helvetica Neue", sans-serif;
-            font-weight: 500;
-            letter-spacing: .1em;
-           }
-           p {
-            font-size: 1em;
-            font-family: "Helvetica Neue", sans-serif;
-            font-weight: 400;
-            letter-spacing: .1em;
-           }
+        margin-bottom: 16px;
+        @media (min-width: $desktop-breakpoint) {
+            font-size: 2em;
+            margin-top: 64px; 
+            text-align: left
+        }
+    }
+    p {
+       font-size: .8em;
+       line-height: 1.5em;
+       @media (min-width: $desktop-breakpoint) {
+        font-size: 1.2em;
+        }
+        &.info {
+            font-style: italic;
+        }
+    }
+    .rule-wrapper {
+        display: block;
+        @media (min-width: $desktop-breakpoint) {
+            display: grid;
+            grid-template-rows: auto;
+            grid-template-columns: 1fr 1fr;
+        }
+        ul {
+            list-style: none;
+            padding: 0px;
+            margin:0px;
+            li {
+                margin: 16px 0px;
+                font-size:.8em;
+                @media (min-width: $desktop-breakpoint) {
+                    font-size:1.2em;
+                    margin: 32px 0px;
+                }
+            }
+        }
+        .image-wrapper {
+            @media (max-width: $mobile-breakpoint) {
+                visibility: hidden;
+                height: 0px;
+            }
+            img {
+                width:100%
+            }
+        }
+        .list {
+            @media (min-width: $desktop-breakpoint) {
+                margin-left: 64px;
+            }
         }
     }
 }
+
+.mobile-banner-wrapper {
+    min-height: 75vw;
+    position:relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 16px;
+    background-image: url('../../../../assets/images/bag-crossing.jpeg');
+    color: white;
+    display:grid;
+    align-content: center;
+    justify-items: center;
+    grid-gap: 16px;
+    h1, div, p {
+        z-index: 100;
+        text-align: center;
+    }
+    a {
+        color:white !important;
+        text-decoration: underline;
+    }
+
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom:0;
+        background: rgba(0, 0, 0, .5);
+    }
+}
+

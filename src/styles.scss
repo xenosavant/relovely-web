@@ -647,6 +647,10 @@ mat-toolbar-row.mega-menu-bar {
 .full-content {
   margin: 0 auto;
   max-width: $header-width;
+  padding: 0px 8px 8px 8px;
+  @media(min-width: $desktop-breakpoint) {
+    padding: 0px;
+  }
     &.profile { 
       grid-template-rows:auto;
       display:grid;
