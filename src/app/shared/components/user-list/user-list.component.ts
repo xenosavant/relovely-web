@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 import { UserDetail } from '@app/shared/models/user-detail.model';
 import { NavigationService } from '@app/shared/services/navigation.service';
 import { NavigationItem } from '@app/shared/models/navigation-item.model';
+import { UserList } from '@app/shared/models/user-list.model';
 
 @Component({
   selector: 'app-user-list',
@@ -11,7 +12,7 @@ import { NavigationItem } from '@app/shared/models/navigation-item.model';
 })
 export class UserListComponent implements OnInit {
 
-  @Input() user: UserDetail;
+  @Input() user: UserList;
 
   constructor(private navigationService: NavigationService) { }
 

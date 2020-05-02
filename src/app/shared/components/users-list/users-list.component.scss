@@ -1,6 +1,11 @@
 .users-wrapper {
    margin-left: 8px;
    margin-right: 8px;
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+   grid-template-rows: auto;
+   row-gap: 4px;
+   column-gap: 8px;
     .item-wrapper {
         padding-left:8px;
         background-color: white;

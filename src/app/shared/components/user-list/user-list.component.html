@@ -5,4 +5,7 @@
   <div class="info">
     {{user.username}}
   </div>
+  <div class="action">
+    <button *ngIf="user.type === 'seller'" mat-stroked-button class="primary">Follow</button>
+  </div>
 </div>

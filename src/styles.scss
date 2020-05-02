@@ -443,8 +443,9 @@ mat-chip-list mat-chip {
 
 .profile-container {
   overflow: hidden;
+  min-height: 100%;
   @media( min-width:$desktop-breakpoint) {
-    min-height: calc(100vh - 511px);
+    min-height: calc(100vh - 361px);
   }
   .mat-tab-body-wrapper {
     margin-top: -25px;
@@ -647,9 +648,12 @@ mat-toolbar-row.mega-menu-bar {
 .full-content {
   margin: 0 auto;
   max-width: $header-width;
-  padding: 0px 8px 8px 8px;
-  @media(min-width: $desktop-breakpoint) {
-    padding: 0px;
+  min-height: 100%;
+  &.home {
+    padding: 0px 8px 8px 8px;
+    @media(min-width: $desktop-breakpoint) {
+      padding: 0px;
+    }
   }
     &.profile { 
       grid-template-rows:auto;
