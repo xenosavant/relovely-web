@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Sanitizer, NgZone, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { environment } from '@env/environment';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AuthService } from '@app/shared/services/auth/auth.service';
@@ -45,11 +45,11 @@ export class SignupComponent implements OnInit {
       password: new FormControl('', [Validators.required]),
     });
     this.signUpForm = new FormGroup({
-      email: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
       verifyPassword: new FormControl('', [Validators.required])
-    });
+    }, this.validatePassword);
     this.resetForm = new FormGroup({
       identifier: new FormControl('', [Validators.required])
     });
@@ -138,5 +138,26 @@ export class SignupComponent implements OnInit {
 
   close() {
     this.navigationService.closeAuthWindow();
+  }
+
+  validatePassword(control: FormGroup): ValidationErrors {
+    const password = control.get('password').value;
+    const verify = control.get('verifyPassword').value;
+    if (!password || !verify) {
+      return null;
+    } else if (password === verify) {
+      return null;
+    } else {
+      return { passwordMatch: `Passwords don't match` }
+    }
+  }
+
+  get passwordValue() {
+    console.log(this.signUpForm.get('password').value)
+    return this.signUpForm.get('password').value;
+  }
+
+  get passwordVerifyValue() {
+    return this.signUpForm.get('verifyPassword').value;
   }
 }

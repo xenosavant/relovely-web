@@ -9,8 +9,7 @@
     z-index: 101;
     overflow:scroll;
     width:100vw;
-    background: gray; /* older browsers */
-    background: rgba(128,128,128,0.7); /* newer browsers */
+    background: rgba(0, 0, 0, 0.7); /* newer browsers */
     .modal-inner {
         margin: 0 auto;
         width:400px;
@@ -23,7 +22,7 @@
         }
         .modal-window {
             background: $background-gray;
-            border: 1px solid $medium-dark-background;
+            border-radius: 5px;
             opacity: 1;
             height: auto;
         }

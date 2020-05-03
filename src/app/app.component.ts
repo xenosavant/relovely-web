@@ -215,7 +215,7 @@ export class AppComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    // this.resetScrollSubscription();
+    this.resetScrollSubscription();
   }
 
   private resetScrollSubscription() {
@@ -239,6 +239,7 @@ export class AppComponent implements OnInit {
           this.scroll0 = false;
           this.scrolledToTop = false;
         }
+        console.log(this.scrolledToTop);
       });
     }
   }
