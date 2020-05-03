@@ -18,7 +18,7 @@ export class ImageViewerComponent implements OnInit {
 
   }
 
-  onClose() {
+  onClose($event: any) {
     this.close.emit(true);
   }
 

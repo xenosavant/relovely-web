@@ -153,7 +153,6 @@ export class SignupComponent implements OnInit {
   }
 
   get passwordValue() {
-    console.log(this.signUpForm.get('password').value)
     return this.signUpForm.get('password').value;
   }
 
