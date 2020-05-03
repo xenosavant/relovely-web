@@ -8,6 +8,7 @@ import { map, catchError } from 'rxjs/operators';
 import { SignupResponse } from '../auth/signup.response';
 import { INavigationState } from '@app/shared/interfaces/navigation-state.interface';
 import { LookupState } from './lookup-state';
+import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 
 @Injectable()
 export class LookupService extends BaseService {
@@ -15,6 +16,8 @@ export class LookupService extends BaseService {
     private _state: LookupState;
     private _catMap = {};
     private _sizeMap = {};
+    private _colorNameMap = {};
+    private _colorMap = {};
 
     private _stateSubject$ = new Subject<LookupState>();
     public state$ = this._stateSubject$.asObservable();
@@ -44,6 +47,7 @@ export class LookupService extends BaseService {
                 this._state.sizes.forEach(sizes => {
                     this.buildSizeDictionary(sizes);
                 });
+                this.buildColorDictionary(this._state.colors);
                 this._stateSubject$.next(this._state);
                 return response;
             }), catchError(this.errorHandler)
@@ -56,6 +60,14 @@ export class LookupService extends BaseService {
 
     public getSize(id: string) {
         return this._sizeMap[id];
+    }
+
+    public getColorName(id: string) {
+        return this._colorNameMap[id];
+    }
+
+    public getColor(id: string) {
+        return this._colorMap[id];
     }
 
     private populateParents(category: Category) {
@@ -71,6 +83,15 @@ export class LookupService extends BaseService {
     private buildSizeDictionary(group: SizeFilterGroup) {
         group.filters.forEach(filter => {
             this._sizeMap[filter.key] = filter.value;
+        })
+    }
+
+    private buildColorDictionary(colors: ColorFilter[]) {
+        colors.forEach(color => {
+            this._colorNameMap[color.key] = color.value;
+        });
+        colors.forEach(color => {
+            this._colorMap[color.key] = color.color;
         })
     }
 }

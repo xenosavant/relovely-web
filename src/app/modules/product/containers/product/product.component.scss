@@ -4,12 +4,14 @@
     padding:16px;
     max-width: $desktop-width;
     margin: 0 auto;
-    height:100%;
+    @media ( min-width: $desktop-breakpoint) {
+        height:100%;
+    }
     background-color: $background-gray;
 }
 
 .profile-container {
-    height:18vw;
+    height:65px;
     display:flex;
     flex-flow: row;
     align-items: center;
