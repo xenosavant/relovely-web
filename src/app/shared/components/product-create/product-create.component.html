@@ -41,19 +41,19 @@
         <input #input type="file" style="visibility:hidden; height:0px;" (change)="imageChanged($event)" />
         <form [formGroup]="form">
             <div>
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <input matInput placeholder="Product Title" formControlName="title" />
                 </mat-form-field>
             </div>
             <div class="description">
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <textarea matInput placeholder="Product Description" formControlName="description"></textarea>
                 </mat-form-field>
             </div>
             <div class="categories">
                 <ng-container formArrayName="categories" *ngFor="let item of categoryArray['controls']; let i = index;">
                     <div [formGroupName]="i">
-                        <mat-form-field>
+                        <mat-form-field appearance="outline">
                             <mat-select placeholder="Category" class="form-control"
                                 (selectionChange)="selectCategory($event, i)" formControlName="id">
                                 <mat-option *ngFor="let cat of categories[i]" [value]="cat.id">{{cat.name}}
@@ -65,7 +65,7 @@
             </div>
             <div class="double-field">
                 <div class="size">
-                    <mat-form-field>
+                    <mat-form-field appearance="outline">
                         <mat-select placeholder="Size" class="form-control" formControlName="size">
                             <mat-option *ngFor="let size of currentSizes" [value]="size.key">{{size.value}}
                             </mat-option>
@@ -73,7 +73,7 @@
                     </mat-form-field>
                 </div>
                 <div class="color">
-                    <mat-form-field>
+                    <mat-form-field appearance="outline">
                         <mat-select placeholder="Color" class="form-control" formControlName="color">
                             <mat-option *ngFor="let color of colors" [value]="color.key">
                                 <div class="dot-wrapper">
@@ -87,12 +87,12 @@
             </div>
 
             <div class="brand">
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <input matInput placeholder="Brand" formControlName="brand" />
                 </mat-form-field>
             </div>
             <div class="tags">
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <mat-chip-list #chipList>
                         <mat-chip [selectable]="false" (removed)="onRemoveTag(tag)" [removable]="true"
                             *ngFor="let tag of tags">
@@ -106,12 +106,12 @@
             </div>
             <div class="double-field">
                 <div class="price">
-                    <mat-form-field>
+                    <mat-form-field appearance="outline">
                         <input type="text" currency matInput placeholder="Price" formControlName="price" />
                     </mat-form-field>
                 </div>
                 <div class="retail-price">
-                    <mat-form-field>
+                    <mat-form-field appearance="outline">
                         <input type="text" currency matInput placeholder="Retail Price" formControlName="retailPrice" />
                     </mat-form-field>
                 </div>
