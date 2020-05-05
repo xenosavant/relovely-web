@@ -16,6 +16,10 @@ const routes: Routes = [
         component: TermsComponent
     },
     {
+        path: 'privacy',
+        component: TermsComponent
+    },
+    {
         path: ':id',
         component: ProfileComponent
     },
