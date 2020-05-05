@@ -1,11 +1,12 @@
-<div class="desktop-wrapper">
+<div class="full-content">
     <div *ngIf="!loading">
         <div class="center" *ngIf="type === 'email'">
+            <img src="../../../../../assets/images/heart.png">
             <h2> Thank You For Joining Relovely!</h2>
             <p>Please check your email for a verification link. </p>
         </div>
     </div>
-    <div *ngIf="loading" class="loading">
+    <div *ngIf=" loading" class="loading">
         <div>
             <mat-spinner diameter="50"></mat-spinner>
         </div>

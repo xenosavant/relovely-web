@@ -60,7 +60,6 @@ export class AddressesComponent implements OnInit {
   onSaved(user: UserDetail) {
     this.user = user;
     this.addresses = [...this.user.addresses];
-    console.log(this.addresses);
     this.ref.markForCheck();
   }
 
