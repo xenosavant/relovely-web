@@ -1,6 +1,7 @@
 import { Product } from "./product.model";
 import { UserList } from "./user-list.model";
 import { IUserPreferences } from "../services/filter/filter-state";
+import { Address } from "../interfaces/address.interface";
 
 export class UserDetail {
     id: string;
@@ -14,5 +15,6 @@ export class UserDetail {
     sales?: Product[];
     favorites?: Product[];
     type: string;
-    preferences: IUserPreferences
+    preferences: IUserPreferences;
+    addresses: Address[]
 }

@@ -12,6 +12,7 @@ import { InstagramAuthComponent } from './containers/instagram-auth/instagram-au
 import { SignoutComponent } from './containers/signout/signout.component';
 import { FacebookAuthComponent } from './containers/facebook-auth/facebook-auth.component';
 import { VerifyComponent } from './containers/verify/verify.component';
+import { MatRadioButton, MatRadioModule } from '@angular/material';
 @NgModule({
   declarations: [SigninComponent, ResetPasswordComponent, PaymentsComponent,
     AddressesComponent, InstagramAuthComponent,
@@ -23,7 +24,8 @@ import { VerifyComponent } from './containers/verify/verify.component';
     CommonModule,
     PortalModule,
     SharedModule,
-    AccountRoutingModule
+    AccountRoutingModule,
+    MatRadioModule
   ]
 })
 export class AccountModule { }

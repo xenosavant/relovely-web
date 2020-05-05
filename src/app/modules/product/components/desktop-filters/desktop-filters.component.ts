@@ -151,7 +151,7 @@ export class DesktopFiltersComponent implements OnInit {
     this.closeActiveMenu();
     switch (menu) {
       case 'size':
-        if (this.currentSizeFilters.length) {
+        if (this.currentSizeFilters && this.currentSizeFilters.length) {
           this._activeTrigger = this['sizeTrigger'];
         } else {
           this._activeTrigger = null;

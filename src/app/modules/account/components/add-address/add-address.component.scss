@@ -1,7 +1,35 @@
-.wrapper {
-    position:fixed;
-    top:0;
-    right:0;
-    bottom:0;
-    left:0;
+.inner-container {
+    .form-wrapper {
+        height:400px;
+        margin: 36px 16px 0px 16px;
+        form {
+            height: 100%;
+            position: relative;
+            .button-wrapper {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+                grid-gap: 16px;
+                bottom: 15px;
+                width: 100%;
+                position: absolute;
+            }
+        }
+    }
+}
+
+form {
+    mat-form-field {
+        width: 100%;
+    }
+    textarea {
+        height:100px;
+    }
+}
+
+.state-zip {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    grid-template-rows: auto;
+    grid-column-gap: 16px;
 }

@@ -83,9 +83,10 @@ export class
         );
     }
 
-    updateUser(userId: string, updates: any): Observable<UserDetail> {
+    updateUser(userId: string, updates: Partial<UserDetail>): Observable<UserDetail> {
         return this.httpClient.patch<UserDetail>(`${this.apiBaseUrl}/users/${userId}`, updates).pipe(
             map((user: UserDetail) => {
+                this._currentUser = user;
                 return user;
             })
         );

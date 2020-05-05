@@ -130,10 +130,3 @@ form button {
         }
     }
 }
-
-.double-field {
-    display: grid;
-    grid-gap: 8px;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-template-rows: auto;
-}

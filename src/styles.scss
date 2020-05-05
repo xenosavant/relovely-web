@@ -55,6 +55,45 @@ a {
   }
 }
 
+.page-title {
+    padding: 16px 0px;
+    margin: 0 auto;
+    width: fit-content;
+    h1 {
+        font-weight: 300;
+    }
+}
+
+
+.double-field {
+  display: grid;
+  grid-gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-rows: auto;
+}
+
+.modal-header {
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  grid-template-rows: 50px;
+  .title {
+      display: grid;
+       align-content: center;
+       div {
+           text-align: center;
+           font: 500 26px Roboto, sans-serif !important;
+       }
+  }
+  .close {
+      display: grid;
+      align-content: center;
+      img {
+          width:40px;
+          cursor: pointer;
+      }
+  }
+}
+
 .cdk-overlay-container {
   background-color: transparent !important;
   .cdk-overlay-pane {

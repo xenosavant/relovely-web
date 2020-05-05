@@ -9,6 +9,8 @@ import { SignupResponse } from '../auth/signup.response';
 import { INavigationState } from '@app/shared/interfaces/navigation-state.interface';
 import { LookupState } from './lookup-state';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
+import { states } from '../../../data/states'
+import { State } from './state';
 
 @Injectable()
 export class LookupService extends BaseService {
@@ -18,6 +20,7 @@ export class LookupService extends BaseService {
     private _sizeMap = {};
     private _colorNameMap = {};
     private _colorMap = {};
+    private _states: State[] = [];
 
     private _stateSubject$ = new Subject<LookupState>();
     public state$ = this._stateSubject$.asObservable();
@@ -33,6 +36,9 @@ export class LookupService extends BaseService {
     }
 
     public getLookupData(): Observable<LookupResponse> {
+        Object.entries(states).forEach(item => {
+            this._states.push({ abbreviation: item[0], full: item[1] })
+        })
         return this.httpClient.get(`${this.apiBaseUrl}/lookup`).pipe(
             map((response: LookupResponse) => {
                 this._state = {
@@ -93,5 +99,9 @@ export class LookupService extends BaseService {
         colors.forEach(color => {
             this._colorMap[color.key] = color.color;
         })
+    }
+
+    public get states() {
+        return this._states;
     }
 }

@@ -1,0 +1,65 @@
+@import '~@angular/material/theming';
+@import '../../../../../styles-variables';
+
+.full-content {
+    @media(max-width: $mobile-breakpoint) {
+        padding-top: 16px;
+    }
+    .button-wrapper {
+        width: 36px;
+        margin: 0 auto;
+        cursor: pointer;
+        img {
+            width: 100%;
+        }
+    }
+    .list-wrapper {
+        display: grid;
+        justify-content: center;
+        margin-top: 16px;
+        row-gap: 16px;
+        .address-wrapper {
+            width: 450px;
+            background-color: white;
+            display: grid;
+            padding: 16px 32px;
+            grid-template-columns: 60px 1fr 50px;
+            grid-template-rows: auto;
+            @include mat-elevation(1);
+            .edit {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                .text-wrapper {
+                    cursor: pointer;
+                    color: $action-button;
+                    &:hover {
+                        color: $dark-blue;
+                    }
+                }
+            }
+            .address {
+                // display: flex;
+                // align-items: center;
+                // justify-content: center;
+            }
+            .options {
+                display: flex;
+                align-items: center;
+                font-size: 14px;
+            }
+        }
+        @media(max-width: $mobile-breakpoint) {
+            row-gap: 8px;
+            .address-wrapper {
+                width: 100vw;
+                padding: 8px 16px;
+            }
+        }
+    }
+    .primary {
+        margin-left: 8px;
+        width: 400px;
+        margin: 0 auto;
+    }
+}

@@ -151,11 +151,8 @@ export class ProductCreateComponent implements OnInit {
       this.categoryArray.removeAt(i);
     }
     this.categories = this.categories.slice(0, index + 1);
-    console.log(this.categories[index], category.value);
     const valueAtIndex = this.categories[index].find(cat => cat.id === category.value);
-    console.log(valueAtIndex);
     const targetIndex = this.categories[index].indexOf(valueAtIndex);
-    console.log(targetIndex);
     if (this.categories[index][targetIndex].children.length) {
       this.categories.push(this.categories[index][targetIndex].children);
       this.categoryArray.push(this.formBuilder.group({

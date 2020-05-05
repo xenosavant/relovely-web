@@ -1,5 +1,5 @@
 .form-wrapper{
-    margin-top: 16px;
+    margin: 16px;
     form {
         button {
             display: block;
@@ -11,8 +11,6 @@
         }
 
     }
-    margin-left:16px;
-    margin-right:16px;
 
     &.reset {
         form {
@@ -97,28 +95,6 @@ button.facebook {
     position: absolute;
     left: 0;
     right: 0;
-}
-
-.header {
-    display: grid;
-    grid-template-columns: 40px 1fr 40px;
-    grid-template-rows: 40px;
-    .title {
-        display: grid;
-         align-content: center;
-         div {
-             text-align: center;
-             font: 500 26px Roboto, sans-serif !important;
-         }
-    }
-    .close {
-        display: grid;
-        align-content: center;
-        img {
-            width:40px;
-            cursor: pointer;
-        }
-    }
 }
 
 .link-text {
