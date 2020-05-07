@@ -1,6 +1,8 @@
 <ng-container *ngIf="!mobile">
-    <div class="breadcrumbs">
-        <app-breadcrumbs [navItem]="currentNavItem"></app-breadcrumbs>
+    <div class="breadcrumb-wrapper">
+        <div class="breadcrumbs">
+            <app-breadcrumbs [navItem]="currentNavItem"></app-breadcrumbs>
+        </div>
     </div>
     <div class="title-bar">
         <div class="title-inner">
@@ -13,10 +15,12 @@
         <app-desktop-filters></app-desktop-filters>
     </div>
 </ng-container>
-<div class="products-content">
-    <app-products-list (edit)="editProduct($event)" [userId]="currentUserId" [products]="products" [showGrid]="grid"
-        [showHeader]="true">
-    </app-products-list>
+<div class="products">
+    <div class="products-content">
+        <app-products-list (edit)="editProduct($event)" [userId]="currentUserId" [products]="products" [showGrid]="grid"
+            [showHeader]="true">
+        </app-products-list>
+    </div>
 </div>
 <ng-template cdkPortal #productCreateModal="cdkPortal">
     <app-product-create [product]="product" [sellerId]="currentUserId" (close)="close($event)">

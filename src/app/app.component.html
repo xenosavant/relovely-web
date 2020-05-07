@@ -91,8 +91,8 @@
       <ng-container *ngIf="!loading">
         <ng-container *ngTemplateOutlet="content"></ng-container>
       </ng-container>
+      <ng-container *ngTemplateOutlet="footer"></ng-container>
     </div>
-    <ng-container *ngTemplateOutlet="footer"></ng-container>
     <div class="mega-menu-wrapper" *ngIf="showMegaMenu">
       <div class="mega-menu">
         <div class="mega-menu-inner-wrapper" (mouseleave)="onLeaveMegaMenu($event)">

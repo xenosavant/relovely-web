@@ -44,10 +44,11 @@ mat-toolbar {
 }
 
 .content-wrapper {
-  height:auto;
-  overflow: hidden;
-  min-height: calc(100vh - 50px);
+  height:100vh;
+  min-height: 100%;
   background-color: $background-gray;
+  display: flex;
+  flex-direction: column;
 }
 
 .content-noscroll {
@@ -335,6 +336,7 @@ mat-nav-list {
 .footer {
   width: 100%;
   color: $background-gray;
+  flex: none;
   @media (max-width: $mobile-breakpoint) {
   }
   @media (min-width: $desktop-breakpoint) {

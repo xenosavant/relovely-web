@@ -1,5 +1,8 @@
 @import '../../../../../styles-variables';
 
+:host {
+    flex:auto;
+}
 
 .header-bar {
     height:16px;

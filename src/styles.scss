@@ -586,7 +586,6 @@ mat-chip-list mat-chip {
 .member-profile-container {
   overflow: hidden;
   .mat-tab-body-wrapper {
-    min-height: calc(100vh - 146px) !important;
     margin-top: -25px;
   }
 
@@ -734,15 +733,18 @@ mat-toolbar-row.mega-menu-bar {
   max-width: $inner-desktop-width;
 }
 
-.products-content {
-  margin: 0 auto;
-  max-width: $desktop-width;
-}
-
 .full-content {
   margin: 0 auto;
   max-width: $header-width;
-  min-height: 100%;
+  flex: auto;
+  @media(max-width: $header-width) {
+    width:100%;
+  }
+  &.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   &.home {
     padding: 0px 8px 8px 8px;
     @media(min-width: $desktop-breakpoint) {

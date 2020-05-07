@@ -1,5 +1,9 @@
 @import '../../../../../../src/styles-variables.scss';
 
+:host {
+flex: auto;
+}
+
 .header-bar {
     height:200px;
 }
