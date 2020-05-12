@@ -13,6 +13,8 @@ import { IUserPreferences } from '@app/shared/services/filter/filter-state';
 import { UserService } from '@app/shared/services/user/user.service';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from '@app/shared/services/overlay.service';
+import { CATEGORY_MAP } from '@app/shared/services/lookup/category-image-map';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -30,6 +32,11 @@ export class ProductsComponent implements OnInit {
   currentNavItem: NavigationItem;
   categoryId: string;
   currentUserId: string;
+  empty = false;
+  emptyImage: string = null;
+  filterSub: Subscription = null;
+  parentCategory: string = null;
+  checkBack: boolean;
 
   @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
 
@@ -59,10 +66,14 @@ export class ProductsComponent implements OnInit {
       this.mobile = result.matches;
     });
     this.route.params.subscribe(params => {
+      console.log(params);
       if (params['categoryId']) {
         this.categoryId = params['categoryId'];
         this.currentNavItem = this.lookupService.navLookup[params['categoryId']];
-        this.filterService.getState().then(state => {
+        if (this.filterSub) {
+          this.filterSub.unsubscribe();
+        }
+        this.filterSub = this.filterService.filterStateSubject$.subscribe(state => {
           this.getProducts(state);
         });
       } else {
@@ -77,9 +88,6 @@ export class ProductsComponent implements OnInit {
       this.currentUserId = u ? u.id : null;
     });
 
-    this.filterService.filterState$.subscribe(state => {
-      this.getProducts(state);
-    });
   }
 
   selectProduct(id: string) {
@@ -96,7 +104,6 @@ export class ProductsComponent implements OnInit {
     const filteredSizes = [];
     this.lookupService.getState().then(lookupValues => {
       state.sizes.forEach(id => {
-        console.log(state);
         const size = lookupValues.sizes.find(size => size.id === id);
         if (size.categoryIds.includes(this.categoryId)) {
           filteredSizes.push(id);
@@ -105,9 +112,29 @@ export class ProductsComponent implements OnInit {
       this.productService.getProducts(this.categoryId, filteredSizes.length ? state.sizes : null,
         state.colors.length ? state.colors : null, state.prices.length ? state.prices : null).subscribe(result => {
           this.products = result.items;
+          const cat: Category = this.lookupService.getCategory(this.categoryId);
+          if (!this.products.length) {
+            if (cat.parent && cat.parent.parent) {
+              this.checkBack = false;
+              this.parentCategory = cat.parent.parent.plural + ' ' + cat.parent.name;
+              this.emptyImage = '../../../../../assets/images/' + CATEGORY_MAP[cat.parent.id];
+            } else if (cat.parent) {
+              this.emptyImage = '../../../../../assets/images/' + CATEGORY_MAP[cat.id];
+              this.checkBack = true;
+            }
+            console.log(this.checkBack);
+            this.empty = true;
+          } else {
+            this.empty = false;
+          }
           this.ref.markForCheck();
         })
     })
+  }
+
+  goToParent() {
+    const cat: Category = this.lookupService.getCategory(this.categoryId);
+    this.router.navigate(['/products/' + cat.parent.id]);
   }
 
 }

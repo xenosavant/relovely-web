@@ -15,11 +15,24 @@
         <app-desktop-filters></app-desktop-filters>
     </div>
 </ng-container>
-<div class="products">
+<div *ngIf="!empty" class="products">
     <div class="products-content">
         <app-products-list (edit)="editProduct($event)" [userId]="currentUserId" [products]="products" [showGrid]="grid"
             [showHeader]="true">
         </app-products-list>
+    </div>
+</div>
+<div *ngIf="empty" class="empty-state">
+    <div class="empty-wrapper clickable" *ngIf="!checkBack" (click)="goToParent()">
+        <img [src]="emptyImage">
+        <h3>Nothing in this category...yet!</h3>
+        <p *ngIf="!checkBack">Click here to see what's available in
+            {{parentCategory}}</p>
+    </div>
+    <div class="empty-wrapper" *ngIf="checkBack">
+        <img [src]="emptyImage">
+        <h3>Nothing in this category...yet!</h3>
+        <p> Check back later!</p>
     </div>
 </div>
 <ng-template cdkPortal #productCreateModal="cdkPortal">

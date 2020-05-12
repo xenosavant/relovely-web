@@ -19,16 +19,7 @@ export class FilterService extends BaseService {
 
     private _state: IUserPreferences;
 
-    public async getState(): Promise<IUserPreferences> {
-        if (this._state) {
-            return this._state;
-        } else {
-            return this.filterState$.toPromise();
-        }
-    }
-
-    private filterStateSubject$ = new Subject<IUserPreferences>();
-    public filterState$ = this.filterStateSubject$.asObservable();
+    public filterStateSubject$ = new BehaviorSubject<IUserPreferences>({ sizes: [], colors: [], prices: [] });
 
     constructor(private localStorage: LocalStorageService, httpClient: HttpClient, private userService: UserService) {
         super(httpClient);
@@ -37,8 +28,6 @@ export class FilterService extends BaseService {
                 this._state = user.preferences || {};
                 console.log(this._state);
                 this.filterStateSubject$.next(this._state);
-            } else {
-                this.filterStateSubject$.next(null);
             }
         })
     }

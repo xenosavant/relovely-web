@@ -50,3 +50,15 @@
     max-width: $desktop-width;
     margin: 0 auto;
 }
+
+.empty-state {
+    flex: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.empty-wrapper.clickable {
+    cursor: pointer;
+}

@@ -12,7 +12,6 @@
 }
 
 mat-sidenav-container {
-  height: 100%;
   width: 100%;
   background-color: white;
   overflow-y: hidden !important;
@@ -44,7 +43,6 @@ mat-toolbar {
 }
 
 .content-wrapper {
-  height:100vh;
   min-height: 100%;
   background-color: $background-gray;
   display: flex;
@@ -347,4 +345,11 @@ mat-nav-list {
     border-top: solid 1px $header-border;
     display: grid;
   }
+}
+
+.mobile-wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
