@@ -3,8 +3,12 @@
     <app-avatar (select)="onUpdate()" [editable]="owner" [image]="user.profileImageUrl"></app-avatar>
   </div>
   <div class="title-wrapper">
-    <div>{{user.username}}</div>
-    <div class="review">
+    <div class="name"><span *ngIf="owner">
+        <fa-icon *ngIf="!editing" (click)="onAction('edit')" icon="edit"></fa-icon>
+        <fa-icon *ngIf="editing" (click)="onAction('close')" icon="undo"></fa-icon>
+      </span>{{user.username}}
+    </div>
+    <div *ngIf="user.type === 'seller'" class="review">
       <fa-icon icon="heart"></fa-icon>
       <fa-icon icon="heart"></fa-icon>
       <fa-icon icon="heart"></fa-icon>
@@ -12,8 +16,10 @@
     </div>
   </div>
   <div class="button-wrapper">
-    <app-button *ngIf="!owner" [type]="'primary'">Follow</app-button>
-    <app-button *ngIf="owner" [type]="'primary'">Edit</app-button>
+    <button mat-stroked-button *ngIf="!owner" class="primary" (click)="onAction('follow')">Follow</button>
+    <button mat-stroked-button *ngIf="owner && editing" class="primary" (click)="onAction('save')"
+      [disabled]="disableSave">Save
+    </button>
   </div>
 </div>
-<app-profile-stats [statItems]="statItems"></app-profile-stats>
+<app-profile-stats *ngIf="!editing" [statItems]="statItems"></app-profile-stats>

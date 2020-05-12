@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, NgZone, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { UserDetail } from '../../../../shared/models/user-detail.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { products } from '@app/data/products.data';
@@ -7,6 +7,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 import { FileUploadService } from '@app/shared/services/file-upload.service';
 import { concatMap, tap } from 'rxjs/operators';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -24,6 +25,9 @@ export class ProfileComponent implements OnInit {
   owner = false;
   loading = true;
   currentUserId: string;
+  editForm: FormGroup;
+  edit = false;
+  public form: FormGroup;
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private userService: UserService, private zone: NgZone, private ref: ChangeDetectorRef,
     private uploadService: FileUploadService) { }

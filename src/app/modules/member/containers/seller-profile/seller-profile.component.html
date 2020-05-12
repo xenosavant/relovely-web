@@ -2,8 +2,10 @@
     <app-product-create [product]="editProduct" [sellerId]="user.id" (close)="close($event)"></app-product-create>
 </ng-template>
 <div class="profile-container">
-    <app-profile-header (update)="update()" [owner]="owner" [user]="user"></app-profile-header>
-    <mat-tab-group>
+    <app-profile-header [disableSave]="disableSave" [editing]="edit" (action)="onAction($event)" (update)="update()"
+        [owner]="owner" [user]="user">
+    </app-profile-header>
+    <mat-tab-group *ngIf="!edit">
         <mat-tab label="Listings">
             <app-products-list [userId]="currentUserId" (edit)="showEditModal($event)"
                 (create)="showCreateModal($event)" [showCreate]="showCreate" [showGrid]="true" [showHeader]="false"
@@ -21,4 +23,23 @@
             <app-users-list [users]="users"></app-users-list>
         </mat-tab>
     </mat-tab-group>
+    <div *ngIf="edit" class="edit">
+        <form [formGroup]="editForm">
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="First Name" formControlName="first" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Last Name" formControlName="last" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Username" formControlName="username" />
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
 </div>

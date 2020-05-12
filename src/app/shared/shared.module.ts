@@ -58,6 +58,8 @@ import {
   faArrowLeft,
   faHeart,
   faTh,
+  faUndo,
+  faWindowClose,
   faThLarge,
   faEllipsisV,
 } from '@fortawesome/free-solid-svg-icons';
@@ -128,9 +130,11 @@ library.add(
   faSearch,
   faShoppingCart,
   faArrowLeft,
-  faHeart,
+  faWindowClose,
   faThLarge,
-  faEllipsisV
+  faEllipsisV,
+  faHeart,
+  faUndo
 );
 
 

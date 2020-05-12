@@ -1,46 +1,73 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
-import { UserDetail } from '@app/shared/models/user-detail.model';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { UserDetail } from '../../../../shared/models/user-detail.model';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { users } from '@app/data/users.data';
-import { Product } from '@app/shared/models/product.model';
 import { products } from '@app/data/products.data';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { OverlayService } from '@app/shared/services/overlay.service';
+import { UserService } from '@app/shared/services/user/user.service';
+import { Product } from '@app/shared/models/product.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { UserService } from '@app/shared/services/user/user.service';
 
 @Component({
-  selector: 'app-member-profile',
-  templateUrl: './member-profile.component.html',
-  styleUrls: ['./member-profile.component.scss'],
+  selector: 'app-seller-profile',
+  templateUrl: './seller-profile.component.html',
+  styleUrls: ['./seller-profile.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MemberProfileComponent implements OnInit {
+export class SellerProfileComponent implements OnInit {
 
-  @Input()
-  user: UserDetail;
-  @Input()
-  owner = false;
+  @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
+
+  @Input() user: UserDetail;
+  @Input() currentUserId: string;
+  @Input() owner = false;
   @Output() updateImage: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() action: EventEmitter<string> = new EventEmitter<string>();
-
-  @Input() currentUserId: string;
-  users: UserDetail[];
-  products: Product[];
   edit = false;
+  users: UserDetail[];
+  showCreate = false;
+  editProduct: Product;
   editForm: FormGroup;
-  formWatcher: Subscription;
-  disableSave = true;
   loading = false;
+  disableSave = true;
+  formWatcher: Subscription;
 
-  constructor(private userService: UserService,
+  constructor(private route: ActivatedRoute,
+    private overlayService: OverlayService,
+    private userService: UserService,
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    // this.user.listings = products.filter(p => {
+    //   return p.seller.username === this.user.username;
+    // })
+    if (this.owner) {
+      this.showCreate = true;
+    }
+
+  }
+
+
+
+  showCreateModal($event: any) {
+    this.editProduct = null;
+    this.overlayService.open(this.productCreateModal);
+  }
+
+  showEditModal(product: any) {
+    this.editProduct = product;
+    this.overlayService.open(this.productCreateModal);
+  }
+
+  close() {
+    this.overlayService.close();
   }
 
   update() {
     this.updateImage.emit(true);
   }
-
 
   onAction(action: string) {
     switch (action) {
@@ -84,5 +111,4 @@ export class MemberProfileComponent implements OnInit {
         break
     }
   }
-
 }

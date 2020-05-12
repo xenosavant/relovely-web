@@ -8,3 +8,10 @@
         border-right: solid $header-border 1px;
     }
 }
+
+.edit {
+    margin: 8px;
+    .mat-form-field {
+        width: 100%;
+    }
+}

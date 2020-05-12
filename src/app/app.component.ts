@@ -120,10 +120,8 @@ export class AppComponent implements OnInit {
     });
     const jwt = this.localStorageService.getItem('jwt');
     if (jwt) {
-      console.log(jwt);
       this.userService.jwt = jwt;
       this.userService.me().pipe(tap(me => {
-        console.log(me);
         this.userService.setLogin(jwt, me);
       }), mergeMap(value => this.getLookup()))
         .subscribe(final => {
@@ -239,7 +237,6 @@ export class AppComponent implements OnInit {
           this.scroll0 = false;
           this.scrolledToTop = false;
         }
-        console.log(this.scrolledToTop);
       });
     }
   }

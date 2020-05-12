@@ -21,7 +21,6 @@ export class AddAddressComponent implements OnInit {
   @Input() address: Address;
   @Input() user: UserDetail;
 
-
   public form: FormGroup;
   edit = false;
   title: string;
@@ -44,7 +43,6 @@ export class AddAddressComponent implements OnInit {
       this.title = "Edit Address";
       this.edit = true;
       this.index = this.user.addresses.indexOf(this.address);
-      console.log(this.index);
     } else {
       this.form = new FormGroup({
         name: new FormControl('', [Validators.required]),
@@ -79,7 +77,6 @@ export class AddAddressComponent implements OnInit {
       update = this.user.addresses;
     } else {
       saveAddress.primary = !this.user.addresses.length ? true : false;
-      console.log(saveAddress);
       update = [...this.user.addresses, saveAddress];
     }
     this.userService.updateUser(this.user.id, { addresses: update }).subscribe(user => {

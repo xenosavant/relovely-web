@@ -3,6 +3,7 @@ import { UserDetail } from '@app/shared/models/user-detail.model';
 import { StatItem } from '@app/shared/models/stat-item.model';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { EventEmitter } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-profile-header',
@@ -14,7 +15,10 @@ export class ProfileHeaderComponent implements OnInit {
 
   @Input() user: UserDetail;
   @Input() owner = false;
+  @Input() editing = false;
+  @Input() disableSave: boolean;
   @Output() update: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() action: EventEmitter<string> = new EventEmitter<string>();
   public statItems: StatItem[];
   public desktop: boolean;
 
@@ -44,6 +48,11 @@ export class ProfileHeaderComponent implements OnInit {
     if (this.owner) {
       this.update.emit(true);
     }
+  }
+
+  onAction(type: string) {
+    console.log(type);
+    this.action.emit(type);
   }
 
 }

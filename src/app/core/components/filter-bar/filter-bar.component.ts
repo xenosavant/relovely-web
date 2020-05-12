@@ -90,7 +90,6 @@ export class FilterBarComponent implements OnInit {
       this.selectedPriceFilters.push(filter);
     }
     this.filterService.updatePrices(this.selectedPriceFilters.map(f => {
-      console.log(f);
       return {
         id: f.id,
         min: f.min,

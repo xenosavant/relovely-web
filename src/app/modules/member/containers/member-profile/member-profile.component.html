@@ -1,6 +1,8 @@
 <div class="member-profile-container">
-  <app-profile-header (update)="update()" [owner]="owner" [user]="user"></app-profile-header>
-  <mat-tab-group mat-align-tabs="center">
+  <app-profile-header [disableSave]="disableSave" [editing]="edit" (action)="onAction($event)" (update)="update()"
+    [owner]="owner" [user]="user">
+  </app-profile-header>
+  <mat-tab-group *ngIf="!edit" mat-align-tabs="center">
     <mat-tab label="Favorites">
       <app-products-list class="users-wrapper" [userId]="currentUserId" [showGrid]="true" [showHeader]="true"
         [products]="products">
@@ -10,4 +12,23 @@
       <app-users-list class="users-wrapper" [users]="users"></app-users-list>
     </mat-tab>
   </mat-tab-group>
+  <div *ngIf="edit" class="edit">
+    <form [formGroup]="editForm">
+      <div>
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="First Name" formControlName="first" />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="Last Name" formControlName="last" />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="Username" formControlName="username" />
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
 </div>
