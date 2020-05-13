@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
-import { UserDetail } from '@app/shared/models/user-detail.model';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ChangeDetectorRef, SimpleChange } from '@angular/core';
 import { UserService } from '@app/shared/services/user/user.service';
+import { UserList } from '@app/shared/models/user-list.model';
 
 @Component({
   selector: 'app-users-list',
@@ -10,7 +10,7 @@ import { UserService } from '@app/shared/services/user/user.service';
 })
 export class UsersListComponent implements OnInit {
 
-  @Input() users: UserDetail[];
+  @Input() users: UserList[];
 
   constructor(private userService: UserService, private ref: ChangeDetectorRef) { }
 

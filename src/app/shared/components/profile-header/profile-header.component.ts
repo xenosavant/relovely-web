@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, SimpleChanges, ChangeDetectorRef, Output } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, SimpleChanges, ChangeDetectorRef, Output, OnChanges } from '@angular/core';
 import { UserDetail } from '@app/shared/models/user-detail.model';
 import { StatItem } from '@app/shared/models/stat-item.model';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -11,12 +11,13 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./profile-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProfileHeaderComponent implements OnInit {
+export class ProfileHeaderComponent implements OnChanges {
 
   @Input() user: UserDetail;
   @Input() owner = false;
   @Input() editing = false;
   @Input() disableSave: boolean;
+  @Input() following: boolean;
   @Output() update: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() action: EventEmitter<string> = new EventEmitter<string>();
   public statItems: StatItem[];
@@ -25,7 +26,7 @@ export class ProfileHeaderComponent implements OnInit {
 
   constructor(private ref: ChangeDetectorRef, private breakpointObserver: BreakpointObserver) { }
 
-  ngOnInit() {
+  ngOnChanges() {
     this.statItems = [];
     if (this.user.type === 'seller') {
       this.statItems.push({ name: 'Listings', count: this.user.listings.length });

@@ -30,6 +30,7 @@ export class MemberProfileComponent implements OnInit {
   formWatcher: Subscription;
   disableSave = true;
   loading = false;
+  actionProcessing = false;
 
   constructor(private userService: UserService,
     private ref: ChangeDetectorRef) { }
@@ -44,8 +45,6 @@ export class MemberProfileComponent implements OnInit {
 
   onAction(action: string) {
     switch (action) {
-      case 'follow':
-        break;
       case 'edit':
         this.edit = true;
         this.editForm = new FormGroup({
@@ -84,5 +83,4 @@ export class MemberProfileComponent implements OnInit {
         break
     }
   }
-
 }

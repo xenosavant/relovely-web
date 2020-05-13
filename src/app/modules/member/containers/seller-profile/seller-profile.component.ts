@@ -9,6 +9,7 @@ import { UserService } from '@app/shared/services/user/user.service';
 import { Product } from '@app/shared/models/product.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { UserList } from '@app/shared/models/user-list.model';
 
 @Component({
   selector: 'app-seller-profile',
@@ -32,7 +33,11 @@ export class SellerProfileComponent implements OnInit {
   editForm: FormGroup;
   loading = false;
   disableSave = true;
+  actionProcessing = false;
   formWatcher: Subscription;
+  following: boolean;
+  followingUsers: UserList[];
+  followerUsers: UserList[];
 
   constructor(private route: ActivatedRoute,
     private overlayService: OverlayService,
@@ -47,9 +52,12 @@ export class SellerProfileComponent implements OnInit {
       this.showCreate = true;
     }
 
+    this.following = this.user.followers.some(u => u.id === this.currentUserId);
+    this.followingUsers = this.user.following;
+    this.followerUsers = this.user.followers;
+    console.log(this.followerUsers);
+
   }
-
-
 
   showCreateModal($event: any) {
     this.editProduct = null;
@@ -72,6 +80,10 @@ export class SellerProfileComponent implements OnInit {
   onAction(action: string) {
     switch (action) {
       case 'follow':
+        this.followUnfollow(true);
+        break;
+      case 'unfollow':
+        this.followUnfollow(false);
         break;
       case 'edit':
         this.edit = true;
@@ -110,5 +122,34 @@ export class SellerProfileComponent implements OnInit {
         this.edit = false;
         break
     }
+  }
+
+  followUnfollow(follow: boolean) {
+    this.actionProcessing = true;
+    this.userService.followUser(this.user.id, follow).subscribe(() => {
+      console.log('success');
+      const me = this.userService.currentUser;
+      if (follow) {
+        this.followerUsers.push({
+          id: me.id,
+          username: me.username,
+          profileImageUrl: me.profileImageUrl,
+          type: me.type
+        });
+        this.followerUsers = Object.assign([], this.followerUsers);
+        this.following = true;
+      } else {
+        this.following = false;
+        console.log(this.followerUsers.indexOf(this.followerUsers.find(u => u.id === this.currentUserId)));
+        this.followerUsers.splice(this.followerUsers.indexOf(this.followerUsers.find(u => u.id === this.currentUserId)), 1);
+        this.followerUsers = Object.assign([], this.followerUsers);
+      }
+      this.user.followers = this.followerUsers;
+      this.user = Object.assign({}, this.user);
+      this.actionProcessing = false;
+      this.ref.markForCheck();
+    }, err => {
+      this.actionProcessing = false;
+    })
   }
 }

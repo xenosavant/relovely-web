@@ -91,4 +91,8 @@ export class
             })
         );
     }
+
+    followUser(userId: string, follow: boolean): Observable<void> {
+        return this.httpClient.patch<void>(`${this.apiBaseUrl}/users/${userId}/follow/?follow=${follow}`, {}).pipe();
+    }
 }
