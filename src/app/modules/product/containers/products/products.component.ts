@@ -122,7 +122,6 @@ export class ProductsComponent implements OnInit {
               this.emptyImage = '../../../../../assets/images/' + CATEGORY_MAP[cat.id];
               this.checkBack = true;
             }
-            console.log(this.checkBack);
             this.empty = true;
           } else {
             this.empty = false;

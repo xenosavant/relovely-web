@@ -16,5 +16,5 @@ export class UserDetail {
     favorites?: Product[];
     type: string;
     preferences: IUserPreferences;
-    addresses: Address[]
+    addresses: Address[];
 }

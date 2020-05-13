@@ -2,8 +2,8 @@
 
 .profile-container {
     background-color: $medium-gray-background;
-    padding-top:8px;
     @media( min-width:$desktop-breakpoint) {
+        padding-top: 8px;
         border-left: solid $header-border 1px;
         border-right: solid $header-border 1px;
     }

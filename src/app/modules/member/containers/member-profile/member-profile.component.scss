@@ -1,11 +1,12 @@
 @import '../../../../../styles-variables';
 
 .member-profile-container {
-    background-color: $background-gray;
-    padding-top:8px;
+    background-color: $medium-gray-background;
+    @media( min-width:$desktop-breakpoint) {
+        padding-top: 8px;
+    }
     border-left: solid $header-border 1px;
     border-right: solid $header-border 1px;
-    border-bottom: solid $header-border 1px;
 }
 
 .edit {

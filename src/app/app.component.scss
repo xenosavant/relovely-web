@@ -54,8 +54,10 @@ mat-toolbar {
 }
 
 .topbar {
-  position:fixed;
-  top:0;
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000;
   z-index:1;
 }
 

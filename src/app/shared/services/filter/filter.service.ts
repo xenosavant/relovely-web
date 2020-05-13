@@ -17,16 +17,16 @@ import { UserService } from '../user/user.service';
 @Injectable()
 export class FilterService extends BaseService {
 
+    private emptyState = { sizes: [], colors: [], prices: [] };
     private _state: IUserPreferences;
 
-    public filterStateSubject$ = new BehaviorSubject<IUserPreferences>({ sizes: [], colors: [], prices: [] });
+    public filterStateSubject$ = new BehaviorSubject<IUserPreferences>(this.emptyState);
 
     constructor(private localStorage: LocalStorageService, httpClient: HttpClient, private userService: UserService) {
         super(httpClient);
         this.userService.getCurrentUser().then(user => {
             if (user) {
-                this._state = user.preferences || {};
-                console.log(this._state);
+                this._state = user.preferences || this.emptyState;
                 this.filterStateSubject$.next(this._state);
             }
         })

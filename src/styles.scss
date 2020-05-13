@@ -488,7 +488,46 @@ mat-chip-list mat-chip {
 // Profile Tabs
 
 .member-profile-container {
-  
+  @media( min-width:$desktop-breakpoint) {
+    min-height: calc(100vh - 361px);
+  }
+  @media( max-width:$mobile-breakpoint) {
+    mat-tab-body {
+      min-height: calc(100vh - 226px);
+    }
+  }
+  overflow: hidden;
+  .mat-tab-body-wrapper {
+    margin-top: -25px;
+  }
+
+  mat-tab-header {
+    height: 50px !important;
+    bottom: 30px !important;
+      div.mat-tab-label-container {
+          div.mat-tab-list {
+            height: 50px;
+            width:100%;
+            div.mat-tab-labels {
+              height: 50px !important;
+              bottom: 30px !important;
+              div.mat-tab-label {
+                align-items: flex-end !important;
+                padding-bottom: 5px;
+                height: 50px !important;
+                div.mat-tab-label-content {
+                  font-size: .85em;
+                  margin-bottom: 4px;
+                }
+              }
+            }
+          }
+          mat-ink-bar {
+            height: 4px;
+            background-color: $dark-blue !important;
+          }
+      }
+  }
   mat-tab-header {
       div.mat-tab-label-container {
           div.mat-tab-list {
@@ -538,9 +577,6 @@ mat-chip-list mat-chip {
 .profile-container {
   overflow: hidden;
   min-height: 100%;
-  @media( min-width:$desktop-breakpoint) {
-    min-height: calc(100vh - 361px);
-  }
   .mat-tab-body-wrapper {
     margin-top: -25px;
   }
@@ -571,41 +607,6 @@ mat-chip-list mat-chip {
                 height: 50px !important;
                 div.mat-tab-label-content {
                   font-size: .85em;
-                }
-              }
-            }
-          }
-          mat-ink-bar {
-            height: 4px;
-            background-color: $dark-blue !important;
-          }
-      }
-  }
-}
-
-.member-profile-container {
-  overflow: hidden;
-  .mat-tab-body-wrapper {
-    margin-top: -25px;
-  }
-
-  mat-tab-header {
-    height: 50px !important;
-    bottom: 30px !important;
-      div.mat-tab-label-container {
-          div.mat-tab-list {
-            height: 50px;
-            width:100%;
-            div.mat-tab-labels {
-              height: 50px !important;
-              bottom: 30px !important;
-              div.mat-tab-label {
-                align-items: flex-end !important;
-                padding-bottom: 5px;
-                height: 50px !important;
-                div.mat-tab-label-content {
-                  font-size: .85em;
-                  margin-bottom: 4px;
                 }
               }
             }
@@ -752,13 +753,14 @@ mat-toolbar-row.mega-menu-bar {
     }
   }
     &.profile { 
-      grid-template-rows:auto;
-      display:grid;
       @media(min-width: $desktop-breakpoint) {
-      grid-template-columns: 35% 1fr;
-      @media(min-width: 1000px) {
-        grid-template-columns: 25% 75%;;
-      }
+        min-height: calc(100vh - 361px);
+        grid-template-rows:auto;
+        display:grid;
+        grid-template-columns: 35% 1fr;
+        @media(min-width: 1000px) {
+          grid-template-columns: 25% 75%;;
+        }
     }
    
   }
