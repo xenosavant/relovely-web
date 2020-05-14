@@ -343,6 +343,12 @@ div.left {
  }
 }
 
+.icon-wrapper.mobile {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+}
+
 
 .mat-list-item-content {
   padding:0px !important;
@@ -753,6 +759,9 @@ mat-toolbar-row.mega-menu-bar {
     }
   }
     &.profile { 
+      @media(max-width: $mobile-breakpoint) {
+        background-color: $medium-gray-background;
+      }
       @media(min-width: $desktop-breakpoint) {
         min-height: calc(100vh - 361px);
         grid-template-rows:auto;

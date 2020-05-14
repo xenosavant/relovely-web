@@ -2,6 +2,10 @@
 
 :host {
 flex: auto;
+@media(max-width: $mobile-breakpoint) {
+    display: flex;
+    flex-direction: column;
+    }
 }
 
 .header-bar {

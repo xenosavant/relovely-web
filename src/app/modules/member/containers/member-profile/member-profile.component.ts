@@ -6,6 +6,7 @@ import { products } from '@app/data/products.data';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UserService } from '@app/shared/services/user/user.service';
+import { UserList } from '@app/shared/models/user-list.model';
 
 @Component({
   selector: 'app-member-profile',
@@ -23,7 +24,7 @@ export class MemberProfileComponent implements OnInit {
   @Output() action: EventEmitter<string> = new EventEmitter<string>();
 
   @Input() currentUserId: string;
-  users: UserDetail[];
+  following: UserList[];
   products: Product[];
   edit = false;
   editForm: FormGroup;
@@ -36,6 +37,7 @@ export class MemberProfileComponent implements OnInit {
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.following = this.user.following;
   }
 
   update() {
