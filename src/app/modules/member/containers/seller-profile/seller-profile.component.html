@@ -7,13 +7,12 @@
     </app-profile-header>
     <mat-tab-group *ngIf="!edit">
         <mat-tab label="Listings">
-            <app-products-list [userId]="currentUserId" (edit)="showEditModal($event)"
-                (create)="showCreateModal($event)" [showCreate]="showCreate" [showGrid]="true" [showHeader]="false"
-                [products]="user.listings">
+            <app-products-list [user]="currentUser" (edit)="showEditModal($event)" (create)="showCreateModal($event)"
+                [showCreate]="showCreate" [showGrid]="true" [showHeader]="false" [products]="user.listings">
             </app-products-list>
         </mat-tab>
         <mat-tab label="Sales">
-            <app-products-list [userId]="currentUserId" [showGrid]="true" [showHeader]="false" [products]="user.sales">
+            <app-products-list [user]="currentUser" [showGrid]="true" [showHeader]="false" [products]="user.sales">
             </app-products-list>
         </mat-tab>
         <mat-tab label="Followers">
@@ -24,6 +23,7 @@
         </mat-tab>
     </mat-tab-group>
     <div *ngIf="edit" class="edit">
+        <div class="error">{{error}}</div>
         <form [formGroup]="editForm">
             <div>
                 <mat-form-field appearance="outline">

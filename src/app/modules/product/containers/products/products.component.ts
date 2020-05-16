@@ -15,6 +15,8 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from '@app/shared/services/overlay.service';
 import { CATEGORY_MAP } from '@app/shared/services/lookup/category-image-map';
 import { Subscription } from 'rxjs';
+import { UserDetail } from '@app/shared/models/user-detail.model';
+import { UserAuth } from '@app/shared/models/user-auth.model';
 
 @Component({
   selector: 'app-products',
@@ -31,7 +33,7 @@ export class ProductsComponent implements OnInit {
   mobile: boolean;
   currentNavItem: NavigationItem;
   categoryId: string;
-  currentUserId: string;
+  currentUser: UserAuth;
   empty = false;
   emptyImage: string = null;
   filterSub: Subscription = null;
@@ -85,7 +87,7 @@ export class ProductsComponent implements OnInit {
     })
 
     this.userService.getCurrentUser().then(u => {
-      this.currentUserId = u ? u.id : null;
+      this.currentUser = u ? u : null;
     });
 
   }

@@ -6,6 +6,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserService } from '@app/shared/services/user/user.service';
 import { UserDetail } from '@app/shared/models/user-detail.model';
 import { Address } from '@app/shared/interfaces/address.interface';
+import { UserAuth } from '@app/shared/models/user-auth.model';
 
 @Component({
   selector: 'app-addresses',
@@ -18,7 +19,7 @@ export class AddressesComponent implements OnInit {
   @ViewChild('addAddressModal', { static: true }) addAddressModal: TemplatePortal<any>;
   public mobile: boolean = false;
 
-  user: UserDetail;
+  user: UserAuth;
   addresses: Address[];
   editAddress: Address;
   loading = true;
@@ -57,7 +58,7 @@ export class AddressesComponent implements OnInit {
     this.overlayService.close();
   }
 
-  onSaved(user: UserDetail) {
+  onSaved(user: UserAuth) {
     this.user = user;
     this.addresses = [...this.user.addresses];
     this.ref.markForCheck();

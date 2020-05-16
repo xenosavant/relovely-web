@@ -8,6 +8,7 @@ import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 import { FileUploadService } from '@app/shared/services/file-upload.service';
 import { concatMap, tap } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UserAuth } from '@app/shared/models/user-auth.model';
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +25,7 @@ export class ProfileComponent implements OnInit {
   mobile: boolean;
   owner = false;
   loading = true;
-  currentUserId: string;
+  currentUser: UserAuth;
   editForm: FormGroup;
   edit = false;
   public form: FormGroup;
@@ -35,19 +36,16 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(param => {
       const id = param.get('id');
-      if (!this.user || (this.user && id !== this.user.id)) {
+      this.userService.getCurrentUser().then(user => {
+        this.currentUser = user ? user : null;
         if (id !== 'profile') {
-          this.userService.getCurrentUser().then(user => {
-            this.currentUserId = user ? user.id : null;
-            this.userService.getUser(id).subscribe(user => {
-              this.owner = false;
-              this.user = user;
-              this.ref.markForCheck();
-              this.loading = false;
-            });
-          })
+          this.userService.getUser(id).subscribe(user => {
+            this.owner = false;
+            this.user = user;
+            this.ref.markForCheck();
+            this.loading = false;
+          });
         } else {
-          this.currentUserId = this.userService.currentUser.id;
           this.userService.getUser(this.userService.currentUser.id).subscribe(user => {
             this.owner = true;
             this.user = user;
@@ -55,11 +53,11 @@ export class ProfileComponent implements OnInit {
             this.ref.markForCheck();
           });
         }
-        this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
-          this.mobile = result.matches;
-        });
-      }
-    });
+      })
+      this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
+        this.mobile = result.matches;
+      });
+    })
   }
 
   onCloseCropper($event: any) {

@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from '@app/shared/models/product.model';
 import { NavigationService } from '@app/shared/services/navigation.service';
+import { UserDetail } from '@app/shared/models/user-detail.model';
 
 @Component({
   selector: 'app-products-list',
@@ -14,7 +15,7 @@ export class ProductsListComponent implements OnInit {
   @Input() showGrid?: boolean;
   @Input() showHeader = true;
   @Input() showCreate = false;
-  @Input() userId: string;
+  @Input() user: UserDetail;
 
   @Output() create: EventEmitter<any> = new EventEmitter;
   @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();

@@ -1,6 +1,7 @@
 import { UserDetail } from '../../models/user-detail.model';
+import { UserAuth } from '@app/shared/models/user-auth.model';
 
 export interface SignupResponse {
-    user: UserDetail;
+    user: UserAuth;
     jwt: string;
 }

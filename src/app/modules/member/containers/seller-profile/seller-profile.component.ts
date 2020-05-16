@@ -10,6 +10,7 @@ import { Product } from '@app/shared/models/product.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UserList } from '@app/shared/models/user-list.model';
+import { UserAuth } from '@app/shared/models/user-auth.model';
 
 @Component({
   selector: 'app-seller-profile',
@@ -22,7 +23,7 @@ export class SellerProfileComponent implements OnInit {
   @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
 
   @Input() user: UserDetail;
-  @Input() currentUserId: string;
+  @Input() currentUser: UserAuth;
   @Input() owner = false;
   @Output() updateImage: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() action: EventEmitter<string> = new EventEmitter<string>();
@@ -38,6 +39,7 @@ export class SellerProfileComponent implements OnInit {
   following: boolean;
   followingUsers: UserList[];
   followerUsers: UserList[];
+  error: string = null;
 
   constructor(private route: ActivatedRoute,
     private overlayService: OverlayService,
@@ -52,11 +54,9 @@ export class SellerProfileComponent implements OnInit {
       this.showCreate = true;
     }
 
-    this.following = this.user.followers.some(u => u.id === this.currentUserId);
+    this.following = this.user.followers.some(u => u.id === this.currentUser.id);
     this.followingUsers = this.user.following;
     this.followerUsers = this.user.followers;
-    console.log(this.followerUsers);
-
   }
 
   showCreateModal($event: any) {
@@ -115,7 +115,8 @@ export class SellerProfileComponent implements OnInit {
             this.edit = false;
             this.ref.markForCheck();
           }, err => {
-            console.log(err);
+            this.error = err.error.error.message;
+            this.ref.markForCheck();
           });
         break;
       case 'close':
@@ -140,8 +141,7 @@ export class SellerProfileComponent implements OnInit {
         this.following = true;
       } else {
         this.following = false;
-        console.log(this.followerUsers.indexOf(this.followerUsers.find(u => u.id === this.currentUserId)));
-        this.followerUsers.splice(this.followerUsers.indexOf(this.followerUsers.find(u => u.id === this.currentUserId)), 1);
+        this.followerUsers.splice(this.followerUsers.indexOf(this.followerUsers.find(u => u.id === this.currentUser.id)), 1);
         this.followerUsers = Object.assign([], this.followerUsers);
       }
       this.user.followers = this.followerUsers;

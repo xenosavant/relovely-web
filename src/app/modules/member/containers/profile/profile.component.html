@@ -19,11 +19,11 @@
   </div>
   <ng-container [ngSwitch]="user.type">
     <ng-container *ngSwitchCase="'seller'">
-      <app-seller-profile [currentUserId]="currentUserId" (updateImage)="input.click()" [owner]="owner" [user]="user">
+      <app-seller-profile [currentUser]="currentUser" (updateImage)="input.click()" [owner]="owner" [user]="user">
       </app-seller-profile>
     </ng-container>
     <ng-container *ngSwitchCase="'member'">
-      <app-member-profile [currentUserId]="currentUserId" (updateImage)="input.click()" [owner]="owner" [user]="user">
+      <app-member-profile [currentUser]="currentUser" (updateImage)="input.click()" [owner]="owner" [user]="user">
       </app-member-profile>
     </ng-container>
   </ng-container>

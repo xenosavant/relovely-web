@@ -17,7 +17,7 @@
 </ng-container>
 <div *ngIf="!empty" class="products">
     <div class="products-content">
-        <app-products-list (edit)="editProduct($event)" [userId]="currentUserId" [products]="products" [showGrid]="grid"
+        <app-products-list (edit)="editProduct($event)" [user]="currentUser" [products]="products" [showGrid]="grid"
             [showHeader]="true">
         </app-products-list>
     </div>

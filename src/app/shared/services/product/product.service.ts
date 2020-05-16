@@ -72,4 +72,8 @@ export class ProductService extends BaseService {
         );
     }
 
+    favoriteProduct(productId: string): Observable<void> {
+        return this.httpClient.patch<void>(`${this.apiBaseUrl}/products/${productId}/favorite/`, {}).pipe();
+    }
+
 }

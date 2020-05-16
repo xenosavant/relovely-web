@@ -7,12 +7,13 @@ import { throwError, Observable, Subject, of } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { LocalStorageService } from '../local-storage/local-storage.service';
+import { UserAuth } from '@app/shared/models/user-auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class
     UserService extends BaseService {
 
-    private userSubject$ = new Subject<UserDetail>();
+    private userSubject$ = new Subject<UserAuth>();
     public user$ = this.userSubject$.asObservable();
 
     private loggedInSubject$ = new Subject<boolean>();
@@ -22,7 +23,7 @@ export class
         super(httpClient);
     }
 
-    private _currentUser: UserDetail;
+    private _currentUser: UserAuth;
 
     private _jwt: string;
     private _notLoggedIn = false;
@@ -31,12 +32,16 @@ export class
         return this._currentUser;
     }
 
-    public async getCurrentUser(): Promise<UserDetail> {
+    public async getCurrentUser(): Promise<UserAuth> {
         if (this._currentUser || this._notLoggedIn) {
             return this._currentUser;
         } else {
             return this.user$.toPromise();
         }
+    }
+
+    public setCurrentUser(user: UserAuth): void {
+        this.localStorageService.setItem('currentUser', user);
     }
 
     public get jwt() {
@@ -47,7 +52,7 @@ export class
         this._jwt = val;
     }
 
-    public setLogin(jwt: string, user: UserDetail) {
+    public setLogin(jwt: string, user: UserAuth) {
         this._jwt = jwt;
         this.localStorageService.setItem('jwt', jwt);
         this._currentUser = user;
@@ -75,17 +80,17 @@ export class
         );
     }
 
-    me(): Observable<UserDetail> {
-        return this.httpClient.get<UserDetail>(`${this.apiBaseUrl}/users/me`).pipe(
-            map((user: UserDetail) => {
+    me(): Observable<UserAuth> {
+        return this.httpClient.get<UserAuth>(`${this.apiBaseUrl}/users/me`).pipe(
+            map((user: UserAuth) => {
                 return user;
             })
         );
     }
 
-    updateUser(userId: string, updates: Partial<UserDetail>): Observable<UserDetail> {
-        return this.httpClient.patch<UserDetail>(`${this.apiBaseUrl}/users/${userId}`, updates).pipe(
-            map((user: UserDetail) => {
+    updateUser(userId: string, updates: Partial<UserAuth>): Observable<UserAuth> {
+        return this.httpClient.patch<UserAuth>(`${this.apiBaseUrl}/users/${userId}`, updates).pipe(
+            map((user: UserAuth) => {
                 this._currentUser = user;
                 return user;
             })

@@ -4,7 +4,7 @@
   </app-profile-header>
   <mat-tab-group *ngIf="!edit" mat-align-tabs="center">
     <mat-tab label="Favorites">
-      <app-products-list class="users-wrapper" [userId]="currentUserId" [showGrid]="true" [showHeader]="true"
+      <app-products-list class="users-wrapper" [user]="currentUser" [showGrid]="true" [showHeader]="true"
         [products]="products">
       </app-products-list>
     </mat-tab>
@@ -13,6 +13,7 @@
     </mat-tab>
   </mat-tab-group>
   <div *ngIf="edit" class="edit">
+    <div class="error">{{error}}</div>
     <form [formGroup]="editForm">
       <div>
         <mat-form-field appearance="outline">

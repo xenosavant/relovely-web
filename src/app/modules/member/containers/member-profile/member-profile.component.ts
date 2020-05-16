@@ -23,7 +23,7 @@ export class MemberProfileComponent implements OnInit {
   @Output() updateImage: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() action: EventEmitter<string> = new EventEmitter<string>();
 
-  @Input() currentUserId: string;
+  @Input() currentUser: UserDetail;
   following: UserList[];
   products: Product[];
   edit = false;
@@ -32,6 +32,7 @@ export class MemberProfileComponent implements OnInit {
   disableSave = true;
   loading = false;
   actionProcessing = false;
+  error: string = null;
 
   constructor(private userService: UserService,
     private ref: ChangeDetectorRef) { }
@@ -77,7 +78,8 @@ export class MemberProfileComponent implements OnInit {
             this.edit = false;
             this.ref.markForCheck();
           }, err => {
-            console.log(err);
+            this.error = err.error.error.message;
+            this.ref.markForCheck();
           });
         break;
       case 'close':

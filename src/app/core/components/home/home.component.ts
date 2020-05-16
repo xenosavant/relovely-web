@@ -21,29 +21,21 @@ export class HomeComponent {
         this.featuredSellers = [
             {
                 profileImageUrl: '../../../assets/images/influencer.jpeg',
-                firstName: 'Influencer1',
-                lastName: '1',
                 username: 'Influencer1',
                 type: 'seller'
             },
             {
                 profileImageUrl: '../../../assets/images/influencer.jpeg',
-                firstName: 'Influencer1',
-                lastName: '1',
                 username: 'Influencer2',
                 type: 'seller'
             },
             {
                 profileImageUrl: '../../../assets/images/influencer.jpeg',
-                firstName: 'Influencer1',
-                lastName: '1',
                 username: 'Influencer3',
                 type: 'seller'
             },
             {
                 profileImageUrl: '../../../assets/images/influencer.jpeg',
-                firstName: 'Influencer1',
-                lastName: '1',
                 username: 'Influencer4',
                 type: 'seller'
             },
