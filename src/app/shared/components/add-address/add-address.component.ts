@@ -35,7 +35,7 @@ export class AddAddressComponent implements OnInit {
       this.form = new FormGroup({
         name: new FormControl(this.address.name, [Validators.required]),
         line1: new FormControl(this.address.line1, [Validators.required]),
-        line2: new FormControl(this.address.line2, [Validators.required]),
+        line2: new FormControl(this.address.line2),
         city: new FormControl(this.address.city, [Validators.required]),
         state: new FormControl(this.address.state, [Validators.required]),
         zip: new FormControl(this.address.zip, [Validators.required, Validators.maxLength(5)]),
@@ -47,7 +47,7 @@ export class AddAddressComponent implements OnInit {
       this.form = new FormGroup({
         name: new FormControl('', [Validators.required]),
         line1: new FormControl('', [Validators.required]),
-        line2: new FormControl('', [Validators.required]),
+        line2: new FormControl(''),
         city: new FormControl('', [Validators.required]),
         state: new FormControl('', [Validators.required]),
         zip: new FormControl('', [Validators.required, Validators.maxLength(5)]),

@@ -1,0 +1,153 @@
+@import '../../../../../styles-variables';
+@import '~@angular/material/theming';
+:host {
+     flex: auto;
+}
+.checkout-wrapper {
+    margin: 0 auto;
+    max-width: 920px;
+    flex: auto;
+    @media( min-width:700px) {
+        grid-template-columns: 1fr 300px;
+        grid-gap: 16px;
+        display: grid;
+    }
+    .checkout {
+        background-color: white;
+        border-radius: 4px;
+        padding:16px;
+        @include mat-elevation(1);
+        h2 {
+            font-weight: 500;
+            margin-bottom: 32px;
+        }
+        @media( max-width:699px) {
+            margin-bottom: 16px;
+            border-radius: 0px;
+        }
+        .shipping-address {
+            margin-bottom: 24px;
+            .selected {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+                .edit {
+                    display: flex;
+                    align-items: flex-start;
+                    @media( min-width:700px) {
+                        justify-content: flex-start;
+                    }
+                    cursor: pointer;
+                }
+            }
+            .addresses {
+                display: flex;
+                flex-direction: row;
+                margin-bottom: 8px;
+                .line-address {
+                    display: flex;
+                    align-items: center;
+                    .name {
+                        margin-bottom: 12px;
+                    }
+                }
+                .options {
+                    height: fit-content;
+                }
+            }
+            .button-wrapper {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+                grid-gap:16px;
+                margin-top: 16px;
+            }
+            .form-wrapper {
+                form {
+                    mat-form-field {
+                        width: 100%;
+                    }
+                    textarea {
+                        height:100px;
+                    }
+                }
+                
+                .state-zip {
+                    display: grid;
+                    grid-template-columns: 1fr 100px;
+                    grid-template-rows: auto;
+                    grid-column-gap: 16px;
+                }
+            }
+        }
+    }
+    .checkout-product {
+        height: fit-content;
+        @media( max-width:699px) {
+            border-radius: 0px;
+        }
+        background-color: white;
+        border-radius: 4px;
+        padding:16px;
+        @include mat-elevation(1);
+        .product {
+           display: flex;
+           flex-direction: row;
+            .product-image {
+                .image-wrapper {
+                    height:100px;
+                    width:100px;
+                    padding: 2px;
+                    background-color: #efefef;
+                    border-radius: 2px;
+                    img {
+                        height: 100%;
+                    }
+                }
+            }
+            .product-info {
+                margin-left: 8px;
+                .title {
+                    font-weight: 500;
+                    font-size: 1.2em;
+                    line-height: 1.3em;
+                }
+            }
+        }
+        .totals {
+            .line-items {
+                .line-item {
+                    height: 24px;
+                }
+            }
+            .value {
+                float: right;
+            }
+            .total {
+                margin-top: 16px;
+                font-weight: 700;
+                font-size: 1.2em;
+            }
+        
+            .address {
+                margin-top: 4px;
+            }
+
+            .purchase {
+                margin-top: 16px;
+                button {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.divider {
+    height:1px;
+    background-color: $medium-dark-background;
+    margin: 24px 0px;
+}
+
+
+

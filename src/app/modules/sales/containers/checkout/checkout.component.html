@@ -1,3 +1,129 @@
-<p>
-  checkout works!
-</p>
+<div class="checkout-wrapper" *ngIf="!loading">
+  <div class="checkout">
+    <div class="shipping-address">
+      <h2> Shipping Address </h2>
+      <ng-container *ngIf="!addingAddress">
+        <ng-container *ngIf=!changingAddress>
+          <div class="selected" *ngIf="selectedAddress">
+            <app-address [address]="selectedAddress"></app-address>
+            <div class="edit"><a appClick target="_blank" (click)="changingAddress = true">Change</a></div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="changingAddress">
+          <mat-radio-group [(ngModel)]="selectedAddress">
+            <div class="addresses" *ngFor="let address of addresses">
+              <div class="options">
+                <mat-radio-button [value]="address"></mat-radio-button>
+              </div>
+              <div class="line-address">
+                <span><strong>{{address.name}}</strong> &nbsp; {{address.line1}} {{address.line2}}, {{address.city}},
+                  {{address.state}},
+                  {{address.zip}}</span>
+              </div>
+            </div>
+            <div class="button-wrapper">
+              <button mat-stroked-button class="primary" (click)="onAddAddress()">
+                <fa-icon icon="plus"></fa-icon>&nbsp; Add Addres
+              </button>
+              <button mat-stroked-button (click)="changingAddress = false">Save</button>
+            </div>
+          </mat-radio-group>
+        </ng-container>
+      </ng-container>
+      <div class="form-wrapper" *ngIf="addingAddress">
+        <form [formGroup]="form">
+          <div>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="Full Name" formControlName="name" />
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="Address" formControlName="line1" />
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="Address Line 2" formControlName="line2" />
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="City" formControlName="city" />
+            </mat-form-field>
+          </div>
+          <div class="state-zip">
+            <div>
+              <mat-form-field appearance="outline">
+                <mat-select placeholder="State" class="form-control" formControlName="state">
+                  <mat-option *ngFor="let state of states" [value]="state.abbreviation">
+                    {{state.full}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field appearance="outline">
+                <input matInput placeholder="Zip" formControlName="zip" maxlength="5" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="button-wrapper">
+            <button mat-stroked-button class="primary" (click)="onSaveAddress()" [disabled]="!form.valid">
+              Save
+            </button>
+            <button *ngIf="addresses.length" mat-stroked-button (click)="onCancelAdd()">Cancel</button>
+          </div>
+        </form>
+      </div>
+      <div class="divider"></div>
+      <div class="payment-method">
+        <h2>Payment Method </h2>
+      </div>
+    </div>
+  </div>
+  <div class="checkout-product">
+    <div class="product">
+      <div class="product-image">
+        <div class="image-wrapper mat-elevation-z2">
+          <img [src]="product.images[0].cropped">
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="title">
+          {{product.title}}
+        </div>
+        <div class="size">
+          Size: {{product.sizeId | appSize}}
+        </div>
+        <div class="seller">
+          Seller: {{product.seller.username}}
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="totals">
+      <div class="line-items">
+        <div class="line-item">
+          <span class="label">Price </span>
+          <span class="value">{{product.price | appCurrency}} </span>
+        </div>
+        <div class="line-item">
+          <span class="label">Tax</span>
+          <span class="value">{{tax | appCurrency}} </span>
+        </div>
+        <div class="line-item">
+          <span class="label">Shipping</span>
+          <span class="value">{{shippingCost | appCurrency}} </span>
+        </div>
+      </div>
+      <div class="total">
+        <span class="label">TOTAL</span>
+        <span class="value">{{ total | appCurrency}} </span>
+      </div>
+      <div class="purchase">
+        <button mat-stroked-button color="accent">Purchase</button>
+      </div>
+    </div>
+  </div>
+</div>

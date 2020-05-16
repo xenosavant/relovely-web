@@ -16,7 +16,6 @@ import { MatRadioButton, MatRadioModule } from '@angular/material';
 @NgModule({
   declarations: [SigninComponent, ResetPasswordComponent, PaymentsComponent,
     AddressesComponent, InstagramAuthComponent,
-    AddAddressComponent,
     SignoutComponent,
     FacebookAuthComponent,
     VerifyComponent],
