@@ -22,6 +22,7 @@ import { CloudinaryModule, CloudinaryConfiguration } from './../../node_modules/
 import { Cloudinary } from 'cloudinary-core';
 import { environment } from '@env/environment';
 import { FilterService } from './shared/services/filter/filter.service';
+import { NgxStripeModule } from 'ngx-stripe';
 export const cloudinaryLib = {
   Cloudinary: Cloudinary
 };
@@ -45,7 +46,8 @@ export const config: CloudinaryConfiguration = { cloud_name: environment.cloudin
     // feature
     ProductModule,
     DragulaModule.forRoot(),
-    CloudinaryModule.forRoot(cloudinaryLib, config)
+    CloudinaryModule.forRoot(cloudinaryLib, config),
+    NgxStripeModule.forRoot(environment.stripePublishableKey),
   ],
   exports: [RouterModule],
   declarations: [AppComponent],

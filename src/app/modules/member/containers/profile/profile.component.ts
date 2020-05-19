@@ -38,19 +38,19 @@ export class ProfileComponent implements OnInit {
       const id = param.get('id');
       this.userService.getCurrentUser().then(user => {
         this.currentUser = user ? user : null;
-        if (id !== 'profile') {
-          this.userService.getUser(id).subscribe(user => {
-            this.owner = false;
-            this.user = user;
-            this.ref.markForCheck();
-            this.loading = false;
-          });
-        } else {
+        if (id === 'profile' || id === user.id) {
           this.userService.getUser(this.userService.currentUser.id).subscribe(user => {
             this.owner = true;
             this.user = user;
             this.loading = false;
             this.ref.markForCheck();
+          });
+        } else {
+          this.userService.getUser(id).subscribe(user => {
+            this.owner = false;
+            this.user = user;
+            this.ref.markForCheck();
+            this.loading = false;
           });
         }
       })

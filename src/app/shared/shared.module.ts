@@ -98,6 +98,9 @@ import { CurrencyDirective } from './directives/currency';
 import { ImageViewerComponent } from './components/image-viewer/image-viewer.component';
 import { AppSizePipe } from './pipes/size.pipe';
 import { AddAddressComponent } from './components/add-address/add-address.component';
+import { CreditCardInputComponent } from './components/credit-card-input/credit-card-input.component';
+import { NgxStripeModule, StripeCardComponent } from 'ngx-stripe';
+import { environment } from '@env/environment';
 
 
 library.add(
@@ -168,7 +171,8 @@ library.add(
     ClickOutsideModule,
     FileUploadModule,
     CloudinaryModule,
-    DragulaModule
+    DragulaModule,
+    NgxStripeModule
   ],
   declarations: [
     CurrencyDirective,
@@ -196,7 +200,8 @@ library.add(
     AppSizePipe,
     ProductCreateComponent,
     ImageViewerComponent,
-    AddAddressComponent],
+    AddAddressComponent,
+    CreditCardInputComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -248,7 +253,8 @@ library.add(
     AppSizePipe,
     ProductCreateComponent,
     ImageViewerComponent,
-    AddAddressComponent
+    AddAddressComponent,
+    CreditCardInputComponent
   ],
   providers: [DecimalPipe],
 })

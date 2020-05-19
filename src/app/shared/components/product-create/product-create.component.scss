@@ -86,7 +86,7 @@ form {
     @media (min-width: $desktop-breakpoint) {
         display:grid;
         grid-gap: 8px;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: 195px 195px 195px;
     }
 }
 

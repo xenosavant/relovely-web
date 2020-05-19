@@ -1,5 +1,9 @@
 <div class="checkout-wrapper" *ngIf="!loading">
   <div class="checkout">
+    <div class="header">
+      <h1>Checkout</h1>
+    </div>
+    <div class="divider"></div>
     <div class="shipping-address">
       <h2> Shipping Address </h2>
       <ng-container *ngIf="!addingAddress">
@@ -22,10 +26,10 @@
               </div>
             </div>
             <div class="button-wrapper">
-              <button mat-stroked-button class="primary" (click)="onAddAddress()">
-                <fa-icon icon="plus"></fa-icon>&nbsp; Add Addres
+              <button mat-stroked-button (click)="changingAddress = false" class="primary">Save</button>
+              <button mat-stroked-button (click)="onAddAddress()">
+                <fa-icon icon="plus"></fa-icon>&nbsp; Add Address
               </button>
-              <button mat-stroked-button (click)="changingAddress = false">Save</button>
             </div>
           </mat-radio-group>
         </ng-container>

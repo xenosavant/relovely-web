@@ -1,0 +1,8 @@
+<form novalidate [formGroup]="form">
+    <mat-form-field appearance="outline">
+        <input matInput placeholder="Full Name" formControlName="name" />
+    </mat-form-field>
+    <ngx-stripe-card (on)="onCardChanged($event)" [options]="cardOptions" [elementsOptions]="elementsOptions">
+    </ngx-stripe-card>
+    <button [disabled]="form.valid" mat-stroked-button class="primary" (click)="onSubmit()">Save</button>
+</form>
