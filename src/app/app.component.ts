@@ -122,6 +122,7 @@ export class AppComponent implements OnInit {
     if (jwt) {
       this.userService.jwt = jwt;
       this.userService.me().pipe(tap(me => {
+        console.log(me);
         this.userService.setLogin(jwt, me);
       }), mergeMap(value => this.getLookup()))
         .subscribe(final => {

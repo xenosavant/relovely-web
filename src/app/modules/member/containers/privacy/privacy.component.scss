@@ -1,6 +1,13 @@
-.page-title {
-    margin-bottom: 36px;
-   h1 {
-    font-weight: 700;
-   }
+.full-content {
+    padding:8px;
+    word-wrap: normal;
+    li {
+        display: inline-block;
+    }
+    .page-title {
+        margin-bottom: 36px;
+       h1 {
+        font-weight: 700;
+       }
+    }
 }

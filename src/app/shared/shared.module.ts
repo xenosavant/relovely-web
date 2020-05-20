@@ -57,11 +57,12 @@ import {
   faShoppingCart,
   faArrowLeft,
   faHeart,
-  faTh,
   faUndo,
   faWindowClose,
   faThLarge,
   faEllipsisV,
+  faLandmark,
+  faStore
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -101,6 +102,9 @@ import { AddAddressComponent } from './components/add-address/add-address.compon
 import { CreditCardInputComponent } from './components/credit-card-input/credit-card-input.component';
 import { NgxStripeModule, StripeCardComponent } from 'ngx-stripe';
 import { environment } from '@env/environment';
+import { VerifySellerComponent } from './components/verify-seller/verify-seller.component';
+import { SsnDirective } from './directives/ssn.directive';
+import { PhoneNumberDirective } from './directives/phoneNumber.directive';
 
 
 library.add(
@@ -139,7 +143,9 @@ library.add(
   faThLarge,
   faEllipsisV,
   faHeart,
-  faUndo
+  faUndo,
+  faLandmark,
+  faStore
 );
 
 
@@ -172,7 +178,9 @@ library.add(
     FileUploadModule,
     CloudinaryModule,
     DragulaModule,
-    NgxStripeModule
+    NgxStripeModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   declarations: [
     CurrencyDirective,
@@ -185,6 +193,8 @@ library.add(
     ProductsListComponent,
     ProductListComponent,
     ClickDirective,
+    SsnDirective,
+    PhoneNumberDirective,
     FakeSlidesDirective,
     UserListComponent,
     UsersListComponent,
@@ -201,7 +211,8 @@ library.add(
     ProductCreateComponent,
     ImageViewerComponent,
     AddAddressComponent,
-    CreditCardInputComponent],
+    CreditCardInputComponent,
+    VerifySellerComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -241,6 +252,8 @@ library.add(
     FakeSlidesDirective,
     ClickDirective,
     CurrencyDirective,
+    PhoneNumberDirective,
+    SsnDirective,
     BreadcrumbsComponent,
     ModalComponent,
     ImageCropperComponent,
@@ -254,7 +267,8 @@ library.add(
     ProductCreateComponent,
     ImageViewerComponent,
     AddAddressComponent,
-    CreditCardInputComponent
+    CreditCardInputComponent,
+    VerifySellerComponent
   ],
   providers: [DecimalPipe],
 })

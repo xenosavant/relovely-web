@@ -47,7 +47,7 @@ export class FilterBarComponent implements OnInit {
         this.priceFilters = lookupState.prices;
         this.selectedCategoryFilterId = navigationState.selectedCategoryId;
         this.currentSizeFilters = lookupState.sizes.filter(size => {
-          return size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
+          return navigationState.selectedCategory && size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
         });
         if (this.userService.currentUser) {
           const cache = this.userService.currentUser.preferences;

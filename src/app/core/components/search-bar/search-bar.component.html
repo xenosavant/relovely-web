@@ -1,9 +1,8 @@
 <div class="search">
-  <form class="search__form">
+  <form novalidate class="search__form">
     <input class="search__input" name="search" type="text" autocomplete="off" #searchTerm
       (keyup.enter)="submit(searchTerm.value)" (focus)="placeholder = searchTerm.value === '' ? '' : placeholder"
       (blur)="
-        placeholder = searchTerm.value === '' ? placeholderText : placeholder
-      " placeholder="{{ placeholder }}">
+        placeholder = searchTerm.value === '' ? placeholderText : placeholder" placeholder="{{ placeholder }}">
   </form>
 </div>

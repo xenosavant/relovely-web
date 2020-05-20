@@ -15,4 +15,11 @@ export class UserAuth {
     type: string;
     preferences: IUserPreferences;
     addresses: Address[];
+    seller?: {
+        missingInfo: string[];
+        suspended?: boolean;
+        verified?: boolean;
+        bankAccountLinked?: boolean;
+        verificationStatus?: 'unverified' | 'review' | 'rejected' | 'verified';
+    }
 }

@@ -8,6 +8,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { UserAuth } from '@app/shared/models/user-auth.model';
+import { SellerVerificationRequest } from './seller-verification.request';
 
 @Injectable({ providedIn: 'root' })
 export class
@@ -92,7 +93,7 @@ export class
     updateUser(userId: string, updates: Partial<UserAuth>): Observable<UserAuth> {
         return this.httpClient.patch<UserAuth>(`${this.apiBaseUrl}/users/${userId}`, updates).pipe(
             map((user: UserAuth) => {
-                this._currentUser = user;
+                this.setCurrentUser(user);
                 return user;
             })
         );
@@ -101,4 +102,15 @@ export class
     followUser(userId: string, follow: boolean): Observable<void> {
         return this.httpClient.patch<void>(`${this.apiBaseUrl}/users/${userId}/follow/?follow=${follow}`, {}).pipe();
     }
+
+    verifySeller(request: SellerVerificationRequest): Observable<UserAuth> {
+        return this.httpClient.post<UserAuth>(`${this.apiBaseUrl}/users/verify`, request).pipe(
+            map((user: UserAuth) => {
+                this.setCurrentUser(user);
+                return user;
+            })
+        );
+    }
+
+
 }

@@ -46,7 +46,7 @@ export class DesktopFiltersComponent implements OnInit {
         this.colors = state.colors;
         this.priceFilters = state.prices;
         this.currentSizeFilters = this.sizeFilters.filter(size => {
-          return size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
+          return navigationState.selectedCategory && size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
         });
         if (this.userService.currentUser) {
           const cache = this.userService.currentUser.preferences;

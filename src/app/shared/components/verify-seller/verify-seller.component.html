@@ -1,0 +1,87 @@
+<app-modal title="Seller Verification" (close)="onClose($event)">
+    <form novalidate [formGroup]="form">
+        <div>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="First Name" formControlName="first" />
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Last Name" formControlName="last" />
+            </mat-form-field>
+        </div>
+        <div class="double-field">
+            <mat-form-field appearance="outline">
+                <input matInput [matDatepicker]="picker" placeholder="Birthday" formControlName="birthday"
+                    id="dateOfBirth" readonly (click)="picker.open()">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <input type="text" autocomplete="off" ssn matInput placeholder="Social Security Number"
+                    formControlName="ssn" />
+            </mat-form-field>
+        </div>
+        <div class="double-field">
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Email" formControlName="email" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <input autocomplete="phone-number-no-fill" matInput phone placeholder="Phone Number"
+                        formControlName="phone" />
+                </mat-form-field>
+            </div>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Address" formControlName="line1" />
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Address Line 2" formControlName="line2" />
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="City" formControlName="city" />
+            </mat-form-field>
+        </div>
+        <div class="state-zip">
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-select placeholder="State" class="form-control" formControlName="state">
+                        <mat-option *ngFor="let state of states" [value]="state.abbreviation">
+                            {{state.full}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Zip" formControlName="zip" maxlength="5" />
+                </mat-form-field>
+            </div>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="United States" formControlName="country" />
+            </mat-form-field>
+        </div>
+        <div class="checkbox-wrapper">
+            <mat-checkbox matCheckbox formControlName="tos">I Agree to the <a href="/member/terms">Terms of Service</a>
+            </mat-checkbox>
+        </div>
+        <div class="button-wrapper">
+            <app-button (click)="onClose($event)">
+                <strong>Cancel</strong>
+            </app-button>
+            <button mat-stroked-button class="primary" [disabled]="!form.valid" (click)="onSave()">
+                <strong> Save </strong>
+            </button>
+        </div>
+    </form>
+</app-modal>

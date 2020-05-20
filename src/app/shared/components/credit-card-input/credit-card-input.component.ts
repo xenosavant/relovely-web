@@ -30,7 +30,6 @@ export class CreditCardInputComponent implements OnInit {
         '::placeholder': {
           color: '#CFD7E0'
         },
-
       }
     }
   };

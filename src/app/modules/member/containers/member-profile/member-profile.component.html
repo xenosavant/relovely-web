@@ -14,7 +14,7 @@
   </mat-tab-group>
   <div *ngIf="edit" class="edit">
     <div class="error">{{error}}</div>
-    <form [formGroup]="editForm">
+    <form novalidate [formGroup]="editForm">
       <div>
         <mat-form-field appearance="outline">
           <input matInput placeholder="First Name" formControlName="first" />

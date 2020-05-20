@@ -9,6 +9,7 @@ import { FacebookAuthComponent } from './containers/facebook-auth/facebook-auth.
 import { VerifyComponent } from './containers/verify/verify.component';
 import { ResetPasswordComponent } from './containers/reset-password/reset-password.component';
 import { PaymentsComponent } from './containers/payments/payments.component';
+import { SettingsComponent } from './containers/settings/settings.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,10 @@ const routes: Routes = [
     {
         path: 'payments',
         component: PaymentsComponent
+    },
+    {
+        path: 'settings',
+        component: SettingsComponent
     },
     {
         path: 'signout',
