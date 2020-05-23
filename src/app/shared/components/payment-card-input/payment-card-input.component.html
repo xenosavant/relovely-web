@@ -1,35 +1,18 @@
-<app-center-modal>
-    <div class="modal-wrapper">
-        <div class="inner-wrapper" [class.invisible]="loading">
-            <div class="modal-header">
-                <div></div>
-                <div class="title">
-                    <div>Add a Card</div>
-                </div>
-                <div class="close">
-                    <img (click)="onClose($event)" src="./assets/images/close.svg" />
-                </div>
-            </div>
-            <form novalidate [formGroup]="form">
-                <mat-form-field appearance="outline">
-                    <input matInput placeholder="Full Name" formControlName="name" />
-                </mat-form-field>
-                <div class="error">
-                    {{error}}
-                </div>
-                <ngx-stripe-card (on)="onCardChanged($event)" [options]="cardOptions"
-                    [elementsOptions]="elementsOptions">
-                </ngx-stripe-card>
-                <div class="button-wrapper">
-                    <app-button (click)="onClose($event)">
-                        <strong>Cancel</strong>
-                    </app-button>
-                    <button mat-stroked-button class="primary" (click)="onSave()" [disabled]="!form.valid">
-                        <strong> Save </strong>
-                    </button>
-                </div>
-            </form>
-        </div>
-        <mat-spinner *ngIf="loading" diameter="25"></mat-spinner>
+<form novalidate [formGroup]="form">
+    <mat-form-field appearance="outline">
+        <input matInput placeholder="Full Name" formControlName="name" />
+    </mat-form-field>
+    <div class="error">
+        {{error}}
     </div>
-</app-center-modal>
+    <ngx-stripe-card (on)="onCardChanged($event)" [options]="cardOptions" [elementsOptions]="elementsOptions">
+    </ngx-stripe-card>
+    <div class="button-wrapper" [style.margin-top.px]="buttonMargin">
+        <app-button (click)="onClose($event)">
+            <strong>Cancel</strong>
+        </app-button>
+        <button mat-stroked-button class="primary" (click)="onSave()" [disabled]="!form.valid">
+            <strong> Save </strong>
+        </button>
+    </div>
+</form>

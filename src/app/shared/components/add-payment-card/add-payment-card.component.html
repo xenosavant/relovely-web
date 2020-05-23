@@ -1,0 +1,19 @@
+<app-center-modal>
+    <div class="modal-wrapper">
+        <div class="inner-wrapper" [class.invisible]="loading">
+            <div class="modal-header">
+                <div></div>
+                <div class="title">
+                    <div>Add a Card</div>
+                </div>
+                <div class="close">
+                    <img (click)="onClose()" src="./assets/images/close.svg" />
+                </div>
+            </div>
+            <app-payment-card-input (isLoading)="onLoading($event)" [buttonMargin]="24" (save)="onCardCreated($event)"
+                (ready)="onReady($event)" (close)="onClose()">
+            </app-payment-card-input>
+        </div>
+        <mat-spinner *ngIf="loading" diameter="25"></mat-spinner>
+    </div>
+</app-center-modal>

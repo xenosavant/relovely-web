@@ -30,6 +30,6 @@
 
 
 <ng-template cdkPortal #addCardModal="cdkPortal">
-  <app-payment-card-input (save)="cardCreated($event)" (close)="close($event)">
-  </app-payment-card-input>
+  <app-add-payment-card (save)="cardCreated($event)" (close)="close()">
+  </app-add-payment-card>
 </ng-template>

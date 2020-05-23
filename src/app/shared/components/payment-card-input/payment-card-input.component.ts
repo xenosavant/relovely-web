@@ -15,14 +15,14 @@ export class PaymentCardInputComponent implements OnInit {
 
   @ViewChild(StripeCardComponent, { static: true }) cardElement: StripeCardComponent;
 
-  @Input() user: UserAuth;
-
+  @Input() buttonMargin: string;
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
+  @Output() isLoading: EventEmitter<boolean> = new EventEmitter();
   @Output() save: EventEmitter<PaymentCard> = new EventEmitter();
   @Output() close: EventEmitter<any> = new EventEmitter();
 
-  loading = true;
   error: string = null;
+  loading = false;
 
   form: FormGroup;
   cardOptions: ElementOptions = {
@@ -54,6 +54,7 @@ export class PaymentCardInputComponent implements OnInit {
 
   onSave() {
     this.loading = true;
+    this.isLoading.emit(true);
     this.stripeService
       .createToken(this.cardElement.getCard(), { name: this.form.get('name').value })
       .subscribe(result => {
@@ -73,18 +74,18 @@ export class PaymentCardInputComponent implements OnInit {
             this.error = 'Please correct card information'
           }
           this.loading = false;
+          this.isLoading.emit(false);
           this.ref.markForCheck();
         }
 
       }, err => {
         console.log(err);
-        this.loading = false;
+        this.isLoading.emit(false);
         this.ref.markForCheck();
       })
   }
 
   onCardChanged(event: any) {
-    console.log(event.type);
     if (event.type === 'ready') {
       this.ready.emit(true);
       this.loading = false;
@@ -92,9 +93,9 @@ export class PaymentCardInputComponent implements OnInit {
     }
   }
 
-  onClose(event) {
+  onClose() {
     console.log('close');
-    this.close.emit(event);
+    this.close.emit();
   }
 
 }

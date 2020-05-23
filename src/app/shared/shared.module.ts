@@ -106,6 +106,7 @@ import { VerifySellerComponent } from './components/verify-seller/verify-seller.
 import { SsnDirective } from './directives/ssn.directive';
 import { PhoneNumberDirective } from './directives/phoneNumber.directive';
 import { CardComponent } from './components/card/card.component';
+import { AddPaymentCardComponent } from './components/add-payment-card/add-payment-card.component';
 
 
 library.add(
@@ -214,7 +215,8 @@ library.add(
     AddAddressComponent,
     PaymentCardInputComponent,
     VerifySellerComponent,
-    CardComponent],
+    CardComponent,
+    AddPaymentCardComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -271,7 +273,8 @@ library.add(
     AddAddressComponent,
     PaymentCardInputComponent,
     VerifySellerComponent,
-    CardComponent
+    CardComponent,
+    AddPaymentCardComponent
   ],
   providers: [DecimalPipe],
 })
