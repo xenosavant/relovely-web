@@ -1,5 +1,7 @@
 import { IUserPreferences } from "../services/filter/filter-state";
 import { Address } from "../interfaces/address.interface";
+import { Card } from "../interfaces/card.interface";
+import { PaymentCard } from "../interfaces/payment-card";
 
 export class UserAuth {
     id: string;
@@ -15,6 +17,7 @@ export class UserAuth {
     type: string;
     preferences: IUserPreferences;
     addresses: Address[];
+    cards: PaymentCard[];
     seller?: {
         missingInfo: string[];
         suspended?: boolean;

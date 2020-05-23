@@ -1,32 +1,34 @@
-<ng-container *ngIf="!mobile">
-  <div class="page-title">
-    <h1>Addresses</h1>
-  </div>
-</ng-container>
-<div class="full-content">
-  <ng-container *ngIf="!loading">
-    <div class="button-wrapper">
-      <img src="./assets/images/plus-black.svg" (click)="openModal()">
+<div class="page-card">
+  <ng-container *ngIf="!mobile">
+    <div class="page-card-header">
+      <h1>Addresses</h1>
     </div>
-    <div *ngIf="addresses.length" class="primary">
-      Default
-    </div>
-    <mat-radio-group [(ngModel)]="primary">
-      <div class="list-wrapper">
-        <div class="address-wrapper" *ngFor="let address of user.addresses">
-          <div class="options">
-            <mat-radio-button [value]="address"></mat-radio-button>
-          </div>
-          <div class="address">
-            <app-address [address]="address"></app-address>
-          </div>
-          <div class="edit">
-            <div class="text-wrapper" (click)="edit(address)">Edit</div>
+  </ng-container>
+  <div class="page-card-body">
+    <ng-container *ngIf="!loading">
+      <div class="button-wrapper">
+        <img src="./assets/images/plus-black.svg" (click)="openModal()">
+      </div>
+      <div *ngIf="addresses.length" class="primary">
+        Default
+      </div>
+      <mat-radio-group [(ngModel)]="primary">
+        <div class="list-wrapper">
+          <div class="address-wrapper" *ngFor="let address of user.addresses">
+            <div class="options">
+              <mat-radio-button [value]="address"></mat-radio-button>
+            </div>
+            <div class="address">
+              <app-address [address]="address"></app-address>
+            </div>
+            <div class="edit">
+              <div class="text-wrapper" (click)="edit(address)">Edit</div>
+            </div>
           </div>
         </div>
-      </div>
-    </mat-radio-group>
-  </ng-container>
+      </mat-radio-group>
+    </ng-container>
+  </div>
 </div>
 
 <ng-template cdkPortal #addAddressModal="cdkPortal">

@@ -99,12 +99,13 @@ import { CurrencyDirective } from './directives/currency';
 import { ImageViewerComponent } from './components/image-viewer/image-viewer.component';
 import { AppSizePipe } from './pipes/size.pipe';
 import { AddAddressComponent } from './components/add-address/add-address.component';
-import { CreditCardInputComponent } from './components/credit-card-input/credit-card-input.component';
+import { PaymentCardInputComponent } from './components/payment-card-input/payment-card-input.component';
 import { NgxStripeModule, StripeCardComponent } from 'ngx-stripe';
 import { environment } from '@env/environment';
 import { VerifySellerComponent } from './components/verify-seller/verify-seller.component';
 import { SsnDirective } from './directives/ssn.directive';
 import { PhoneNumberDirective } from './directives/phoneNumber.directive';
+import { CardComponent } from './components/card/card.component';
 
 
 library.add(
@@ -211,8 +212,9 @@ library.add(
     ProductCreateComponent,
     ImageViewerComponent,
     AddAddressComponent,
-    CreditCardInputComponent,
-    VerifySellerComponent],
+    PaymentCardInputComponent,
+    VerifySellerComponent,
+    CardComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -267,8 +269,9 @@ library.add(
     ProductCreateComponent,
     ImageViewerComponent,
     AddAddressComponent,
-    CreditCardInputComponent,
-    VerifySellerComponent
+    PaymentCardInputComponent,
+    VerifySellerComponent,
+    CardComponent
   ],
   providers: [DecimalPipe],
 })

@@ -158,8 +158,11 @@
             <div class="account-trigger-wrapper" (mouseleave)="onLeaveAccountTrigger($event)"></div>
             <span class="menu-wrapper" (mouseleave)="onLeaveAccountMenu($event)">
               <ng-container *ngIf="accountNav">
-                <div class="menu-item-wrapper" *ngFor="let item of accountNav.subItems">
-                  <div class="menu-item" (click)="onAccountMenuAction(item.path)"> {{item.name}}</div>
+                <div class="menu-item-wrapper">
+                  <ul>
+                    <li *ngFor="let item of accountNav.subItems" class="menu-item"
+                      (click)="onAccountMenuAction(item.path)"> {{item.name}}</li>
+                  </ul>
                 </div>
               </ng-container>
             </span>

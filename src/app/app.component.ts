@@ -196,7 +196,7 @@ export class AppComponent implements OnInit {
       );
     }
     this.accountNav.subItems.push(new NavigationItem([], '/account/settings', 'Settings', '0', [], [], null),
-      new NavigationItem([], '/account/terms', 'Terms of Service', null, [], [], null),
+      new NavigationItem([], '/member/terms', 'Terms of Service', null, [], [], null),
       new NavigationItem([], '/account/help', 'Help', null, [], [], null),
       new NavigationItem([], '/account/signout', 'Sign Out', null, [], [], null),
     );
@@ -278,6 +278,7 @@ export class AppComponent implements OnInit {
   }
 
   public onAccountMenuAction(path: string) {
+    console.log(path);
     this.navigationService.navigate({ path: path })
   }
 

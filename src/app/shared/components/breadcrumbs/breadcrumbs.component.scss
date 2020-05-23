@@ -6,8 +6,6 @@
     font-size: 1.1em;
     a {
         cursor: pointer;
-        &:hover { 
-            color: black;
-        }
+        color: $dark-blue !important;
     }
 }

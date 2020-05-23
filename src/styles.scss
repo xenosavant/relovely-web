@@ -37,7 +37,9 @@ a {
   font-weight: 600;
   &:hover {
     text-decoration: underline;
-    
+  }
+  &.mat-list-item {
+    color: $dark-blue !important;
   }
 }
 
@@ -56,14 +58,47 @@ a {
   }
 }
 
-.page-title {
-    padding: 16px 0px;
-    margin: 0 auto;
-    width: fit-content;
-    h1 {
-        font-weight: 300;
+.page-card {
+
+  @media(min-width: $desktop-breakpoint) {
+    background-color: white;
+    @include mat-elevation(2);
+    border-radius: 6px;
+    max-width: 600px;
+     margin: 0 auto;
+  }
+
+  .page-card-header {
+    padding: 12px 12px;
+    position: relative;
+      h1 {
+        width: fit-content;
+        margin: 0 auto;
+          margin-bottom: 0 !important;
+          font-weight: 300;
+          font-size: 1.9em;
+          font-family: 'Roboto Light', sans-serif !important;
+      }
+      &::after {
+        content: '';
+        width: 100%;
+        border-bottom: solid .5px  #d9d9d9;
+        position: absolute;
+        left: 0;
+        margin-top: 16px;
+        z-index: 1;
+      }
     }
+  .page-card-body {
+    padding-top: 16px;
+    @media(min-width: $desktop-breakpoint) {
+        padding-bottom: 16px;
+    }
+  }
+  
+
 }
+
 
 
 .double-field {
@@ -194,7 +229,7 @@ div.mat-tab-label {
   .mat-form-field-outline-gap {
     border-width: .5px !important;
   }
-}z
+}
 
 .field.StripeElement {
   @include mat-elevation(1);
@@ -955,16 +990,20 @@ div.filter-bar {
         width:100%;
         .menu-item-wrapper {
           width:100%;
-          height:30px;
-          display: grid;
-          align-items: center;
           cursor:pointer;
-          &:hover {
-            background-color: $medium-gray-background;
-          }
-          padding: 6px 21px 6px 13px;
-          .menu-item {
-
+          ul {
+            list-style-type: none;
+            padding:0;
+            margin-bottom: 0 !important;
+            li {
+              height:30px;
+              display: grid;
+              align-items: center;
+              padding: 8px;
+              &:hover {
+                background-color: $medium-gray-background;
+              }
+            }
           }
         }
       }

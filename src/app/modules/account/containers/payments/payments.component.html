@@ -1,13 +1,35 @@
-<ng-container *ngIf="!mobile">
-  <div class="page-title">
-    <h1>Payment Methods</h1>
-  </div>
-</ng-container>
-<div class="full-content">
-  <div class="button-wrapper">
-    <img src="./assets/images/plus-black.svg" (click)="this.addCard = true">
-  </div>
-  <div *ngIf="addCard" class="form-wrapper">
-    <app-credit-card-input></app-credit-card-input>
+<div class="page-card">
+  <ng-container *ngIf="!mobile">
+    <div class="page-card-header">
+      <h1>Payment Methods</h1>
+    </div>
+  </ng-container>
+  <div class="page-card-body">
+    <ng-container *ngIf="!loading">
+      <div class="button-wrapper">
+        <img src="./assets/images/plus-black.svg" (click)="addCard()">
+      </div>
+      <div *ngIf="user.cards.length" class="primary">
+        Default
+      </div>
+      <mat-radio-group [(ngModel)]="primary" (change)="primarySubject$.next(true)">
+        <div class="list-wrapper">
+          <div class="card-wrapper" *ngFor="let card of user.cards">
+            <div class="options">
+              <mat-radio-button [value]="card"></mat-radio-button>
+            </div>
+            <div class="card">
+              <app-card [card]="card"></app-card>
+            </div>
+          </div>
+        </div>
+      </mat-radio-group>
+    </ng-container>
   </div>
 </div>
+
+
+<ng-template cdkPortal #addCardModal="cdkPortal">
+  <app-payment-card-input (save)="cardCreated($event)" (close)="close($event)">
+  </app-payment-card-input>
+</ng-template>

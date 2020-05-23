@@ -8,13 +8,7 @@
 .full-content {
     max-width:600px !important;
 }
-.settings-wrapper {
-    background-color: white;
-    @media (min-width: $desktop-breakpoint) {
-        @include mat-elevation(1);
-        border-radius: 6px;
-        padding:16px 0px;
-    }
+.page-card {
     .line {
         &:hover {
             background-color: $background-gray !important;

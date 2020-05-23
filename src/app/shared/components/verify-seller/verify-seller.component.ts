@@ -50,7 +50,7 @@ export class VerifySellerComponent implements OnInit {
     this.close.emit();
   }
 
-  onSave(event: any) {
+  onSave() {
     const birth = (this.form.get('birthday').value as Date);
     this.loading = true;
     this.userService.verifySeller({

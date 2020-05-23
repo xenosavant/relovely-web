@@ -5,13 +5,13 @@
     flex:auto;
 }
 
-.full-content {
-    @media(max-width: $mobile-breakpoint) {
-        padding-top: 16px;
-    }
+.page-card-body {
+    max-width: 450px !important;
+    margin: 0 auto;
     .button-wrapper {
         width: 36px;
         margin: 0 auto;
+        padding-bottom: 24px;
         cursor: pointer;
         img {
             width: 100%;
@@ -21,5 +21,28 @@
     .form-wrapper {
         margin:0 auto;
     }
+    .primary {
+        padding-left: 16px;
+        padding-bottom: 12px;
+    }
 
+    .list-wrapper {
+        display: grid;
+        .card-wrapper {
+            width: 100%;
+            background-color: white;
+            display: grid;
+            padding: 16px 32px;
+            grid-template-columns: 60px 1fr 50px;
+            grid-template-rows: auto;
+            @media(max-width: $mobile-breakpoint) {
+                @include mat-elevation(2);
+            }
+            .card {
+                display: flex;
+                align-items: center;
+            }
+
+        }
+    }
 }

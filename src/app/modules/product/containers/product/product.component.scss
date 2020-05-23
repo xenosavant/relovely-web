@@ -34,6 +34,9 @@
     .info {
         flex-grow: 1;
     }
+    .action {
+        max-width: 40%;
+    }
 }
 
 .product-details {
@@ -204,6 +207,8 @@
 }
 
 .sold {
-    margin-top:16px;
+    @media ( min-width: $desktop-breakpoint) {
+        margin-top:16px;
+    }
     color: $pink-button;
 }

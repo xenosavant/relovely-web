@@ -1,5 +1,10 @@
-<div class="full-content">
-    <div class="settings-wrapper">
+<div class="page-card">
+    <ng-container *ngIf="!mobile">
+        <div class="page-card-header">
+            <h1>Settings</h1>
+        </div>
+    </ng-container>
+    <div class="page-card-body">
         <ng-container *ngIf="currentUser.type === 'seller'">
             <div class="verification line" (click)="showVerifyModal()">
                 <div class="icon-wrap">
@@ -22,7 +27,7 @@
                 <span *ngIf="currentUser.seller.bankAccountLinked" class="tag success">Linked</span>
             </div>
         </ng-container>
-        <ng-container *ngIf="!currentUser.type !== 'seller'"></ng-container>
+        <ng-container *ngIf="currentUser.type !== 'seller'"></ng-container>
     </div>
 </div>
 
