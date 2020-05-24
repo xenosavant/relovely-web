@@ -3,7 +3,17 @@
 :host {
      flex: auto;
 }
+
 .checkout-wrapper {
+    .checkout{
+        .header {
+            h1 {
+                font-weight: 300;
+                font-size: 1.9em;
+                font-family: 'Roboto Light', sans-serif !important;
+            }
+        } 
+    }
     margin: 0 auto;
     max-width: 920px;
     flex: auto;
@@ -25,21 +35,21 @@
             margin-bottom: 16px;
             border-radius: 0px;
         }
+        .selected {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto;
+            .edit {
+                display: flex;
+                align-items: flex-start;
+                @media( min-width:700px) {
+                    justify-content: flex-start;
+                }
+                cursor: pointer;
+            }
+        }
         .shipping-address {
             margin-bottom: 24px;
-            .selected {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                grid-template-rows: auto;
-                .edit {
-                    display: flex;
-                    align-items: flex-start;
-                    @media( min-width:700px) {
-                        justify-content: flex-start;
-                    }
-                    cursor: pointer;
-                }
-            }
             .addresses {
                 display: flex;
                 flex-direction: row;
@@ -78,6 +88,16 @@
                     grid-template-rows: auto;
                     grid-column-gap: 16px;
                 }
+            }
+        }
+    }
+    .payment-method {
+        .payment-form-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            app-payment-card-input {
+                width: 100%;
             }
         }
     }

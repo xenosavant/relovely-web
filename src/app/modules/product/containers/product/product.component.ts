@@ -152,19 +152,7 @@ export class ProductComponent implements OnInit {
     this.overlayService.close();
   }
 
-  purchase(event: any) {
-    this.orderService.postOrder({
-      address: {
-        name: 'Domenick Packett',
-        line1: '298 6th St',
-        line2: 'Apt 1',
-        city: 'Jersey City',
-        state: 'NJ',
-        zip: '07302',
-        country: 'US',
-      }
-    }, this.product.id).subscribe(response => {
-
-    })
+  purchase() {
+    this.navigationService.navigate({ path: `/sales/checkout/${this.product.id}` });
   }
 }

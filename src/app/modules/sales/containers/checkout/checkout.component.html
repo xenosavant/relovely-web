@@ -15,7 +15,7 @@
         </ng-container>
         <ng-container *ngIf="changingAddress">
           <mat-radio-group [(ngModel)]="selectedAddress">
-            <div class="addresses" *ngFor="let address of addresses">
+            <div class="addresses" *ngFor="let address of user.addresses">
               <div class="options">
                 <mat-radio-button [value]="address"></mat-radio-button>
               </div>
@@ -76,13 +76,41 @@
             <button mat-stroked-button class="primary" (click)="onSaveAddress()" [disabled]="!form.valid">
               Save
             </button>
-            <button *ngIf="addresses.length" mat-stroked-button (click)="onCancelAdd()">Cancel</button>
+            <button *ngIf="user.addresses.length" mat-stroked-button (click)="onCancelAdd()">Cancel</button>
           </div>
         </form>
       </div>
       <div class="divider"></div>
       <div class="payment-method">
         <h2>Payment Method </h2>
+        <ng-container *ngIf="!addingPayment">
+          <div class="selected" *ngIf="!changingPayment">
+            <app-card [card]="selectedPayment"></app-card>
+            <div class="edit"><a appClick target="_blank" (click)="changingPayment = true">Change</a></div>
+          </div>
+          <ng-container *ngIf="changingPayment">
+            <mat-radio-group [(ngModel)]="selectedPayment">
+              <div class="addresses" *ngFor="let payment of user.cards">
+                <div class="options">
+                  <mat-radio-button [value]="payment"></mat-radio-button>
+                </div>
+                <app-card [card]="payment"></app-card>
+              </div>
+              <div class="button-wrapper">
+                <button mat-stroked-button (click)="changingPayment = false" class="primary">Save</button>
+                <button mat-stroked-button (click)="onAddPayment()">
+                  <fa-icon icon="plus"></fa-icon>&nbsp; Add Payment
+                </button>
+              </div>
+            </mat-radio-group>
+          </ng-container>
+        </ng-container>
+        <div class="payment-form-wrapper" *ngIf="addingPayment">
+          <app-payment-card-input [class.invisible]="loadingPayment" (isLoading)="onLoadingPaymentForm($event)"
+            [buttonMargin]="36" (save)="onSavePayment($event)" (ready)="onReady($event)" (close)="onCancelAddPayment()">
+          </app-payment-card-input>
+          <mat-spinner *ngIf="loadingPayment" diameter="25"></mat-spinner>
+        </div>
       </div>
     </div>
   </div>
@@ -126,7 +154,15 @@
         <span class="value">{{ total | appCurrency}} </span>
       </div>
       <div class="purchase">
-        <button mat-stroked-button color="accent">Purchase</button>
+        <button mat-stroked-button [class.normal]="!checkingOut" color="accent" [disabled]="checkoutDisabled()"
+          (click)="checkout()">
+          <ng-container *ngIf="!checkingOut">
+            Purchase
+          </ng-container>
+          <ng-container *ngIf="checkingOut">
+            <mat-spinner diameter="20" class="white"></mat-spinner>
+          </ng-container>
+        </button>
       </div>
     </div>
   </div>

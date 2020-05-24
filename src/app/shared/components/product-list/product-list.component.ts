@@ -98,4 +98,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     })
   }
 
+  purchase() {
+    this.navigationService.navigate({ path: `/sales/checkout/${this.product.id}` });
+  }
+
 }

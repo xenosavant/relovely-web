@@ -7,6 +7,10 @@ import { Address } from '@app/shared/interfaces/address.interface';
 import { UserService } from '@app/shared/services/user/user.service';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UserAuth } from '@app/shared/models/user-auth.model';
+import { PaymentCard } from '@app/shared/interfaces/payment-card';
+import { PaymentCardType } from '@app/shared/services/lookup/payment-card-map';
+import { OrderService } from '@app/shared/services/order/order.service';
 
 @Component({
   selector: 'app-checkout',
@@ -22,30 +26,42 @@ export class CheckoutComponent implements OnInit {
   tax: number = 0;
   shippingCost: number = 711;
   mobile = false;
-  addresses: Address[];
+  user: UserAuth;
   selectedAddress: Address;
+  selectedPayment: PaymentCard;
   loading = true;
   addingAddress = false;
   changingAddress = false;
+  addingPayment = false;
+  changingPayment = false;
   states;
   form: FormGroup;
+  loadingPayment: boolean;
+  checkingOut = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
     private userService: UserService,
+    private orderService: OrderService,
     private lookupService: LookupService,
     private breakpointObserver: BreakpointObserver,
     private ref: ChangeDetectorRef) {
   }
 
   ngOnInit() {
-    this.addresses = this.userService.currentUser.addresses;
+    this.user = this.userService.currentUser;
     this.states = this.lookupService.states;
-    if (this.addresses.length) {
-      this.selectedAddress = this.addresses.find(a => a.primary);
+    if (this.user.addresses.length) {
+      this.selectedAddress = this.user.addresses.find(a => a.primary);
     } else {
       this.addingAddress = true;
+    }
+
+    if (this.user.cards.length) {
+      this.selectedPayment = this.user.cards.find(a => a.primary);
+    } else {
+      this.addingPayment = true;
     }
 
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
@@ -71,9 +87,8 @@ export class CheckoutComponent implements OnInit {
       zip: this.form.get('zip').value,
       country: 'US'
     }
-    this.userService.updateUser(this.userService.currentUser.id, { addresses: [...this.addresses, saveAddress] }).subscribe(user => {
-      this.userService.setCurrentUser(user);
-      this.addresses = this.userService.currentUser.addresses;
+    this.userService.updateUser(this.userService.currentUser.id, { addresses: [...this.user.addresses, saveAddress] }).subscribe(user => {
+      this.user = user;
       this.selectedAddress = saveAddress;
       this.addingAddress = false;
     })
@@ -96,6 +111,39 @@ export class CheckoutComponent implements OnInit {
 
   changeAddress() {
     this.changingAddress = true;
+  }
+
+  onSavePayment(card: PaymentCard) {
+
+  }
+
+  changePayment() {
+    this.changingPayment = true;
+  }
+
+  onAddPayment() {
+    this.addingPayment = true;
+  }
+
+  onLoadingPaymentForm(loading) {
+    this.loadingPayment = loading;
+  }
+  onCancelAddPayment() {
+    this.addingPayment = false;
+  }
+
+  checkoutDisabled() {
+    return !this.selectedAddress || !this.selectedPayment || this.changingPayment || this.changingAddress || this.checkingOut;
+  }
+
+  checkout() {
+    this.checkingOut = true;
+    this.orderService.postOrder({ address: this.selectedAddress, paymentId: this.selectedPayment.stripeId }, this.product.id)
+      .subscribe(response => {
+
+      }, err => {
+        console.log(err);
+      })
   }
 
 }

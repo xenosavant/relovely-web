@@ -12,8 +12,8 @@
   </div>
   <div class="bottom-icons" *ngIf="!product.sold">
     <div class="left">
-      <button mat-stroked-button class="primary" *ngIf="!product.auction && !seller">Buy Now</button>
-      <button mat-stroked-button class="primary" *ngIf="product.auction && !seller">Bid</button>
+      <button mat-stroked-button class="primary" *ngIf="!product.auction && !seller" (click)="purchase()">Buy
+        Now</button>
       <button mat-stroked-button class="primary" *ngIf="seller" (click)="onEdit()">Edit</button>
     </div>
     <div *ngIf="!seller" class="right" (click)="onFavorite()">
