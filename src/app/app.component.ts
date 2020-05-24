@@ -66,6 +66,7 @@ export class AppComponent implements OnInit {
   public showHeader = false;
   public showMegaMenu = false;
   public selectedMenuItem = -1;
+  public loginSubscription: Subscription;
 
   get top(): number {
     return ((this.showFilterBar ? 70 : 0) + (this.showNavBar ? 44 : 0));
@@ -122,23 +123,33 @@ export class AppComponent implements OnInit {
     if (jwt) {
       this.userService.jwt = jwt;
       this.userService.me().pipe(tap(me => {
-        console.log(me);
         this.userService.setLogin(jwt, me);
       }), mergeMap(value => this.getLookup()))
         .subscribe(final => {
-          console.log(final)
+          if (this.loginSubscription) {
+            this.loginSubscription.unsubscribe();
+          }
+          this.loginSubscription = this.userService.loggedIn$.subscribe(loggedIn => {
+            this.getLookup();
+            this.ref.markForCheck()
+          });
         });
     } else {
       this.userService.logout();
       this.getLookup().subscribe(value => {
-        console.log(value);
       });
     }
+    this.navigationService.showAuthWindow$.subscribe(open => {
+      if (open) {
+        this.showSignUpModal()
+      } else {
+        this.closeModal();
+      }
+    });
   }
 
   getLookup(): Observable<LookupResponse> {
     return from(this.lookupService.getLookupData().toPromise().then(lookup => {
-      console.log(lookup);
       this.navSetup(JSON.parse(lookup.categories.json));
       this.loading = false;
       return lookup;
@@ -177,6 +188,9 @@ export class AppComponent implements OnInit {
       this.setParents(item);
     });
 
+    this.desktopLinkItems = [];
+    this.desktopNavigationItems = [];
+
     this.accountNav = {
       name: 'Account', path: null, subItems: [
         new NavigationItem([], '/member/profile', 'Profile', null, [], [], null),
@@ -193,22 +207,15 @@ export class AppComponent implements OnInit {
     if (this.userService.currentUser && this.userService.currentUser.type === 'seller') {
       this.accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', null, [], [], null),
         new NavigationItem([], '/sales/listings', 'Listings', null, [], [], null),
+        new NavigationItem([], '/account/settings', 'Settings', '0', [], [], null)
       );
     }
-    this.accountNav.subItems.push(new NavigationItem([], '/account/settings', 'Settings', '0', [], [], null),
+    this.accountNav.subItems.push(
       new NavigationItem([], '/member/terms', 'Terms of Service', null, [], [], null),
       new NavigationItem([], '/account/help', 'Help', null, [], [], null),
       new NavigationItem([], '/account/signout', 'Sign Out', null, [], [], null),
     );
     navigationItems.push(this.accountNav);
-
-    this.navigationService.showAuthWindow$.subscribe(open => {
-      if (open) {
-        this.showSignUpModal()
-      } else {
-        this.closeModal();
-      }
-    });
     this.navigationService.rootNavigationItems = navigationItems;
     this.navigationService.setCurrentNavigationItems(navigationItems);
   }
@@ -241,7 +248,6 @@ export class AppComponent implements OnInit {
       });
     }
   }
-
 
   setParents(parent: NavigationItem) {
     this.lookupService.navLookup[parent.id] = parent;

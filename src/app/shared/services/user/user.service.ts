@@ -62,6 +62,7 @@ export class
         this._notLoggedIn = false;
         this.userSubject$.next(user);
         this.loggedInSubject$.next(true);
+        console.log('setting login')
     }
 
     public logout() {

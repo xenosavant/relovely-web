@@ -82,6 +82,11 @@ button.facebook {
     }
 }
 
+.button-wrap {
+    display: flex;
+    align-items: center;
+}
+
 .spacer {
     height:16px;
 }
