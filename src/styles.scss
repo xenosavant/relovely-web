@@ -76,6 +76,12 @@ a {
   }
 
   .page-card-header {
+    @media(max-width: $mobile-breakpoint) {
+      visibility: hidden;
+      height: 0;
+      width: 0;
+      padding: 0 !important;
+    }
     padding: 12px 12px;
     position: relative;
       h1 {
@@ -102,11 +108,7 @@ a {
         padding-bottom: 16px;
     }
   }
-  
-
 }
-
-
 
 .double-field {
   display: grid;
@@ -117,32 +119,52 @@ a {
   }
 }
 
+form {
+  mat-form-field {
+      width: 100%;
+  }
+  textarea {
+      height:100px;
+  }
+}
+
+.error {
+  color: $alert;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
 .state-zip {
   display: grid;
   grid-template-columns: 1fr 100px;
   grid-template-rows: auto;
   grid-column-gap: 16px;
 }
-
-.modal-header {
-  display: grid;
-  grid-template-columns: 40px 1fr 40px;
-  grid-template-rows: 50px;
-  .title {
-      display: grid;
-       align-content: center;
-       div {
-           text-align: center;
-           font: 500 26px Roboto, sans-serif !important;
-       }
-  }
-  .close {
-      display: grid;
-      align-content: center;
-      img {
-          width:40px;
-          cursor: pointer;
-      }
+app-center-modal {
+  .modal-header {
+    display: grid;
+    grid-template-columns: [left] 40px [middle] 1fr [center] 40px;
+    grid-template-rows: 50px;
+    .title {
+        display: grid;
+        grid-column-start: middle;
+        grid-column-end: middle;
+        align-content: center;
+        div {
+            text-align: center;
+            font: 500 26px 'Roboto Light', sans-serif !important;
+        }
+    }
+    .close {
+        display: grid;
+        align-content: center;
+        grid-column-start: end;
+        grid-column-end: end;
+        img {
+            width:40px;
+            cursor: pointer;
+        }
+    }
   }
 }
 

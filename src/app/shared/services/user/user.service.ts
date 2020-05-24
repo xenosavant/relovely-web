@@ -9,6 +9,7 @@ import { environment } from '@env/environment';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { SellerVerificationRequest } from './seller-verification.request';
+import { BankAccountRequest } from './bank-acount-request';
 
 @Injectable({ providedIn: 'root' })
 export class
@@ -106,6 +107,15 @@ export class
 
     verifySeller(request: SellerVerificationRequest): Observable<UserAuth> {
         return this.httpClient.post<UserAuth>(`${this.apiBaseUrl}/users/verify`, request).pipe(
+            map((user: UserAuth) => {
+                this.setCurrentUser(user);
+                return user;
+            })
+        );
+    }
+
+    addBank(request: BankAccountRequest): Observable<UserAuth> {
+        return this.httpClient.post<UserAuth>(`${this.apiBaseUrl}/users/add-bank`, request).pipe(
             map((user: UserAuth) => {
                 this.setCurrentUser(user);
                 return user;

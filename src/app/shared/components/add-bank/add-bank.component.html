@@ -1,0 +1,46 @@
+<app-center-modal>
+    <div class="inner-wrapper">
+        <div class="form-wrapper" *ngIf="!loading">
+            <div class="modal-header">
+                <div class="title">
+                    <div>Add a Bank Account</div>
+                </div>
+                <div class="close">
+                    <img (click)="onClose($event)" src="./assets/images/close.svg" />
+                </div>
+            </div>
+            <form novalidate [formGroup]="form">
+                <div class="error">{{error}}</div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="First Name" formControlName="first" />
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="Last Name" formControlName="last" />
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="Account Number" formControlName="account" />
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="Routing Number" formControlName="routing" />
+                    </mat-form-field>
+                </div>
+                <div class="button-wrapper">
+                    <app-button (click)="onClose($event)">
+                        <strong>Cancel</strong>
+                    </app-button>
+                    <button mat-stroked-button class="primary" (click)="onSave()" [disabled]="!form.valid">
+                        <strong> Save </strong>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <mat-spinner *ngIf="loading" diameter="25"></mat-spinner>
+    </div>
+</app-center-modal>

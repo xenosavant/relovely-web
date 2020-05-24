@@ -62,7 +62,7 @@ import {
   faThLarge,
   faEllipsisV,
   faLandmark,
-  faStore
+  faStore,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -107,6 +107,7 @@ import { SsnDirective } from './directives/ssn.directive';
 import { PhoneNumberDirective } from './directives/phoneNumber.directive';
 import { CardComponent } from './components/card/card.component';
 import { AddPaymentCardComponent } from './components/add-payment-card/add-payment-card.component';
+import { AddBankComponent } from './components/add-bank/add-bank.component';
 
 
 library.add(
@@ -216,7 +217,8 @@ library.add(
     PaymentCardInputComponent,
     VerifySellerComponent,
     CardComponent,
-    AddPaymentCardComponent],
+    AddPaymentCardComponent,
+    AddBankComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -274,7 +276,8 @@ library.add(
     PaymentCardInputComponent,
     VerifySellerComponent,
     CardComponent,
-    AddPaymentCardComponent
+    AddPaymentCardComponent,
+    AddBankComponent
   ],
   providers: [DecimalPipe],
 })

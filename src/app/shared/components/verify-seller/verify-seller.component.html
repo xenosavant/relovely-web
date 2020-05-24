@@ -1,4 +1,4 @@
-<app-modal title="Seller Verification" (close)="onClose($event)">
+<app-modal [title]="'Seller Verification'" (close)="onClose($event)">
     <form novalidate [formGroup]="form">
         <div>
             <mat-form-field appearance="outline">
@@ -71,8 +71,29 @@
                 <input matInput placeholder="United States" formControlName="country" />
             </mat-form-field>
         </div>
+        <div class="documents">
+            <div class="add-document" (click)="front.click()">
+                <div *ngIf="!frontImage">
+                    <fa-icon icon="plus"></fa-icon>
+                    <div>Front of Identity Document</div>
+                </div>
+                <div class="success" *ngIf="frontImage">
+                    <fa-icon icon="check"></fa-icon>
+                </div>
+            </div>
+            <div class="add-document" (click)="back.click()">
+                <div *ngIf="!backImage">
+                    <fa-icon icon="plus"></fa-icon>
+                    <div *ngIf="!backImage">Back of Identity Document</div>
+                </div>
+                <div class="success" *ngIf="backImage">
+                    <fa-icon icon="check"></fa-icon>
+                </div>
+            </div>
+        </div>
         <div class="checkbox-wrapper">
-            <mat-checkbox matCheckbox formControlName="tos">I Agree to the <a href="/member/terms">Terms of Service</a>
+            <mat-checkbox matCheckbox formControlName="tos">I Agree to the <a href="/member/terms">Terms of
+                    Service</a>
             </mat-checkbox>
         </div>
         <div class="button-wrapper">
@@ -84,4 +105,6 @@
             </button>
         </div>
     </form>
+    <input #front type="file" ng2FileSelect [uploader]="frontUploader" style="visibility:hidden; height:0px;" />
+    <input #back type="file" ng2FileSelect [uploader]="backUploader" style="visibility:hidden; height:0px;" />
 </app-modal>

@@ -1,8 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { State } from '@app/shared/services/lookup/state';
 import { UserService } from '@app/shared/services/user/user.service';
+import { FileUploader } from 'ng2-file-upload';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-verify-seller',
@@ -14,13 +16,22 @@ export class VerifySellerComponent implements OnInit {
 
   @Output() close: EventEmitter<any> = new EventEmitter;
 
+  uploadUrl = environment.apiUrl + '/users/add-document';
   states: State[];
   form: FormGroup;
   error: string = null;
   loading: boolean = false;
   tosAccept: number;
+  frontImage: string;
+  backImage: string;
+  frontUploader: FileUploader;
+  backUploader: FileUploader;
+  frontError: string;
+  backError: string;
+  frontUploading: boolean;
+  backUploading: boolean;
 
-  constructor(private lookupService: LookupService, private userService: UserService) { }
+  constructor(private lookupService: LookupService, private userService: UserService, private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.states = this.lookupService.states;
@@ -44,6 +55,36 @@ export class VerifySellerComponent implements OnInit {
         this.tosAccept = Math.floor(Date.now() / 1000);
       }
     });
+    const jwt = this.userService.jwt;
+    this.frontUploader = new FileUploader({ url: this.uploadUrl, authToken: 'Bearer ' + jwt });
+    this.backUploader = new FileUploader({ url: this.uploadUrl, authToken: 'Bearer ' + jwt });
+    this.frontUploader.onAfterAddingFile = (file) => {
+      const validity = this.verifyFile(file);
+      if (validity === 'valid') {
+        this.frontUploading = true;
+        this.frontUploader.uploadItem(file);
+      } else {
+        this.frontError = validity;
+      }
+    }
+    this.backUploader.onAfterAddingFile = (file) => {
+      const validity = this.verifyFile(file);
+      if (validity === 'valid') {
+        this.backUploading = true;
+        this.backUploader.uploadItem(file);
+      } else {
+        this.backError = validity;
+      }
+    }
+    this.frontUploader.onSuccessItem = (item, response, status, headers) => {
+      this.frontUploading = false;
+      this.frontImage = response;
+      this.ref.markForCheck();
+    }
+    this.backUploader.onSuccessItem = (item, response, status, headers) => {
+      this.backUploading = false;
+      this.frontImage = response;
+    }
   }
 
   onClose(event: any) {
@@ -70,7 +111,9 @@ export class VerifySellerComponent implements OnInit {
         line1: this.form.get('line1').value,
         line2: this.form.get('line2').value,
         country: 'US'
-      }
+      },
+      documentBack: this.backImage,
+      documentFront: this.frontImage
     }).subscribe(response => {
       this.loading = false;
       this.close.emit();
@@ -79,6 +122,21 @@ export class VerifySellerComponent implements OnInit {
       this.error = err.error.error;
       console.log(err);
     });
+  }
+
+  onFrontUpload(event) {
+    console.log(event.target.files[0]);
+  }
+
+  verifyFile(event: any): string {
+    const file: File = event.file;
+    if (!file.type.startsWith('image')) {
+      return 'File is not an image';
+    }
+    if (file.size > 10000000) {
+      return 'File is too large, must be less than 10MB.'
+    }
+    return 'valid';
   }
 
 }

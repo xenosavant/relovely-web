@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { UserService } from '@app/shared/services/user/user.service';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { TemplatePortal } from '@angular/cdk/portal';
@@ -13,12 +13,14 @@ import { OverlayService } from '@app/shared/services/overlay.service';
 export class SettingsComponent implements OnInit {
 
   @ViewChild('verify', { static: true }) verifyModal: TemplatePortal<any>;
+  @ViewChild('bank', { static: true }) bankModal: TemplatePortal<any>;
 
   currentUser: UserAuth;
   verficationClass: any;
 
   constructor(private userService: UserService,
-    private overlayService: OverlayService) { }
+    private overlayService: OverlayService,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.currentUser = this.userService.currentUser;
@@ -33,8 +35,14 @@ export class SettingsComponent implements OnInit {
     this.overlayService.open(this.verifyModal);
   }
 
+  showBankAccountModal() {
+    this.overlayService.open(this.bankModal);
+  }
+
   close(event: any) {
     this.overlayService.close();
+    this.currentUser = this.userService.currentUser;
+    this.ref.markForCheck();
   }
 
 }

@@ -73,15 +73,6 @@
     }
 }
 
-form {
-    mat-form-field {
-        width: 100%;
-    }
-    textarea {
-        height:100px;
-    }
-}
-
 .categories {
     @media (min-width: $desktop-breakpoint) {
         display:grid;

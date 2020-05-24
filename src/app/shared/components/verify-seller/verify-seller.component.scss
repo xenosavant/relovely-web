@@ -1,6 +1,4 @@
-mat-form-field {
-    width: 100%;
-}
+@import '../../../../styles-variables.scss';
 
 .button-wrapper {
     display: grid;
@@ -11,5 +9,40 @@ mat-form-field {
 }
 
 .checkbox-wrapper {
+    margin-bottom: 16px;
+}
+
+.documents {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    @media (max-width: 599px) {
+        height: calc((100vw - 48px) / 2);
+    }
+    @media (min-width: 600px) {
+        height: 200px;
+        grid-template-columns: repeat(3, 200px);
+        column-gap: 32px;
+    }
+    grid-gap:8px;
+    .add-document {
+        background-color: $medium-dark-background;
+        width:100%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        div {
+            font-size: 1.2em;
+            text-align: center;
+            color: white;
+        }
+        fa-icon {
+            font-size: 2em;
+        }
+        .success {
+            font-size: 3em;
+            color: green;
+        }
+    }
     margin-bottom: 16px;
 }

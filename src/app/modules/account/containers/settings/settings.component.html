@@ -16,7 +16,7 @@
                 <span class="tag detail"
                     [ngClass]="verficationClass">{{currentUser.seller.verificationStatus | titlecase}}</span>
             </div>
-            <div class="bank line">
+            <div class="bank line" (click)="showBankAccountModal()">
                 <div class="icon-wrap">
                     <fa-icon icon="landmark"></fa-icon>
                 </div>
@@ -33,4 +33,8 @@
 
 <ng-template cdkPortal #verify="cdkPortal">
     <app-verify-seller (close)="close($event)"></app-verify-seller>
+</ng-template>
+
+<ng-template cdkPortal #bank="cdkPortal">
+    <app-add-bank (close)="close($event)"></app-add-bank>
 </ng-template>

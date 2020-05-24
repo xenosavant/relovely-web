@@ -1,4 +1,5 @@
 import { Address } from "@app/shared/interfaces/address.interface";
+import { BankAccountRequest } from "./bank-acount-request";
 
 export interface SellerVerificationRequest {
     firstName: string;
@@ -11,11 +12,7 @@ export interface SellerVerificationRequest {
     phone: string;
     ssn: string;
     tosAcceptDate: number;
+    documentFront: string;
+    documentBack: string;
     bankAccount?: BankAccountRequest;
-}
-
-export interface BankAccountRequest {
-    routingNumber: string;
-    accountNumber: string;
-    name?: string;
 }
