@@ -8,7 +8,7 @@
     <ngx-stripe-card (on)="onCardChanged($event)" [options]="cardOptions" [elementsOptions]="elementsOptions">
     </ngx-stripe-card>
     <div class="button-wrapper" [style.margin-top.px]="buttonMargin">
-        <app-button (click)="onClose($event)">
+        <app-button (click)="onClose()">
             <strong>Cancel</strong>
         </app-button>
         <button mat-stroked-button class="primary" (click)="onSave()" [disabled]="!form.valid">

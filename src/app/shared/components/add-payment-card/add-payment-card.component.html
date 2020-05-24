@@ -10,7 +10,7 @@
                 </div>
             </div>
             <app-payment-card-input (isLoading)="onLoading($event)" [buttonMargin]="24" (save)="onCardCreated($event)"
-                (ready)="onReady($event)" (close)="onClose()">
+                (ready)="onReady()" (close)="onClose()">
             </app-payment-card-input>
         </div>
         <mat-spinner *ngIf="loading" diameter="25"></mat-spinner>
