@@ -3,6 +3,7 @@ import { UserService } from '@app/shared/services/user/user.service';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from '@app/shared/services/overlay.service';
+import { VerificationError } from '@app/shared/services/user/verification-error';
 
 @Component({
   selector: 'app-settings',
@@ -17,6 +18,11 @@ export class SettingsComponent implements OnInit {
 
   currentUser: UserAuth;
   verficationClass: any;
+  missingData: boolean;
+  verification: VerificationError = null;
+  allowClick: boolean;
+  verificationStatus: string;
+  bankAccountLinked = false;
 
   constructor(private userService: UserService,
     private overlayService: OverlayService,
@@ -24,15 +30,53 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.userService.currentUser;
-    this.verficationClass = {
-      alert: this.currentUser.seller.verificationStatus === 'unverified' || this.currentUser.seller.verificationStatus === 'rejected',
-      review: this.currentUser.seller.verificationStatus === 'review',
-      success: this.currentUser.seller.verificationStatus === 'verified',
-    };
+    this.verficationClass = {};
+    this.setView();
+  }
+
+  setView() {
+    if (!this.currentUser.seller.missingInfo.includes('external_account')) {
+      this.bankAccountLinked = true;
+    }
+    switch (this.currentUser.seller.verificationStatus) {
+      case 'unverified':
+        this.allowClick = true;
+        this.verificationStatus = 'Unverified';
+        this.verficationClass.alert = true;
+        break;
+      case 'review':
+        if (this.currentUser.seller.missingInfo &&
+          !(this.currentUser.seller.missingInfo.indexOf('external_acccount') === -1 || this.currentUser.seller.missingInfo.length > 1)) {
+          this.allowClick = true;
+          this.verification = {
+            errors: this.currentUser.seller.errors,
+            missingData: this.currentUser.seller.missingInfo
+          };
+          this.verificationStatus = 'Info Missing';
+          this.verficationClass.alert = true;
+        } else {
+          this.verificationStatus = 'In Review';
+          this.verficationClass.review = true;
+          this.allowClick = false;
+        }
+        break;
+      case 'rejected':
+        this.verificationStatus = 'Rejected';
+        this.allowClick = true;
+        this.verficationClass.alert = true;
+        break;
+      case 'verified':
+        this.verificationStatus = 'Verified';
+        this.allowClick = false;
+        this.verficationClass.success = true;
+        break;
+    }
   }
 
   showVerifyModal() {
-    this.overlayService.open(this.verifyModal);
+    if (this.allowClick) {
+      this.overlayService.open(this.verifyModal);
+    }
   }
 
   showBankAccountModal() {
@@ -42,6 +86,7 @@ export class SettingsComponent implements OnInit {
   close(event: any) {
     this.overlayService.close();
     this.currentUser = this.userService.currentUser;
+    this.setView();
     this.ref.markForCheck();
   }
 

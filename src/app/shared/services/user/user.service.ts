@@ -114,12 +114,22 @@ export class
         );
     }
 
+    updateSeller(request: Partial<SellerVerificationRequest>): Observable<UserAuth> {
+        return this.httpClient.post<UserAuth>(`${this.apiBaseUrl}/users/update-verification`, request).pipe(
+            map((user: UserAuth) => {
+                this.setCurrentUser(user);
+                return user;
+            })
+        );
+    }
+
     addBank(request: BankAccountRequest): Observable<UserAuth> {
         return this.httpClient.post<UserAuth>(`${this.apiBaseUrl}/users/add-bank`, request).pipe(
             map((user: UserAuth) => {
                 this.setCurrentUser(user);
                 return user;
             })
+
         );
     }
 

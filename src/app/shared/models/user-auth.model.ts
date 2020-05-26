@@ -5,6 +5,7 @@ import { PaymentCard } from "../interfaces/payment-card";
 
 export class UserAuth {
     id: string;
+    email: string;
     firstName: string;
     lastName: string;
     username: string;
@@ -20,8 +21,7 @@ export class UserAuth {
     cards: PaymentCard[];
     seller?: {
         missingInfo: string[];
-        suspended?: boolean;
-        verified?: boolean;
+        errors: [],
         bankAccountLinked?: boolean;
         verificationStatus?: 'unverified' | 'review' | 'rejected' | 'verified';
     }

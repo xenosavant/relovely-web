@@ -6,25 +6,25 @@
     </ng-container>
     <div class="page-card-body">
         <ng-container *ngIf="currentUser.type === 'seller'">
-            <div class="verification line" (click)="showVerifyModal()">
+            <div class="verification line" [class.clickable]="allowClick" (click)="showVerifyModal()">
                 <div class="icon-wrap">
                     <fa-icon icon="store"></fa-icon>
                 </div>
                 <span class="title">
                     Store
                 </span>
-                <span class="tag detail"
-                    [ngClass]="verficationClass">{{currentUser.seller.verificationStatus | titlecase}}</span>
+                <span class="tag detail" [ngClass]="verficationClass">
+                    {{verificationStatus}}</span>
             </div>
-            <div class="bank line" (click)="showBankAccountModal()">
+            <div class="bank line clickable" (click)="showBankAccountModal()">
                 <div class="icon-wrap">
                     <fa-icon icon="landmark"></fa-icon>
                 </div>
                 <span class="title">
                     Bank Account
                 </span>
-                <span *ngIf="!currentUser.seller.bankAccountLinked" class="tag alert"> Unlinked</span>
-                <span *ngIf="currentUser.seller.bankAccountLinked" class="tag success">Linked</span>
+                <span *ngIf="!bankAccountLinked" class="tag alert"> Unlinked</span>
+                <span *ngIf="bankAccountLinked" class="tag success">Linked</span>
             </div>
         </ng-container>
         <ng-container *ngIf="currentUser.type !== 'seller'"></ng-container>
@@ -32,7 +32,7 @@
 </div>
 
 <ng-template cdkPortal #verify="cdkPortal">
-    <app-verify-seller (close)="close($event)"></app-verify-seller>
+    <app-verify-seller [verification]="verification" (close)="close($event)"></app-verify-seller>
 </ng-template>
 
 <ng-template cdkPortal #bank="cdkPortal">

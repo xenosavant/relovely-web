@@ -10,7 +10,8 @@ export interface SellerVerificationRequest {
     address: Address;
     email: string;
     phone: string;
-    ssn: string;
+    ssn4?: string;
+    ssn?: string;
     tosAcceptDate: number;
     documentFront: string;
     documentBack: string;

@@ -7,9 +7,22 @@
     grid-gap: 16px;
     width: 100%;
 }
+.error {
+    margin-bottom: 16px;
+}
 
 .checkbox-wrapper {
     margin-bottom: 16px;
+}
+
+.errors {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: repeat(2, 1fr);
+    @media (min-width: 600px) {
+        grid-template-columns: repeat(3, 200px);
+        column-gap: 32px;
+    }
 }
 
 .documents {
@@ -42,6 +55,17 @@
         .success {
             font-size: 3em;
             color: green;
+        }
+        .error {
+            font-size: 3em;
+            color: $alert;
+        }
+        .spinner-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width:100%;
         }
     }
     margin-bottom: 16px;

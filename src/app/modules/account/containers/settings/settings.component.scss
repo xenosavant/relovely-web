@@ -10,15 +10,15 @@
 }
 .page-card {
     .line {
-        &:hover {
+        &.clickable:hover {
             background-color: $background-gray !important;
+            cursor: pointer;
         }
-        cursor: pointer;
         padding: 16px 16px;
         font-size: 1.1em;
         font-weight: 600;
         display: grid;
-        grid-template-columns: 30px 1fr 100px;
+        grid-template-columns: 30px 1fr 125px;
         grid-template-rows: auto;
         .title {
 
