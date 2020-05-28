@@ -1,13 +1,13 @@
 <div class="order-wrapper">
 
     <div class="product-image">
-        <div class="image-wrapper mat-elevation-z2">
+        <div [class.clickable]="detail" (click)="onImageClick()" class="image-wrapper mat-elevation-z2">
             <img class="product" [src]="order.product.images[0].cropped">
         </div>
     </div>
     <div class="product-info">
         <div class=details>
-            <div class="mobile-title mat-body">
+            <div *ngIf="!detail" class="mobile-title mat-body">
                 <div class="info-wrapper">
                     <div *ngIf="order.status === 'shipped'">
                         Shipped {{order.shipDate | date}}
@@ -25,7 +25,7 @@
                     <div class="title">
                         {{order.product.title}}
                     </div>
-                    <div class="status">
+                    <div class="status" *ngIf="!detail">
                         <div *ngIf="order.status === 'shipped'">
                             Shipped {{order.shipDate | date}}
                         </div>

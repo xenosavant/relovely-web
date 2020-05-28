@@ -1,15 +1,11 @@
-<ng-container *ngIf="!mobile">
-  <div class="page-title">
+<div class="orders-wrapper" *ngIf="loading">
+  <div *ngIf="!mobile" class="page-title">
     <h1>{{title}}</h1>
   </div>
-
-</ng-container>
-
-<div class="orders-wrapper" *ngIf="orders">
   <div *ngFor="let order of orders; let i = index" class="order-card" (mouseenter)="onEnter(i)"
     (click)="goToOrder(order.id)" (mouseleave)="onLeave()" [class.mat-elevation-z2]="hoverIndex !== i"
     [class.mat-elevation-z5]="hoverIndex === i">
-    <app-order-list [seller]="false" [order]="order"></app-order-list>
+    <app-order-list [seller]="true" [order]="order"></app-order-list>
   </div>
   <div *ngIf="orders.length > 10" class="pagination">
   </div>

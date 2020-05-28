@@ -8,11 +8,11 @@ export class Order {
     public shipDate?: string;
     public deliveryDate?: string;
     public status: 'ordered' | 'shipped' | 'delivered' | 'review' | 'cancelled';
-    public trackingNumber?: string;
-    public shippingCarrierName?: string;
-    public shippingCarrerId?: string;
+    public shippingCarrier?: string;
     public total: number;
-    public shippingCost?: number;
+    public shippingCost: number;
+    public shippingLabelUrl: string;
+    public trackingUrl: string;
     public tax: number;
     public product: Product;
     public seller?: UserList;

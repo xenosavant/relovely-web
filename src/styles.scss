@@ -835,6 +835,15 @@ mat-toolbar-row.mega-menu-bar {
   max-width: $inner-desktop-width;
 }
 
+.page-title {
+  h1 {
+    font: 300 1.9em 'Roboto Light', sans-serif !important;
+    margin: 0 auto;
+    width: fit-content;
+  }
+  margin-bottom: 16px;
+}
+
 .full-content {
   margin: 0 auto;
   max-width: $header-width;

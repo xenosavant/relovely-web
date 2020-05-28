@@ -16,6 +16,7 @@ export class SalesComponent implements OnInit {
   public hoverIndex: number;
   public mobile: boolean;
   public title = 'Sales';
+  loading = true;
 
   constructor(private navigationService: NavigationService,
     private orderServive: OrderService, private ref: ChangeDetectorRef,
@@ -30,6 +31,7 @@ export class SalesComponent implements OnInit {
     })
     this.orderServive.getOrders(true).subscribe(orders => {
       this.orders = orders.items;
+      this.loading = false;
       this.ref.markForCheck();
     });
   }
