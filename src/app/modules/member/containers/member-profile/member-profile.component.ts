@@ -50,6 +50,7 @@ export class MemberProfileComponent implements OnInit {
     switch (action) {
       case 'edit':
         this.edit = true;
+        this.error = null;
         this.editForm = new FormGroup({
           first: new FormControl(this.user.firstName, [Validators.required]),
           last: new FormControl(this.user.lastName, [Validators.required]),
@@ -76,6 +77,7 @@ export class MemberProfileComponent implements OnInit {
             this.user.username = user.username;
             this.loading = false;
             this.edit = false;
+            this.error = null;
             this.ref.markForCheck();
           }, err => {
             this.error = err.error.error.message;

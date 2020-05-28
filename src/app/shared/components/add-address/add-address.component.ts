@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Address } from '@app/shared/interfaces/address.interface';
@@ -6,6 +6,10 @@ import { State } from '@app/shared/services/lookup/state';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { UserService } from '@app/shared/services/user/user.service';
 import { UserDetail } from '@app/shared/models/user-detail.model';
+import { ShipmentService } from '@app/shared/services/shipment/shipment.service';
+import { tap, mergeMap } from 'rxjs/operators';
+import { iif, EMPTY } from 'rxjs';
+import { AddressVerificationResponse } from '@app/shared/services/shipment/address-verification.response';
 
 @Component({
   selector: 'app-add-address',
@@ -26,10 +30,16 @@ export class AddAddressComponent implements OnInit {
   title: string;
   states: State[];
   index: number;
+  errors: string[];
+  message: string;
 
-  constructor(private lookupService: LookupService, private userService: UserService) { }
+  constructor(private lookupService: LookupService,
+    private userService: UserService,
+    private shipmentService: ShipmentService,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    console.log(this.user.addresses);
     this.states = this.lookupService.states;
     if (this.address) {
       this.form = new FormGroup({
@@ -79,11 +89,35 @@ export class AddAddressComponent implements OnInit {
       saveAddress.primary = !this.user.addresses.length ? true : false;
       update = [...this.user.addresses, saveAddress];
     }
-    this.userService.updateUser(this.user.id, { addresses: update }).subscribe(user => {
-      this.save.emit(this.user);
-      this.close.emit(true);
-    }, err => {
-      console.log(err);
-    })
+    this.shipmentService.verifyAddress(saveAddress).pipe(tap(val => {
+      this.address = val.correctedAddress ? {
+        line1: val.correctedAddress.line1,
+        line2: val.correctedAddress.line2,
+        city: val.correctedAddress.city,
+        state: val.correctedAddress.state,
+        zip: val.correctedAddress.zip,
+        country: 'US'
+      } : update;
+      this.errors = val.errors || [];
+      this.message = val.correctedAddress ? 'This address looks like a better match' : null;
+      this.updateFormFields();
+      this.ref.markForCheck();
+    }), mergeMap((v: AddressVerificationResponse) =>
+      iif(() => (!v.errors && !v.correctedAddress && v.success),
+        this.userService.updateUser(this.user.id, { addresses: update }), EMPTY)))
+      .subscribe(user => {
+        this.save.emit(this.user);
+        this.close.emit(true);
+      }, err => {
+        console.log(err);
+      })
+  }
+
+  updateFormFields() {
+    this.form.get('line1').setValue(this.address.line1);
+    this.form.get('line2').setValue(this.address.line2);
+    this.form.get('city').setValue(this.address.city);
+    this.form.get('state').setValue(this.address.state);
+    this.form.get('zip').setValue(this.address.zip);
   }
 }

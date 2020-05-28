@@ -1,5 +1,9 @@
 @import '../../../../../styles-variables';
 
+:host {
+    flex:auto;
+}
+
 .page-wrapper {
     margin: 0 auto;
     max-width: $desktop-breakpoint;
@@ -27,7 +31,7 @@
     margin:16px 8px 16px 8px;
     @media(min-width: 500px) {
         display: grid;
-        grid-template-columns: 1fr 180px;
+        grid-template-columns: 1fr 250px;
         grid-template-rows: auto;
     }
 

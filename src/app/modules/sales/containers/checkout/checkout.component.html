@@ -146,12 +146,26 @@
         </div>
         <div class="line-item">
           <span class="label">Shipping</span>
-          <span class="value">{{shippingCost | appCurrency}} </span>
+          <span class="value">
+            <ng-container *ngIf="shippingCostLoading">
+              <mat-spinner diameter="20"></mat-spinner>
+            </ng-container>
+            <ng-container *ngIf="!shippingCostLoading">
+              {{shippingCost | appCurrency}}
+            </ng-container>
+          </span>
         </div>
       </div>
       <div class="total">
         <span class="label">TOTAL</span>
-        <span class="value">{{ total | appCurrency}} </span>
+        <span class="value">
+          <ng-container *ngIf="shippingCostLoading">
+            <mat-spinner diameter="20"></mat-spinner>
+          </ng-container>
+          <ng-container *ngIf="!shippingCostLoading">
+            {{total | appCurrency}}
+          </ng-container>
+        </span>
       </div>
       <div class="purchase">
         <button mat-stroked-button [class.normal]="!checkingOut" color="accent" [disabled]="checkoutDisabled()"

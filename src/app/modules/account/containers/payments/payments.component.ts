@@ -53,18 +53,14 @@ export class PaymentsComponent implements OnInit {
     ).subscribe(result => {
       this.user = this.userService.currentUser;
       this.primary = this.user.cards.find(card => card.primary);
-      console.log(this.primary);
       this.ref.markForCheck();
     })
   }
 
   cardCreated(card: PaymentCard) {
-    if (!this.user.cards.length) {
-      card.primary = true;
-    }
-    const updates = [...this.user.cards, card];
-    this.userService.updateUser(this.user.id, { cards: updates }).subscribe(result => {
+    this.userService.addCard(card).subscribe(result => {
       this.user = this.userService.currentUser;
+      console.log(this.user);
       this.primary = this.user.cards.find(c => c.primary);
       this.overlayService.close();
       this.ref.markForCheck();

@@ -11,6 +11,8 @@ import { UserAuth } from '@app/shared/models/user-auth.model';
 import { PaymentCard } from '@app/shared/interfaces/payment-card';
 import { PaymentCardType } from '@app/shared/services/lookup/payment-card-map';
 import { OrderService } from '@app/shared/services/order/order.service';
+import { ShipmentService } from '@app/shared/services/shipment/shipment.service';
+import { NavigationService } from '@app/shared/services/navigation.service';
 
 @Component({
   selector: 'app-checkout',
@@ -19,7 +21,6 @@ import { OrderService } from '@app/shared/services/order/order.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CheckoutComponent implements OnInit {
-
 
   product: Product;
   total: number;
@@ -38,6 +39,9 @@ export class CheckoutComponent implements OnInit {
   form: FormGroup;
   loadingPayment: boolean;
   checkingOut = false;
+  shippingCostLoading = true;
+  shippingRateId: string;
+  shipmentId: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,6 +50,8 @@ export class CheckoutComponent implements OnInit {
     private orderService: OrderService,
     private lookupService: LookupService,
     private breakpointObserver: BreakpointObserver,
+    private shipmentService: ShipmentService,
+    private navigationService: NavigationService,
     private ref: ChangeDetectorRef) {
   }
 
@@ -70,10 +76,25 @@ export class CheckoutComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.productService.getProduct(params['id']).subscribe(product => {
         this.product = product;
-        this.total = this.product.price + this.tax + this.shippingCost;
-        this.loading = false;
-        this.ref.markForCheck();
-      })
+        const toAddress = this.user.addresses.find(a => a.primary);
+        if (toAddress) {
+          this.shipmentService.previewShipment({ weight: 32, toAddress: toAddress, sellerId: product.sellerId }).subscribe(response => {
+            this.shippingCost = response.shippingRate;
+            this.total = this.product.price + this.shippingCost;
+            this.shippingRateId = response.rateId;
+            this.shipmentId = response.shipmentId;
+            this.shippingCostLoading = false;
+            this.loading = false;
+            this.ref.markForCheck();
+          });
+        } else {
+          this.shippingCost = 0;
+          this.total = this.product.price + this.shippingCost;
+          this.shippingCostLoading = false
+          this.loading = false;
+          this.ref.markForCheck();
+        }
+      });
     })
   }
 
@@ -132,15 +153,25 @@ export class CheckoutComponent implements OnInit {
     this.addingPayment = false;
   }
 
+  onReady(event: any) {
+
+  }
+
   checkoutDisabled() {
     return !this.selectedAddress || !this.selectedPayment || this.changingPayment || this.changingAddress || this.checkingOut;
   }
 
   checkout() {
     this.checkingOut = true;
-    this.orderService.postOrder({ address: this.selectedAddress, paymentId: this.selectedPayment.stripeId }, this.product.id)
-      .subscribe(response => {
-
+    this.orderService.postOrder(
+      {
+        address: this.selectedAddress,
+        paymentId: this.selectedPayment.stripeId,
+        rateId: this.shippingRateId,
+        shipmentId: this.shipmentId
+      }, this.product.id)
+      .subscribe(order => {
+        this.navigationService.navigate({ path: `/sales/orders/${order.id}` })
       }, err => {
         console.log(err);
       })

@@ -12,6 +12,8 @@ import { OrderService } from '@app/shared/services/order/order.service';
 export class OrderComponent implements OnInit {
 
   public order: Order;
+  public loading = true;
+  seller: boolean;
 
   constructor(private activatedRoute: ActivatedRoute, private orderService: OrderService) { }
 
@@ -19,6 +21,7 @@ export class OrderComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.orderService.getOrder(params['id']).subscribe(order => {
         this.order = order;
+        this.loading = false;
         console.log(order);
       })
     })

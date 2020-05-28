@@ -34,9 +34,9 @@ $custom-typography: mat-typography-config(
 
 a {
   color: $link-blue !important;
-  font-weight: 600;
+  font-weight: 400;
   &:hover {
-    text-decoration: underline;
+    text-decoration: underline !important;
   }
   &.mat-list-item {
     color: $dark-blue !important;
@@ -873,6 +873,7 @@ mat-toolbar-row.mega-menu-bar {
 html {
   body {
   // font-size: calc(1em + 1vw) !important;
+  overflow:hidden;
   line-height: 1.1 !important;
   }
 }

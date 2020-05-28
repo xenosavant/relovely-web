@@ -10,6 +10,7 @@ import { LocalStorageService } from '../local-storage/local-storage.service';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { SellerVerificationRequest } from './seller-verification.request';
 import { BankAccountRequest } from './bank-acount-request';
+import { PaymentCard } from '@app/shared/interfaces/payment-card';
 
 @Injectable({ providedIn: 'root' })
 export class
@@ -103,6 +104,16 @@ export class
 
     followUser(userId: string, follow: boolean): Observable<void> {
         return this.httpClient.patch<void>(`${this.apiBaseUrl}/users/${userId}/follow/?follow=${follow}`, {}).pipe();
+    }
+
+    addCard(card: PaymentCard): Observable<UserAuth> {
+        return this.httpClient.post<UserAuth>(`${this.apiBaseUrl}/users/add-card`, card).pipe(
+            map((user: UserAuth) => {
+                console.log(user);
+                this.setCurrentUser(user);
+                return user;
+            })
+        );
     }
 
     verifySeller(request: SellerVerificationRequest): Observable<UserAuth> {

@@ -63,7 +63,7 @@ export class PaymentCardInputComponent implements OnInit {
             last4: result.token.card.last4,
             name: this.form.get('name').value,
             type: REVERSE_CARD_TYPE_MAP[result.token.card.brand],
-            stripeId: result.token.card.id,
+            stripeId: result.token.id,
             expirationMonth: result.token.card.exp_month,
             expirationYear: result.token.card.exp_year,
           });

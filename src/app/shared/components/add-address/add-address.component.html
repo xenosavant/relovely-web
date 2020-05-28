@@ -9,6 +9,10 @@
       </div>
     </div>
     <div class="form-wrapper">
+      <div class="error">
+        <div>{{message}}</div>
+        <div *ngFor="let error of errors">{{error}}</div>
+      </div>
       <form novalidate [formGroup]="form">
         <div>
           <mat-form-field appearance="outline">

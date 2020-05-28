@@ -1,6 +1,6 @@
 .inner-container {
     .form-wrapper {
-        height:400px;
+        height:auto;
         margin: 36px 16px 0px 16px;
         form {
             height: 100%;
@@ -10,9 +10,8 @@
                 grid-template-columns: 1fr 1fr;
                 grid-template-rows: auto;
                 grid-gap: 16px;
-                bottom: 15px;
                 width: 100%;
-                position: absolute;
+                margin-bottom: 16px;
             }
         }
     }
