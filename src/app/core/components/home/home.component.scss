@@ -1,5 +1,8 @@
 @import '../../../../styles-variables.scss';
 
+:host {
+    flex: auto;
+}
 .header-bar {
     height:100px;
     padding:16px;
