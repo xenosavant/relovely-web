@@ -27,7 +27,8 @@
         margin-top: 16px;
     }
     .forgot {
-        margin-bottom: 16px;
+        display: inline-block;
+        width: 100%;
     }
 }
 .errors {
@@ -35,8 +36,7 @@
 }
 
 .outer-wrapper {
-    max-height:550px;
-    min-height:516px;
+    min-height:500px;
 }
 
 .sign-up-divider {
@@ -46,8 +46,8 @@
 }
 
 .sign-in-divider {
-    height:80px;
-    padding-top:30px;
+    height:50px;
+    padding-top:20px;
     text-align: center;
 }
 

@@ -40,10 +40,9 @@ export class OrderComponent implements OnInit {
 
   onPrint() {
     const newWindow = window.open();
-    newWindow.document.write(`<html><body><img style="height:600px;" src="${this.order.shippingLabelUrl}"/></body></html>`);
+    newWindow.document.write(`<html><body onload="window.print();"><img style="height:600px;" src="${this.order.shippingLabelUrl}"/></body></html>`);
     newWindow.document.close();
     newWindow.focus();
-    newWindow.print();
   }
 
 }

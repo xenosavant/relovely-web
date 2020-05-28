@@ -144,13 +144,15 @@ form {
 app-center-modal {
   .modal-header {
     display: grid;
-    grid-template-columns: [left] 40px [middle] 1fr [center] 40px;
+    grid-template-areas: 'left middle right';
+    grid-template-columns: 40px 1fr 40px;
     grid-template-rows: 50px;
     .title {
         display: grid;
-        grid-column-start: middle;
-        grid-column-end: middle;
+        grid-area: middle;
         align-content: center;
+        font: 500 26px 'Roboto Light', sans-serif !important;
+
         div {
             text-align: center;
             font: 500 26px 'Roboto Light', sans-serif !important;
@@ -159,8 +161,7 @@ app-center-modal {
     .close {
         display: grid;
         align-content: center;
-        grid-column-start: end;
-        grid-column-end: end;
+        grid-area: right;
         img {
             width:40px;
             cursor: pointer;

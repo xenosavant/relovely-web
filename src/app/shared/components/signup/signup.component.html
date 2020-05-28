@@ -1,6 +1,6 @@
 <app-center-modal>
   <div class="outer-wrapper">
-    <div class="modal-header">
+    <div *ngIf="!loading" class="modal-header">
       <div class="title">
         <div>{{title}}</div>
       </div>
