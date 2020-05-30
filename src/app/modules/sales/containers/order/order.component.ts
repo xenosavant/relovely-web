@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Order } from '@app/shared/models/order.model';
 import { OrderService } from '@app/shared/services/order/order.service';
 import { UserService } from '@app/shared/services/user/user.service';
+import { CARD_TYPE_MAP } from '@app/shared/services/lookup/payment-card-map';
 
 @Component({
   selector: 'app-order',
@@ -15,6 +16,7 @@ export class OrderComponent implements OnInit {
   public order: Order;
   public loading = true;
   seller: boolean;
+  typeMap = CARD_TYPE_MAP;
 
   constructor(
     private activatedRoute: ActivatedRoute,

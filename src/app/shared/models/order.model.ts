@@ -18,4 +18,5 @@ export class Order {
     public seller?: UserList;
     public buyer?: UserList;
     public address: Address;
+    public orderNumber: string;
 }

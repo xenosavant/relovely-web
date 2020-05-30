@@ -4,12 +4,12 @@
         <div class="divider"></div>
         <div class="grid-wrapper">
             <div class="left">
-                <div class="order-number">Order Number: 213421423</div>
+                <div class="order-number">Order Number: {{order.orderNumber}}</div>
                 <div class="payment">
                     <div>
                         <strong>Payment Method:</strong>
                     </div>
-                    <div>Visa ending in 3456</div>
+                    <div>{{typeMap[order.paymentType]}} ending in {{order.paymentLast4}}</div>
                 </div>
             </div>
             <div class="right">

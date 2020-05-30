@@ -1,5 +1,9 @@
 @import '../../../../../styles-variables';
 
+:host {
+    flex: auto;
+}
+
 .product-container-wrapper {
     padding:16px;
     max-width: $desktop-width;
