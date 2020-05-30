@@ -4,4 +4,5 @@ export interface ShipmentPreviewRequest {
     toAddress: Address;
     weight: number;
     sellerId: string;
+    price: number;
 }

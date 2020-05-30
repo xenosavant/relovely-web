@@ -78,11 +78,12 @@ export class CheckoutComponent implements OnInit {
         this.product = product;
         const toAddress = this.user.addresses.find(a => a.primary);
         if (toAddress) {
-          this.shipmentService.previewShipment({ weight: 32, toAddress: toAddress, sellerId: product.sellerId }).subscribe(response => {
+          this.shipmentService.previewShipment({ weight: 32, toAddress: toAddress, sellerId: product.sellerId, price: product.price }).subscribe(response => {
             this.shippingCost = response.shippingRate;
             this.total = this.product.price + this.shippingCost;
             this.shippingRateId = response.rateId;
             this.shipmentId = response.shipmentId;
+            this.tax = response.taxRate;
             this.shippingCostLoading = false;
             this.loading = false;
             this.ref.markForCheck();
