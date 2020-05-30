@@ -12,8 +12,8 @@
                     <div *ngIf="order.status === 'shipped'">
                         Shipped {{order.shipDate | date}}
                     </div>
-                    <div *ngIf="order.status === 'ordered'">
-                        Ordered {{order.orderDate | date}}
+                    <div *ngIf="order.status === 'purchased'">
+                        Purchased {{order.orderDate | date}}
                     </div>
                     <div *ngIf="order.status === 'delivered'">
                         Delivered {{order.deliveryDate | date}}
@@ -29,8 +29,8 @@
                         <div *ngIf="order.status === 'shipped'">
                             Shipped {{order.shipDate | date}}
                         </div>
-                        <div *ngIf="order.status === 'ordered'">
-                            Ordered {{order.orderDate | date}}
+                        <div *ngIf="order.status === 'purchased'">
+                            Purchased {{order.orderDate | date}}
                         </div>
                         <div *ngIf="order.status === 'delivered'">
                             Delivered {{order.deliveryDate | date}}

@@ -7,7 +7,7 @@ export class Order {
     public purchaseDate: string;
     public shipDate?: string;
     public deliveryDate?: string;
-    public status: 'ordered' | 'shipped' | 'delivered' | 'review' | 'cancelled';
+    public status: 'purchased' | 'shipped' | 'delivered' | 'review' | 'cancelled' | 'error';
     public shippingCarrier?: string;
     public total: number;
     public shippingCost: number;

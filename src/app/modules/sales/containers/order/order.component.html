@@ -66,7 +66,7 @@
                     <div class="review">
                         <a *ngIf="['delivered', 'review'].includes(order.status)" appClick target="_blank">Write a
                             Review</a>
-                        <a *ngIf="['shipped', 'ordered'].includes(order.status)" (click)="onTrack()" appClick
+                        <a *ngIf="['shipped', 'purchased'].includes(order.status)" (click)="onTrack()" appClick
                             target="_blank">Track
                             Package</a>
                     </div>
