@@ -22,12 +22,16 @@ export class ProfileHeaderComponent implements OnChanges {
   @Output() action: EventEmitter<string> = new EventEmitter<string>();
   public statItems: StatItem[];
   public desktop: boolean;
+  public rating: number;
 
 
   constructor(private ref: ChangeDetectorRef, private breakpointObserver: BreakpointObserver) { }
 
   ngOnChanges() {
     this.statItems = [];
+
+    this.rating = (this.user.averageRating / 5) * 100;
+    console.log(this.rating)
     if (this.user.type === 'seller') {
       this.statItems.push({ name: 'Listings', count: this.user.listings.length });
       this.statItems.push({ name: 'Sales', count: this.user.sales.length });

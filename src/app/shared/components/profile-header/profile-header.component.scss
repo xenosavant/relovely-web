@@ -16,11 +16,8 @@
     .title-wrapper {
         height:2.5em;
         line-height:1.25em;
-        flex-grow: 1;
-        font-size: 1em;
         color: $dark-blue;
         padding-left:24px;
-        display: flex;
         flex-direction: column;
         justify-content: center;
         fa-icon {
@@ -35,14 +32,44 @@
             padding-left:50px;
         }
         .review {
-            color:#a76e6e !important;
+            width: fit-content;
+            display: grid;
+            grid-gap: 6px;
+            font-size: 1em;
+            position: relative;
+            display: flex;
+            .heart {
+                color:#A9A9A9;
+                &.filled {
+                    color:#a76e6e !important;
+                }
+                padding-right: 4px;
+            }
             span {
+
                 font-weight: 400;
                 font-size: .85em;
             }
+            .overlay {
+                position: absolute;
+                height: 100%;
+                bottom: 0;
+                cursor: pointer;
+                display: flex;
+                -ms-flex-align: center;
+                align-items: center;
+                flex-wrap: nowrap;
+                overflow: hidden;
+                mat-icon {
+                    height:100px;
+                    width:100px;
+                    visibility: visible;
+                    color: white;
+                    font-size: 100px;
+                }
+            }
         }
         .name {
-            margin-bottom: 8px;
             fa-icon {
                 padding-right:8px;
             }
@@ -51,6 +78,9 @@
 
     .button-wrapper {
         min-width: 100px;
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
         @media( min-width:$desktop-breakpoint) {
             margin-left: 35vw;
         }

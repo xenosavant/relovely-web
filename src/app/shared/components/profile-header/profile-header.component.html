@@ -10,10 +10,18 @@
       </span>{{user.username}}
     </div>
     <div *ngIf="user.type === 'seller'" class="review">
-      <fa-icon icon="heart"></fa-icon>
-      <fa-icon icon="heart"></fa-icon>
-      <fa-icon icon="heart"></fa-icon>
-      <fa-icon icon="heart"></fa-icon>
+      <fa-icon class="heart" icon="heart"></fa-icon>
+      <fa-icon class="heart" icon="heart"></fa-icon>
+      <fa-icon class="heart" icon="heart"></fa-icon>
+      <fa-icon class="heart" icon="heart"></fa-icon>
+      <fa-icon class="heart" icon="heart"></fa-icon>
+      <div class="overlay" [style.width.%]="rating">
+        <fa-icon class="heart filled" icon="heart"></fa-icon>
+        <fa-icon class="heart filled" icon="heart"></fa-icon>
+        <fa-icon class="heart filled" icon="heart"></fa-icon>
+        <fa-icon class="heart filled" icon="heart"></fa-icon>
+        <fa-icon class="heart filled" icon="heart"></fa-icon>
+      </div>
     </div>
   </div>
   <div class="button-wrapper">

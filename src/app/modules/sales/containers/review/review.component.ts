@@ -49,7 +49,6 @@ export class ReviewComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.orderService.getOrder(params['id']).subscribe(order => {
         this.order = order;
-        console.log(this.order)
         if (this.order.review) {
           this.readonly = true;
           this.title = 'Product Review'

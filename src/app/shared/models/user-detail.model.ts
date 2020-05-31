@@ -17,4 +17,5 @@ export class UserDetail {
     type: string;
     preferences: IUserPreferences;
     addresses: Address[];
+    averageRating?: number;
 }
