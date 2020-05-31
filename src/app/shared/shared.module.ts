@@ -108,6 +108,7 @@ import { PhoneNumberDirective } from './directives/phoneNumber.directive';
 import { CardComponent } from './components/card/card.component';
 import { AddPaymentCardComponent } from './components/add-payment-card/add-payment-card.component';
 import { AddBankComponent } from './components/add-bank/add-bank.component';
+import { OrderStatusComponent } from './components/order-status/order-status.component';
 
 
 library.add(
@@ -218,7 +219,8 @@ library.add(
     VerifySellerComponent,
     CardComponent,
     AddPaymentCardComponent,
-    AddBankComponent],
+    AddBankComponent,
+    OrderStatusComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -277,7 +279,8 @@ library.add(
     VerifySellerComponent,
     CardComponent,
     AddPaymentCardComponent,
-    AddBankComponent
+    AddBankComponent,
+    OrderStatusComponent
   ],
   providers: [DecimalPipe],
 })

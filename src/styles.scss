@@ -844,6 +844,7 @@ mat-toolbar-row.mega-menu-bar {
     width: fit-content;
   }
   margin-bottom: 16px;
+  margin-top: 16px;
 }
 
 .full-content {
@@ -864,20 +865,19 @@ mat-toolbar-row.mega-menu-bar {
       padding: 0px;
     }
   }
-    &.profile { 
-      @media(max-width: $mobile-breakpoint) {
-        background-color: $medium-gray-background;
-      }
-      @media(min-width: $desktop-breakpoint) {
-        min-height: calc(100vh - 361px);
-        grid-template-rows:auto;
-        display:grid;
-        grid-template-columns: 35% 1fr;
-        @media(min-width: 1000px) {
-          grid-template-columns: 25% 75%;;
-        }
+  &.profile { 
+    @media(max-width: $mobile-breakpoint) {
+      background-color: $medium-gray-background;
     }
-   
+    @media(min-width: $desktop-breakpoint) {
+      min-height: calc(100vh - 361px);
+      grid-template-rows:auto;
+      display:grid;
+      grid-template-columns: 35% 1fr;
+      @media(min-width: 1000px) {
+        grid-template-columns: 25% 75%;;
+      }
+    }
   }
 }
 

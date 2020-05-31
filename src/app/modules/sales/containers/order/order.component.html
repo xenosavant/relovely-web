@@ -1,5 +1,5 @@
 <div class="page-wrapper">
-    <div *ngIf="!loading" class="order-wrapper mat-elevation-z2">
+    <div *ngIf="!loading" class="order-wrapper">
         <app-order-list [seller]="seller" [detail]="true" [order]="order"></app-order-list>
         <div class="divider"></div>
         <div class="grid-wrapper">
@@ -64,7 +64,8 @@
                 </ng-container>
                 <ng-container *ngIf="!seller">
                     <div class="review">
-                        <a *ngIf="['delivered', 'review'].includes(order.status)" appClick target="_blank">Write a
+                        <a *ngIf="['delivered', 'review'].includes(order.status)" (click)="onReview()" appClick
+                            target="_blank">Write a
                             Review</a>
                         <a *ngIf="['shipped', 'purchased'].includes(order.status)" (click)="onTrack()" appClick
                             target="_blank">Track

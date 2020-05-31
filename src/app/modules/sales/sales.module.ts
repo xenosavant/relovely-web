@@ -8,9 +8,10 @@ import { OrdersComponent } from './containers/orders/orders.component';
 import { OrderComponent } from './containers/order/order.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { SalesComponent } from './containers/sales/sales.component';
+import { ReviewComponent } from './containers/review/review.component';
 
 @NgModule({
-  declarations: [CheckoutComponent, OrdersComponent, OrderComponent, OrderListComponent, SalesComponent],
+  declarations: [CheckoutComponent, OrdersComponent, OrderComponent, OrderListComponent, SalesComponent, ReviewComponent],
   imports: [
     CommonModule,
     SharedModule,

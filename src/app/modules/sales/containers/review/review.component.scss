@@ -1,0 +1,112 @@
+@import '../../../../../styles-variables.scss';
+@import '~@angular/material/theming';
+
+:host {
+    flex: auto;
+}
+.page-wrapper {
+    margin: 0 auto;
+    max-width: 800px;
+    .page-title {
+        margin: 16px 0px 32px 278px !important;
+        h1 {
+            margin: 0;
+        }
+    }
+    .review-wrapper {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        @media( min-width:600px) {
+            grid-template-columns: 200px 1fr;
+            grid-template-rows: auto;
+            grid-gap: 64px;
+            padding: 0px 8px 8px 8px;
+        }
+        .product {
+            .product-image {
+                margin:8px;
+                .image-wrapper {
+                    padding: 2px;
+                    background-color: #efefef;
+                    border-radius: 2px;
+                    img {
+                        width:100%;
+                    }
+                }
+            }
+            .product-info {
+                margin:8px;
+                .title {
+                    font-weight: 500;
+                    font-size: 1.2em;
+                    line-height: 1.1em;
+                    margin-bottom: 4px;
+                    margin-top: 16px;
+                }
+                .status {
+                    font-size: .9em;
+                    line-height: 1.3em;
+                }
+                .seller {
+                    font-size: .9em;
+                    line-height: 1.3em;
+                }
+            }
+        }
+
+        .review {
+            .label {
+                margin-bottom: 8px;
+            }
+            margin: 8px;
+            .rating {
+                .hearts {
+                    width: 100px;
+                    display: grid;
+                    grid-template-columns: repeat(5, 1fr);
+                    grid-template-rows: auto;
+                    grid-gap: 6px;
+                    margin-top: 8px;
+                    font-size: 1.5em;
+                    .heart {
+                        color:lightgray;
+                        &.clickable {
+                            cursor: pointer;
+                        }
+                        &.selected {
+                            color:#a76e6e !important;
+                        }
+                    }
+                }
+            }
+            .reviewer {
+                height: 50px;
+                display: flex;
+                align-items: center;
+                margin-bottom: 16px;
+                .image {
+                    width: 50px;
+                    height: 50px;
+                }
+                .name {
+                    padding-left: 16px;
+                }
+            }
+            .form {
+                margin-top: 24px;
+                textarea {
+                    height: 200px;
+                }
+                button {
+                    width: 100px;
+                    margin-bottom: 16px;
+                }
+            }
+            .readonly-review {
+                margin-top: 16px;
+            }
+        }
+    
+    }
+}

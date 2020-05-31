@@ -4,6 +4,7 @@ import { Order } from '@app/shared/models/order.model';
 import { OrderService } from '@app/shared/services/order/order.service';
 import { UserService } from '@app/shared/services/user/user.service';
 import { CARD_TYPE_MAP } from '@app/shared/services/lookup/payment-card-map';
+import { NavigationService } from '@app/shared/services/navigation.service';
 
 @Component({
   selector: 'app-order',
@@ -22,7 +23,8 @@ export class OrderComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
     private userService: UserService,
-    private ref: ChangeDetectorRef) { }
+    private ref: ChangeDetectorRef,
+    private navigationService: NavigationService) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
@@ -38,6 +40,10 @@ export class OrderComponent implements OnInit {
   onTrack() {
     const newWindow = window.open(this.order.trackingUrl);
     newWindow.focus();
+  }
+
+  onReview() {
+    this.navigationService.navigate({ path: `/sales/review/${this.order.id}` });
   }
 
   onPrint() {

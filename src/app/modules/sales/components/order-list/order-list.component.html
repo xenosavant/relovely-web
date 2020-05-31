@@ -9,15 +9,7 @@
         <div class=details>
             <div *ngIf="!detail" class="mobile-title mat-body">
                 <div class="info-wrapper">
-                    <div *ngIf="order.status === 'shipped'">
-                        Shipped {{order.shipDate | date}}
-                    </div>
-                    <div *ngIf="order.status === 'purchased'">
-                        Purchased {{order.orderDate | date}}
-                    </div>
-                    <div *ngIf="order.status === 'delivered'">
-                        Delivered {{order.deliveryDate | date}}
-                    </div>
+                    <app-order-status [order]="order"></app-order-status>
                 </div>
             </div>
             <div class="info">
@@ -25,17 +17,7 @@
                     <div class="title">
                         {{order.product.title}}
                     </div>
-                    <div class="status" *ngIf="!detail">
-                        <div *ngIf="order.status === 'shipped'">
-                            Shipped {{order.shipDate | date}}
-                        </div>
-                        <div *ngIf="order.status === 'purchased'">
-                            Purchased {{order.orderDate | date}}
-                        </div>
-                        <div *ngIf="order.status === 'delivered'">
-                            Delivered {{order.deliveryDate | date}}
-                        </div>
-                    </div>
+                    <app-order-status [order]="order"></app-order-status>
                     <div *ngIf="!seller" class="seller">
                         Seller: {{order.seller.username}}
                     </div>

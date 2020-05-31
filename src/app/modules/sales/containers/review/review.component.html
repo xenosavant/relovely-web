@@ -1,0 +1,80 @@
+<div class="page-wrapper">
+    <div *ngIf="!mobile" class="page-title">
+        <h1>{{title}}</h1>
+    </div>
+    <div class="review-wrapper" *ngIf="!loading">
+        <div class="product">
+            <div class="product-image">
+                <div (click)="onImageClick()" class="image-wrapper mat-elevation-z2">
+                    <img class="product" [src]="order.product.images[0].cropped">
+                </div>
+            </div>
+            <div class="product-info">
+                <div class="title">
+                    {{order.product.title}}
+                </div>
+                <div class="status">
+                    <app-order-status [order]="order"></app-order-status>
+                </div>
+                <div class="seller">
+                    Seller: {{order.seller.username}}
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!readonly" class="review">
+            <div class="rating">
+                <div class="label">How would you rate this item?</div>
+                <div class="hearts">
+                    <fa-icon class="heart clickable" [class.selected]="rating >= 1" icon="heart" (click)="rating = 1">
+                    </fa-icon>
+                    <fa-icon class="heart clickable" [class.selected]="rating >= 2" icon="heart" (click)="rating = 2">
+                    </fa-icon>
+                    <fa-icon class="heart clickable" [class.selected]="rating >= 3" icon="heart" (click)="rating = 3">
+                    </fa-icon>
+                    <fa-icon class="heart clickable" [class.selected]="rating >= 4" icon="heart" (click)="rating = 4">
+                    </fa-icon>
+                    <fa-icon class="heart clickable" [class.selected]="rating >= 5" icon="heart" (click)="rating = 5">
+                    </fa-icon>
+                </div>
+            </div>
+            <div class="form">
+                <form [formGroup]="form">
+                    <div class="text">
+                        <div class="label"> Tell us more about the item.</div>
+                        <mat-form-field appearance="outline">
+                            <textarea matInput placeholder="Write a review, be descriptive!"
+                                formControlName="review"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <button mat-stroked-button [disabled]="!form.valid || rating === 0" (click)="onSubmit()"
+                        [class.primary]="true">
+                        <ng-container *ngIf="!saving">Submit</ng-container>
+                        <ng-container *ngIf="saving">
+                            <mat-spinner class="white" diameter="20"></mat-spinner>
+                        </ng-container>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div *ngIf="readonly" class="review">
+            <div class="reviewer">
+                <div class="image">
+                    <app-avatar (click)="goToProfile()" [image]="order.buyer.profileImageUrl"></app-avatar>
+                </div>
+                <div class="name">{{order.buyer.username}}</div>
+            </div>
+            <div class="rating">
+                <div class="hearts">
+                    <fa-icon class="heart" [class.selected]="order.review.rating >= 1" icon="heart"></fa-icon>
+                    <fa-icon class="heart" [class.selected]="order.review.rating >= 2" icon="heart"></fa-icon>
+                    <fa-icon class="heart" [class.selected]="order.review.rating >= 3" icon="heart"></fa-icon>
+                    <fa-icon class="heart" [class.selected]="order.review.rating >= 4" icon="heart"></fa-icon>
+                    <fa-icon class="heart" [class.selected]="order.review.rating >= 5" icon="heart"></fa-icon>
+                </div>
+            </div>
+            <div class="readonly-review">
+                {{order.review.review}}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 @import '../../../../../styles-variables';
+@import '~@angular/material/theming';
 
 :host {
     flex:auto;
@@ -13,8 +14,9 @@
     border-radius: 4px;
     background-color: white;
     padding: 0px 8px 8px 8px;
+    @include mat-elevation(2);
     @media(max-width: $mobile-breakpoint) {
-        min-height:calc(100vh - 48px);
+        min-height:calc(100vh);
     }
  }
 

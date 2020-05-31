@@ -1,0 +1,15 @@
+<div *ngIf="order.status === 'shipped'">
+    Shipped on {{order.shipDate | date}}
+</div>
+<div *ngIf="order.status === 'purchased'">
+    Purchased on {{order.orderDate | date}}
+</div>
+<div *ngIf="order.status === 'delivered'">
+    Delivered on {{order.deliveryDate | date}}
+</div>
+<div *ngIf="order.status === 'disputed'">
+    Disputed on {{order.disputeDate | date}}
+</div>
+<div *ngIf="order.status === 'resolved'">
+    Resolved on {{order.resolutionDate | date}}
+</div>
