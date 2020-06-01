@@ -12,9 +12,10 @@ import { ProfileComponent } from './containers/profile/profile.component';
 import { PortalModule } from '@angular/cdk/portal';
 import { TermsComponent } from './containers/terms/terms.component';
 import { PrivacyComponent } from './containers/privacy/privacy.component';
+import { ReviewsComponent } from './containers/reviews/reviews.component';
 
 @NgModule({
-  declarations: [SellerProfileComponent, MemberProfileComponent, FavoritesComponent, PurchasesComponent, MemberProfileComponent, ProfileComponent, TermsComponent, PrivacyComponent],
+  declarations: [SellerProfileComponent, MemberProfileComponent, FavoritesComponent, PurchasesComponent, MemberProfileComponent, ProfileComponent, TermsComponent, PrivacyComponent, ReviewsComponent],
   imports: [
     CommonModule,
     MemberRoutingModule,

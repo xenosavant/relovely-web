@@ -5,6 +5,7 @@ import { ProfileComponent } from './containers/profile/profile.component';
 import { ListingsComponent } from './containers/listings/listings.component';
 import { InstagramAuthComponent } from './components/instagram-auth/instagram-auth.component';
 import { TermsComponent } from './containers/terms/terms.component';
+import { ReviewsComponent } from './containers/reviews/reviews.component';
 
 const routes: Routes = [
     {
@@ -22,6 +23,10 @@ const routes: Routes = [
     {
         path: ':id',
         component: ProfileComponent
+    },
+    {
+        path: 'ratings/:id',
+        component: ReviewsComponent
     },
 ];
 
