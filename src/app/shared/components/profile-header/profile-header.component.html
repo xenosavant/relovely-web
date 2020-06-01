@@ -9,18 +9,21 @@
         <fa-icon *ngIf="editing" (click)="onAction('close')" icon="undo"></fa-icon>
       </span>{{user.username}}
     </div>
-    <div *ngIf="user.type === 'seller'" class="review">
-      <img src="./assets/images/rating-heart.svg" />
-      <img src="./assets/images/rating-heart.svg" />
-      <img src="./assets/images/rating-heart.svg" />
-      <img src="./assets/images/rating-heart.svg" />
-      <img src="./assets/images/rating-heart.svg" />
-      <div class="overlay" [style.width.%]="rating">
-        <img src="./assets/images/pink-heart.svg" />
-        <img src="./assets/images/pink-heart.svg" />
-        <img src="./assets/images/pink-heart.svg" />
-        <img src="./assets/images/pink-heart.svg" />
-        <img src="./assets/images/pink-heart.svg" />
+    <div class="rating-wrapper" *ngIf="user.type === 'seller'">
+      <div class="number">({{ratingDisplay}})</div>
+      <div class="review">
+        <img src="./assets/images/rating-heart.svg" />
+        <img src="./assets/images/rating-heart.svg" />
+        <img src="./assets/images/rating-heart.svg" />
+        <img src="./assets/images/rating-heart.svg" />
+        <img src="./assets/images/rating-heart.svg" />
+        <div class="overlay" [style.width.%]="rating">
+          <img src="./assets/images/pink-heart.svg" />
+          <img src="./assets/images/pink-heart.svg" />
+          <img src="./assets/images/pink-heart.svg" />
+          <img src="./assets/images/pink-heart.svg" />
+          <img src="./assets/images/pink-heart.svg" />
+        </div>
       </div>
     </div>
   </div>

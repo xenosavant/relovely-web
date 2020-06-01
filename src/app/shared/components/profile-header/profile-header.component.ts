@@ -23,6 +23,7 @@ export class ProfileHeaderComponent implements OnChanges {
   public statItems: StatItem[];
   public desktop: boolean;
   public rating: number;
+  public ratingDisplay: string;
 
 
   constructor(private ref: ChangeDetectorRef, private breakpointObserver: BreakpointObserver) { }
@@ -31,7 +32,7 @@ export class ProfileHeaderComponent implements OnChanges {
     this.statItems = [];
 
     this.rating = (this.user.averageRating / 5) * 100;
-    console.log(this.rating)
+    this.ratingDisplay = ((this.rating / 100) * 5).toFixed(1);
     if (this.user.type === 'seller') {
       this.statItems.push({ name: 'Listings', count: this.user.listings.length });
       this.statItems.push({ name: 'Sales', count: this.user.sales.length });

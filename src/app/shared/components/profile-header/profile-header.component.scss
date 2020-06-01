@@ -31,52 +31,69 @@
           @media( min-width:900px) {
             padding-left:50px;
         }
-        .review {
-            width: fit-content;
-            display: grid;
-            grid-gap: 6px;
-            font-size: 1em;
-            position: relative;
+        .rating-wrapper {
             display: flex;
-            &.first {
-                z-index: 3;
-            }
-            img { width: 20px;}
-            @media(max-width: $mobile-breakpoint) {
-                margin-left: -3px;
-            }
-            @media(min-width: $desktop-breakpoint) {
-                img { width: 24px;}
-            }
-            span {
-                font-weight: 400;
-                font-size: .85em;
-            }
-            .overlay {
-                position: absolute;
-                height: 100%;
-                bottom: 0;
-                display: flex;
-                -ms-flex-align: center;
-                align-items: center;
-                flex-wrap: nowrap;
-                overflow: hidden;
-                img {width: 18px; margin-left: 1px; margin-right: 1px; }
+            flex-direction: row;
+            align-items: center;
+            .number {
+                font-size: 14px;
+                line-height: 14px;
+                margin-right: 4px;
                 @media(min-width: $desktop-breakpoint) {
-                    img { width: 22px; margin-left: 1px; margin-right: 1px;}
+                    color: #cfcece;
+                    font-size: 20px;
+                    line-height: 18px;
+                    height: 20px;
+                    margin-right: 8px;
                 }
+            }
+            .review {
+                width: fit-content;
+                display: grid;
+                grid-gap: 6px;
+                font-size: 1em;
+                position: relative;
+                display: flex;
                 &.first {
-                    z-index: 4;
+                    z-index: 3;
                 }
-                &.second {
-                    z-index: 5;
+                img { width: 20px;}
+                @media(max-width: $mobile-breakpoint) {
+                    margin-left: -3px;
                 }
-                mat-icon {
-                    height:100px;
-                    width:100px;
-                    visibility: visible;
-                    color: white;
-                    font-size: 100px;
+                @media(min-width: $desktop-breakpoint) {
+                    img { width: 24px;}
+                }
+                span {
+                    font-weight: 400;
+                    font-size: .85em;
+                }
+                .overlay {
+                    position: absolute;
+                    height: 100%;
+                    bottom: 0;
+                    display: flex;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    flex-wrap: nowrap;
+                    overflow: hidden;
+                    img {width: 18px; margin-left: 1px; margin-right: 1px; }
+                    @media(min-width: $desktop-breakpoint) {
+                        img { width: 22px; margin-left: 1px; margin-right: 1px;}
+                    }
+                    &.first {
+                        z-index: 4;
+                    }
+                    &.second {
+                        z-index: 5;
+                    }
+                    mat-icon {
+                        height:100px;
+                        width:100px;
+                        visibility: visible;
+                        color: white;
+                        font-size: 100px;
+                    }
                 }
             }
         }
