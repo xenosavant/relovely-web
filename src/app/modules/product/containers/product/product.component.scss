@@ -5,7 +5,7 @@
 }
 
 .product-container-wrapper {
-    padding:16px;
+    padding:8px;
     max-width: $desktop-width;
     margin: 0 auto;
     @media ( min-width: $desktop-breakpoint) {
@@ -19,7 +19,7 @@
     display:flex;
     flex-flow: row;
     align-items: center;
-    padding:1vw;
+    margin-bottom: 8px;
 
     .profile-image-wrapper {
         width: 15vw;
@@ -35,8 +35,20 @@
     line-height: 1.4 !important;
     display:flex;
     flex-direction: row;
+    margin: 0px 4px;
     .info {
         flex-grow: 1;
+        .product-name {
+            font-size: 1.1em  !important;
+            font-weight: 600  !important;
+            font-family: 'Roboto Light', sans-serif !important;
+        }
+        .product-price {
+            .retail {
+                text-decoration: line-through;
+                color: $pink-text;
+            }
+        }
     }
     .action {
         max-width: 40%;
@@ -44,9 +56,10 @@
 }
 
 .product-details {
+    margin: 0px 4px;
     padding-top: 16px;
     padding-bottom: 16px;
-    font-size: .7em;
+    font-size: 1em !important;
     font-weight:400;
 }
 

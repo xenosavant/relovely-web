@@ -7,10 +7,10 @@
     flex-direction: row;
     
     align-items:  center;
-    height:120px;
+    height:100px;
 
     .avatar-wrapper {
-        width:100px;
+        width:75px;
     }
     
     .title-wrapper {
@@ -38,15 +38,17 @@
             font-size: 1em;
             position: relative;
             display: flex;
-            .heart {
-                color:#A9A9A9;
-                &.filled {
-                    color:#a76e6e !important;
-                }
-                padding-right: 4px;
+            &.first {
+                z-index: 3;
+            }
+            img { width: 20px;}
+            @media(max-width: $mobile-breakpoint) {
+                margin-left: -3px;
+            }
+            @media(min-width: $desktop-breakpoint) {
+                img { width: 24px;}
             }
             span {
-
                 font-weight: 400;
                 font-size: .85em;
             }
@@ -54,12 +56,21 @@
                 position: absolute;
                 height: 100%;
                 bottom: 0;
-                cursor: pointer;
                 display: flex;
                 -ms-flex-align: center;
                 align-items: center;
                 flex-wrap: nowrap;
                 overflow: hidden;
+                img {width: 18px; margin-left: 1px; margin-right: 1px; }
+                @media(min-width: $desktop-breakpoint) {
+                    img { width: 22px; margin-left: 1px; margin-right: 1px;}
+                }
+                &.first {
+                    z-index: 4;
+                }
+                &.second {
+                    z-index: 5;
+                }
                 mat-icon {
                     height:100px;
                     width:100px;

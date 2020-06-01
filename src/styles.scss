@@ -727,6 +727,14 @@ mat-chip-list mat-chip {
   color: $dark-gray !important;
 }
 
+.toolbar-filler {
+  display:grid;
+  align-items: center;
+  img {
+    margin-bottom: 3px;
+  }
+}
+
 
 .desktop-bar {
    margin: 0 auto;
