@@ -12,6 +12,8 @@ export class AvatarComponent implements OnInit {
   @Output() select: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() image: string
   @Input() editable: boolean;
+  @Input() mobile: boolean;
+
 
   constructor() { }
 

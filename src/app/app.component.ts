@@ -26,6 +26,7 @@ import { OverlayService } from './shared/services/overlay.service';
 import { LocalStorageService } from './shared/services/local-storage/local-storage.service';
 import { LookupResponse } from './shared/services/lookup/lookup.response';
 import { IUserPreferences } from './shared/services/filter/filter-state';
+import { HeaderService } from './shared/services/header.service';
 
 @Component({
   selector: 'app-root',
@@ -54,6 +55,7 @@ export class AppComponent implements OnInit {
   public desktopLinkItems: NavigationItem[] = [];
   public selectedDesktopNavSubItems: NavigationItem[];
   public accountNav: NavigationItem;
+  public showMobileHeader = true;;
 
 
   public showFilterBar: boolean;
@@ -87,6 +89,7 @@ export class AppComponent implements OnInit {
     private zone: NgZone,
     private userService: UserService,
     private overlayService: OverlayService,
+    private headerService: HeaderService,
     private localStorageService: LocalStorageService,
     private route: ActivatedRoute,
     @Inject(DOCUMENT) private document: any
@@ -105,6 +108,9 @@ export class AppComponent implements OnInit {
         this.scrollSubscription$.unsubscribe();
       }
     })
+    this.headerService.headerVisible$.subscribe(hide => {
+      this.showMobileHeader = !hide;
+    });
     this.navigationService.navConfig$.subscribe(nav => {
       this.categoryFilters = nav.categoryItems;
       this.navHeader = nav.navigationHeader;

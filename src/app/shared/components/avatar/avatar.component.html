@@ -1,7 +1,10 @@
 <div class="avatar-wrapper" (click)="onSelect($event)">
   <img *ngIf="image" [src]="image">
-  <img *ngIf="!image" src="./assets/images/profile-large.png">
-  <div *ngIf="editable" class="overlay">
+  <ng-container *ngIf="!image">
+    <img *ngIf="!mobile" src="./assets/images/profile-large.png">
+    <img *ngIf="mobile" src="./assets/images/profile-add.svg">
+  </ng-container>
+  <div *ngIf="editable" [class.overlay]="!mobile" [class.mobile]="mobile && !image">
     <mat-icon>add</mat-icon>
   </div>
 </div>

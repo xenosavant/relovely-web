@@ -1,6 +1,6 @@
 <ng-container>
   <div #mobileLayout class="theme-wrapper" *ngIf="mobile">
-    <mat-toolbar class="topbar" color="primary"
+    <mat-toolbar class="topbar" color="primary" *ngIf="showMobileHeader"
       [class.mat-elevation-z2]="(!(showNavBar || showFilterBar) && !scrolledToTop) && !sidenavOpen"
       [ngStyle]="{'z-index':(!(showNavBar || showFilterBar) || !scrolledToTop) && !sidenavOpen ? 101 : 1 }">
       <mat-toolbar-row [class.no-border]=" scrolledToTop && (showFilterBar || showNavBar)" class="top-bar gray"

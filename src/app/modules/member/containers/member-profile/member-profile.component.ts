@@ -42,8 +42,10 @@ export class MemberProfileComponent implements OnInit {
     this.following = this.user.following;
   }
 
-  update() {
-    this.updateImage.emit(true);
+  onUpdate() {
+    if (this.owner) {
+      this.updateImage.emit(true);
+    }
   }
 
 

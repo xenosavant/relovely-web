@@ -9,6 +9,7 @@ import { FileUploadService } from '@app/shared/services/file-upload.service';
 import { concatMap, tap } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserAuth } from '@app/shared/models/user-auth.model';
+import { HeaderService } from '@app/shared/services/header.service';
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +32,8 @@ export class ProfileComponent implements OnInit {
   public form: FormGroup;
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private userService: UserService, private zone: NgZone, private ref: ChangeDetectorRef,
-    private uploadService: FileUploadService) { }
+    private uploadService: FileUploadService,
+    private headerService: HeaderService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(param => {
@@ -63,6 +65,7 @@ export class ProfileComponent implements OnInit {
 
   onCloseCropper($event: any) {
     this.crop = false;
+    this.headerService.hideHeader(false);
   }
 
   onImageCropped(image: ImageSet) {
@@ -74,15 +77,18 @@ export class ProfileComponent implements OnInit {
       concatMap(response =>
         this.userService.updateUser(this.user.id, { profileImageUrl: response.secure_url })
       )).subscribe(result => {
+        this.headerService.hideHeader(false);
         this.crop = false;
         this.user = { ...this.user, profileImageUrl: tempUrl }
       }, error => {
+        this.headerService.hideHeader(false);
         this.crop = false;
       })
   }
 
   public onUpdateImage($event: any): void {
     this.imageChangedEvent = $event;
+    this.headerService.hideHeader(true);
     this.crop = true;
   }
 }

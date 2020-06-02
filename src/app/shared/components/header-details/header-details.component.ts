@@ -20,12 +20,16 @@ export class HeaderDetailsComponent implements OnInit {
   @Output() update: EventEmitter<any> = new EventEmitter();
 
   desktop: boolean;
+  public rating: number;
+  public ratingDisplay: string;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.rating = (this.user.averageRating / 5) * 100;
+    this.ratingDisplay = ((this.rating / 100) * 5).toFixed(1);
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.desktop = !result.matches;
       this.ref.markForCheck();
@@ -41,7 +45,7 @@ export class HeaderDetailsComponent implements OnInit {
     this.action.emit(action);
   }
 
-  onUdpate() {
+  onUpdate() {
     this.update.emit();
   }
 

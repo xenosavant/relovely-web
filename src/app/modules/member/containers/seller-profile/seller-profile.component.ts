@@ -75,7 +75,9 @@ export class SellerProfileComponent implements OnInit {
   }
 
   onUpdate() {
-    this.updateImage.emit(true);
+    if (this.owner) {
+      this.updateImage.emit(true);
+    }
   }
 
   onAction(action: string) {

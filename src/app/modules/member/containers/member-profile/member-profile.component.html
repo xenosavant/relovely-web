@@ -15,12 +15,11 @@
           <li><img src="./assets/images/location.png"> Newark, NJ</li>
           <li></li>
         </ul>
-        <input #input type="file" style="visibility:hidden" (change)="onUpdateImage($event)" />
       </div>
     </div>
   </div>
   <div class="member-profile-container">
-    <app-profile-header [disableSave]="disableSave" [editing]="edit" (action)="onAction($event)" (update)="update()"
+    <app-profile-header [disableSave]="disableSave" [editing]="edit" (action)="onAction($event)" (update)="onUpdate()"
       [owner]="owner" [user]="user">
     </app-profile-header>
     <mat-tab-group *ngIf="!edit" mat-align-tabs="center">

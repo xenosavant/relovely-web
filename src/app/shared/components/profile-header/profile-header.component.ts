@@ -22,8 +22,6 @@ export class ProfileHeaderComponent implements OnChanges {
   @Output() action: EventEmitter<string> = new EventEmitter<string>();
   public statItems: StatItem[];
   public desktop: boolean;
-  public rating: number;
-  public ratingDisplay: string;
 
 
   constructor(private ref: ChangeDetectorRef, private breakpointObserver: BreakpointObserver) { }
@@ -34,8 +32,6 @@ export class ProfileHeaderComponent implements OnChanges {
       this.desktop = !result.matches;
       this.ref.markForCheck();
     })
-    this.rating = (this.user.averageRating / 5) * 100;
-    this.ratingDisplay = ((this.rating / 100) * 5).toFixed(1);
     if (this.user.type === 'seller') {
       this.statItems.push({ name: 'Listings', count: this.user.listings.length });
       this.statItems.push({ name: 'Sales', count: this.user.sales.length });
