@@ -1,0 +1,130 @@
+@import '../../../../styles-variables.scss';
+.header-container {
+    margin-left:12px;
+    margin-right:12px;
+    display:flex;
+    flex-direction: row;
+    
+    align-items:  center;
+    height:100px;
+
+    &.desktop {
+        margin:0 auto;
+        max-width: 1312px;
+        padding-top: 50px;
+        display: grid;
+        grid-template-columns: 25% 50% 25%;
+        grid-template-rows: auto;
+        .avatar-wrapper {
+            width:200px !important;
+            border-radius: 50%;
+            display: inline-block;
+            border: 3px solid $background-gray;
+        }
+        .title-wrapper {
+            padding-left: 0 !important;
+        }
+    }
+
+.avatar-wrapper {
+    width:75px;
+}
+
+.title-wrapper {
+    height:2.5em;
+    line-height:1.25em;
+    color: $dark-blue;
+    padding-left:24px;
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+    fa-icon {
+        cursor: pointer;
+    }
+    @media( min-width:$desktop-breakpoint) {
+        color: white;
+        font-size: 1.4em;
+        }
+        @media( min-width:900px) {
+        padding-left:50px;
+    }
+    .rating-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .number {
+            font-size: 14px;
+            line-height: 14px;
+            margin-right: 4px;
+            @media(min-width: $desktop-breakpoint) {
+                color: #cfcece;
+                font-size: 20px;
+                line-height: 18px;
+                height: 20px;
+                margin-right: 8px;
+            }
+        }
+        .review {
+            width: fit-content;
+            display: grid;
+            grid-gap: 6px;
+            font-size: 1em;
+            position: relative;
+            display: flex;
+            &.first {
+                z-index: 3;
+            }
+            img { width: 20px;}
+            @media(max-width: $mobile-breakpoint) {
+                margin-left: -3px;
+            }
+            @media(min-width: $desktop-breakpoint) {
+                img { width: 24px;}
+            }
+            span {
+                font-weight: 400;
+                font-size: .85em;
+            }
+            .overlay {
+                position: absolute;
+                height: 100%;
+                bottom: 0;
+                display: flex;
+                -ms-flex-align: center;
+                align-items: center;
+                flex-wrap: nowrap;
+                overflow: hidden;
+                img {width: 18px; margin-left: 1px; margin-right: 1px; }
+                @media(min-width: $desktop-breakpoint) {
+                    img { width: 22px; margin-left: 1px; margin-right: 1px;}
+                }
+                &.first {
+                    z-index: 4;
+                }
+                &.second {
+                    z-index: 5;
+                }
+                mat-icon {
+                    height:100px;
+                    width:100px;
+                    visibility: visible;
+                    color: white;
+                    font-size: 100px;
+                }
+            }
+        }
+    }
+    .name {
+        fa-icon {
+            padding-right:8px;
+        }
+    }
+}
+
+.button-wrapper {
+    min-width: 100px;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    }
+}

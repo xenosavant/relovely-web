@@ -1,45 +1,68 @@
 <ng-template cdkPortal #productCreateModal="cdkPortal">
     <app-product-create [product]="editProduct" [sellerId]="user.id" (close)="close($event)"></app-product-create>
 </ng-template>
-<div class="profile-container">
-    <app-profile-header [disableSave]="disableSave" [editing]="edit" (action)="onAction($event)" (update)="update()"
-        [owner]="owner" [user]="user" [following]="following">
-    </app-profile-header>
-    <mat-tab-group *ngIf="!edit">
-        <mat-tab label="Listings">
-            <app-products-list [user]="currentUser" (edit)="showEditModal($event)" (create)="showCreateModal($event)"
-                [showCreate]="showCreate" [showGrid]="true" [showHeader]="false" [products]="user.listings">
-            </app-products-list>
-        </mat-tab>
-        <mat-tab label="Sales">
-            <app-products-list [user]="currentUser" [showGrid]="true" [showHeader]="false" [products]="user.sales">
-            </app-products-list>
-        </mat-tab>
-        <mat-tab label="Followers">
-            <app-users-list [users]="followerUsers"></app-users-list>
-        </mat-tab>
-        <mat-tab label="Following">
-            <app-users-list [users]="followingUsers"></app-users-list>
-        </mat-tab>
-    </mat-tab-group>
-    <div *ngIf="edit" class="edit">
-        <div class="error">{{error}}</div>
-        <form novalidate [formGroup]="editForm">
-            <div>
-                <mat-form-field appearance="outline">
-                    <input matInput placeholder="First Name" formControlName="first" />
-                </mat-form-field>
+<div *ngIf="!mobile" class="header-bar">
+    <app-header-details (update)="onUpdate()" (action)="onAction($event)" *ngIf="!loading" [owner]="owner"
+        [editing]="edit" [disableSave]="disableSave" [following]="following" [user]="user">
+    </app-header-details>
+</div>
+<div class="full-content profile" *ngIf="!loading">
+    <div class="sidebar-wrapper" *ngIf="!mobile">
+        <div class="desktop-inner">
+            <div class="info-wrapper">
+                <ul>
+                    <li><img src="./assets/images/instagram.png"> @influencer1987</li>
+                    <li>
+                        <img src="./assets/images/black-heart.svg"> 546 Favorites
+                    </li>
+                    <li><img src="./assets/images/location.png"> Newark, NJ</li>
+                    <li></li>
+                </ul>
+                <input #input type="file" style="visibility:hidden" (change)="onUpdateImage($event)" />
             </div>
-            <div>
-                <mat-form-field appearance="outline">
-                    <input matInput placeholder="Last Name" formControlName="last" />
-                </mat-form-field>
-            </div>
-            <div>
-                <mat-form-field appearance="outline">
-                    <input matInput placeholder="Username" formControlName="username" />
-                </mat-form-field>
-            </div>
-        </form>
+        </div>
+    </div>
+    <div class="profile-container">
+        <app-profile-header [disableSave]="disableSave" [editing]="edit" (action)="onAction($event)" (update)="update()"
+            [owner]="owner" [user]="user" [following]="following">
+        </app-profile-header>
+        <mat-tab-group *ngIf="!edit">
+            <mat-tab label="Listings">
+                <app-products-list [user]="currentUser" (edit)="showEditModal($event)"
+                    (create)="showCreateModal($event)" [showCreate]="showCreate" [showGrid]="true" [showHeader]="false"
+                    [products]="user.listings">
+                </app-products-list>
+            </mat-tab>
+            <mat-tab label="Sales">
+                <app-products-list [user]="currentUser" [showGrid]="true" [showHeader]="false" [products]="user.sales">
+                </app-products-list>
+            </mat-tab>
+            <mat-tab label="Followers">
+                <app-users-list [users]="followerUsers"></app-users-list>
+            </mat-tab>
+            <mat-tab label="Following">
+                <app-users-list [users]="followingUsers"></app-users-list>
+            </mat-tab>
+        </mat-tab-group>
+        <div *ngIf="edit" class="edit">
+            <div class="error">{{error}}</div>
+            <form novalidate [formGroup]="editForm">
+                <div>
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="First Name" formControlName="first" />
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="Last Name" formControlName="last" />
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="Username" formControlName="username" />
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

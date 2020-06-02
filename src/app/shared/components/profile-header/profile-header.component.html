@@ -1,39 +1,5 @@
-<div class="header-container" [class.desktop]="desktop">
-  <div class="avatar-wrapper">
-    <app-avatar (select)="onUpdate()" [editable]="owner" [image]="user.profileImageUrl"></app-avatar>
-  </div>
-  <div class="title-wrapper">
-    <div class="name">
-      <span *ngIf="owner">
-        <fa-icon *ngIf="!editing" (click)="onAction('edit')" icon="edit"></fa-icon>
-        <fa-icon *ngIf="editing" (click)="onAction('close')" icon="undo"></fa-icon>
-      </span>{{user.username}}
-    </div>
-    <div class="rating-wrapper" *ngIf="user.type === 'seller'">
-      <div class="number">({{ratingDisplay}})</div>
-      <div class="review">
-        <img src="./assets/images/rating-heart.svg" />
-        <img src="./assets/images/rating-heart.svg" />
-        <img src="./assets/images/rating-heart.svg" />
-        <img src="./assets/images/rating-heart.svg" />
-        <img src="./assets/images/rating-heart.svg" />
-        <div class="overlay" [style.width.%]="rating">
-          <img src="./assets/images/pink-heart.svg" />
-          <img src="./assets/images/pink-heart.svg" />
-          <img src="./assets/images/pink-heart.svg" />
-          <img src="./assets/images/pink-heart.svg" />
-          <img src="./assets/images/pink-heart.svg" />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="button-wrapper">
-    <button mat-stroked-button *ngIf="!owner && !following" class="primary" (click)="onAction('follow')">Follow</button>
-    <button mat-stroked-button *ngIf="!owner && following" class="primary"
-      (click)="onAction('unfollow')">Unfollow</button>
-    <button mat-stroked-button *ngIf="owner && editing" class="primary" (click)="onAction('save')"
-      [disabled]="disableSave">Save
-    </button>
-  </div>
+<div *ngIf="!desktop">
+  <app-header-details [editing]="editing" [disableSave]="disableSave" [following]="following" (update)="onUpdate()"
+    (action)="onAction($event)" [user]="user" [owner]="owner"></app-header-details>
 </div>
 <app-profile-stats *ngIf="!editing" [statItems]="statItems"></app-profile-stats>

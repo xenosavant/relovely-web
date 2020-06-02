@@ -30,7 +30,10 @@ export class ProfileHeaderComponent implements OnChanges {
 
   ngOnChanges() {
     this.statItems = [];
-
+    this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
+      this.desktop = !result.matches;
+      this.ref.markForCheck();
+    })
     this.rating = (this.user.averageRating / 5) * 100;
     this.ratingDisplay = ((this.rating / 100) * 5).toFixed(1);
     if (this.user.type === 'seller') {
@@ -44,10 +47,6 @@ export class ProfileHeaderComponent implements OnChanges {
       this.statItems.push({ name: 'Following', count: this.user.following.length });
       this.statItems.push({ name: '', count: -1 });
     }
-    this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
-      this.desktop = !result.matches;
-      this.ref.markForCheck();
-    })
   }
 
   onUpdate() {

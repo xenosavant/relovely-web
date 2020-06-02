@@ -22,6 +22,7 @@ export class MemberProfileComponent implements OnInit {
   owner = false;
   @Output() updateImage: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() action: EventEmitter<string> = new EventEmitter<string>();
+  @Input() mobile: boolean;
 
   @Input() currentUser: UserDetail;
   following: UserList[];

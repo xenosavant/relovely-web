@@ -109,6 +109,7 @@ import { CardComponent } from './components/card/card.component';
 import { AddPaymentCardComponent } from './components/add-payment-card/add-payment-card.component';
 import { AddBankComponent } from './components/add-bank/add-bank.component';
 import { OrderStatusComponent } from './components/order-status/order-status.component';
+import { HeaderDetailsComponent } from './components/header-details/header-details.component';
 
 
 library.add(
@@ -220,7 +221,8 @@ library.add(
     CardComponent,
     AddPaymentCardComponent,
     AddBankComponent,
-    OrderStatusComponent],
+    OrderStatusComponent,
+    HeaderDetailsComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -280,7 +282,8 @@ library.add(
     CardComponent,
     AddPaymentCardComponent,
     AddBankComponent,
-    OrderStatusComponent
+    OrderStatusComponent,
+    HeaderDetailsComponent
   ],
   providers: [DecimalPipe],
 })

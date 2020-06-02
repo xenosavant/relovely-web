@@ -27,6 +27,7 @@ export class SellerProfileComponent implements OnInit {
   @Input() owner = false;
   @Output() updateImage: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() action: EventEmitter<string> = new EventEmitter<string>();
+  @Input() mobile: boolean;
   edit = false;
   users: UserDetail[];
   showCreate = false;
@@ -73,11 +74,12 @@ export class SellerProfileComponent implements OnInit {
     this.overlayService.close();
   }
 
-  update() {
+  onUpdate() {
     this.updateImage.emit(true);
   }
 
   onAction(action: string) {
+    console.log(action);
     switch (action) {
       case 'follow':
         this.followUnfollow(true);
