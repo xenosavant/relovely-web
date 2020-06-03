@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { UserDetail } from '@app/shared/models/user-detail.model';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { NavigationService } from '@app/shared/services/navigation.service';
 
 @Component({
   selector: 'app-header-details',
@@ -25,7 +26,8 @@ export class HeaderDetailsComponent implements OnInit {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private ref: ChangeDetectorRef) { }
+    private ref: ChangeDetectorRef,
+    private navigationService: NavigationService) { }
 
   ngOnInit() {
     this.rating = (this.user.averageRating / 5) * 100;
@@ -47,6 +49,10 @@ export class HeaderDetailsComponent implements OnInit {
 
   onUpdate() {
     this.update.emit();
+  }
+
+  goToRatings() {
+    this.navigationService.navigate({ path: `/member/ratings/${this.user.id}` })
   }
 
 }

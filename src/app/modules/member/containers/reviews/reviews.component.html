@@ -1,5 +1,48 @@
 <div class="page-wrapper">
     <div *ngIf="!mobile" class="page-title">
-        <h1>{{title}}</h1>
+        <h1>{{name}} Reviews</h1>
+    </div>
+</div>
+
+<div *ngIf="!loading" class="reviews-wrapper">
+    <div class="review-item" *ngFor="let review of reviews">
+        <a appClick (click)="goToProduct(review.product.id)" target="_blank" class="title">
+            {{review.product.title}}
+        </a>
+        <div class="reviewer">
+            <div class="image">
+                <app-avatar (click)="goToProfile(review.reviewer.id)" [image]="review.reviewer.profileImageUrl">
+                </app-avatar>
+            </div>
+            <div class="name">{{review.reviewer.username}}</div>
+        </div>
+        <div class="rating-wrapper">
+            <div class="number">({{review.rating.toFixed(1)}})</div>
+            <div class="rating">
+                <img src="./assets/images/rating-heart.svg" />
+                <img src="./assets/images/rating-heart.svg" />
+                <img src="./assets/images/rating-heart.svg" />
+                <img src="./assets/images/rating-heart.svg" />
+                <img src="./assets/images/rating-heart.svg" />
+                <div class="overlay" [style.width.%]="review.percentage">
+                    <img src="./assets/images/pink-heart.svg" />
+                    <img src="./assets/images/pink-heart.svg" />
+                    <img src="./assets/images/pink-heart.svg" />
+                    <img src="./assets/images/pink-heart.svg" />
+                    <img src="./assets/images/pink-heart.svg" />
+                </div>
+            </div>
+        </div>
+        <div class="date">
+            Reviewed on {{review.date | date}}
+        </div>
+        <div class="review">
+            <div class="review-title">
+                {{review.title}}
+            </div>
+            <div class="body">
+                {{review.body}}
+            </div>
+        </div>
     </div>
 </div>

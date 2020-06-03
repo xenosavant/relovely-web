@@ -11,6 +11,8 @@ import { UserAuth } from '@app/shared/models/user-auth.model';
 import { SellerVerificationRequest } from './seller-verification.request';
 import { BankAccountRequest } from './bank-acount-request';
 import { PaymentCard } from '@app/shared/interfaces/payment-card';
+import { Review } from '@app/shared/models/review.model';
+import { UserReviewsResponse } from './user-reviews.response';
 
 @Injectable({ providedIn: 'root' })
 export class
@@ -85,6 +87,14 @@ export class
         );
     }
 
+    getReviews(userId: string): Observable<UserReviewsResponse> {
+        return this.httpClient.get<UserReviewsResponse>(`${this.apiBaseUrl}/users/${userId}/reviews`).pipe(
+            map((reviews: UserReviewsResponse) => {
+                return reviews;
+            })
+        );
+    }
+
     me(): Observable<UserAuth> {
         return this.httpClient.get<UserAuth>(`${this.apiBaseUrl}/users/me`).pipe(
             map((user: UserAuth) => {
@@ -143,6 +153,5 @@ export class
 
         );
     }
-
 
 }

@@ -3,10 +3,13 @@ import { UserList } from "./user-list.model";
 
 export class Review {
     id?: string;
-    review: string;
+    body: string;
+    title: string;
+    percentage?: string;
     rating: number;
     seller?: UserList;
     reviewer?: UserList;
+    reviewerId?: string;
     product?: Product;
     date?: Date;
 }

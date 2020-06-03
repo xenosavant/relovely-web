@@ -10,7 +10,7 @@
                 <fa-icon *ngIf="editing" (click)="onAction('close')" icon="undo"></fa-icon>
             </span>{{user.username}}
         </div>
-        <div class="rating-wrapper" *ngIf="user.type === 'seller'">
+        <div class="rating-wrapper" (click)="goToRatings()" *ngIf="user.type === 'seller' && rating !== 0">
             <div class="number">({{ratingDisplay}})</div>
             <div class="review">
                 <img src="./assets/images/rating-heart.svg" />

@@ -1,10 +1,109 @@
+@import '../../../../../styles-variables.scss';
+
 :host {
     flex: auto;
 }
 
-.page-wrapper {
+.reviews-wrapper {
     margin: 0 auto;
-    max-width: 800px;
+    max-width: 500px;
+    margin-top: 24px;
+    @media(max-width: $mobile-breakpoint) {
+        padding: 8px;
+        margin-top: 16px;
+    }
+    .review-item {
+        .title {
+            font-size: 1.4em;
+        }
+        .reviewer {
+            height: 35px;
+            display: flex;
+            align-items: center;
+            margin: 12px 0px 6px;
+            .image {
+                width: 35px;
+                height: 35px;
+            }
+            .name {
+                padding-left: 8px;
+            }
+        }
+        .rating-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 6px 0px 6px;
+            .number {
+                font-size: 14px;
+                line-height: 14px;
+                margin-right: 4px;
+                @media(min-width: $desktop-breakpoint) {
+                    font-size: 20px;
+                    line-height: 18px;
+                    margin-right: 8px;
+                }
+            }
+            .rating {
+                width: fit-content;
+                display: grid;
+                grid-gap: 6px;
+                font-size: 1em;
+                position: relative;
+                display: flex;
+                &.first {
+                    z-index: 3;
+                }
+                img { width: 20px;}
+                @media(min-width: $desktop-breakpoint) {
+                    img { width: 24px;}
+                }
+                span {
+                    font-weight: 400;
+                    font-size: .85em;
+                }
+                .overlay {
+                    position: absolute;
+                    height: 100%;
+                    bottom: 0;
+                    display: flex;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    flex-wrap: nowrap;
+                    overflow: hidden;
+                    img {width: 18px; margin-left: 1px; margin-right: 1px; }
+                    @media(min-width: $desktop-breakpoint) {
+                        img { width: 22px; margin-left: 1px; margin-right: 1px;}
+                    }
+                    &.first {
+                        z-index: 4;
+                    }
+                    &.second {
+                        z-index: 5;
+                    }
+                    mat-icon {
+                        height:100px;
+                        width:100px;
+                        visibility: visible;
+                        color: white;
+                        font-size: 100px;
+                    }
+                }
+            }
+        }
+        .date {
+            color: $dark-gray-47;
+            margin-bottom: 6px;
+        }
+        .review {
+            .review-title {
+                font-size: 1.1em;
+                margin: 12px 0px 6px;
+                font-weight: 600;
+            }
+            .body {
 
-    
+            }
+        }
+    }
 }

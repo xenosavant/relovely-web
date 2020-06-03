@@ -27,7 +27,8 @@ export class ReviewComponent implements OnInit {
   mobile: boolean;
   rating: number = 0;
   form: FormGroup = new FormGroup({
-    review: new FormControl('', [Validators.required]),
+    body: new FormControl('', [Validators.required]),
+    title: new FormControl('', [Validators.required]),
   })
   saving = false;
   readonly: boolean;
@@ -65,7 +66,8 @@ export class ReviewComponent implements OnInit {
     this.saving = true;
     this.reviewService.postReview({
       rating: this.rating,
-      review: this.form.get('review').value
+      title: this.form.get('title').value,
+      body: this.form.get('body').value
     }, this.order.product.id).subscribe(response => {
       this.saving = false;
       this.readonly = true;
@@ -73,6 +75,14 @@ export class ReviewComponent implements OnInit {
       this.title = 'Product Review'
       this.ref.markForCheck();
     });
+  }
+
+  onImageClick() {
+    this.navigationService.navigate({ path: `/products/detail/${this.order.product.id}` })
+  }
+
+  goToProfile(id: string) {
+    this.navigationService.navigate({ path: `/member/${this.order.seller.id}` });
   }
 
 }

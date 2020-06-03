@@ -40,10 +40,12 @@
             <div class="form">
                 <form [formGroup]="form">
                     <div class="text">
-                        <div class="label"> Tell us more about the item.</div>
+                        <mat-form-field appearance="outline">
+                            <input matInput placeholder="Give the review a short title." formControlName="title" />
+                        </mat-form-field>
                         <mat-form-field appearance="outline">
                             <textarea matInput placeholder="Write a review, be descriptive!"
-                                formControlName="review"></textarea>
+                                formControlName="body"></textarea>
                         </mat-form-field>
                     </div>
                     <button mat-stroked-button [disabled]="!form.valid || rating === 0" (click)="onSubmit()"
@@ -72,8 +74,16 @@
                     <fa-icon class="heart" [class.selected]="order.review.rating >= 5" icon="heart"></fa-icon>
                 </div>
             </div>
+            <div class="date">
+                Reviewed on {{order.review.date | date}}
+            </div>
             <div class="readonly-review">
-                {{order.review.review}}
+                <div class="title">
+                    {{order.review.title}}
+                </div>
+                <div class="body">
+                    {{order.review.body}}
+                </div>
             </div>
         </div>
     </div>
