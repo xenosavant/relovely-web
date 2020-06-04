@@ -90,30 +90,30 @@
   <div class="theme-wrapper light-theme" *ngIf="!mobile">
     <div class="content-wrapper" [class.content-noscroll]="overlayService.isOpen">
       <ng-container *ngTemplateOutlet="desktopToolbar"></ng-container>
+      <div class="mega-menu-wrapper" *ngIf="showMegaMenu">
+        <div class="mega-menu">
+          <div class="mega-menu-inner-wrapper" (mouseleave)="onLeaveMegaMenu($event)">
+            <div class="mega-menu-header">
+              <div (click)="navigate(item)" *ngFor="let item of selectedDesktopNavSubItems" class="menu-item">
+                <h1>{{item.name}}</h1>
+              </div>
+            </div>
+            <div class="mega-menu-body">
+              <div *ngFor="let item of selectedDesktopNavSubItems">
+                <ul>
+                  <li (click)="navigate(subItem)" *ngFor="let subItem of item.subItems">{{subItem.name}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="body-wrapper">
         <ng-container *ngIf="!loading">
           <ng-container *ngTemplateOutlet="content"></ng-container>
         </ng-container>
       </div>
       <ng-container *ngTemplateOutlet="footer"></ng-container>
-    </div>
-    <div class="mega-menu-wrapper" *ngIf="showMegaMenu">
-      <div class="mega-menu">
-        <div class="mega-menu-inner-wrapper" (mouseleave)="onLeaveMegaMenu($event)">
-          <div class="mega-menu-header">
-            <div (click)="navigate(item)" *ngFor="let item of selectedDesktopNavSubItems" class="menu-item">
-              <h1>{{item.name}}</h1>
-            </div>
-          </div>
-          <div class="mega-menu-body">
-            <div *ngFor="let item of selectedDesktopNavSubItems">
-              <ul>
-                <li (click)="navigate(subItem)" *ngFor="let subItem of item.subItems">{{subItem.name}}</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </ng-container>
