@@ -39,6 +39,7 @@ export class ProductsComponent implements OnInit {
   filterSub: Subscription = null;
   parentCategory: string = null;
   checkBack: boolean;
+  loading = true;
 
   @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
 
@@ -68,7 +69,6 @@ export class ProductsComponent implements OnInit {
       this.mobile = result.matches;
     });
     this.route.params.subscribe(params => {
-      console.log(params);
       if (params['categoryId']) {
         this.categoryId = params['categoryId'];
         this.currentNavItem = this.lookupService.navLookup[params['categoryId']];
@@ -76,6 +76,7 @@ export class ProductsComponent implements OnInit {
           this.filterSub.unsubscribe();
         }
         this.filterSub = this.filterService.filterStateSubject$.subscribe(state => {
+          this.loading = true;
           this.getProducts(state);
         });
       } else {
@@ -128,6 +129,7 @@ export class ProductsComponent implements OnInit {
           } else {
             this.empty = false;
           }
+          this.loading = false;
           this.ref.markForCheck();
         })
     })
@@ -136,6 +138,10 @@ export class ProductsComponent implements OnInit {
   goToParent() {
     const cat: Category = this.lookupService.getCategory(this.categoryId);
     this.router.navigate(['/products/' + cat.parent.id]);
+  }
+
+  onClose() {
+    this.overlayService.close();
   }
 
 }

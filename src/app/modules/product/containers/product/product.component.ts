@@ -13,6 +13,7 @@ import { UserService } from '@app/shared/services/user/user.service';
 import { ThrowStmt } from '@angular/compiler';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from '@app/shared/services/overlay.service';
+import { UserAuth } from '@app/shared/models/user-auth.model';
 
 @Component({
   selector: 'app-product',
@@ -23,12 +24,15 @@ import { OverlayService } from '@app/shared/services/overlay.service';
 export class ProductComponent implements OnInit {
 
   @ViewChild('viewImage', { static: true }) viewImageElement: TemplatePortal<any>;
+  @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
 
   product: Product;
   mobile: boolean;
+  currentUser: UserAuth;
   loading = true;
   videoThumbnail: string;
   videoPadding = 0;
+  editProduct: Product;
   seller: boolean = false;
   currentItem: string | VideoMetaData;
   id: string;
@@ -60,18 +64,21 @@ export class ProductComponent implements OnInit {
     private zone: NgZone,
     private ref: ChangeDetectorRef,
     private productService: ProductService,
-    private orderService: OrderService,
     private userService: UserService,
     private overlayService: OverlayService) { }
 
   ngOnInit() {
+    this.currentUser = this.userService.currentUser;
+    console.log(this.currentUser);
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.id = params.get('id');
-
       this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
         this.mobile = result.matches;
         if (!this.product) {
           this.productService.getProduct(this.id).subscribe(response => {
+            if (this.currentUser && this.currentUser.id === response.sellerId) {
+              this.seller = true;
+            }
             this.product = response;
             this.currentItem = this.product.videos[0] ? this.product.videos[0] : this.product.images[0].cropped;
             this.currentImage = this.product.videos[0] ? null : this.product.images[0].original;
@@ -100,14 +107,9 @@ export class ProductComponent implements OnInit {
                 }
               };
             }
-            this.userService.getCurrentUser().then(user => {
-              if (user && user.id === this.product.seller.id) {
-                this.seller = true;
-              }
-              this.zone.run(() => {
-                this.loading = false;
-                this.ref.markForCheck();
-              })
+            this.zone.run(() => {
+              this.loading = false;
+              this.ref.markForCheck();
             })
           })
         }
@@ -124,7 +126,12 @@ export class ProductComponent implements OnInit {
   }
 
   edit() {
+    this.editProduct = this.product;
+    this.overlayService.open(this.productCreateModal);
+  }
 
+  close() {
+    this.overlayService.close();
   }
 
   carouselTranslated(event: any) {

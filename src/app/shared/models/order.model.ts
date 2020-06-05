@@ -25,4 +25,4 @@ export class Order {
     public orderNumber: string;
 }
 
-export type OrderStatus = 'purchased' | 'shipped' | 'delivered' | 'resolved' | 'cancelled' | 'error' | 'disputed';
+export type OrderStatus = 'purchased' | 'shipped' | 'delivered' | 'refunded' | 'cancelled' | 'error' | 'disputed';

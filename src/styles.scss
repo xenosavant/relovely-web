@@ -860,7 +860,7 @@ mat-toolbar-row.mega-menu-bar {
   max-width: $header-width;
   flex: auto;
   @media(max-width: $header-width) {
-    width:100%;
+    width:100vw;
   }
   &.empty {
     display: flex;

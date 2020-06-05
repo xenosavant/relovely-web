@@ -9,7 +9,7 @@
   <div *ngFor="let product of products; let i = index" class="product-wrapper" (mouseenter)="onEnter(i)"
     (mouseleave)="onLeave()" [class.mat-elevation-z4]="hoverIndex === i">
     <app-product-list [showGrid]="showGrid" (edit)="onEdit($event)" [showHeader]="showHeader"
-      (selectProduct)="gotToProduct($event)" [product]="product" [user]="user" [seller]="userId === product.sellerId">
+      (selectProduct)="gotToProduct($event)" [product]="product" [user]="user" [seller]="user.id === product.sellerId">
     </app-product-list>
   </div>
 </div>

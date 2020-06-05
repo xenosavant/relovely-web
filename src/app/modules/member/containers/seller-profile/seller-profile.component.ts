@@ -48,9 +48,6 @@ export class SellerProfileComponent implements OnInit {
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-    // this.user.listings = products.filter(p => {
-    //   return p.seller.username === this.user.username;
-    // })
     if (this.owner) {
       this.showCreate = true;
     }

@@ -27,4 +27,5 @@ export class Product {
     public auction?: boolean = false;
     public tags?: string[];
     public cloudId?: string;
+    public weight: number;
 }

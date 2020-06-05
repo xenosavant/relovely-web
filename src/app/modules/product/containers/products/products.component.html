@@ -15,10 +15,10 @@
         <app-desktop-filters></app-desktop-filters>
     </div>
 </ng-container>
-<div *ngIf="!empty" class="products">
+<div *ngIf="!empty && !loading" class="products">
     <div class="products-content">
         <app-products-list (edit)="editProduct($event)" [user]="currentUser" [products]="products" [showGrid]="grid"
-            [showHeader]="true">
+            [showHeader]="true" (close)="onClose()">
         </app-products-list>
     </div>
 </div>
@@ -36,6 +36,6 @@
     </div>
 </div>
 <ng-template cdkPortal #productCreateModal="cdkPortal">
-    <app-product-create [product]="product" [sellerId]="currentUserId" (close)="close($event)">
+    <app-product-create [product]="product" [sellerId]="currentUserId" (close)="onClose($event)">
     </app-product-create>
 </ng-template>

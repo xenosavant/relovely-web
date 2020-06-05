@@ -122,10 +122,16 @@
     }
 }
 
-.button-wrapper {
-    min-width: 100px;
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
+    .button-wrapper {
+        min-width: 80px;
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        button {
+            @media(max-width: $mobile-breakpoint) {
+                font-size: 14px;
+                min-height: 25px !important;
+            }
+        }
     }
 }

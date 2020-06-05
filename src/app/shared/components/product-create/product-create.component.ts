@@ -15,6 +15,7 @@ import { resolve } from 'dns';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { KeyValue } from '@app/shared/interfaces/key-value.interface';
 import { FileUploadService } from '@app/shared/services/file-upload.service';
+import { weights } from '../../../data/weights.ts';
 
 @Component({
   selector: 'app-product-create',
@@ -53,6 +54,7 @@ export class ProductCreateComponent implements OnInit {
   edit = false;
   title: string;
   cuurencyChars = new RegExp('[\.,$]', 'g');
+  weights = weights;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -89,7 +91,8 @@ export class ProductCreateComponent implements OnInit {
         price: new FormControl(this.product.price, [Validators.required]),
         retailPrice: new FormControl(this.product.retailPrice),
         color: new FormControl(this.product.colorId),
-        tag: new FormControl('')
+        tag: new FormControl(''),
+        weight: new FormControl(this.product.weight, [Validators.required])
       }, this.validateCategories);
       this.tags = [...this.product.tags];
       this.images = this.product.images;
@@ -108,29 +111,13 @@ export class ProductCreateComponent implements OnInit {
         tag: new FormControl(''),
         price: new FormControl(null, [Validators.required]),
         retailPrice: new FormControl(null),
-        color: new FormControl(null)
+        color: new FormControl(null),
+        weight: new FormControl(null, [Validators.required])
       }, this.validateCategories);
     }
     this.id = guid();
     this.form.get('categories').valueChanges.subscribe((val: any) => {
-      this.currentSizes = [];
-      if (val.length === 3 && val[2].id) {
-        this.sizes.forEach(size => {
-          if (size.categoryIds.indexOf(val[2].id) > -1) {
-            size.filters.forEach(filter => {
-              this.currentSizes.push(filter);
-            });
-          }
-        });
-        const formField = this.form.get('size');
-        if (!this.currentSizes.length) {
-          formField.clearValidators();
-          formField.updateValueAndValidity();
-        } else {
-          formField.setValidators([Validators.required]);
-          formField.updateValueAndValidity();
-        }
-      }
+      this.setSizes(val);
     })
     this.lookupService.getState().then(state => {
       this.sizes = state.sizes;
@@ -142,8 +129,30 @@ export class ProductCreateComponent implements OnInit {
         this.categories.push(second.children);
         const third = this.categories[1].find(cat => cat.id === this.product.categories[1]);
         this.categories.push(third.children);
+        this.setSizes(this.form.get('categories').value);
       }
     })
+  }
+
+  setSizes(categories) {
+    this.currentSizes = [];
+    if (categories.length === 3 && categories[2].id) {
+      this.sizes.forEach(size => {
+        if (size.categoryIds.indexOf(categories[2].id) > -1) {
+          size.filters.forEach(filter => {
+            this.currentSizes.push(filter);
+          });
+        }
+      });
+      const formField = this.form.get('size');
+      if (!this.currentSizes.length) {
+        formField.clearValidators();
+        formField.updateValueAndValidity();
+      } else {
+        formField.setValidators([Validators.required]);
+        formField.updateValueAndValidity();
+      }
+    }
   }
 
   public selectCategory(category: any, index: any) {
@@ -241,8 +250,7 @@ export class ProductCreateComponent implements OnInit {
       this.images.forEach(image => {
         delete image.id;
       });
-      let product: Product;
-      product = {
+      const product: Product = {
         cloudId: this.id,
         title: this.form.get('title').value,
         description: this.form.get('description').value,
@@ -251,7 +259,8 @@ export class ProductCreateComponent implements OnInit {
         videos: this.video ? [this.video] : [],
         brand: this.form.get('brand').value,
         tags: this.tags,
-        price: parseInt(this.form.get('price').value.replace(this.cuurencyChars, ''))
+        price: parseInt(this.form.get('price').value.replace(this.cuurencyChars, '')),
+        weight: this.form.get('weight').value
       };
       if (this.form.get('size').value) {
         product.sizeId = this.form.get('size').value;

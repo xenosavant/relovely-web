@@ -85,7 +85,14 @@
                     </mat-form-field>
                 </div>
             </div>
-
+            <div class="weight">
+                <mat-form-field appearance="outline">
+                    <mat-select placeholder="Shipping Weight" class="form-control" formControlName="weight">
+                        <mat-option *ngFor="let weight of weights" [value]="weight.key">{{weight.value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <div class="brand">
                 <mat-form-field appearance="outline">
                     <input matInput placeholder="Brand" formControlName="brand" />
@@ -116,7 +123,6 @@
                     </mat-form-field>
                 </div>
             </div>
-
             <button mat-stroked-button [disabled]="!form.valid" (click)="onSave()" [class.primary]="true">
                 List
             </button>
