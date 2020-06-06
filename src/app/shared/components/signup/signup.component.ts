@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Sanitizer, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Sanitizer, NgZone, ChangeDetectorRef, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { environment } from '@env/environment';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -24,12 +24,15 @@ export class SignupComponent implements OnInit {
   public signinFacebookUrl: string;
   private originalResetText = 'Enter your email below to reset your password:';
 
-  public emailError: string = null;
+  public signupError: string = null;
   public signinError: string = null;
   public loading = false;
   public state: 'signin' | 'signup' | 'reset' = 'signin';
   public title = 'SIGN IN';
   public resetText = this.originalResetText;
+
+  @Input()
+  error: string;
 
   constructor(private sanitizer: DomSanitizer,
     private authService: AuthService,
@@ -40,6 +43,9 @@ export class SignupComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    if (this.error) {
+      this.signinError = this.error;
+    }
     this.signInForm = new FormGroup({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
@@ -76,8 +82,8 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
-    this.emailError = null;
-    this.emailError = null;
+    this.signupError = null;
+    this.signupError = null;
     this.loading = true;
     this.authService.signup({ email: this.signUpForm.value['email'], password: this.signUpForm.value['password'], username: this.signUpForm.value['username'] })
       .subscribe(response => {
@@ -86,7 +92,7 @@ export class SignupComponent implements OnInit {
         this.navigationService.closeAuthWindow();
       }, err => {
         if (err.status === 409) {
-          this.emailError = err.error.error.message;
+          this.signupError = err.error.error.message;
           this.loading = false;
           this.zone.run(() => {
             this.ref.detectChanges();

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserList } from '@app/shared/models/user-list.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NavigationService } from '@app/shared/services/navigation.service';
 
 @Component({
     selector: 'app-home',
@@ -12,7 +14,9 @@ export class HomeComponent {
     mobile: boolean;
     featuredSellers: UserList[];
 
-    constructor(private breakpointObserver: BreakpointObserver) { }
+    constructor(private breakpointObserver: BreakpointObserver,
+        private route: ActivatedRoute,
+        private navigationService: NavigationService) { }
 
     ngOnInit() {
         this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {

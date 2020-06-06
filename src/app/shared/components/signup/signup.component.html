@@ -56,7 +56,7 @@
         </ng-container>
         <ng-container *ngSwitchCase="'signup'">
           <div class="errors">
-            <div *ngIf="emailError !== null" class="form-error">{{emailError}}</div>
+            <div *ngIf="signupError !== null" class="form-error">{{signupError}}</div>
             <div class="form-error" *ngIf="(passwordValue && passwordVerifyValue) && (passwordValue.length === passwordVerifyValue.length || !verify.focused)
               && signUpForm.invalid && signUpForm.errors && signUpForm.errors.passwordMatch">
               Passwords don't match

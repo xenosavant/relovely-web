@@ -33,7 +33,7 @@ export class NavigationService {
     private currentNavSubject$ = new Subject<NavigationItem>();
     public currentNavConfig$ = this.currentNavSubject$.asObservable();
 
-    private authWindowSubject$ = new Subject<boolean>();
+    private authWindowSubject$ = new Subject<string>();
     public showAuthWindow$ = this.authWindowSubject$.asObservable();
 
     public rootNavigationItems: NavigationItem[];
@@ -180,12 +180,12 @@ export class NavigationService {
         this.currentNavSubject$.next(this._currentNavigationItem);
     }
 
-    public openAuthWindow() {
-        this.authWindowSubject$.next(true);
+    public openAuthWindow(error: string = 'none') {
+        this.authWindowSubject$.next(error);
     }
 
     public closeAuthWindow() {
-        this.authWindowSubject$.next(false);
+        this.authWindowSubject$.next(null);
     }
 
     public resetNavigation() {

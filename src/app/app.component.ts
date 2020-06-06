@@ -69,6 +69,7 @@ export class AppComponent implements OnInit {
   public showMegaMenu = false;
   public selectedMenuItem = -1;
   public loginSubscription: Subscription;
+  public signupError: string = null;
 
   get top(): number {
     return ((this.showFilterBar ? 70 : 0) + (this.showNavBar ? 44 : 0));
@@ -145,8 +146,13 @@ export class AppComponent implements OnInit {
       this.getLookup().subscribe(value => {
       });
     }
-    this.navigationService.showAuthWindow$.subscribe(open => {
-      if (open) {
+    this.navigationService.showAuthWindow$.subscribe(error => {
+      if (error) {
+        if (error !== 'none') {
+          this.signupError = error;
+        } else {
+          this.signupError = null;
+        }
         this.showSignUpModal()
       } else {
         this.closeModal();
