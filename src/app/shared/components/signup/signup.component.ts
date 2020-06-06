@@ -8,12 +8,12 @@ import { NavigationService } from '@app/shared/services/navigation/navigation.se
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-signup',
+  selector: 'app-auth',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SignupComponent implements OnInit {
+export class AuthComponent implements OnInit {
 
   public signInForm: FormGroup;
   public signUpForm: FormGroup;
@@ -24,8 +24,6 @@ export class SignupComponent implements OnInit {
   public signinFacebookUrl: string;
   private originalResetText = 'Enter your email below to reset your password:';
 
-  public signupError: string = null;
-  public signinError: string = null;
   public loading = false;
   public title: string;
   public resetText = this.originalResetText;
@@ -46,9 +44,6 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.goTo(this.state);
-    if (this.error) {
-      this.signinError = this.error;
-    }
     this.signInForm = new FormGroup({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
@@ -80,8 +75,7 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
-    this.signupError = null;
-    this.signupError = null;
+    this.error = null;
     this.loading = true;
     this.authService.signup({ email: this.signUpForm.value['email'], password: this.signUpForm.value['password'], username: this.signUpForm.value['username'] })
       .subscribe(response => {
@@ -90,7 +84,7 @@ export class SignupComponent implements OnInit {
         this.navigationService.closeAuthWindow();
       }, err => {
         if (err.status === 409) {
-          this.signupError = err.error.error.message;
+          this.error = err.error.error.message;
           this.loading = false;
           this.zone.run(() => {
             this.ref.detectChanges();
@@ -101,18 +95,17 @@ export class SignupComponent implements OnInit {
   }
 
   signin() {
-    this.signinError = null;
+    this.error = null;
     this.loading = true;
     this.authService.signin({ email: this.signInForm.value['email'], password: this.signInForm.value['password'] })
       .subscribe(response => {
-
         this.userService.setLogin(response.jwt, response.user);
         this.router.navigate(['/'], { queryParams: { type: 'email' } });
         this.navigationService.closeAuthWindow();
         this.loading = false;
       }, (err) => {
         if (err.status === 403) {
-          this.signinError = err.error.error.message,
+          this.error = err.error.error.message,
             this.loading = false;
           this.zone.run(() => {
             this.ref.detectChanges();
@@ -139,7 +132,7 @@ export class SignupComponent implements OnInit {
   }
 
   goTo(state) {
-    console.log(state);
+    this.error = null;
     this.state = state;
     switch (this.state) {
       case ('signin'):

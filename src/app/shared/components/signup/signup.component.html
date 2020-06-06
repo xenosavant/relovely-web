@@ -12,7 +12,7 @@
       <ng-container [ngSwitch]="state">
         <ng-container *ngSwitchCase="'signin'">
           <div class="errors">
-            <div *ngIf="signinError !== null" class="form-error">{{signinError}}</div>
+            <div *ngIf="error !== null" class="form-error">{{error}}</div>
           </div>
           <div class="form-wrapper">
             <form novalidate [formGroup]="signInForm">
@@ -56,7 +56,7 @@
         </ng-container>
         <ng-container *ngSwitchCase="'signup'">
           <div class="errors">
-            <div *ngIf="signupError !== null" class="form-error">{{signupError}}</div>
+            <div *ngIf="error !== null" class="form-error">{{error}}</div>
             <div class="form-error" *ngIf="(passwordValue && passwordVerifyValue) && (passwordValue.length === passwordVerifyValue.length || !verify.focused)
               && signUpForm.invalid && signUpForm.errors && signUpForm.errors.passwordMatch">
               Passwords don't match
@@ -141,6 +141,7 @@
           </div>
         </ng-container>
         <ng-container *ngSwitchCase="'sell'">
+          <div *ngIf="error !== null" class="form-error">{{error}}</div>
           <div class="form-wrapper sell">
             <div class="sell-info">
               To apply as a seller, please click the button below to verify your Instagram account.

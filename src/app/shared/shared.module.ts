@@ -88,7 +88,7 @@ import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.compo
 import { ModalComponent } from './components/modal/modal.component';
 import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
 import { CenterModalComponent } from './components/center-modal/center-modal.component';
-import { SignupComponent } from './components/signup/signup.component';
+import { AuthComponent } from './components/signup/signup.component';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 import { VideoUploaderComponent } from './components/video-uploader/video-uploader.component';
 import { AddressComponent } from './components/address/address.component';
@@ -207,7 +207,7 @@ library.add(
     ModalComponent,
     ImageCropperComponent,
     CenterModalComponent,
-    SignupComponent,
+    AuthComponent,
     VideoPlayerComponent,
     VideoUploaderComponent,
     AddressComponent,
@@ -268,7 +268,7 @@ library.add(
     ModalComponent,
     ImageCropperComponent,
     CenterModalComponent,
-    SignupComponent,
+    AuthComponent,
     VideoPlayerComponent,
     VideoUploaderComponent,
     AddressComponent,
