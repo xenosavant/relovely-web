@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { UserService } from '@app/shared/services/user/user.service';
@@ -22,7 +22,7 @@ export class VerifyComponent implements OnInit {
     private authService: AuthService,
     private navigationService: NavigationService,
     private userService: UserService,
-    private router: Router) { }
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -36,9 +36,11 @@ export class VerifyComponent implements OnInit {
                 this.userService.setLogin(response.jwt, response.user);
                 this.welcome = true;
                 this.loading = false;
+                this.ref.markForCheck();
               });
             } else {
               this.loading = false;
+              this.ref.markForCheck();
             }
             break;
           case 'seller':
@@ -47,6 +49,7 @@ export class VerifyComponent implements OnInit {
                 this.userService.setLogin(response.jwt, response.user);
                 this.welcome = true;
                 this.loading = false;
+                this.ref.markForCheck();
               });
             } else {
               this.navigationService.navigate({ path: '/' });

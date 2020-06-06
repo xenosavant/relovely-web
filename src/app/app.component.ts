@@ -139,7 +139,7 @@ export class AppComponent implements OnInit {
           }
           this.loginSubscription = this.userService.loggedIn$.subscribe(loggedIn => {
             this.getLookup();
-            this.ref.markForCheck()
+            this.ref.markForCheck();
           });
         });
     } else {

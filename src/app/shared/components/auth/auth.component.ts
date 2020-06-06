@@ -68,6 +68,7 @@ export class AuthComponent implements OnInit {
   }
 
   signUpInstagram() {
+    this.loading = true;
     const url = this.signupInstagramUrl + `&state=` + this.sellerForm.get('email').value;
     location.replace(url);
   }
@@ -181,10 +182,12 @@ export class AuthComponent implements OnInit {
   }
 
   goToTerms() {
+    this.close();
     this.navigationService.navigate({ path: '/member/terms' });
   }
 
   goToPrivacy() {
+    this.close();
     this.navigationService.navigate({ path: '/member/privacy' });
   }
 }
