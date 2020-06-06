@@ -14,7 +14,7 @@ import { NavigationItem } from './shared/models/navigation-item.model';
 import { LookupService } from './shared/services/lookup/lookup.service';
 import { KeyValue, DOCUMENT } from '@angular/common';
 import { Router, Navigation, ActivatedRoute } from '@angular/router';
-import { NavigationService } from './shared/services/navigation.service';
+import { NavigationService } from './shared/services/navigation/navigation.service';
 import { UserService } from './shared/services/user/user.service';
 import { Category } from './shared/models/category.model';
 import { products } from './data/products.data';
@@ -70,6 +70,7 @@ export class AppComponent implements OnInit {
   public selectedMenuItem = -1;
   public loginSubscription: Subscription;
   public signupError: string = null;
+  public authPage = 'signin';
 
   get top(): number {
     return ((this.showFilterBar ? 70 : 0) + (this.showNavBar ? 44 : 0));
@@ -146,10 +147,11 @@ export class AppComponent implements OnInit {
       this.getLookup().subscribe(value => {
       });
     }
-    this.navigationService.showAuthWindow$.subscribe(error => {
-      if (error) {
-        if (error !== 'none') {
-          this.signupError = error;
+    this.navigationService.showAuthWindow$.subscribe(item => {
+      if (item.page) {
+        this.authPage = item.page;
+        if (item.error) {
+          this.signupError = item.error;
         } else {
           this.signupError = null;
         }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { OverlayService } from '@app/shared/services/overlay.service';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserService } from '@app/shared/services/user/user.service';

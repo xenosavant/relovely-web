@@ -1,5 +1,5 @@
 <app-center-modal>
-  <div class="outer-wrapper">
+  <div class="outer-wrapper" [class.signin]="state === 'signin'" [class.signup]="state === 'signup'">
     <div *ngIf="!loading" class="modal-header">
       <div class="title">
         <div>{{title}}</div>
@@ -138,6 +138,15 @@
                 </a>
               </div>
             </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'sell'">
+          <div class="form-wrapper sell">
+            <div class="sell-info">
+              To apply as a seller, please click the button below to verify your Instagram account.
+            </div>
+            <button class="instagram primary" mat-stroked-button (click)="signUpInstagram()">
+              <img src="./assets/images/instagram-white.png" /> <strong>Apply with Instagram </strong> </button>
           </div>
         </ng-container>
       </ng-container>

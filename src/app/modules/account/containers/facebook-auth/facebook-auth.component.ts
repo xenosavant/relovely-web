@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { UserService } from '@app/shared/services/user/user.service';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 
 @Component({
   selector: 'app-facebook-auth',
@@ -35,7 +35,7 @@ export class FacebookAuthComponent implements OnInit {
             }, err => {
               this.loading = false;
               this.router.navigate(['/']);
-              this.navigationService.openAuthWindow(err.error.error.message);
+              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signin' });
             });
             break;
           case 'signup':
@@ -45,7 +45,7 @@ export class FacebookAuthComponent implements OnInit {
             }, err => {
               this.loading = false;
               this.router.navigate(['/']);
-              this.navigationService.openAuthWindow(err.error.error.message);
+              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signup' });
             });
             break;
         }

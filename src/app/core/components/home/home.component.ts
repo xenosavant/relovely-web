@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserList } from '@app/shared/models/user-list.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 
 @Component({
     selector: 'app-home',
@@ -44,5 +44,9 @@ export class HomeComponent {
                 type: 'seller'
             },
         ]
+    }
+
+    onSell() {
+        this.navigationService.openAuthWindow({ page: 'sell' })
     }
 }

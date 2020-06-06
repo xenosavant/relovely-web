@@ -6,7 +6,7 @@ import { OrderService } from '@app/shared/services/order/order.service';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ShipmentService } from '@app/shared/services/shipment/shipment.service';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { Product } from '@app/shared/models/product.model';
 import { Order } from '@app/shared/models/order.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';

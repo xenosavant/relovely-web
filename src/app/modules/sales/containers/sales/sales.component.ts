@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Order } from '@app/shared/models/order.model';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { OrderService } from '@app/shared/services/order/order.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 

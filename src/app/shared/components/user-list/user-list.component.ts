@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, SimpleChange } from '@angular/core';
 import { UserDetail } from '@app/shared/models/user-detail.model';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { NavigationItem } from '@app/shared/models/navigation-item.model';
 import { UserList } from '@app/shared/models/user-list.model';
 

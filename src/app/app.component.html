@@ -199,5 +199,5 @@
 </ng-template>
 
 <ng-template cdkPortal #signUpModal="cdkPortal">
-  <app-signup [error]="signupError" (close)="close($event)"></app-signup>
+  <app-signup [error]="signupError" [state]="authPage" (close)="close($event)"></app-signup>
 </ng-template>

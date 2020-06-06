@@ -4,7 +4,7 @@ import { Order } from '@app/shared/models/order.model';
 import { OrderService } from '@app/shared/services/order/order.service';
 import { UserService } from '@app/shared/services/user/user.service';
 import { CARD_TYPE_MAP } from '@app/shared/services/lookup/payment-card-map';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 
 @Component({
   selector: 'app-order',

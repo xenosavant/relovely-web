@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChil
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { Card } from '@app/shared/interfaces/card.interface';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { UserService } from '@app/shared/services/user/user.service';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from '@app/shared/services/overlay.service';

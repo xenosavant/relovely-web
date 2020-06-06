@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { UserService } from '@app/shared/services/user/user.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class SignoutComponent implements OnInit {
     this.userService.logout();
     this.navigationService.resetNavigation();
     this.navigationService.navigate({ path: '/' })
-    this.navigationService.openAuthWindow();
+    this.navigationService.openAuthWindow({ page: 'signin' });
   }
 
 }

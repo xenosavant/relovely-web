@@ -12,7 +12,7 @@ import { PaymentCard } from '@app/shared/interfaces/payment-card';
 import { PaymentCardType } from '@app/shared/services/lookup/payment-card-map';
 import { OrderService } from '@app/shared/services/order/order.service';
 import { ShipmentService } from '@app/shared/services/shipment/shipment.service';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { guid } from '../../../../shared/utils/rand';
 
 @Component({

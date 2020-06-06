@@ -3,7 +3,7 @@ import { NavigationItem } from '@app/shared/models/navigation-item.model';
 import { categories } from '@app/data/filter-groups.data';
 import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PriceFilter } from '@app/shared/models/price-filter.model';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';

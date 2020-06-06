@@ -5,7 +5,7 @@ import { UserService } from '@app/shared/services/user/user.service';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ReviewService } from '@app/shared/services/review/review.service';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { Review } from '@app/shared/models/review.model';
 import { UserReviewsResponse, ReviewResponse } from '@app/shared/services/user/user-reviews.response';
 

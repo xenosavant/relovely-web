@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 import { LookupService } from './shared/services/lookup/lookup.service';
 import { RouterModule } from '@angular/router';
 import { ProductModule } from './modules/product/product.module';
-import { NavigationService } from './shared/services/navigation.service';
+import { NavigationService } from './shared/services/navigation/navigation.service';
 import { AppRoutingModule } from './app-routing.module';
 import { MatButtonModule } from '@angular/material';
 import { DragulaModule } from 'ng2-dragula';

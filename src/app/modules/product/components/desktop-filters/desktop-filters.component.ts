@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ElementRef, ViewChild, Chan
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { PriceFilter } from '@app/shared/models/price-filter.model';
 import { MatMenuTrigger } from '@angular/material';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
 import { FilterService } from '@app/shared/services/filter/filter.service';

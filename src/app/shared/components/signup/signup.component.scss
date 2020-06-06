@@ -22,6 +22,24 @@
             }
         }
     }
+    &.sell {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: auto;
+        height: 200px;
+        .sell-info {
+            font-size: 1.1em;
+            font-weight: 600;
+            text-align: center;
+            display: flex;
+            align-items: center;
+        }
+
+        button {
+
+        }
+        
+    }
     .link-text {
         margin-bottom: 16px;
         margin-top: 16px;
@@ -36,7 +54,12 @@
 }
 
 .outer-wrapper {
-    min-height:500px;
+    &.signup {
+        min-height:500px;
+    }
+    &.signin {
+        min-height:400px;
+    }
 }
 
 .sign-up-divider {

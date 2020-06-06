@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, NgZone, 
 import { Product } from '@app/shared/models/product.model';
 import { products } from '@app/data/products.data';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { NavigationItem } from '@app/shared/models/navigation-item.model';
 import { BreakpointObserver } from '@angular/cdk/layout';

@@ -4,7 +4,7 @@ import { environment } from '@env/environment';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { UserService } from '@app/shared/services/user/user.service';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -27,12 +27,14 @@ export class SignupComponent implements OnInit {
   public signupError: string = null;
   public signinError: string = null;
   public loading = false;
-  public state: 'signin' | 'signup' | 'reset' = 'signin';
-  public title = 'SIGN IN';
+  public title: string;
   public resetText = this.originalResetText;
 
   @Input()
   error: string;
+
+  @Input()
+  public state: 'signin' | 'signup' | 'reset' | 'sell' = 'signin';
 
   constructor(private sanitizer: DomSanitizer,
     private authService: AuthService,
@@ -43,6 +45,7 @@ export class SignupComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.goTo(this.state);
     if (this.error) {
       this.signinError = this.error;
     }
@@ -141,8 +144,22 @@ export class SignupComponent implements OnInit {
   }
 
   goTo(state) {
+    console.log(state);
     this.state = state;
-    this.title = this.state === 'signin' ? 'SIGN IN' : this.state === 'signup' ? 'SIGN UP' : 'FORGOT PASSWORD';
+    switch (this.state) {
+      case ('signin'):
+        this.title = 'SIGN IN';
+        break;
+      case ('signup'):
+        this.title = 'SIGN UP';
+        break;
+      case ('reset'):
+        this.title = 'RESET PASSWORD';
+        break;
+      case ('sell'):
+        this.title = 'APPLY TO SELL';
+        break;
+    }
   }
 
   close() {

@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, ChangeDetectorRef, NgZone, OnDestroy } from '@angular/core';
 import { Product } from '@app/shared/models/product.model';
 import { Router } from '@angular/router';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { isDefined } from '@angular/compiler/src/util';
 import { Subscription } from 'rxjs';
 import { ProductService } from '@app/shared/services/product/product.service';

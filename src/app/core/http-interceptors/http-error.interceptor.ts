@@ -10,7 +10,7 @@ import {
 import { Observable, from } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { UserService } from '@app/shared/services/user/user.service';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 
 /** Passes HttpErrorResponse to application-wide error handler */
 @Injectable()
@@ -49,7 +49,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 401) {
             this.userSerice.logout();
-            this.navigationService.openAuthWindow();
+            this.navigationService.openAuthWindow({ page: 'signin' });
           }
           const appErrorHandler = this.injector.get(ErrorHandler);
           appErrorHandler.handleError(err);

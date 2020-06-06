@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { NavigationItem } from '../models/navigation-item.model';
+import { NavigationItem } from '../../models/navigation-item.model';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { Category } from '../models/category.model';
+import { Category } from '../../models/category.model';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { trigger } from '@angular/animations';
-import { INavigationState } from '../interfaces/navigation-state.interface';
-import { LookupService } from './lookup/lookup.service';
+import { INavigationState } from '../../interfaces/navigation-state.interface';
+import { LookupService } from '../lookup/lookup.service';
+import { IAuthItem } from './auth-item.interface';
 
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
@@ -33,7 +34,7 @@ export class NavigationService {
     private currentNavSubject$ = new Subject<NavigationItem>();
     public currentNavConfig$ = this.currentNavSubject$.asObservable();
 
-    private authWindowSubject$ = new Subject<string>();
+    private authWindowSubject$ = new Subject<IAuthItem>();
     public showAuthWindow$ = this.authWindowSubject$.asObservable();
 
     public rootNavigationItems: NavigationItem[];
@@ -180,12 +181,12 @@ export class NavigationService {
         this.currentNavSubject$.next(this._currentNavigationItem);
     }
 
-    public openAuthWindow(error: string = 'none') {
-        this.authWindowSubject$.next(error);
+    public openAuthWindow(item: IAuthItem) {
+        this.authWindowSubject$.next(item);
     }
 
     public closeAuthWindow() {
-        this.authWindowSubject$.next(null);
+        this.authWindowSubject$.next({});
     }
 
     public resetNavigation() {

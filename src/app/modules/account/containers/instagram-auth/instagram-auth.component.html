@@ -1,1 +1,11 @@
-<p>instagram-auth works!</p>
+<ng-container *ngIf="!loading">
+    <div class="center" *ngIf="type === 'email'">
+        <img src="../../../../../assets/images/heart.png">
+        <h2> Thank You For Joining Relovely!</h2>
+        <p>Please check your email for a verification link. </p>
+    </div>
+</ng-container>
+<div *ngIf="loading" class="authorizing">
+    <div class="text">Authorizing</div>
+    <mat-spinner diameter="30"></mat-spinner>
+</div>

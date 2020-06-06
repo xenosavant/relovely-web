@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, NgZone, ChangeDetect
 import { Product } from '@app/shared/models/product.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { products } from '@app/data/products.data';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { OwlCarouselOConfig } from 'ngx-owl-carousel-o/lib/carousel/owl-carousel-o-config';
 import { ProductService } from '@app/shared/services/product/product.service';

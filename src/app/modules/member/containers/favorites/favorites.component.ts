@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Product } from '@app/shared/models/product.model';
-import { NavigationService } from '@app/shared/services/navigation.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { UserService } from '@app/shared/services/user/user.service';
 import { ProductService } from '@app/shared/services/product/product.service';
 import { UserDetail } from '@app/shared/models/user-detail.model';
