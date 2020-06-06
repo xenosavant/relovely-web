@@ -9,14 +9,15 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss'],
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthComponent implements OnInit {
 
   public signInForm: FormGroup;
   public signUpForm: FormGroup;
+  public sellerForm: FormGroup;
   public resetForm: FormGroup;
   public signupInstagramUrl: string;
   public signinInstagramUrl: string;
@@ -48,6 +49,9 @@ export class AuthComponent implements OnInit {
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
+    this.sellerForm = new FormGroup({
+      email: new FormControl('', [Validators.email, Validators.required])
+    });
     this.signUpForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       username: new FormControl('', [Validators.required]),
@@ -57,7 +61,9 @@ export class AuthComponent implements OnInit {
     this.resetForm = new FormGroup({
       identifier: new FormControl('', [Validators.required])
     });
-    this.signupInstagramUrl = environment.instagramAuthUrl + `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSignupRedirectUrl}&scope=user_profile,user_media&response_type=code`
+    this.signupInstagramUrl = environment.instagramAuthUrl +
+      `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSignupRedirectUrl}&scope=user_profile,user_media&response_type=code` +
+      `?state=` + this.sellerForm.get('email').value
     this.signupFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSignupRedirectUrl}&scope=email&response_type=code`;
     this.signinFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSigninRedirectUrl}&response_type=code`;
   }

@@ -144,10 +144,16 @@
           <div *ngIf="error !== null" class="form-error">{{error}}</div>
           <div class="form-wrapper sell">
             <div class="sell-info">
-              To apply as a seller, please click the button below to verify your Instagram account.
+              To apply as a seller, please enter your email and click the button below to verify your Instagram account.
             </div>
-            <button class="instagram primary" mat-stroked-button (click)="signUpInstagram()">
-              <img src="./assets/images/instagram-white.png" /> <strong>Apply with Instagram </strong> </button>
+            <form novalidate [formGroup]="sellerForm">
+              <mat-form-field appearance="outline">
+                <input matInput placeholder="Email" formControlName="email" />
+              </mat-form-field>
+              <button class="instagram primary" mat-stroked-button (click)="signUpInstagram()"
+                [disabled]="!sellerForm.valid">
+                <img src="./assets/images/instagram-white.png" /> <strong>Apply with Instagram </strong> </button>
+            </form>
           </div>
         </ng-container>
       </ng-container>

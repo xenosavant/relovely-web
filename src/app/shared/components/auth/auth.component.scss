@@ -23,9 +23,6 @@
         }
     }
     &.sell {
-        display: grid;
-        grid-template-rows: 1fr 1fr;
-        grid-template-columns: auto;
         height: 200px;
         .sell-info {
             font-size: 1.1em;
@@ -33,6 +30,7 @@
             text-align: center;
             display: flex;
             align-items: center;
+            margin-bottom: 24px;
         }
 
         button {
