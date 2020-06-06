@@ -62,18 +62,13 @@ export class SignupComponent implements OnInit {
     this.resetForm = new FormGroup({
       identifier: new FormControl('', [Validators.required])
     });
-    this.signupInstagramUrl = environment.instagramAuthUrl + `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSigninRedirectUrl}&scope=user_profile,user_media&response_type=code`
+    this.signupInstagramUrl = environment.instagramAuthUrl + `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSignupRedirectUrl}&scope=user_profile,user_media&response_type=code`
     this.signupFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSignupRedirectUrl}&scope=email&response_type=code`;
-    console.log(this.signupFacebookUrl);
     this.signinFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSigninRedirectUrl}&response_type=code`;
   }
 
   signUpInstagram() {
     location.replace(this.signupInstagramUrl);
-  }
-
-  signInInstagram() {
-    location.replace(this.signinInstagramUrl);
   }
 
   signUpFacebook() {

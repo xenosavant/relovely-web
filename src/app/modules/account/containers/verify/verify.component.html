@@ -1,10 +1,22 @@
 <div class="full-content empty">
     <ng-container *ngIf="!loading">
-        <div class="center" *ngIf="type === 'email'">
-            <img src="../../../../../assets/images/heart.png">
-            <h2> Thank You For Joining Relovely!</h2>
-            <p>Please check your email for a verification link. </p>
-        </div>
+        <ng-container *ngIf="!welcome">
+            <div class="center" *ngIf="type === 'email'">
+                <img src="../../../../../assets/images/heart.png">
+                <h2> Thank You For Joining Relovely!</h2>
+                <p>Please check your email for a verification link. </p>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="welcome">
+            <div class="center" *ngIf="type === 'seller'">
+                <img src="../../../../../assets/images/heart.png">
+                <h2> Welcome to Relovely!</h2>
+                <p *ngIf="type === 'email'">Click<a (click)="goToProducts()" appClick target="_blank">here</a>to see
+                    what's in stock </p>
+                <p *ngIf="type === 'seller'">Click<a (click)="goToProducts()" appClick target="_blank">here</a>to get
+                    started selling </p>
+            </div>
+        </ng-container>
     </ng-container>
     <div *ngIf=" loading" class="loading">
         <div>

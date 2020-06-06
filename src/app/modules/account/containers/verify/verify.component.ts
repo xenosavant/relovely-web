@@ -15,6 +15,7 @@ export class VerifyComponent implements OnInit {
   public error = false;
   public type: string;
   public loading = true;
+  public welcome = false;
 
   constructor(private activatedRoute: ActivatedRoute,
     private authService: AuthService,
@@ -31,11 +32,22 @@ export class VerifyComponent implements OnInit {
             if (code) {
               this.authService.verifyEmail({ code: code.replace(/ /g, '+') }).subscribe(response => {
                 this.userService.setLogin(response.jwt, response.user);
-                this.router.navigate(['/']);
+                this.welcome = true;
                 this.loading = false;
               });
             } else {
               this.loading = false;
+            }
+            break;
+          case 'seller':
+            if (code) {
+              this.authService.verifyEmail({ code: code.replace(/ /g, '+') }).subscribe(response => {
+                this.userService.setLogin(response.jwt, response.user);
+                this.welcome = true;
+                this.loading = false;
+              });
+            } else {
+              this.router.navigate(['/']);
             }
             break;
           default:

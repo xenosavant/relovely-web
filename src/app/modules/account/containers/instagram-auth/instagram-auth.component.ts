@@ -32,7 +32,7 @@ export class InstagramAuthComponent implements OnInit {
           this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signin' });
         });
       } else {
-
+        this.router.navigate(['/']);
       }
     });
   }
