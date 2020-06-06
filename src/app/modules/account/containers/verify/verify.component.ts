@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { UserService } from '@app/shared/services/user/user.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 
 @Component({
   selector: 'app-verify',
@@ -19,6 +20,7 @@ export class VerifyComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
     private authService: AuthService,
+    private navigationService: NavigationService,
     private userService: UserService,
     private router: Router) { }
 
@@ -47,7 +49,7 @@ export class VerifyComponent implements OnInit {
                 this.loading = false;
               });
             } else {
-              this.router.navigate(['/']);
+              this.navigationService.navigate({ path: '/' });
             }
             break;
           default:
@@ -55,9 +57,16 @@ export class VerifyComponent implements OnInit {
             break;
         }
       } else {
-        this.router.navigate(['/']);
+        this.navigationService.navigate({ path: '/' });
       }
     });
   }
 
+  goToProducts() {
+    this.navigationService.navigate({ path: '/products' });
+  }
+
+  goToSettings() {
+    this.navigationService.navigate({ path: '/account/settings' });
+  }
 }
