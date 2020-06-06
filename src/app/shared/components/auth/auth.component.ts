@@ -62,14 +62,14 @@ export class AuthComponent implements OnInit {
       identifier: new FormControl('', [Validators.required])
     });
     this.signupInstagramUrl = environment.instagramAuthUrl +
-      `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSignupRedirectUrl}&scope=user_profile,user_media&response_type=code` +
-      `?state=` + this.sellerForm.get('email').value
+      `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSignupRedirectUrl}`;
     this.signupFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSignupRedirectUrl}&scope=email&response_type=code`;
     this.signinFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSigninRedirectUrl}&response_type=code`;
   }
 
   signUpInstagram() {
-    location.replace(this.signupInstagramUrl);
+    const url = this.signupInstagramUrl + `&state=` + this.sellerForm.get('email').value;
+    location.replace(url);
   }
 
   signUpFacebook() {
@@ -178,5 +178,13 @@ export class AuthComponent implements OnInit {
 
   get passwordVerifyValue() {
     return this.signUpForm.get('verifyPassword').value;
+  }
+
+  goToTerms() {
+    this.navigationService.navigate({ path: '/member/terms' });
+  }
+
+  goToPrivacy() {
+    this.navigationService.navigate({ path: '/member/privacy' });
   }
 }

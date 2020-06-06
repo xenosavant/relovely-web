@@ -12,7 +12,7 @@ export const environment = {
   facebookSignupRedirectUrl: 'https://dev.relovely.com/account/facebook?type=signup',
   facebookSigninRedirectUrl: 'https://dev.relovely.com/account/facebook?type=signin',
   facebooLinkRedirectUrl: 'https://dev.relovely.com/account/facebook?type=link',
-  instagramAuthUrl: `https://api.instagram.com/oauth/authorize?scope=user_profile,user_media&response_type=code`,
+  instagramAuthUrl: `https://api.instagram.com/oauth/authorize?scope=user_profile&response_type=code`,
   instagramClientId: '600076470775068',
   instagramSignupRedirectUrl: 'https://dev.relovely.com/account/instagram',
   cloudinaryApiKey: '398779565118789',

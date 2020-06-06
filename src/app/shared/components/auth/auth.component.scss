@@ -23,7 +23,7 @@
         }
     }
     &.sell {
-        height: 200px;
+        height: 250px;
         .sell-info {
             font-size: 1.1em;
             font-weight: 600;
@@ -53,10 +53,10 @@
 
 .outer-wrapper {
     &.signup {
-        min-height:500px;
+        min-height:586px;
     }
     &.signin {
-        min-height:400px;
+        min-height:486px;
     }
 }
 
@@ -136,4 +136,11 @@ button.facebook {
 
 .forgot {
     text-align: center;
+}
+
+
+.policies {
+    text-align: center;
+    margin-top: 16px;
+    font-weight: 600;
 }

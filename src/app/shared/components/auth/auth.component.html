@@ -39,7 +39,7 @@
             <div class="spacer"></div>
             <button class="facebook primary" mat-stroked-button (click)="signInFacebook()">
               <div class="button-wrap"> <img src="./assets/images/facebook-color.png" /> <strong>Sign in with Facebook
-                </strong> </div>
+                </strong></div>
             </button>
             <div class="spacer"></div>
             <div class="link-text">
@@ -100,6 +100,12 @@
               <div class="button-wrap"> <img src="./assets/images/facebook-color.png" /> <strong>Sign up with Facebook
                 </strong></div>
             </button>
+            <div class="policies">
+              By applying you are agreeing to the
+              <a (click)="goToTerms()" appClick target="_blank">privacy policy</a>
+              and the
+              <a appClick (click)="goToPrivacy()" target="_blank">terms of service</a>
+            </div>
             <div class="link-text">
               Already have an account?
               <a (click)="goTo('signin')" class="link" appClick target="_blank">
@@ -154,6 +160,12 @@
                 [disabled]="!sellerForm.valid">
                 <img src="./assets/images/instagram-white.png" /> <strong>Apply with Instagram </strong> </button>
             </form>
+            <div class="policies">
+              By applying you are agreeing to the
+              <a (click)="goToTerms()" appClick target="_blank">privacy policy</a>
+              and the
+              <a appClick (click)="goToPrivacy()" target="_blank">terms of service</a>
+            </div>
           </div>
         </ng-container>
       </ng-container>
