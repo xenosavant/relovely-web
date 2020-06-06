@@ -13,6 +13,7 @@ import { PaymentCardType } from '@app/shared/services/lookup/payment-card-map';
 import { OrderService } from '@app/shared/services/order/order.service';
 import { ShipmentService } from '@app/shared/services/shipment/shipment.service';
 import { NavigationService } from '@app/shared/services/navigation.service';
+import { guid } from '../../../../shared/utils/rand';
 
 @Component({
   selector: 'app-checkout',
@@ -76,9 +77,10 @@ export class CheckoutComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.productService.getProduct(params['id']).subscribe(product => {
         this.product = product;
+        console.log(this.product);
         const toAddress = this.user.addresses.find(a => a.primary);
         if (toAddress) {
-          this.shipmentService.previewShipment({ weight: 32, toAddress: toAddress, sellerId: product.sellerId, price: product.price }).subscribe(response => {
+          this.shipmentService.previewShipment({ weight: this.product.weight, toAddress: toAddress, sellerId: product.sellerId, price: product.price }).subscribe(response => {
             this.shippingCost = response.shippingRate;
             this.total = this.product.price + this.shippingCost;
             this.shippingRateId = response.rateId;
@@ -107,7 +109,8 @@ export class CheckoutComponent implements OnInit {
       city: this.form.get('city').value,
       state: this.form.get('state').value,
       zip: this.form.get('zip').value,
-      country: 'US'
+      country: 'US',
+      id: guid()
     }
     this.userService.updateUser(this.userService.currentUser.id, { addresses: [...this.user.addresses, saveAddress] }).subscribe(user => {
       this.user = user;
@@ -115,6 +118,7 @@ export class CheckoutComponent implements OnInit {
       this.addingAddress = false;
     })
   }
+
   onCancelAdd($event: any) {
     this.addingAddress = false;
   }
@@ -136,7 +140,14 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSavePayment(card: PaymentCard) {
-
+    this.userService.addCard(card).subscribe(result => {
+      this.user = this.userService.currentUser;
+      this.selectedPayment = this.user.cards.find(a => a.primary);
+      this.addingPayment = false;
+      this.ref.markForCheck();
+    }, err => {
+      console.log(err);
+    })
   }
 
   changePayment() {

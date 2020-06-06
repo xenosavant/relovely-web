@@ -12,7 +12,7 @@
       <div *ngIf="addresses.length" class="primary">
         Default
       </div>
-      <mat-radio-group [(ngModel)]="primary">
+      <mat-radio-group [(ngModel)]="primary" (change)="primarySubject$.next(true)">
         <div class="list-wrapper">
           <div class="address-wrapper" *ngFor="let address of user.addresses">
             <div class="options">

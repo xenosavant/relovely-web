@@ -10,6 +10,7 @@ import { ShipmentService } from '@app/shared/services/shipment/shipment.service'
 import { tap, mergeMap } from 'rxjs/operators';
 import { iif, EMPTY } from 'rxjs';
 import { AddressVerificationResponse } from '@app/shared/services/shipment/address-verification.response';
+import { guid } from '../../utils/rand';
 
 @Component({
   selector: 'app-add-address',
@@ -78,7 +79,8 @@ export class AddAddressComponent implements OnInit {
       city: this.form.get('city').value,
       state: this.form.get('state').value,
       zip: this.form.get('zip').value,
-      country: 'US'
+      country: 'US',
+      id: guid()
     }
     let update;
     if (this.edit) {

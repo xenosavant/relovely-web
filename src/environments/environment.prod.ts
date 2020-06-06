@@ -7,7 +7,7 @@ export const environment = {
   test: false,
   i18nPrefix: '/relovely',
   apiUrl: 'https://api.relovely.com',
-  facebookAuthUrl: 'https://graph.facebook.com/v6.0/oauth/access_token',
+  facebookAuthUrl: 'https://www.facebook.com/v6.0/dialog/oauth',
   facebookClientId: '498359121110237',
   facebookSignupRedirectUrl: 'https://dev.relovely.com/account/facebook?type=signup',
   facebookSigninRedirectUrl: 'https://dev.relovely.com/account/facebook?type=signin',
