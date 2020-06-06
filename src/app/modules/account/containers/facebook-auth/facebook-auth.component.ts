@@ -12,6 +12,7 @@ import { UserService } from '@app/shared/services/user/user.service';
 export class FacebookAuthComponent implements OnInit {
 
   private code: string;
+  loading = true;
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService,
     private userService: UserService,
@@ -25,6 +26,7 @@ export class FacebookAuthComponent implements OnInit {
         switch (type) {
           case 'signin':
             this.authService.signinWithFacebook(this.code).subscribe(response => {
+              console.log(response);
               this.userService.setLogin(response.jwt, response.user);
               this.router.navigate(['/']);
             });

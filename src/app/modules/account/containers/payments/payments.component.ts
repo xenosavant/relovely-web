@@ -47,7 +47,7 @@ export class PaymentsComponent implements OnInit {
       this.ref.markForCheck();
     });
     const sub = this.primarySubject$.asObservable().pipe(
-      debounceTime(1000),
+      debounceTime(500),
       switchMap(val =>
         this.primaryChanged())
     ).subscribe(result => {

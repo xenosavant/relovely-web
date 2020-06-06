@@ -1,0 +1,18 @@
+:host {
+    flex: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.authorizing {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .text {
+        margin-bottom: 16px;
+        font-size: 1em;
+        font-weight: 600;
+    }
+}
