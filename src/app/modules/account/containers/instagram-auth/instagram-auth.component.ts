@@ -24,18 +24,17 @@ export class InstagramAuthComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.code = params['code'];
       const email = params['state'];
-      console.log(this.code);
-      //   if (this.code) {
-      //     this.authService.signupWithInstagram(email, this.code).subscribe(() => {
-      //       this.loading = false;
-      //     }, err => {
-      //       this.loading = false;
-      //       this.router.navigate(['/']);
-      //       this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
-      //     });
-      //   } else {
-      //     this.router.navigate(['/']);
-      //   }
+      if (this.code) {
+        this.authService.signupWithInstagram(email, this.code).subscribe(() => {
+          this.loading = false;
+        }, err => {
+          this.loading = false;
+          this.router.navigate(['/']);
+          this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
+        });
+      } else {
+        this.router.navigate(['/']);
+      }
     });
   }
 }
