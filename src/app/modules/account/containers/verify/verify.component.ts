@@ -46,7 +46,16 @@ export class VerifyComponent implements OnInit {
             break;
           case 'seller':
             if (this.code) {
-              console.log(this.code);
+              this.loading = false;
+              this.ref.markForCheck();
+            } else {
+              this.navigationService.navigate({ path: '/' });
+              this.loading = false;
+              this.ref.markForCheck();
+            }
+            break;
+          case 'member':
+            if (this.code) {
               this.loading = false;
               this.ref.markForCheck();
             } else {

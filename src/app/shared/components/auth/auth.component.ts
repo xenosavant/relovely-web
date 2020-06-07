@@ -33,7 +33,7 @@ export class AuthComponent implements OnChanges {
   error: string;
 
   @Input()
-  public state: 'signin' | 'signup' | 'reset' | 'sell' = 'signin';
+  public state: 'signin' | 'signup' | 'reset' | 'sell' | 'instagram' = 'signin';
 
   constructor(private sanitizer: DomSanitizer,
     private authService: AuthService,
@@ -158,6 +158,9 @@ export class AuthComponent implements OnChanges {
         break;
       case ('sell'):
         this.title = 'APPLY TO SELL';
+        break;
+      case ('instagram'):
+        this.title = 'SIGN UP WITH INSTAGRAM';
         break;
     }
   }

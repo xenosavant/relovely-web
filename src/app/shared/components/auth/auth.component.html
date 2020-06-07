@@ -100,6 +100,9 @@
               <div class="button-wrap"> <img src="./assets/images/facebook-color.svg" /> <strong>Sign up with Facebook
                 </strong></div>
             </button>
+            <button class="instagram primary" mat-stroked-button (click)="goTo('instagram')"
+              [disabled]="!sellerForm.valid">
+              <img src="./assets/images/instagram-white.png" /> <strong>Signup with Instagram </strong> </button>
             <div class="policies">
               By applying you are agreeing to the
               <a (click)="goToPrivacy()" appClick target="_blank">privacy policy</a>
@@ -169,6 +172,29 @@
           </div>
         </ng-container>
       </ng-container>
+      <ng-container *ngSwitchCase="'instaram'">
+        <div *ngIf="error !== null" class="form-error">{{error}}</div>
+        <div class="form-wrapper sell">
+          <div class="sell-info">
+            To sign up please enter your email and click the button below to verify your Instagram account.
+          </div>
+          <form novalidate [formGroup]="sellerForm">
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="Email" formControlName="email" />
+            </mat-form-field>
+            <button class="instagram primary" mat-stroked-button (click)="signUpInstagram()"
+              [disabled]="!sellerForm.valid">
+              <img src="./assets/images/instagram-white.png" /> <strong>Signup with Instagram </strong> </button>
+          </form>
+          <div class="policies">
+            By signing up you are agreeing to the
+            <a (click)="goToPrivacy()" appClick target="_blank">privacy policy</a>
+            and the
+            <a appClick (click)="goToTerms()" target="_blank">terms of service</a>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
     </ng-container>
     <div *ngIf="loading" class="loading-wrapper">
       <div class="loading">

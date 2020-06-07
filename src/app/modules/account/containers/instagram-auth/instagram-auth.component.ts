@@ -26,7 +26,7 @@ export class InstagramAuthComponent implements OnInit {
       this.code = params['code'];
       const email = params['state'];
       if (this.code) {
-        this.authService.signupWithInstagram(email, this.code).subscribe(() => {
+        this.authService.sellWithInstagram(email, this.code).subscribe(() => {
           this.loading = false;
           this.ref.markForCheck();
         }, err => {

@@ -54,6 +54,14 @@ export class AuthService extends BaseService {
         );
     }
 
+    sellWithInstagram(email: string, code: string): Observable<void> {
+        return this.httpClient.post<void>(`${this.apiBaseUrl}/instagram/sell`, { code: code, email: email }).pipe(
+            map(() => {
+                return;
+            })
+        );
+    }
+
     signupWithInstagram(email: string, code: string): Observable<void> {
         return this.httpClient.post<void>(`${this.apiBaseUrl}/instagram/signup`, { code: code, email: email }).pipe(
             map(() => {
