@@ -100,7 +100,7 @@
                 </strong></div>
             </button>
             <button class="instagram primary" mat-stroked-button (click)="goTo('instagram')">
-              <img src="./assets/images/instagram-white.png" /> <strong>Signup with Instagram </strong> </button>
+              <img src="./assets/images/instagram-white.png" /> <strong>Continue with Instagram </strong> </button>
             <div class="policies">
               By applying you are agreeing to the
               <a (click)="goToPrivacy()" appClick target="_blank">privacy policy</a>
@@ -156,7 +156,7 @@
               <mat-form-field appearance="outline">
                 <input matInput placeholder="Email" formControlName="email" />
               </mat-form-field>
-              <button class="instagram primary" mat-stroked-button (click)="signUpInstagram()"
+              <button class="instagram primary" mat-stroked-button (click)="sellWithInstagram()"
                 [disabled]="!sellerForm.valid">
                 <img src="./assets/images/instagram-white.png" /> <strong>Apply with Instagram </strong> </button>
             </form>
