@@ -27,7 +27,16 @@
                 <span *ngIf="bankAccountLinked" class="tag success">Linked</span>
             </div>
         </ng-container>
-        <ng-container *ngIf="currentUser.type !== 'seller'"></ng-container>
+        <div class="verification line clickable" (click)="showVerifyModal()">
+            <div class="icon-wrap">
+                <fa-icon icon="store"></fa-icon>
+            </div>
+            <span class="title">
+                Store
+            </span>
+            <span class="tag detail" [ngClass]="verficationClass">
+                {{verificationStatus}}</span>
+        </div>
     </div>
 </div>
 
