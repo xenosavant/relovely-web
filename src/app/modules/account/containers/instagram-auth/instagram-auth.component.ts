@@ -26,31 +26,33 @@ export class InstagramAuthComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.code = params['code'];
       this.type = params['type'];
+      console.log(this.code);
+      console.log(this.type);
       const email = params['state'];
-      if (this.code && this.type) {
-        if (this.type === 'seller') {
-          this.authService.sellWithInstagram(email, this.code).subscribe(() => {
-            this.loading = false;
-            this.ref.markForCheck();
-          }, err => {
-            this.loading = false;
-            this.router.navigate(['/']);
-            this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
-          });
-        }
-        if (this.type === 'member') {
-          this.authService.signupWithInstagram(email, this.code).subscribe(() => {
-            this.loading = false;
-            this.ref.markForCheck();
-          }, err => {
-            this.loading = false;
-            this.router.navigate(['/']);
-            this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
-          });
-        }
-      } else {
-        this.router.navigate(['/']);
-      }
+      // if (this.code && this.type) {
+      //   if (this.type === 'seller') {
+      //     this.authService.sellWithInstagram(email, this.code).subscribe(() => {
+      //       this.loading = false;
+      //       this.ref.markForCheck();
+      //     }, err => {
+      //       this.loading = false;
+      //       this.router.navigate(['/']);
+      //       this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
+      //     });
+      //   }
+      //   if (this.type === 'member') {
+      //     this.authService.signupWithInstagram(email, this.code).subscribe(() => {
+      //       this.loading = false;
+      //       this.ref.markForCheck();
+      //     }, err => {
+      //       this.loading = false;
+      //       this.router.navigate(['/']);
+      //       this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
+      //     });
+      //   }
+      // } else {
+      //   this.router.navigate(['/']);
+      // }
     });
   }
 }
