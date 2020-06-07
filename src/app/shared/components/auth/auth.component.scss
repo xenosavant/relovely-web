@@ -86,20 +86,6 @@ button.instagram {
     }
 }
 
-button.facebook {
-    width: 235px;
-    display: grid;
-    background-color:  #4267B2 !important;
-    margin: 0 auto;
-    grid-template-columns: 40px auto;
-    height:35px;
-    img {
-        height:30px;
-        margin-right: 16px;
-        margin-left:-5px;
-    }
-}
-
 .button-wrap {
     display: flex;
     align-items: center;

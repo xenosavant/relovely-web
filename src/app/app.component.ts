@@ -211,6 +211,7 @@ export class AppComponent implements OnInit {
         new NavigationItem([], '/sales/orders', 'Orders', null, [], [], null),
         new NavigationItem([], '/account/payments', 'Payment Methods', null, [], [], null),
         new NavigationItem([], '/account/addresses', 'Addresses', null, [], [], null),
+        new NavigationItem([], '/account/settings', 'Settings', '0', [], [], null)
       ]
     }
     navigationItems.forEach(item => {
@@ -220,8 +221,7 @@ export class AppComponent implements OnInit {
     this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'About', null, [], [], null));
     if (this.userService.currentUser && this.userService.currentUser.type === 'seller') {
       this.accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', null, [], [], null),
-        new NavigationItem([], '/sales/listings', 'Listings', null, [], [], null),
-        new NavigationItem([], '/account/settings', 'Settings', '0', [], [], null)
+        new NavigationItem([], '/sales/listings', 'Listings', null, [], [], null)
       );
     }
     this.accountNav.subItems.push(

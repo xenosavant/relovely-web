@@ -1,0 +1,27 @@
+<app-center-modal>
+    <div class="modal-wrapper">
+        <div class="inner-wrapper" [class.invisible]="loading">
+            <div class="modal-header">
+                <div class="title">
+                    <div>Link Facebook Account</div>
+                </div>
+                <div class="close">
+                    <img (click)="onClose()" src="./assets/images/close.svg" />
+                </div>
+            </div>
+            <div class="body-wrapper">
+                <div class="text">
+                    Click the button below to link your facebook account to Relovely.
+                </div>
+                <div class="button-wrapper">
+                    <button class="facebook primary" mat-stroked-button (click)="linkFacebook()">
+                        <div class="button-wrap"> <img src="./assets/images/facebook-color.png" />
+                            <strong>Link to Facebook</strong>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <mat-spinner *ngIf="loading" diameter="25"></mat-spinner>
+    </div>
+</app-center-modal>

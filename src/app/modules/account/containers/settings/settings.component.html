@@ -27,15 +27,15 @@
                 <span *ngIf="bankAccountLinked" class="tag success">Linked</span>
             </div>
         </ng-container>
-        <div class="verification line clickable" (click)="showVerifyModal()">
+        <div class="verification line clickable" (click)="linkFacebook()">
             <div class="icon-wrap">
-                <fa-icon icon="store"></fa-icon>
+                <img src="/assets/images/facebook-black.svg" />
             </div>
             <span class="title">
-                Store
+                Facebook
             </span>
-            <span class="tag detail" [ngClass]="verficationClass">
-                {{verificationStatus}}</span>
+            <span *ngIf="!facebookLinked" class="tag alert"> Unlinked</span>
+            <span *ngIf="facebookLinked" class="tag success">Linked</span>
         </div>
     </div>
 </div>
@@ -46,4 +46,8 @@
 
 <ng-template cdkPortal #bank="cdkPortal">
     <app-add-bank (close)="close($event)"></app-add-bank>
+</ng-template>
+
+<ng-template cdkPortal #facebook="cdkPortal">
+    <app-link-facebook (close)="close($event)"></app-link-facebook>
 </ng-template>

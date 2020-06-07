@@ -18,10 +18,18 @@
         font-size: 1.1em;
         font-weight: 600;
         display: grid;
+        align-items: center;
         grid-template-columns: 30px 1fr 125px;
+        column-gap: 8px;
         grid-template-rows: auto;
         .title {
 
+        }
+        .icon-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
         }
     }
 

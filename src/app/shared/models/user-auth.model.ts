@@ -19,6 +19,8 @@ export class UserAuth {
     preferences: IUserPreferences;
     addresses: Address[];
     cards: PaymentCard[];
+    facebookUserId: string;
+    instagramUsername: string;
     seller?: {
         missingInfo: string[];
         errors: [],

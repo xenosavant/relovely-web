@@ -48,6 +48,17 @@ export class FacebookAuthComponent implements OnInit {
               this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signup' });
             });
             break;
+          case 'link':
+            console.log(this.code);
+            // this.authService.linkFacebook(this.code).subscribe(response => {
+            //   this.userService.setLogin(response.jwt, response.user);
+            //   this.router.navigate(['/']);
+            // }, err => {
+            //   this.loading = false;
+            //   this.router.navigate(['/']);
+            //   this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signup' });
+            // });
+            break;
         }
       } else {
         this.router.navigate(['/']);

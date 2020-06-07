@@ -15,6 +15,7 @@ export class SettingsComponent implements OnInit {
 
   @ViewChild('verify', { static: true }) verifyModal: TemplatePortal<any>;
   @ViewChild('bank', { static: true }) bankModal: TemplatePortal<any>;
+  @ViewChild('facebook', { static: true }) facebookModal: TemplatePortal<any>;
 
   currentUser: UserAuth;
   verficationClass: any;
@@ -23,6 +24,7 @@ export class SettingsComponent implements OnInit {
   allowClick: boolean;
   verificationStatus: string;
   bankAccountLinked = false;
+  facebookLinked = false;
 
   constructor(private userService: UserService,
     private overlayService: OverlayService,
@@ -35,41 +37,46 @@ export class SettingsComponent implements OnInit {
   }
 
   setView() {
-    if (!this.currentUser.seller.missingInfo.includes('external_account')) {
-      this.bankAccountLinked = true;
-    }
-    switch (this.currentUser.seller.verificationStatus) {
-      case 'unverified':
-        this.allowClick = true;
-        this.verificationStatus = 'Unverified';
-        this.verficationClass.alert = true;
-        break;
-      case 'review':
-        if (this.currentUser.seller.missingInfo &&
-          !(this.currentUser.seller.missingInfo.indexOf('external_acccount') === -1 || this.currentUser.seller.missingInfo.length > 1)) {
+    if (this.currentUser.type === 'seller') {
+      if (!this.currentUser.seller.missingInfo.includes('external_account')) {
+        this.bankAccountLinked = true;
+      }
+      switch (this.currentUser.seller.verificationStatus) {
+        case 'unverified':
           this.allowClick = true;
-          this.verification = {
-            errors: this.currentUser.seller.errors,
-            missingData: this.currentUser.seller.missingInfo
-          };
-          this.verificationStatus = 'Info Missing';
+          this.verificationStatus = 'Unverified';
           this.verficationClass.alert = true;
-        } else {
-          this.verificationStatus = 'In Review';
-          this.verficationClass.review = true;
+          break;
+        case 'review':
+          if (this.currentUser.seller.missingInfo &&
+            !(this.currentUser.seller.missingInfo.indexOf('external_acccount') === -1 || this.currentUser.seller.missingInfo.length > 1)) {
+            this.allowClick = true;
+            this.verification = {
+              errors: this.currentUser.seller.errors,
+              missingData: this.currentUser.seller.missingInfo
+            };
+            this.verificationStatus = 'Info Missing';
+            this.verficationClass.alert = true;
+          } else {
+            this.verificationStatus = 'In Review';
+            this.verficationClass.review = true;
+            this.allowClick = false;
+          }
+          break;
+        case 'rejected':
+          this.verificationStatus = 'Rejected';
+          this.allowClick = true;
+          this.verficationClass.alert = true;
+          break;
+        case 'verified':
+          this.verificationStatus = 'Verified';
           this.allowClick = false;
-        }
-        break;
-      case 'rejected':
-        this.verificationStatus = 'Rejected';
-        this.allowClick = true;
-        this.verficationClass.alert = true;
-        break;
-      case 'verified':
-        this.verificationStatus = 'Verified';
-        this.allowClick = false;
-        this.verficationClass.success = true;
-        break;
+          this.verficationClass.success = true;
+          break;
+      }
+    }
+    if (this.currentUser.facebookUserId) {
+      this.facebookLinked = true;
     }
   }
 
@@ -88,6 +95,10 @@ export class SettingsComponent implements OnInit {
     this.currentUser = this.userService.currentUser;
     this.setView();
     this.ref.markForCheck();
+  }
+
+  linkFacebook() {
+    this.overlayService.open(this.facebookModal);
   }
 
 }
