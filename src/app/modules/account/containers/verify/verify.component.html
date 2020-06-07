@@ -1,5 +1,5 @@
 <div class="full-content empty">
-    <ng-container *ngIf="!loading">
+    <ng-container *ngIf="!loading && !saving">
         <ng-container *ngIf="!welcome">
             <div class="center" *ngIf="type === 'email'">
                 <img src="../../../../../assets/images/heart.png">
@@ -13,7 +13,7 @@
                 <h2> Welcome to Relovely!</h2>
                 <p *ngIf="type === 'email'">Click<a (click)="goToProducts()" appClick target="_blank"> here </a>to see
                     what's in stock </p>
-                <p *ngIf="type === 'seller'">Click<a (click)="goToSettings()" appClick target="_blank">here</a>to get
+                <p *ngIf="type === 'seller'">Click<a (click)="goToSettings()" appClick target="_blank"> here </a>to get
                     started selling </p>
             </ng-container>
             <div class="form" *ngIf="!welcome">
@@ -39,7 +39,7 @@
                     </div>
                     <button mat-stroked-button class="primary" (click)="onSavePassword()" [disabled]="!form.valid">
                         <strong>
-                            SIGN UP
+                            SUBMIT
                         </strong>
                     </button>
                 </form>

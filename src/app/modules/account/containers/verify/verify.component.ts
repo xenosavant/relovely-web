@@ -18,6 +18,7 @@ export class VerifyComponent implements OnInit {
   public type: string;
   public loading = true;
   public welcome = false;
+  public code: string;
   form: FormGroup = new FormGroup({
     password: new FormControl('', [Validators.required]),
     verifyPassword: new FormControl('', [Validators.required])
@@ -31,32 +32,26 @@ export class VerifyComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
-      const code = params['code'];
+      this.code = params['code'];
       this.type = params['type'];
       if (this.type) {
         switch (this.type) {
           case 'email':
-            if (code) {
-              this.authService.verifyEmail({ code: code.replace(/ /g, '+') }).subscribe(response => {
-                this.userService.setLogin(response.jwt, response.user);
-                this.welcome = true;
-                this.loading = false;
-                this.ref.markForCheck();
-              });
+            if (this.code) {
+              this.loading = false;
             } else {
               this.loading = false;
               this.ref.markForCheck();
             }
             break;
           case 'seller':
-            if (code) {
-              this.authService.verifyEmail({ code: code.replace(/ /g, '+') }).subscribe(response => {
-                this.userService.setLogin(response.jwt, response.user);
-                this.loading = false;
-                this.ref.markForCheck();
-              });
+            if (this.code) {
+              this.loading = false;
+              this.ref.markForCheck();
             } else {
               this.navigationService.navigate({ path: '/' });
+              this.loading = false;
+              this.ref.markForCheck();
             }
             break;
           default:
@@ -86,11 +81,18 @@ export class VerifyComponent implements OnInit {
   }
 
   onSavePassword() {
-    this.authService.resetPassword(this.passwordValue).subscribe(user => {
-      this.welcome = true;
-    }, error => {
-      console.log(error);
-    })
+    this.loading = true;
+    this.authService.verifyEmail({ code: this.code }).subscribe(response => {
+      this.authService.resetPassword({ password: this.passwordValue, code: this.code }).subscribe(user => {
+        this.userService.setLogin(response.jwt, response.user);
+        this.welcome = true;
+        this.loading = false;
+        this.ref.markForCheck();
+      }, error => {
+        console.log(error);
+        this.loading = false;
+      });
+    });
   }
 
   validatePassword(control: FormGroup): ValidationErrors {
