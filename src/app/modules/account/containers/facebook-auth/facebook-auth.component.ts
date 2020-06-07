@@ -49,8 +49,8 @@ export class FacebookAuthComponent implements OnInit {
             });
             break;
           case 'link':
-            this.authService.linkFacebook(this.code).subscribe(response => {
-              this.userService.setCurrentUser(response.user);
+            this.authService.linkFacebook(this.code).subscribe(user => {
+              this.userService.setCurrentUser(user);
               this.router.navigate(['/account/settings']);
             }, err => {
               this.loading = false;

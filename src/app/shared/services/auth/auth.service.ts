@@ -9,6 +9,7 @@ import { UserDetail } from '@app/shared/models/user-detail.model';
 import { VerifyRequest } from './verify.request';
 import { EmailPasswordRequest } from './email-password.request';
 import { ResetPasswordRequest } from './reset-password.request';
+import { UserAuth } from '@app/shared/models/user-auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends BaseService {
@@ -69,9 +70,9 @@ export class AuthService extends BaseService {
         );
     }
 
-    linkFacebook(code: string): Observable<SignupResponse> {
-        return this.httpClient.post<SignupResponse>(`${this.apiBaseUrl}/facebook/link`, { code: code }).pipe(
-            map((response: SignupResponse) => {
+    linkFacebook(code: string): Observable<UserAuth> {
+        return this.httpClient.post<UserAuth>(`${this.apiBaseUrl}/facebook/link`, { code: code }).pipe(
+            map((response: UserAuth) => {
                 return response;
             })
         );
