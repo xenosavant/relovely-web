@@ -13,6 +13,7 @@ import { NavigationService } from '@app/shared/services/navigation/navigation.se
 export class InstagramAuthComponent implements OnInit {
 
   private code: string;
+  private type: string;
   loading = true;
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -24,16 +25,29 @@ export class InstagramAuthComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
       this.code = params['code'];
+      this.type = params['type'];
       const email = params['state'];
-      if (this.code) {
-        this.authService.sellWithInstagram(email, this.code).subscribe(() => {
-          this.loading = false;
-          this.ref.markForCheck();
-        }, err => {
-          this.loading = false;
-          this.router.navigate(['/']);
-          this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
-        });
+      if (this.code && this.type) {
+        if (this.type === 'seller') {
+          this.authService.sellWithInstagram(email, this.code).subscribe(() => {
+            this.loading = false;
+            this.ref.markForCheck();
+          }, err => {
+            this.loading = false;
+            this.router.navigate(['/']);
+            this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
+          });
+        }
+        if (this.type === 'member') {
+          this.authService.signupWithInstagram(email, this.code).subscribe(() => {
+            this.loading = false;
+            this.ref.markForCheck();
+          }, err => {
+            this.loading = false;
+            this.router.navigate(['/']);
+            this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
+          });
+        }
       } else {
         this.router.navigate(['/']);
       }

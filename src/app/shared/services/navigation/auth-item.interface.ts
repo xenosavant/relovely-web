@@ -1,4 +1,4 @@
 export interface IAuthItem {
     error?: string;
-    page?: 'signup' | 'signin' | 'sell' | 'reset';
+    page?: 'signup' | 'signin' | 'sell' | 'reset' | 'instagram';
 }
