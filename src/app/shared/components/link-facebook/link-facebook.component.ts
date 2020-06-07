@@ -10,6 +10,7 @@ import { environment } from '@env/environment';
 export class LinkFacebookComponent implements OnInit {
 
   @Output() close: EventEmitter<boolean> = new EventEmitter();
+  loading = false;
 
   linkFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebooLinkRedirectUrl}&scope=email&response_type=code`;
   constructor() { }
@@ -18,6 +19,7 @@ export class LinkFacebookComponent implements OnInit {
   }
 
   linkFacebook() {
+    this.loading = true;
     location.replace(this.linkFacebookUrl);
   }
 
