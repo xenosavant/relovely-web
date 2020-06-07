@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '@app/shared/services/user/user.service';
 import { AuthService } from '@app/shared/services/auth/auth.service';
@@ -18,7 +18,8 @@ export class InstagramAuthComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private navigationService: NavigationService,
-    private router: Router) { }
+    private router: Router,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -27,6 +28,7 @@ export class InstagramAuthComponent implements OnInit {
       if (this.code) {
         this.authService.signupWithInstagram(email, this.code).subscribe(() => {
           this.loading = false;
+          this.ref.markForCheck();
         }, err => {
           this.loading = false;
           this.router.navigate(['/']);
