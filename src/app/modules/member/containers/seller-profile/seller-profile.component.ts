@@ -41,6 +41,7 @@ export class SellerProfileComponent implements OnInit {
   followingUsers: UserList[];
   followerUsers: UserList[];
   error: string = null;
+  saving = false;
 
   constructor(private route: ActivatedRoute,
     private overlayService: OverlayService,
@@ -103,7 +104,7 @@ export class SellerProfileComponent implements OnInit {
         this.disableSave = !this.editForm.valid;
         break;
       case 'save':
-        this.loading = true;
+        this.saving = true;
         this.userService.updateUser(this.user.id,
           {
             firstName: this.editForm.get('first').value,
@@ -113,12 +114,13 @@ export class SellerProfileComponent implements OnInit {
             this.user.firstName = user.firstName;
             this.user.lastName = user.lastName;
             this.user.username = user.username;
-            this.loading = false;
+            this.saving = false;
             this.edit = false;
             this.error = null;
             this.ref.markForCheck();
           }, err => {
             this.error = err.error.error.message;
+            this.saving = false;
             this.ref.markForCheck();
           });
         break;

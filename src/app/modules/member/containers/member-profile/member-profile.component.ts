@@ -34,6 +34,7 @@ export class MemberProfileComponent implements OnInit {
   loading = false;
   actionProcessing = false;
   error: string = null;
+  saving = false;
 
   constructor(private userService: UserService,
     private ref: ChangeDetectorRef) { }
@@ -68,7 +69,7 @@ export class MemberProfileComponent implements OnInit {
         this.disableSave = !this.editForm.valid;
         break;
       case 'save':
-        this.loading = true;
+        this.saving = true;
         this.userService.updateUser(this.user.id,
           {
             firstName: this.editForm.get('first').value,
@@ -78,12 +79,13 @@ export class MemberProfileComponent implements OnInit {
             this.user.firstName = user.firstName;
             this.user.lastName = user.lastName;
             this.user.username = user.username;
-            this.loading = false;
+            this.saving = false;
             this.edit = false;
             this.error = null;
             this.ref.markForCheck();
           }, err => {
             this.error = err.error.error.message;
+            this.saving = false;
             this.ref.markForCheck();
           });
         break;

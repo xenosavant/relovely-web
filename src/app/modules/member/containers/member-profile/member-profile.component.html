@@ -33,24 +33,29 @@
       </mat-tab>
     </mat-tab-group>
     <div *ngIf="edit" class="edit">
-      <div class="error">{{error}}</div>
-      <form novalidate [formGroup]="editForm">
-        <div>
-          <mat-form-field appearance="outline">
-            <input matInput placeholder="First Name" formControlName="first" />
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field appearance="outline">
-            <input matInput placeholder="Last Name" formControlName="last" />
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field appearance="outline">
-            <input matInput placeholder="Username" formControlName="username" />
-          </mat-form-field>
-        </div>
-      </form>
+      <ng-container *ngIf="!saving">
+        <div class="error">{{error}}</div>
+        <form novalidate [formGroup]="editForm">
+          <div>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="First Name" formControlName="first" />
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="Last Name" formControlName="last" />
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="Username" formControlName="username" />
+            </mat-form-field>
+          </div>
+        </form>
+      </ng-container>
+      <div class="spinner-wrapper">
+        <mat-spinner *ngIf="saving" diameter="25"></mat-spinner>
+      </div>
     </div>
   </div>
 </div>

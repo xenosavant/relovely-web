@@ -11,6 +11,12 @@
 
 .edit {
     margin: 8px;
+    .spinner-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 250px;
+    }
 }
 
 .header-bar {
