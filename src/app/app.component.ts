@@ -148,6 +148,7 @@ export class AppComponent implements OnInit {
       });
     }
     this.navigationService.showAuthWindow$.subscribe(item => {
+      console.log(item.page);
       if (item.page) {
         this.authPage = item.page;
         if (item.error) {
@@ -285,7 +286,7 @@ export class AppComponent implements OnInit {
     if (this.userService.currentUser) {
       this.goToFavorites();
     } else {
-      this.showSignUpModal();
+      this.showSignin();
     }
   }
 
@@ -365,7 +366,7 @@ export class AppComponent implements OnInit {
 
   public sideNavigate(item: NavigationItem) {
     if (!this.userService.currentUser && item.name === 'Account') {
-      this.showSignUpModal();
+      this.showSignin();
     } else {
       const close = this.navigationService.sideNavigate(item);
       if (close) {
@@ -376,6 +377,11 @@ export class AppComponent implements OnInit {
 
   public goBack(item: NavigationItem) {
     this.navigationService.setCurrentNavigationItems(this.navigationService.rootNavigationItems);
+  }
+
+  public showSignin() {
+    this.authPage = 'signin';
+    this.showSignUpModal();
   }
 
   public showSignUpModal() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Sanitizer, NgZone, ChangeDetectorRef, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Sanitizer, NgZone, ChangeDetectorRef, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { environment } from '@env/environment';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnChanges {
 
   public signInForm: FormGroup;
   public signUpForm: FormGroup;
@@ -43,28 +43,33 @@ export class AuthComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private router: Router) { }
 
-  ngOnInit() {
-    this.goTo(this.state);
-    this.signInForm = new FormGroup({
-      email: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
-    });
-    this.sellerForm = new FormGroup({
-      email: new FormControl('', [Validators.email, Validators.required])
-    });
-    this.signUpForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      username: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
-      verifyPassword: new FormControl('', [Validators.required])
-    }, this.validatePassword);
-    this.resetForm = new FormGroup({
-      identifier: new FormControl('', [Validators.required])
-    });
-    this.signupInstagramUrl = environment.instagramAuthUrl +
-      `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSignupRedirectUrl}`;
-    this.signupFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSignupRedirectUrl}&scope=email&response_type=code`;
-    this.signinFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSigninRedirectUrl}&response_type=code`;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.state && !!changes.state.currentValue) {
+      console.log(changes.state.currentValue);
+      this.goTo(changes.state.currentValue);
+      this.signInForm = new FormGroup({
+        email: new FormControl('', [Validators.required]),
+        password: new FormControl('', [Validators.required]),
+      });
+      this.sellerForm = new FormGroup({
+        email: new FormControl('', [Validators.email, Validators.required])
+      });
+      this.signUpForm = new FormGroup({
+        email: new FormControl('', [Validators.required, Validators.email]),
+        username: new FormControl('', [Validators.required]),
+        password: new FormControl('', [Validators.required]),
+        verifyPassword: new FormControl('', [Validators.required])
+      }, this.validatePassword);
+      this.resetForm = new FormGroup({
+        identifier: new FormControl('', [Validators.required])
+      });
+      this.signupInstagramUrl = environment.instagramAuthUrl +
+        `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSignupRedirectUrl}`;
+      this.signupFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSignupRedirectUrl}&scope=email&response_type=code`;
+      this.signinFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSigninRedirectUrl}&response_type=code`;
+      this.ref.markForCheck();
+    }
+
   }
 
   signUpInstagram() {
