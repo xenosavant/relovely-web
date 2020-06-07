@@ -7,16 +7,44 @@
                 <p>Please check your email for a verification link. </p>
             </div>
         </ng-container>
-        <ng-container *ngIf="welcome">
-            <div class="center" *ngIf="type === 'seller'">
+        <div class="center" *ngIf="type === 'seller'">
+            <ng-container *ngIf="welcome">
                 <img src="../../../../../assets/images/heart.png">
                 <h2> Welcome to Relovely!</h2>
                 <p *ngIf="type === 'email'">Click<a (click)="goToProducts()" appClick target="_blank"> here </a>to see
                     what's in stock </p>
                 <p *ngIf="type === 'seller'">Click<a (click)="goToSettings()" appClick target="_blank">here</a>to get
                     started selling </p>
+            </ng-container>
+            <div class="form" *ngIf="!welcome">
+                <div class="info">
+                    Please select a password for your account.
+                </div>
+                <div class="form-error" *ngIf="(passwordValue && passwordVerifyValue) && (passwordValue.length === passwordVerifyValue.length || !verify.focused)
+                && form.invalid && form.errors && form.errors.passwordMatch">
+                    Passwords don't match
+                </div>
+                <form [formGroup]="form">
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <input #password="matInput" matInput type="password" placeholder="Password"
+                                formControlName="password" />
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <input #verify="matInput" matInput type="password" placeholder="Verify Password"
+                                formControlName="verifyPassword" />
+                        </mat-form-field>
+                    </div>
+                    <button mat-stroked-button class="primary" (click)="onSavePassword()" [disabled]="!form.valid">
+                        <strong>
+                            SIGN UP
+                        </strong>
+                    </button>
+                </form>
             </div>
-        </ng-container>
+        </div>
     </ng-container>
     <div *ngIf="loading" class="authorizing">
         <div class="text">Authorizing</div>
