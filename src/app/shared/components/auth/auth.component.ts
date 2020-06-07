@@ -160,7 +160,7 @@ export class AuthComponent implements OnChanges {
         this.title = 'APPLY TO SELL';
         break;
       case ('instagram'):
-        this.title = 'SIGN UP WITH INSTAGRAM';
+        this.title = 'INSTAGRAM SIGN UP';
         break;
     }
   }

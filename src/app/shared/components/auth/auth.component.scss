@@ -24,19 +24,17 @@
     }
     &.sell {
         height: 250px;
-        .sell-info {
-            font-size: 1.1em;
-            font-weight: 600;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        button {
-
-        }
-        
+    }
+    &.instagram {
+        height: 325px;
+    }
+    .sell-info {
+        font-size: 1.1em;
+        font-weight: 600;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        margin-bottom: 24px;
     }
     .link-text {
         margin-bottom: 16px;
@@ -53,10 +51,13 @@
 
 .outer-wrapper {
     &.signup {
-        min-height:586px;
+        min-height:647px;
     }
     &.signin {
         min-height:486px;
+    }
+    &.instagram {
+        min-height:325;
     }
 }
 
@@ -73,13 +74,12 @@
 }
 
 button.instagram {
-    margin-bottom: 16px;
+    margin: 16px 0px;
     display: grid;
-    width: 235px;
+    width: 100%;
     grid-template-columns: 40px auto;
     background-color: #3f729b !important;
-    margin: 0 auto;
-    height:35px;
+    height:40px;
     img {
         height:24px;
         margin-right: 16px;
