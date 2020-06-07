@@ -46,6 +46,7 @@ export class VerifyComponent implements OnInit {
             break;
           case 'seller':
             if (this.code) {
+              console.log(this.code);
               this.loading = false;
               this.ref.markForCheck();
             } else {

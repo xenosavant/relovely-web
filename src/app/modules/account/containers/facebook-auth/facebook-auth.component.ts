@@ -49,16 +49,14 @@ export class FacebookAuthComponent implements OnInit {
             });
             break;
           case 'link':
-            // this.authService.linkFacebook(this.code).subscribe(user => {
-            //   this.userService.setCurrentUser(user);
-            //   this.router.navigate(['/account/settings']);
-            // }, err => {
-            //   this.loading = false;
-            //   this.router.navigate(['/']);
-            //   this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signup' });
-            // });
-            // break;
-            console.log(this.code);
+            this.authService.linkFacebook(this.code).subscribe(user => {
+              this.userService.setCurrentUser(user);
+              this.router.navigate(['/account/settings']);
+            }, err => {
+              this.loading = false;
+              this.router.navigate(['/']);
+              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signup' });
+            });
             break;
         }
       } else {
