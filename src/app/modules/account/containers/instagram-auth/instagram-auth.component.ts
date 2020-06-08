@@ -24,11 +24,15 @@ export class InstagramAuthComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
-      this.code = params['code'];
-      this.type = params['type'];
-      console.log(this.code);
-      console.log(this.type);
-      const email = params['state'];
+      const code = params['code'];
+      const state = params['state'];
+      try {
+        const parsed = JSON.parse(state) as { type: string, email: string };
+        console.log(parsed);
+        console.log(code);
+      } catch {
+        //   this.router.navigate(['/']);
+      }
       // if (this.code && this.type) {
       //   if (this.type === 'seller') {
       //     this.authService.sellWithInstagram(email, this.code).subscribe(() => {
