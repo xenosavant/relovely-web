@@ -15,6 +15,9 @@
             <div class="info">
                 Please enter your email address
             </div>
+            <div class="errors">
+                <div *ngIf="error !== null" class="form-error">{{error}}</div>
+            </div>
             <form [formGroup]="form">
                 <div>
                     <mat-form-field appearance="outline">
