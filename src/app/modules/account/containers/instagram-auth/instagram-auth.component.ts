@@ -4,6 +4,8 @@ import { UserService } from '@app/shared/services/user/user.service';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { Subject, Subscription, combineLatest } from 'rxjs';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { withLatestFrom } from 'rxjs/operators';
 
 @Component({
   selector: 'app-instagram-auth',
@@ -16,6 +18,10 @@ export class InstagramAuthComponent implements OnInit {
   private code: string;
   private type: string;
   loading = true;
+  saving = false;
+  success = false;
+  error: string;
+  form: FormGroup = new FormGroup({ email: new FormControl('', [Validators.required]) });
 
   constructor(private activatedRoute: ActivatedRoute,
     private authService: AuthService,
@@ -25,40 +31,74 @@ export class InstagramAuthComponent implements OnInit {
 
   ngOnInit() {
     combineLatest([this.activatedRoute.queryParams, this.activatedRoute.params]).subscribe(([query, route]) => {
-      const type = route['type'];
-      const code = query['code'];
-      const state = query['state'];
-      console.log(type, code, state);
+      this.type = route['type'];
+      this.code = query['code'];
+      if (this.code && this.type) {
+        if (this.type === 'seller' || this.type === 'member') {
+          this.loading = false;
+        } else {
+          this.router.navigate(['/']);
+        }
+      } else {
+        this.router.navigate(['/']);
+      }
     });
-    // this.activatedRoute.queryParams.subscribe(params => {
-    //   const type = this.activatedRoute.params.
-    //   const code = params['code'];
-    //   const email = params['state'];
-    //   console.log(email);
-    //   console.log(code);
-    // if (this.code && this.type) {
-    //   if (this.type === 'seller') {
-    //     this.authService.sellWithInstagram(email, this.code).subscribe(() => {
-    //       this.loading = false;
-    //       this.ref.markForCheck();
-    //     }, err => {
-    //       this.loading = false;
-    //       this.router.navigate(['/']);
-    //       this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
-    //     });
-    //   }
-    //   if (this.type === 'member') {
-    //     this.authService.signupWithInstagram(email, this.code).subscribe(() => {
-    //       this.loading = false;
-    //       this.ref.markForCheck();
-    //     }, err => {
-    //       this.loading = false;
-    //       this.router.navigate(['/']);
-    //       this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
-    //     });
-    //   }
-    // } else {
-    //   this.router.navigate(['/']);
-    // }
   }
+
+  onSubmit() {
+    this.saving = true;
+    this.error = null;
+    if (this.type === 'member') {
+      this.authService.signupWithInstagram(this.form.get('email').value, this.code).subscribe(() => {
+        this.success = true;
+        this.saving = false;
+        this.ref.markForCheck();
+      }, err => {
+        this.error = err.error.error.message;
+        this.saving = false;
+        this.ref.markForCheck();
+      });
+    }
+    else if (this.type === 'seller') {
+      this.authService.sellWithInstagram(this.form.get('email').value, this.code).subscribe(() => {
+        this.success = true;
+        this.saving = false;
+        this.ref.markForCheck();
+      }, err => {
+        this.error = err.error.error.message;
+        this.saving = false;
+        this.ref.markForCheck();
+      });
+    }
+  }
+  // this.activatedRoute.queryParams.subscribe(params => {
+  //   const type = this.activatedRoute.params.
+  //   const code = params['code'];
+  //   const email = params['state'];
+  //   console.log(email);
+  //   console.log(code);
+  // if (this.code && this.type) {
+  //   if (this.type === 'seller') {
+  //     this.authService.sellWithInstagram(email, this.code).subscribe(() => {
+  //       this.loading = false;
+  //       this.ref.markForCheck();
+  //     }, err => {
+  //       this.loading = false;
+  //       this.router.navigate(['/']);
+  //       this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
+  //     });
+  //   }
+  //   if (this.type === 'member') {
+  //     this.authService.signupWithInstagram(email, this.code).subscribe(() => {
+  //       this.loading = false;
+  //       this.ref.markForCheck();
+  //     }, err => {
+  //       this.loading = false;
+  //       this.router.navigate(['/']);
+  //       this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
+  //     });
+  //   }
+  // } else {
+  //   this.router.navigate(['/']);
+  // }
 }

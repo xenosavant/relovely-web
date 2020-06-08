@@ -99,8 +99,11 @@
               <div class="button-wrap"> <img src="./assets/images/facebook-color.svg" /> <strong>Continue with Facebook
                 </strong></div>
             </button>
-            <button class="instagram primary" mat-stroked-button (click)="goTo('instagram')">
-              <img src="./assets/images/instagram-white.png" /> <strong>Continue with Instagram </strong> </button>
+            <button class="instagram primary" mat-stroked-button (click)="signUpInstagram()">
+              <div class="button-wrap"> <img src="./assets/images/instagram-white.png" /> <strong>Continue with
+                  Instagram
+                </strong></div>
+            </button>
             <div class="policies">
               By applying you are agreeing to the
               <a (click)="goToPrivacy()" appClick target="_blank">privacy policy</a>
@@ -150,57 +153,15 @@
           <div *ngIf="error !== null" class="form-error">{{error}}</div>
           <div class="form-wrapper sell">
             <div class="sell-info">
-              To apply as a seller, please enter your email and click the button below to verify your Instagram account.
+              To apply as a seller, please click the button below to verify your Instagram account.
             </div>
-            <form novalidate [formGroup]="sellerForm">
-              <mat-form-field appearance="outline">
-                <input matInput placeholder="Email" formControlName="email" />
-              </mat-form-field>
-              <button class="instagram primary" mat-stroked-button (click)="sellWithInstagram()"
-                [disabled]="!sellerForm.valid">
-                <img src="./assets/images/instagram-white.png" /> <strong>Apply with Instagram </strong> </button>
-            </form>
+            <button class="instagram primary" mat-stroked-button (click)="sellWithInstagram()">
+              <img src="./assets/images/instagram-white.png" /> <strong>Apply with Instagram </strong> </button>
             <div class="policies">
               By applying you are agreeing to the
               <a (click)="goToPrivacy()" appClick target="_blank">privacy policy</a>
               and the
               <a appClick (click)="goToTerms()" target="_blank">terms of service</a>
-            </div>
-          </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="'instagram'">
-          <div *ngIf="error !== null" class="form-error">{{error}}</div>
-          <div class="form-wrapper instagram">
-            <div class="sell-info">
-              To sign up please enter your email and click the button below to verify your Instagram account.
-            </div>
-            <form novalidate [formGroup]="sellerForm">
-              <mat-form-field appearance="outline">
-                <input matInput placeholder="Email" formControlName="email" />
-              </mat-form-field>
-              <button class="instagram primary" mat-stroked-button (click)="signUpInstagram()"
-                [disabled]="!sellerForm.valid">
-                <img src="./assets/images/instagram-white.png" /> <strong>Signup with Instagram </strong> </button>
-            </form>
-            <div class="policies">
-              By signing up you are agreeing to the
-              <a (click)="goToPrivacy()" appClick target="_blank">privacy policy</a>
-              and the
-              <a appClick (click)="goToTerms()" target="_blank">terms of service</a>
-            </div>
-            <div class="links">
-              <div class="link-text">
-                Already have an account?
-                <a (click)="goTo('signin')" class="link" appClick target="_blank">
-                  Sign In
-                </a>
-              </div>
-              <div class="link-text">
-                Don't have an account?
-                <a (click)="goTo('signup')" class="link" appClick target="_blank">
-                  Sign Up
-                </a>
-              </div>
             </div>
           </div>
         </ng-container>

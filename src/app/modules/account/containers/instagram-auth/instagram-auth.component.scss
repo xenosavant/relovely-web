@@ -28,3 +28,12 @@
 p {
     font-weight: 600;
 }
+
+.form {
+    width: 400px;
+    text-align: center;
+    .info {
+        font-weight: 600;
+        margin-bottom: 16px;
+    }
+}

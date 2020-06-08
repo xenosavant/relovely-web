@@ -1,11 +1,39 @@
-<ng-container *ngIf="!loading">
-    <div class="center">
+<ng-container *ngIf="!loading && !saving">
+    <div *ngIf="success" class="center">
         <img src="../../../../../assets/images/heart.png">
-        <h2> Thank You For Applying to Sell on Relovely!</h2>
-        <p>We're reviewing your application and we'll send you an email when you're approved.</p>
+        <ng-container *ngIf="type === 'seller'">
+            <h2> Thank You For Applying to Sell on Relovely!</h2>
+            <p>We're reviewing your application and we'll send you an email when you're approved.</p>
+        </ng-container>
+        <ng-container *ngIf="type === 'member'">
+            <h2> Welcome to Relovely!</h2>
+            <p>Please check your email for a verification link.</p>
+        </ng-container>
+    </div>
+    <div *ngIf="!success">
+        <div class="form">
+            <div class="info">
+                Please enter your email address
+            </div>
+            <form [formGroup]="form">
+                <div>
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" placeholder="Email Address" formControlName="email" />
+                    </mat-form-field>
+                </div>
+                <button mat-stroked-button class="primary" (click)="onSubmit()" [disabled]="!form.valid">
+                    <strong>
+                        SUBMIT
+                    </strong>
+                </button>
+            </form>
+        </div>
     </div>
 </ng-container>
 <div *ngIf="loading" class="authorizing">
     <div class="text">Authorizing</div>
+    <mat-spinner diameter="30"></mat-spinner>
+</div>
+<div *ngIf="saving" class="authorizing">
     <mat-spinner diameter="30"></mat-spinner>
 </div>

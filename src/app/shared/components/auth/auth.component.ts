@@ -45,14 +45,10 @@ export class AuthComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.state && !!changes.state.currentValue) {
-      console.log(changes.state.currentValue);
       this.goTo(changes.state.currentValue);
       this.signInForm = new FormGroup({
         email: new FormControl('', [Validators.required]),
         password: new FormControl('', [Validators.required]),
-      });
-      this.sellerForm = new FormGroup({
-        email: new FormControl('', [Validators.email, Validators.required])
       });
       this.signUpForm = new FormGroup({
         email: new FormControl('', [Validators.required, Validators.email]),
@@ -74,15 +70,13 @@ export class AuthComponent implements OnChanges {
 
   signUpInstagram() {
     this.loading = true;
-    const state = JSON.stringify({ email: this.sellerForm.get('email').value, type: 'member' });
-    const url = this.signupInstagramUrl + `/member?state=${this.sellerForm.get('email').value}`;
+    const url = `${this.signupInstagramUrl}/member`;
     location.replace(url);
   }
 
   sellWithInstagram() {
     this.loading = true;
-    const state = JSON.stringify({ email: this.sellerForm.get('email').value, type: 'seller' });
-    const url = this.signupInstagramUrl + `/seller?state=${this.sellerForm.get('email').value}`;
+    const url = `${this.signupInstagramUrl}/seller`;
     location.replace(url);
   }
 
