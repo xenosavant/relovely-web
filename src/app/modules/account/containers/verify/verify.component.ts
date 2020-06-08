@@ -37,12 +37,8 @@ export class VerifyComponent implements OnInit {
       if (this.type) {
         switch (this.type) {
           case 'email':
-            if (this.code) {
-              this.loading = false;
-            } else {
-              this.loading = false;
-              this.ref.markForCheck();
-            }
+            this.loading = false;
+            this.ref.markForCheck();
             break;
           case 'seller':
             if (this.code) {
