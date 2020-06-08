@@ -75,14 +75,14 @@ export class AuthComponent implements OnChanges {
   signUpInstagram() {
     this.loading = true;
     const state = JSON.stringify({ email: this.sellerForm.get('email').value, type: 'member' });
-    const url = this.signupInstagramUrl + `?state=${state}`;
+    const url = this.signupInstagramUrl + `/member?state=${this.sellerForm.get('email').value}`;
     location.replace(url);
   }
 
   sellWithInstagram() {
     this.loading = true;
     const state = JSON.stringify({ email: this.sellerForm.get('email').value, type: 'seller' });
-    const url = this.signupInstagramUrl + `?state=${state}`;
+    const url = this.signupInstagramUrl + `/seller?state=${this.sellerForm.get('email').value}`;
     location.replace(url);
   }
 
