@@ -186,11 +186,11 @@
             </div>
           </div>
         </ng-container>
-        <ng-container *ngSwitchCase="'intagram'">
+        <ng-container *ngSwitchCase="'instagram'">
           <div *ngIf="error !== null" class="form-error">{{error}}</div>
           <div *ngIf="!authenticated" class="form-wrapper sell">
             <div class="sell-info">
-              To apply with Instagram, please click the button below to verify your Instagram account.
+              To signup with Instagram, please click the button below to verify your Instagram account.
             </div>
             <button class="instagram primary" mat-stroked-button (click)="sellWithInstagram()">
               <img src="./assets/images/instagram-white.png" /> <strong>Apply with Instagram </strong> </button>
@@ -201,11 +201,12 @@
               <a appClick (click)="goToTerms()" target="_blank">terms of service</a>
             </div>
           </div>
-          <div *ngIf="authenticated">
+          <div class="form-wrapper member" *ngIf="authenticated">
+            <div class="sell-info">
+              You are applying as {{authUsername}}. Enter your email and password and click signup to continue the
+              application.
+            </div>
             <form novalidate [formGroup]="memberForm">
-              <div class="sell-info">
-                To apply with Instagram, please click the button below to verify your Instagram account.
-              </div>
               <mat-form-field appearance="outline">
                 <input matInput type="text" placeholder="Email Address" formControlName="email" />
               </mat-form-field>
@@ -223,7 +224,7 @@
               </div>
               <button mat-stroked-button class="primary" (click)="applyAsMember()" [disabled]="!memberForm.valid">
                 <strong>
-                  APPLY
+                  SIGNUP
                 </strong>
               </button>
             </form>

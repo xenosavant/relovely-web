@@ -33,7 +33,8 @@ export class AuthComponent implements OnChanges {
 
   @Input()
   error: string;
-
+  @Input()
+  authUsername: string;
   @Input()
   token: string;
 
@@ -109,7 +110,7 @@ export class AuthComponent implements OnChanges {
 
   applyAsMember() {
     this.loading = true;
-    this.authService.signupWithInstagram(this.sellerForm.get('email').value, this.token).subscribe(() => {
+    this.authService.signupWithInstagram(this.memberForm.get('email').value, this.token).subscribe(() => {
       this.loading = false;
       this.navigationService.navigate({ path: '/account/instagram/member' });
     }, err => {
