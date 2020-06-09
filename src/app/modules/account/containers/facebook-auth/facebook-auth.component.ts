@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { UserService } from '@app/shared/services/user/user.service';
@@ -19,7 +19,8 @@ export class FacebookAuthComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private router: Router,
-    private navigationService: NavigationService) { }
+    private navigationService: NavigationService,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -37,18 +38,18 @@ export class FacebookAuthComponent implements OnInit {
             });
             break;
           default:
-            // this.authService.continueWithFacebook(this.code).subscribe(response => {
-            //   this.userService.setLogin(response.jwt, response.user);
-            //   if (response.existing) {
-            //     this.router.navigate(['/']);
-            //   } else {
-            //     this.loading = false;
-            //   }
-            // }, err => {
-            //   this.router.navigate(['/']);
-            //   this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signin' });
-            // });
-            console.log(this.code);
+            this.authService.continueWithFacebook(this.code).subscribe(response => {
+              this.userService.setLogin(response.jwt, response.user);
+              if (response.existing) {
+                this.router.navigate(['/']);
+              } else {
+                this.loading = false;
+                this.ref.markForCheck();
+              }
+            }, err => {
+              this.router.navigate(['/']);
+              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signin' });
+            });
             break;
         }
       } else {

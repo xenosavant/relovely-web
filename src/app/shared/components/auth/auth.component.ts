@@ -45,7 +45,7 @@ export class AuthComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.state && !!changes.state.currentValue) {
-      this.goTo(changes.state.currentValue);
+      this.goTo(changes.state.currentValue, this.error);
       this.signInForm = new FormGroup({
         email: new FormControl('', [Validators.required]),
         password: new FormControl('', [Validators.required]),
@@ -84,7 +84,6 @@ export class AuthComponent implements OnChanges {
   }
 
   signup() {
-    this.error = null;
     this.loading = true;
     this.authService.signup({ email: this.signUpForm.value['email'], password: this.signUpForm.value['password'], username: this.signUpForm.value['username'] })
       .subscribe(response => {
@@ -104,7 +103,6 @@ export class AuthComponent implements OnChanges {
   }
 
   signin() {
-    this.error = null;
     this.loading = true;
     this.authService.signin({ email: this.signInForm.value['email'], password: this.signInForm.value['password'] })
       .subscribe(response => {
@@ -140,8 +138,8 @@ export class AuthComponent implements OnChanges {
     this.title = 'RESET PASSWORD';
   }
 
-  goTo(state) {
-    this.error = null;
+  goTo(state, error = null) {
+    this.error = error;
     this.state = state;
     switch (this.state) {
       case ('signin'):
