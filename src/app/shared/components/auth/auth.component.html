@@ -166,11 +166,11 @@
           </div>
           <div *ngIf="authenticated" class="form-wrapper sell__auth">
             <div class="sell-info">
-
+              You are applying as {{authUsername}}. Enter your email and click apply to continue the application.
             </div>
             <form novalidate [formGroup]="sellerForm">
               <mat-form-field appearance="outline">
-                <input matInput type="text" placeholder="Email Address" formControlName="sellerForm" />
+                <input matInput type="text" placeholder="Email Address" formControlName="email" />
               </mat-form-field>
               <button mat-stroked-button class="primary" (click)="applyToSell()" [disabled]="!sellerForm.valid">
                 <strong>

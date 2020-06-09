@@ -71,8 +71,8 @@ export class AuthService extends BaseService {
         );
     }
 
-    getInstagramToken(code: string): Observable<InstagramTokenResponse> {
-        return this.httpClient.post<InstagramTokenResponse>(`${this.apiBaseUrl}/instagram/signup`, { code: code }).pipe(
+    getInstagramToken(token: string, type: 'member' | 'seller'): Observable<InstagramTokenResponse> {
+        return this.httpClient.post<InstagramTokenResponse>(`${this.apiBaseUrl}/instagram/token`, { token: token, type: type }).pipe(
             map((token) => {
                 return token;
             })

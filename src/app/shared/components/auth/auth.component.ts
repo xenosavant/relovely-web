@@ -50,9 +50,6 @@ export class AuthComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.state && !!changes.state.currentValue) {
-      if (this.token) {
-        this.authenticated = true;
-      }
       this.goTo(changes.state.currentValue, this.error);
       this.signInForm = new FormGroup({
         email: new FormControl('', [Validators.required]),
@@ -78,6 +75,10 @@ export class AuthComponent implements OnChanges {
       this.signupFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookRedirectUrl}&scope=email&response_type=code`;
       this.ref.markForCheck();
     }
+    console.log(this.token);
+    if (this.token) {
+      this.authenticated = true;
+    }
   }
 
   memberAuthenticateInstagram() {
@@ -95,6 +96,7 @@ export class AuthComponent implements OnChanges {
   applyToSell() {
     this.loading = true;
     this.authService.sellWithInstagram(this.sellerForm.get('email').value, this.token).subscribe(() => {
+      this.loading = false;
       this.navigationService.navigate({ path: '/account/instagram/seller' });
     }, err => {
       this.error = err.error.error.message;

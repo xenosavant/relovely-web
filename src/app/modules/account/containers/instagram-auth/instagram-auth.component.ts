@@ -34,29 +34,29 @@ export class InstagramAuthComponent implements OnInit {
       this.code = query['code'];
       if (this.type) {
         if (this.code) {
-          console.log(this.code);
-          // if (this.type === 'member') {
-          //   this.authService.getInstagramToken(this.code).subscribe((response) => {
-          //     this.router.navigate(['/']);
-          //     this.navigationService.openAuthWindow({ username: response.username, token: response.token, page: 'instagram' });
-          //   }, err => {
-          //     this.error = err.error.error.message;
-          //     this.router.navigate(['/']);
-          //     this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
-          //   });
-          // }
-          // else if (this.type === 'seller') {
-          //   this.authService.getInstagramToken(this.code).subscribe((response) => {
-          //     this.router.navigate(['/']);
-          //     this.navigationService.openAuthWindow({ username: response.username, token: response.token, page: 'sell' });
-          //   }, err => {
-          //     this.error = err.error.error.message;
-          //     this.router.navigate(['/']);
-          //     this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
-          //   });
-          // }
+          if (this.type === 'member') {
+            this.authService.getInstagramToken(this.code, 'member').subscribe((response) => {
+              this.router.navigate(['/']);
+              this.navigationService.openAuthWindow({ username: response.username, token: response.token, page: 'instagram' });
+            }, err => {
+              this.error = err.error.error.message;
+              this.router.navigate(['/']);
+              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
+            });
+          }
+          else if (this.type === 'seller') {
+            this.authService.getInstagramToken(this.code, 'seller').subscribe((response) => {
+              this.router.navigate(['/']);
+              this.navigationService.openAuthWindow({ username: response.username, token: response.token, page: 'sell' });
+            }, err => {
+              this.error = err.error.error.message;
+              this.router.navigate(['/']);
+              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
+            });
+          }
         } else {
           this.success = true;
+          this.loading = false;
         }
       } else {
         this.router.navigate(['/']);
