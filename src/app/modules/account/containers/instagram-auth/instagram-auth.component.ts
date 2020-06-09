@@ -21,7 +21,6 @@ export class InstagramAuthComponent implements OnInit {
   saving = false;
   success = false;
   error: string;
-  form: FormGroup = new FormGroup({ email: new FormControl('', [Validators.required]) });
 
   constructor(private activatedRoute: ActivatedRoute,
     private authService: AuthService,
@@ -33,72 +32,35 @@ export class InstagramAuthComponent implements OnInit {
     combineLatest([this.activatedRoute.queryParams, this.activatedRoute.params]).subscribe(([query, route]) => {
       this.type = route['type'];
       this.code = query['code'];
-      if (this.code && this.type) {
-        if (this.type === 'seller' || this.type === 'member') {
-          this.loading = false;
+      if (this.type) {
+        if (this.code) {
+          console.log(this.code);
+          // if (this.type === 'member') {
+          //   this.authService.getInstagramToken(this.code).subscribe((response) => {
+          //     this.router.navigate(['/']);
+          //     this.navigationService.openAuthWindow({ username: response.username, token: response.token, page: 'instagram' });
+          //   }, err => {
+          //     this.error = err.error.error.message;
+          //     this.router.navigate(['/']);
+          //     this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
+          //   });
+          // }
+          // else if (this.type === 'seller') {
+          //   this.authService.getInstagramToken(this.code).subscribe((response) => {
+          //     this.router.navigate(['/']);
+          //     this.navigationService.openAuthWindow({ username: response.username, token: response.token, page: 'sell' });
+          //   }, err => {
+          //     this.error = err.error.error.message;
+          //     this.router.navigate(['/']);
+          //     this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
+          //   });
+          // }
         } else {
-          this.router.navigate(['/']);
+          this.success = true;
         }
       } else {
         this.router.navigate(['/']);
       }
     });
   }
-
-  onSubmit() {
-    this.saving = true;
-    this.error = null;
-    if (this.type === 'member') {
-      this.authService.signupWithInstagram(this.form.get('email').value, this.code).subscribe(() => {
-        this.success = true;
-        this.saving = false;
-        this.ref.markForCheck();
-      }, err => {
-        this.error = err.error.error.message;
-        this.saving = false;
-        this.ref.markForCheck();
-      });
-    }
-    else if (this.type === 'seller') {
-      this.authService.sellWithInstagram(this.form.get('email').value, this.code).subscribe(() => {
-        this.success = true;
-        this.saving = false;
-        this.ref.markForCheck();
-      }, err => {
-        this.error = err.error.error.message;
-        this.saving = false;
-        this.ref.markForCheck();
-      });
-    }
-  }
-  // this.activatedRoute.queryParams.subscribe(params => {
-  //   const type = this.activatedRoute.params.
-  //   const code = params['code'];
-  //   const email = params['state'];
-  //   console.log(email);
-  //   console.log(code);
-  // if (this.code && this.type) {
-  //   if (this.type === 'seller') {
-  //     this.authService.sellWithInstagram(email, this.code).subscribe(() => {
-  //       this.loading = false;
-  //       this.ref.markForCheck();
-  //     }, err => {
-  //       this.loading = false;
-  //       this.router.navigate(['/']);
-  //       this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
-  //     });
-  //   }
-  //   if (this.type === 'member') {
-  //     this.authService.signupWithInstagram(email, this.code).subscribe(() => {
-  //       this.loading = false;
-  //       this.ref.markForCheck();
-  //     }, err => {
-  //       this.loading = false;
-  //       this.router.navigate(['/']);
-  //       this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
-  //     });
-  //   }
-  // } else {
-  //   this.router.navigate(['/']);
-  // }
 }

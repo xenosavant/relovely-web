@@ -18,6 +18,7 @@ export class AuthComponent implements OnChanges {
   public signInForm: FormGroup;
   public signUpForm: FormGroup;
   public sellerForm: FormGroup;
+  public memberForm: FormGroup;
   public resetForm: FormGroup;
   public signupInstagramUrl: string;
   public signinInstagramUrl: string;
@@ -26,11 +27,15 @@ export class AuthComponent implements OnChanges {
   private originalResetText = 'Enter your email below to reset your password:';
 
   public loading = false;
+  public authenticated = false;
   public title: string;
   public resetText = this.originalResetText;
 
   @Input()
   error: string;
+
+  @Input()
+  token: string;
 
   @Input()
   public state: 'signin' | 'signup' | 'reset' | 'sell' | 'instagram' = 'signin';
@@ -45,6 +50,9 @@ export class AuthComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.state && !!changes.state.currentValue) {
+      if (this.token) {
+        this.authenticated = true;
+      }
       this.goTo(changes.state.currentValue, this.error);
       this.signInForm = new FormGroup({
         email: new FormControl('', [Validators.required]),
@@ -59,6 +67,12 @@ export class AuthComponent implements OnChanges {
       this.resetForm = new FormGroup({
         identifier: new FormControl('', [Validators.required])
       });
+      this.sellerForm = new FormGroup({
+        email: new FormControl('', [Validators.required])
+      });
+      this.memberForm = new FormGroup({
+        email: new FormControl('', [Validators.required])
+      });
       this.signupInstagramUrl = environment.instagramAuthUrl +
         `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSignupRedirectUrl}`;
       this.signupFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookRedirectUrl}&scope=email&response_type=code`;
@@ -66,16 +80,31 @@ export class AuthComponent implements OnChanges {
     }
   }
 
-  signUpInstagram() {
+  memberAuthenticateInstagram() {
     this.loading = true;
     const url = `${this.signupInstagramUrl}/member`;
     location.replace(url);
   }
 
-  sellWithInstagram() {
+  sellerAuthenticateInstagram() {
     this.loading = true;
     const url = `${this.signupInstagramUrl}/seller`;
     location.replace(url);
+  }
+
+  applyToSell() {
+    this.loading = true;
+    this.authService.sellWithInstagram(this.sellerForm.get('email').value, this.token).subscribe(() => {
+      this.navigationService.navigate({ path: '/account/instagram/seller' });
+    }, err => {
+      this.error = err.error.error.message;
+      this.loading = false;
+      this.ref.markForCheck();
+    })
+  }
+
+  applyAsMember() {
+    // TODO
   }
 
 

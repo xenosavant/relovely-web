@@ -71,6 +71,8 @@ export class AppComponent implements OnInit {
   public loginSubscription: Subscription;
   public signupError: string = null;
   public authPage = 'signin';
+  public authToken: string;
+  public authUsername: string;
 
   get top(): number {
     return ((this.showFilterBar ? 70 : 0) + (this.showNavBar ? 44 : 0));
@@ -148,9 +150,10 @@ export class AppComponent implements OnInit {
       });
     }
     this.navigationService.showAuthWindow$.subscribe(item => {
-      console.log(item.page);
       if (item.page) {
+        this.authToken = item.token;
         this.authPage = item.page;
+        this.authUsername = item.username;
         if (item.error) {
           this.signupError = item.error;
         } else {

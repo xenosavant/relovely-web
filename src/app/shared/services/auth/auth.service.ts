@@ -10,6 +10,7 @@ import { VerifyRequest } from './verify.request';
 import { EmailPasswordRequest } from './email-password.request';
 import { ResetPasswordRequest } from './reset-password.request';
 import { UserAuth } from '@app/shared/models/user-auth.model';
+import { InstagramTokenResponse } from './instagram-token.response';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends BaseService {
@@ -66,6 +67,14 @@ export class AuthService extends BaseService {
         return this.httpClient.post<void>(`${this.apiBaseUrl}/instagram/signup`, { code: code, email: email }).pipe(
             map(() => {
                 return;
+            })
+        );
+    }
+
+    getInstagramToken(code: string): Observable<InstagramTokenResponse> {
+        return this.httpClient.post<InstagramTokenResponse>(`${this.apiBaseUrl}/instagram/signup`, { code: code }).pipe(
+            map((token) => {
+                return token;
             })
         );
     }

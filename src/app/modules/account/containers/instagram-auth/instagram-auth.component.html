@@ -10,28 +10,6 @@
             <p>Please check your email for a verification link.</p>
         </ng-container>
     </div>
-    <div *ngIf="!success">
-        <div class="form">
-            <div class="info">
-                Please enter your email address
-            </div>
-            <div class="errors">
-                <div *ngIf="error !== null" class="form-error">{{error}}</div>
-            </div>
-            <form [formGroup]="form">
-                <div>
-                    <mat-form-field appearance="outline">
-                        <input matInput type="text" placeholder="Email Address" formControlName="email" />
-                    </mat-form-field>
-                </div>
-                <button mat-stroked-button class="primary" (click)="onSubmit()" [disabled]="!form.valid">
-                    <strong>
-                        SUBMIT
-                    </strong>
-                </button>
-            </form>
-        </div>
-    </div>
 </ng-container>
 <div *ngIf="loading" class="authorizing">
     <div class="text">Authorizing</div>
