@@ -33,31 +33,32 @@ export class InstagramAuthComponent implements OnInit {
       this.type = route['type'];
       this.code = query['code'];
       if (this.type) {
-        if (this.code) {
-          if (this.type === 'member') {
-            this.authService.getInstagramToken(this.code, 'member').subscribe((response) => {
-              this.router.navigate(['/']);
-              this.navigationService.openAuthWindow({ username: response.username, token: response.token, page: 'instagram' });
-            }, err => {
-              this.error = err.error.error.message;
-              this.router.navigate(['/']);
-              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
-            });
-          }
-          else if (this.type === 'seller') {
-            this.authService.getInstagramToken(this.code, 'seller').subscribe((response) => {
-              this.router.navigate(['/']);
-              this.navigationService.openAuthWindow({ username: response.username, token: response.token, page: 'sell' });
-            }, err => {
-              this.error = err.error.error.message;
-              this.router.navigate(['/']);
-              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
-            });
-          }
-        } else {
-          this.success = true;
-          this.loading = false;
-        }
+        // if (this.code) {
+        //   if (this.type === 'member') {
+        //     this.authService.getInstagramToken(this.code, 'member').subscribe((response) => {
+        //       this.router.navigate(['/']);
+        //       this.navigationService.openAuthWindow({ username: response.username, token: response.token, page: 'instagram' });
+        //     }, err => {
+        //       this.error = err.error.error.message;
+        //       this.router.navigate(['/']);
+        //       this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
+        //     });
+        //   }
+        //   else if (this.type === 'seller') {
+        //     this.authService.getInstagramToken(this.code, 'seller').subscribe((response) => {
+        //       this.router.navigate(['/']);
+        //       this.navigationService.openAuthWindow({ username: response.username, token: response.token, page: 'sell' });
+        //     }, err => {
+        //       this.error = err.error.error.message;
+        //       this.router.navigate(['/']);
+        //       this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
+        //     });
+        //   }
+        // } else {
+        //   this.success = true;
+        //   this.loading = false;
+        // }
+        console.log(this.code);
       } else {
         this.router.navigate(['/']);
       }
