@@ -25,37 +25,28 @@ export class FacebookAuthComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.code = params['code'];
       const type = params['type'];
-      if (this.code && type) {
+      if (this.code) {
         switch (type) {
-          case 'signin':
-            this.authService.signinWithFacebook(this.code).subscribe(response => {
-              console.log(response);
-              this.userService.setLogin(response.jwt, response.user);
-              this.router.navigate(['/']);
-            }, err => {
-              this.loading = false;
-              this.router.navigate(['/']);
-              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signin' });
-            });
-            break;
-          case 'signup':
-            this.authService.signupWithFacebook(this.code).subscribe(response => {
-              this.userService.setLogin(response.jwt, response.user);
-              this.router.navigate(['/']);
-            }, err => {
-              this.loading = false;
-              this.router.navigate(['/']);
-              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signup' });
-            });
-            break;
           case 'link':
             this.authService.linkFacebook(this.code).subscribe(user => {
               this.userService.setCurrentUser(user);
               this.router.navigate(['/account/settings']);
             }, err => {
-              this.loading = false;
               this.router.navigate(['/']);
               this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signup' });
+            });
+            break;
+          default:
+            this.authService.continueWithFacebook(this.code).subscribe(response => {
+              this.userService.setLogin(response.jwt, response.user);
+              if (response.existing) {
+                this.router.navigate(['/']);
+              } else {
+                this.loading = false;
+              }
+            }, err => {
+              this.router.navigate(['/']);
+              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signin' });
             });
             break;
         }
@@ -63,6 +54,10 @@ export class FacebookAuthComponent implements OnInit {
         this.router.navigate(['/']);
       }
     });
+  }
+
+  goToProducts() {
+    this.navigationService.navigate({ path: '/products' });
   }
 
 }

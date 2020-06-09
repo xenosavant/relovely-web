@@ -61,11 +61,9 @@ export class AuthComponent implements OnChanges {
       });
       this.signupInstagramUrl = environment.instagramAuthUrl +
         `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSignupRedirectUrl}`;
-      this.signupFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSignupRedirectUrl}&scope=email&response_type=code`;
-      this.signinFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookSigninRedirectUrl}&response_type=code`;
+      this.signupFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookRedirectUrl}&scope=email&response_type=code`;
       this.ref.markForCheck();
     }
-
   }
 
   signUpInstagram() {
@@ -81,12 +79,8 @@ export class AuthComponent implements OnChanges {
   }
 
 
-  signUpFacebook() {
+  continueWithFacebook() {
     location.replace(this.signupFacebookUrl);
-  }
-
-  signInFacebook() {
-    location.replace(this.signinFacebookUrl);
   }
 
   signup() {

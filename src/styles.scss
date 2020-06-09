@@ -997,10 +997,8 @@ button {
   }
   &.facebook {
     width: 100%;
-    display: grid;
     background-color:  #1877F2 !important;
     margin: 0 auto;
-    grid-template-columns: 40px auto;
     height:40px;
     img {
         height: 22px;
@@ -1008,6 +1006,17 @@ button {
         margin-left:-5px;
     }
   }
+  &.instagram {
+    margin: 16px 0px;
+    width: 100%;
+    background-color: #3f729b !important;
+    height:40px;
+    img {
+        height:24px;
+        margin-right: 16px;
+    }
+}
+
  }
 }
 

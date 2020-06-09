@@ -70,14 +70,6 @@ export class AuthService extends BaseService {
         );
     }
 
-    signupWithFacebook(code: string): Observable<SignupResponse> {
-        return this.httpClient.post<SignupResponse>(`${this.apiBaseUrl}/facebook/signup`, { code: code }).pipe(
-            map((response: SignupResponse) => {
-                return response;
-            })
-        );
-    }
-
     linkFacebook(code: string): Observable<UserAuth> {
         return this.httpClient.post<UserAuth>(`${this.apiBaseUrl}/facebook/link`, { code: code }).pipe(
             map((response: UserAuth) => {
@@ -86,8 +78,8 @@ export class AuthService extends BaseService {
         );
     }
 
-    signinWithFacebook(code: string): Observable<SignupResponse> {
-        return this.httpClient.post<SignupResponse>(`${this.apiBaseUrl}/facebook/signin`, { code: code }).pipe(
+    continueWithFacebook(code: string): Observable<SignupResponse> {
+        return this.httpClient.post<SignupResponse>(`${this.apiBaseUrl}/facebook/continue`, { code: code }).pipe(
             map((response: SignupResponse) => {
                 return response;
             })

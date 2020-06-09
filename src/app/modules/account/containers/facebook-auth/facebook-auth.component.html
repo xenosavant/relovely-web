@@ -1,4 +1,12 @@
-<div class="authorizing">
+<div *ngIf="loading" class="authorizing">
     <div class="text">Authorizing</div>
     <mat-spinner diameter="30"></mat-spinner>
+</div>
+<div *ngIf="!loading" class="center">
+    <img src="../../../../../assets/images/heart.png">
+    <ng-container *ngIf="type === 'member'">
+        <h2> Welcome to Relovely!</h2>
+        <p>Click<a (click)="goToProducts()" appClick target="_blank"> here </a>to see
+            what's in stock </p>
+    </ng-container>
 </div>
