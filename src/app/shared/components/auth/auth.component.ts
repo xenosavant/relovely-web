@@ -68,8 +68,10 @@ export class AuthComponent implements OnChanges {
         email: new FormControl('', [Validators.required])
       });
       this.memberForm = new FormGroup({
-        email: new FormControl('', [Validators.required])
-      });
+        email: new FormControl('', [Validators.required]),
+        password: new FormControl('', [Validators.required]),
+        verifyPassword: new FormControl('', [Validators.required])
+      }, this.validatePassword);
       this.signupInstagramUrl = environment.instagramAuthUrl +
         `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSignupRedirectUrl}`;
       this.signupFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookRedirectUrl}&scope=email&response_type=code`;
@@ -106,7 +108,15 @@ export class AuthComponent implements OnChanges {
   }
 
   applyAsMember() {
-    // TODO
+    this.loading = true;
+    this.authService.signupWithInstagram(this.sellerForm.get('email').value, this.token).subscribe(() => {
+      this.loading = false;
+      this.navigationService.navigate({ path: '/account/instagram/member' });
+    }, err => {
+      this.error = err.error.error.message;
+      this.loading = false;
+      this.ref.markForCheck();
+    })
   }
 
 

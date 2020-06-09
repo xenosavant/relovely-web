@@ -95,11 +95,11 @@
                 Or
               </div>
             </form>
-            <button class="facebook primary" mat-stroked-button (click)="signUpFacebook()">
+            <button class="facebook primary" mat-stroked-button (click)="continueWithFacebook()">
               <div class="button-wrap"> <img src="./assets/images/facebook-color.svg" /> <strong>Continue with Facebook
                 </strong></div>
             </button>
-            <button class="instagram primary" mat-stroked-button (click)="signUpInstagram()">
+            <button class="instagram primary" mat-stroked-button (click)="memberAuthenticateInstagram()">
               <div class="button-wrap"> <img src="./assets/images/instagram-white.png" /> <strong>Continue with
                   Instagram
                 </strong></div>
@@ -186,25 +186,55 @@
             </div>
           </div>
         </ng-container>
-        <!-- <ng-container *ngSwitchCase="'intagram'">
+        <ng-container *ngSwitchCase="'intagram'">
           <div *ngIf="error !== null" class="form-error">{{error}}</div>
-          <div class="form-wrapper sell">
+          <div *ngIf="!authenticated" class="form-wrapper sell">
             <div class="sell-info">
               To apply with Instagram, please click the button below to verify your Instagram account.
             </div>
-            <mat-form-field appearance="outline">
-              <input matInput type="text" placeholder="Email Address" formControlName="memberForm" />
-            </mat-form-field>
             <button class="instagram primary" mat-stroked-button (click)="sellWithInstagram()">
               <img src="./assets/images/instagram-white.png" /> <strong>Apply with Instagram </strong> </button>
             <div class="policies">
-              By applying you are agreeing to the
+              By joining you are agreeing to the
               <a (click)="goToPrivacy()" appClick target="_blank">privacy policy</a>
               and the
               <a appClick (click)="goToTerms()" target="_blank">terms of service</a>
             </div>
           </div>
-        </ng-container> -->
+          <div *ngIf="authenticated">
+            <form novalidate [formGroup]="memberForm">
+              <div class="sell-info">
+                To apply with Instagram, please click the button below to verify your Instagram account.
+              </div>
+              <mat-form-field appearance="outline">
+                <input matInput type="text" placeholder="Email Address" formControlName="email" />
+              </mat-form-field>
+              <div>
+                <mat-form-field appearance="outline">
+                  <input #password="matInput" matInput type="password" placeholder="Password"
+                    formControlName="password" />
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field appearance="outline">
+                  <input #verify="matInput" matInput type="password" placeholder="Verify Password"
+                    formControlName="verifyPassword" />
+                </mat-form-field>
+              </div>
+              <button mat-stroked-button class="primary" (click)="applyAsMember()" [disabled]="!memberForm.valid">
+                <strong>
+                  APPLY
+                </strong>
+              </button>
+            </form>
+            <div class="policies">
+              By joining you are agreeing to the
+              <a (click)="goToPrivacy()" appClick target="_blank">privacy policy</a>
+              and the
+              <a appClick (click)="goToTerms()" target="_blank">terms of service</a>
+            </div>
+          </div>
+        </ng-container>
       </ng-container>
     </ng-container>
     <div *ngIf="loading" class="loading-wrapper">
