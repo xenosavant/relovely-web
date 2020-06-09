@@ -37,17 +37,18 @@ export class FacebookAuthComponent implements OnInit {
             });
             break;
           default:
-            this.authService.continueWithFacebook(this.code).subscribe(response => {
-              this.userService.setLogin(response.jwt, response.user);
-              if (response.existing) {
-                this.router.navigate(['/']);
-              } else {
-                this.loading = false;
-              }
-            }, err => {
-              this.router.navigate(['/']);
-              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signin' });
-            });
+            // this.authService.continueWithFacebook(this.code).subscribe(response => {
+            //   this.userService.setLogin(response.jwt, response.user);
+            //   if (response.existing) {
+            //     this.router.navigate(['/']);
+            //   } else {
+            //     this.loading = false;
+            //   }
+            // }, err => {
+            //   this.router.navigate(['/']);
+            //   this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signin' });
+            // });
+            console.log(this.code);
             break;
         }
       } else {
