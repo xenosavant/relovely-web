@@ -52,12 +52,18 @@ export class VerifyComponent implements OnInit {
             break;
           case 'member':
             if (this.code) {
-              this.loading = false;
-              this.ref.markForCheck();
+              this.authService.verifyEmail({ code: this.code }).subscribe(response => {
+                this.userService.setLogin(response.jwt, response.user);
+                this.loading = false;
+                this.welcome = true;
+                this.ref.markForCheck();
+              }, error => {
+                this.navigationService.navigate({ path: '/' });
+                this.loading = false;
+              })
             } else {
               this.navigationService.navigate({ path: '/' });
               this.loading = false;
-              this.ref.markForCheck();
             }
             break;
           default:
