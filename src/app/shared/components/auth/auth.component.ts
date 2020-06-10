@@ -100,6 +100,7 @@ export class AuthComponent implements OnChanges {
     this.loading = true;
     this.authService.sellWithInstagram(this.sellerForm.get('email').value, this.token).subscribe(() => {
       this.loading = false;
+      this.navigationService.closeAuthWindow();
       this.navigationService.navigate({ path: '/account/instagram/seller' });
     }, err => {
       this.error = err.error.error.message;
@@ -112,6 +113,7 @@ export class AuthComponent implements OnChanges {
     this.loading = true;
     this.authService.signupWithInstagram(this.memberForm.get('email').value, this.token).subscribe(() => {
       this.loading = false;
+      this.navigationService.closeAuthWindow();
       this.navigationService.navigate({ path: '/account/instagram/member' });
     }, err => {
       this.error = err.error.error.message;
@@ -171,7 +173,7 @@ export class AuthComponent implements OnChanges {
         this.loading = false;
         this.router.navigate(['/account/reset-password'])
       }, err => {
-
+        this.navigationService.closeAuthWindow();
       });
   }
 
