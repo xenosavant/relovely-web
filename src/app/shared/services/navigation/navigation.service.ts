@@ -68,7 +68,9 @@ export class NavigationService {
         if (item.id === "-1") {
             this._navConfig.pageHeader = 'All Products';
             this._navConfig.showFilterBar = true;
-            this._navConfig.chipItems = item.subItems.slice(0, 3);
+            this._navConfig.selectedCategory = { id: '-1', name: 'All Products', parent: null, children: [] };
+            this._navConfig.chipItems = [];
+            this.navConfigSubject$.next(this._navConfig);
             this.goto(item, back);
         }
         else if (item.id) {
@@ -84,6 +86,9 @@ export class NavigationService {
                     this._navConfig.chipItems = item.parent.subItems;
                     this._navConfig.pageHeader = item.parent.parent.plural + ' ' + item.parent.name;
                 }
+            } else {
+                this._navConfig.chipItems = [];
+                this._navConfig.pageHeader = item.plural + ' ' + 'Clothing';
             }
             const params = {};
             // if (item.queryStrings.length) {

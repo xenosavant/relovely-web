@@ -1,6 +1,6 @@
 <div class="filter-bar">
   <mat-tab-group [@.disabled]="true">
-    <mat-tab label="Category">
+    <mat-tab label="Category" *ngIf="categoryFilters && categoryFilters.length">
       <div>
         <mat-chip-list>
           <mat-basic-chip [class.selected]="selectedCategoryFilterId === item.id" (click)="navigate(item)"

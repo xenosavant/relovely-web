@@ -41,14 +41,16 @@ export class FilterBarComponent implements OnInit {
 
   ngOnInit() {
     this.navigationService.navConfig$.subscribe(navigationState => {
+      console.log(navigationState);
       this.lookupService.getState().then(lookupState => {
         this.sizeFilters = lookupState.sizes;
         this.colorFilters = lookupState.colors;
         this.priceFilters = lookupState.prices;
         this.selectedCategoryFilterId = navigationState.selectedCategoryId;
         this.currentSizeFilters = lookupState.sizes.filter(size => {
-          return navigationState.selectedCategory && size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
+          return navigationState.selectedCategory && navigationState.selectedCategory.id === '-1' || size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
         });
+        console.log(this.currentSizeFilters)
         if (this.userService.currentUser) {
           const cache = this.userService.currentUser.preferences;
           if (cache) {

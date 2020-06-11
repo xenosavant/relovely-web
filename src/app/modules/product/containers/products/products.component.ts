@@ -82,6 +82,8 @@ export class ProductsComponent implements OnInit {
       } else {
         const root = this.navigationService.rootNavigationItems;
         this.currentNavItem = new NavigationItem([{ key: 'category', value: '0' }], '/products', 'All Products', "-1", root, [], null);
+        this.categoryId = '0';
+        this.getProducts(this.filterService.filterStateSubject$.value);
       }
       this.navigationService.navigate(this.currentNavItem);
       this.ref.markForCheck();

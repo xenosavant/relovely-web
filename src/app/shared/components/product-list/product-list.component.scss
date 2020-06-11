@@ -73,7 +73,11 @@
 
 .profile-name {
     padding-left:5px;
-    font-size: .75em;
+    font-size: .8em;
+    @media( min-width:$desktop-breakpoint) {
+        font-size: .95em;
+    }
+    font-weight: 600;
 }
 
 .profile-header {

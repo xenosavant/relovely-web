@@ -150,12 +150,10 @@ export class AppComponent implements OnInit {
       });
     }
     this.navigationService.showAuthWindow$.subscribe(item => {
-      console.log(item);
       if (item.page) {
         this.authToken = item.token;
         this.authPage = item.page;
         this.authUsername = item.username;
-        console.log(this.authToken);
         if (item.error) {
           this.signupError = item.error;
         } else {
@@ -304,7 +302,8 @@ export class AppComponent implements OnInit {
   }
 
   public onAccountMenuAction(path: string) {
-    console.log(path);
+    this.showMegaMenu = false;
+    this.selectedMenuItem = -1;
     this.navigationService.navigate({ path: path })
   }
 
