@@ -59,8 +59,8 @@ export class AuthComponent implements OnChanges {
       this.signUpForm = new FormGroup({
         email: new FormControl('', [Validators.required, Validators.email]),
         username: new FormControl('', [Validators.required]),
-        password: new FormControl('', [Validators.required]),
-        verifyPassword: new FormControl('', [Validators.required])
+        password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+        verifyPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
       }, this.validatePassword);
       this.resetForm = new FormGroup({
         identifier: new FormControl('', [Validators.required])
@@ -70,8 +70,8 @@ export class AuthComponent implements OnChanges {
       });
       this.memberForm = new FormGroup({
         email: new FormControl('', [Validators.required]),
-        password: new FormControl('', [Validators.required]),
-        verifyPassword: new FormControl('', [Validators.required])
+        password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+        verifyPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
       }, this.validatePassword);
       this.signupInstagramUrl = environment.instagramAuthUrl +
         `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramSignupRedirectUrl}`;
@@ -225,6 +225,14 @@ export class AuthComponent implements OnChanges {
 
   get passwordVerifyValue() {
     return this.signUpForm.get('verifyPassword').value;
+  }
+
+  get instaPasswordValue() {
+    return this.memberForm.get('password').value;
+  }
+
+  get instaPasswordVerifyValue() {
+    return this.memberForm.get('verifyPassword').value;
   }
 
   goToTerms() {

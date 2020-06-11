@@ -61,6 +61,11 @@
               && signUpForm.invalid && signUpForm.errors && signUpForm.errors.passwordMatch">
               Passwords don't match
             </div>
+            <div
+              *ngIf="signUpForm.get('password').errors && signUpForm.get('password').errors.minlength && passwordValue.length && !password.focused"
+              class="form-error">
+              Password must be at least 8 characters long
+            </div>
           </div>
           <div class="form-wrapper">
             <form novalidate [formGroup]="signUpForm">
@@ -187,7 +192,18 @@
           </div>
         </ng-container>
         <ng-container *ngSwitchCase="'instagram'">
-          <div *ngIf="error !== null" class="form-error">{{error}}</div>
+          <div class="errors">
+            <div *ngIf="error !== null" class="form-error">{{error}}</div>
+            <div class="form-error" *ngIf="(instaPasswordValue && instaPasswordVerifyValue) && (instaPasswordValue.length === instaPasswordVerifyValue.length || !verify.focused)
+            && memberForm.invalid && memberForm.errors && memberForm.errors.passwordMatch">
+              Passwords don't match
+            </div>
+            <div
+              *ngIf="memberForm.get('password').errors && memberForm.get('password').errors.minlength && passwordValue.length && !password.focused"
+              class="form-error">
+              Password must be at least 8 characters long
+            </div>
+          </div>
           <div *ngIf="!authenticated" class="form-wrapper sell">
             <div class="sell-info">
               To signup with Instagram, please click the button below to verify your Instagram account.
@@ -203,7 +219,8 @@
           </div>
           <div class="form-wrapper member" *ngIf="authenticated">
             <div class="sell-info">
-              You are joining as {{authUsername}}. Enter your email and password and click signup to continue.
+              <div>Signing up as</div>
+              <div class="instagram">{{authUsername}}</div>
             </div>
             <form novalidate [formGroup]="memberForm">
               <mat-form-field appearance="outline">

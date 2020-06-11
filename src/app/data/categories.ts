@@ -189,7 +189,7 @@
     },
     {
         "name": "Accessories",
-        "id": 14,
+        "id": "14",
         "children": [{
             "name": "Belts",
             "id": "1401",
@@ -460,88 +460,6 @@
         {
             "name": "Watches",
             "id": "2313",
-            "children": []
-        }
-        ]
-    }
-    ]
-},
-{
-    "name": "Kids",
-    "id": "3",
-    "plural": "Kids",
-    "children": [{
-        "name": "Clothing",
-        "id": "31",
-        "children": [{
-            "name": "Baby Boys",
-            "id": "3101",
-            "children": []
-        },
-        {
-            "name": "Baby Girls",
-            "id": "3102",
-            "children": []
-        },
-        {
-            "name": "Boys",
-            "id": "3103",
-            "children": []
-        },
-        {
-            "name": "Girls",
-            "id": "3104",
-            "children": []
-        }
-        ]
-    },
-    {
-        "name": "Shoes",
-        "id": 32,
-        "children": [{
-            "name": "Baby Boys",
-            "id": "3201",
-            "children": []
-        },
-        {
-            "name": "Baby Girls",
-            "id": "3202",
-            "children": []
-        },
-        {
-            "name": "Boys",
-            "id": "3203",
-            "children": []
-        },
-        {
-            "name": "Girls",
-            "id": "3204",
-            "children": []
-        }
-
-        ]
-    },
-    {
-        "name": "Accessories",
-        "id": "33",
-        "children": [{
-            "name": "Baby Boys",
-            "id": "3301",
-            "children": []
-        },
-        {
-            "name": "Baby Girls",
-            "id": "3302",
-            "children": []
-        },
-        {
-            "name": "Boys",
-            "id": "3303",
-            "children": []
-        },
-        {
-            "name": "Girls",
-            "id": "3304",
             "children": []
         }
         ]
