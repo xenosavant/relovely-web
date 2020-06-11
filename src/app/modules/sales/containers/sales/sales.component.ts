@@ -27,7 +27,6 @@ export class SalesComponent implements OnInit {
   ngOnInit() {
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
-      console.log(this.mobile);
     })
     this.orderServive.getOrders(true).subscribe(orders => {
       this.orders = orders.items;

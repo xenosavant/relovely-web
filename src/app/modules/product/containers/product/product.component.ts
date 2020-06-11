@@ -69,7 +69,6 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.userService.currentUser;
-    console.log(this.currentUser);
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.id = params.get('id');
       this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {

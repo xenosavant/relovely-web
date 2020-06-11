@@ -26,7 +26,6 @@ export class FavoritesComponent implements OnInit {
   ngOnInit() {
     this.navigationService.showNavBar(true, 'YOUR FAVORITES');
     this.userService.getCurrentUser().then(user => {
-      console.log(this.user);
       this.user = user;
     });
     this.productService.getFavorites().subscribe(response => {

@@ -53,6 +53,8 @@ export class SellerProfileComponent implements OnInit {
       this.showCreate = true;
     }
 
+    console.log(this.user)
+
     this.following = this.user.followers.some(u => u.id === this.currentUser.id);
     this.followingUsers = this.user.following;
     this.followerUsers = this.user.followers;
@@ -78,8 +80,11 @@ export class SellerProfileComponent implements OnInit {
     }
   }
 
+  goToInstagram() {
+    window.open(`https://instagram.com/${this.user.instagramUsername}`)
+  }
+
   onAction(action: string) {
-    console.log(action);
     switch (action) {
       case 'follow':
         this.followUnfollow(true);
@@ -133,7 +138,6 @@ export class SellerProfileComponent implements OnInit {
   followUnfollow(follow: boolean) {
     this.actionProcessing = true;
     this.userService.followUser(this.user.id, follow).subscribe(() => {
-      console.log('success');
       const me = this.userService.currentUser;
       if (follow) {
         this.followerUsers.push({

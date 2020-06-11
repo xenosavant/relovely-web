@@ -9,6 +9,7 @@ export class UserDetail {
     lastName: string;
     username: string;
     profileImageUrl: string;
+    instagramUsername?: string;
     listings?: Product[];
     followers?: UserList[];
     following?: UserList[];
@@ -18,4 +19,6 @@ export class UserDetail {
     preferences: IUserPreferences;
     addresses: Address[];
     averageRating?: number;
+    city?: string;
+    state?: string;
 }

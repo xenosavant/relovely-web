@@ -60,13 +60,11 @@ export class PaymentsComponent implements OnInit {
   cardCreated(card: PaymentCard) {
     this.userService.addCard(card).subscribe(result => {
       this.user = this.userService.currentUser;
-      console.log(this.user);
       this.primary = this.user.cards.find(c => c.primary);
       this.overlayService.close();
       this.ref.markForCheck();
     }, err => {
       this.overlayService.close();
-      console.log(err);
     })
   }
 

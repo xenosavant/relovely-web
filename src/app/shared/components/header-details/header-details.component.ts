@@ -39,11 +39,10 @@ export class HeaderDetailsComponent implements OnInit {
   }
 
   ngOnChanges(changes) {
-    console.log(changes);
+
   }
 
   onAction(action: string) {
-    console.log(action);
     this.action.emit(action);
   }
 

@@ -8,6 +8,7 @@ import { trigger } from '@angular/animations';
 import { INavigationState } from '../../interfaces/navigation-state.interface';
 import { LookupService } from '../lookup/lookup.service';
 import { IAuthItem } from './auth-item.interface';
+import { KeyValue } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
@@ -65,13 +66,14 @@ export class NavigationService {
     }
 
     public navigate(item: NavigationItem, back = false): boolean {
+        const params = item.queryStrings;
         if (item.id === "-1") {
             this._navConfig.pageHeader = 'All Products';
             this._navConfig.showFilterBar = true;
             this._navConfig.selectedCategory = { id: '-1', name: 'All Products', parent: null, children: [] };
             this._navConfig.chipItems = [];
             this.navConfigSubject$.next(this._navConfig);
-            this.goto(item, back);
+            this.goto(item, back, params);
         }
         else if (item.id) {
             this._navConfig.selectedCategory = this.lookupService.getCategory(item.id);
@@ -90,18 +92,13 @@ export class NavigationService {
                 this._navConfig.chipItems = [];
                 this._navConfig.pageHeader = item.plural + ' ' + 'Clothing';
             }
-            const params = {};
-            // if (item.queryStrings.length) {
-            //     item.queryStrings.forEach(q =>
-            //         params[q.key] = q.value);
-            // }
-            this.goto(item, back);
+            this.goto(item, back, params);
 
             this.navConfigSubject$.next(this._navConfig);
             return true;
         } else {
             this._navConfig.showFilterBar = false;
-            this.goto(item, back);
+            this.goto(item, back, params);
             return true;
         }
     }
@@ -118,7 +115,7 @@ export class NavigationService {
         } else return this.navigate(item);
     }
 
-    private goto(navigationItem: NavigationItem, back: boolean) {
+    private goto(navigationItem: NavigationItem, back: boolean, queryParams: KeyValue<string, string>[] = null) {
         this._navConfig.categoryItems = navigationItem.subCategories;
         if (navigationItem.id) {
             this._navConfig.showFilterBar = true;
@@ -128,20 +125,21 @@ export class NavigationService {
             this._navConfig.showNavBar = false;
         }
         if (!back) {
-            const params = {};
-            if (navigationItem.queryStrings) {
-                navigationItem.queryStrings.forEach(element => {
-                    params[element.key] = element.value;
-                });
-            }
             if (!this._currentNavigationItem || this._currentNavigationItem.path !== navigationItem.path) {
                 this._navigationStack.push(navigationItem);
                 this._currentNavigationItem = navigationItem;
                 this.currentNavSubject$.next(this._currentNavigationItem);
             }
             // const queryParamsHandling = this._currentNavigationItem.id && navigationItem.id === this._currentNavigationItem.id ?  'preserve';
-
-            this.router.navigate([navigationItem.path]);
+            let parsedParams = {};
+            if (!navigationItem.id && navigationItem.path !== '/products') {
+                parsedParams = { search: null }
+            } else if (navigationItem.queryStrings) {
+                navigationItem.queryStrings.forEach(element => {
+                    parsedParams[element.key] = element.value;
+                });
+            }
+            this.router.navigate([navigationItem.path], { queryParams: parsedParams, queryParamsHandling: 'merge' });
         }
         this._navConfig.showTopLeveNavigation = true;
         this._navConfig.currentNavigationItems = this.rootNavigationItems;

@@ -17,6 +17,7 @@ import { CATEGORY_MAP } from '@app/shared/services/lookup/category-image-map';
 import { Subscription } from 'rxjs';
 import { UserDetail } from '@app/shared/models/user-detail.model';
 import { UserAuth } from '@app/shared/models/user-auth.model';
+import { withLatestFrom } from 'rxjs/operators';
 
 @Component({
   selector: 'app-products',
@@ -40,6 +41,7 @@ export class ProductsComponent implements OnInit {
   parentCategory: string = null;
   checkBack: boolean;
   loading = true;
+  searchTerm: string;
 
   @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
 
@@ -61,6 +63,7 @@ export class ProductsComponent implements OnInit {
     this.navigationService.navConfig$.subscribe(state => {
       this.grid = state.showProductGrid;
       this.title = state.pageHeader;
+      console.log(this.title);
       this.zone.run(() => {
         this.ref.markForCheck();
       })
@@ -68,10 +71,13 @@ export class ProductsComponent implements OnInit {
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
     });
-    this.route.params.subscribe(params => {
-      if (params['categoryId']) {
-        this.categoryId = params['categoryId'];
-        this.currentNavItem = this.lookupService.navLookup[params['categoryId']];
+    this.route.params.pipe(withLatestFrom(this.route.queryParams)).subscribe(params => {
+      const routeParams = params[0];
+      const queryParams = params[1];
+      this.searchTerm = queryParams['search'];
+      if (routeParams['categoryId']) {
+        this.categoryId = routeParams['categoryId'];
+        this.currentNavItem = this.lookupService.navLookup[routeParams['categoryId']];
         if (this.filterSub) {
           this.filterSub.unsubscribe();
         }
@@ -81,12 +87,20 @@ export class ProductsComponent implements OnInit {
         });
       } else {
         const root = this.navigationService.rootNavigationItems;
-        this.currentNavItem = new NavigationItem([{ key: 'category', value: '0' }], '/products', 'All Products', "-1", root, [], null);
+        this.currentNavItem = new NavigationItem([], '/products', 'All Products', "-1", root, [], null);
         this.categoryId = '0';
         this.getProducts(this.filterService.filterStateSubject$.value);
       }
       this.navigationService.navigate(this.currentNavItem);
       this.ref.markForCheck();
+    })
+
+    this.route.queryParams.subscribe(params => {
+      const newTerm = params['search'];
+      if (this.searchTerm !== newTerm) {
+        this.searchTerm = params['search'];
+        this.getProducts(this.filterService.filterStateSubject$.value);
+      }
     })
 
     this.userService.getCurrentUser().then(u => {
@@ -114,18 +128,30 @@ export class ProductsComponent implements OnInit {
           filteredSizes.push(id);
         }
       });
-      this.productService.getProducts(this.categoryId, filteredSizes.length ? state.sizes : null,
+      this.productService.getProducts(this.categoryId, this.searchTerm, filteredSizes.length ? state.sizes : null,
         state.colors.length ? state.colors : null, state.prices.length ? state.prices : null).subscribe(result => {
           this.products = result.items;
           const cat: Category = this.lookupService.getCategory(this.categoryId);
           if (!this.products.length) {
-            if (cat.parent && cat.parent.parent) {
-              this.checkBack = false;
-              this.parentCategory = cat.parent.parent.plural + ' ' + cat.parent.name;
-              this.emptyImage = '../../../../../assets/images/' + CATEGORY_MAP[cat.parent.id];
-            } else if (cat.parent) {
-              this.emptyImage = '../../../../../assets/images/' + CATEGORY_MAP[cat.id];
-              this.checkBack = true;
+            if (this.categoryId === '-1') {
+              this.emptyImage = '../../../../../assets/images/women-clothing.svg';
+            } else {
+              if (cat.parent && cat.parent.parent) {
+                this.checkBack = false;
+                this.parentCategory = cat.parent.parent.plural + ' ' + cat.parent.name;
+                this.emptyImage = '../../../../../assets/images/' + CATEGORY_MAP[cat.parent.id];
+              } else if (cat.parent) {
+                this.emptyImage = '../../../../../assets/images/' + CATEGORY_MAP[cat.id];
+                this.checkBack = true;
+              } else {
+                if (cat.id === '1') {
+                  this.emptyImage = '../../../../../assets/images/women-clothing.svg';
+                }
+                if (cat.id === '2') {
+                  this.emptyImage = '../../../../../assets/images/men-clothing.svg';
+                }
+                this.checkBack = true;
+              }
             }
             this.empty = true;
           } else {

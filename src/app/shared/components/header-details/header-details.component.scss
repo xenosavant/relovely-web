@@ -26,9 +26,13 @@
         }
     }
 
-.avatar-wrapper {
-    width:75px;
-}
+    .outer-avatar {
+        display: flex;
+        justify-content: center;
+        .avatar-wrapper {
+            width:75px;
+        }
+    }
 
 .title-wrapper {
     height:2.5em;
@@ -53,12 +57,13 @@
         flex-direction: row;
         align-items: center;
         cursor: pointer;
+        margin-top: 6px;
         .number {
             font-size: 14px;
             line-height: 14px;
             margin-right: 4px;
             @media(min-width: $desktop-breakpoint) {
-                color: #cfcece;
+                color: #fafafafa;
                 font-size: 20px;
                 line-height: 18px;
                 height: 20px;

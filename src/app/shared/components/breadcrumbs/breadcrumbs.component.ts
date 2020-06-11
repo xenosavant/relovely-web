@@ -19,6 +19,9 @@ export class BreadcrumbsComponent implements OnChanges {
     this.crumbs = [];
     this.crumbs.push({ path: '/', name: 'Home' });
     let currentItem = this.navItem;
+    if (currentItem.id && currentItem.id !== '-1') {
+      this.crumbs.push({ path: '/products', name: 'All Products' });
+    }
     const navStack = [];
     while (currentItem) {
       navStack.push(currentItem);

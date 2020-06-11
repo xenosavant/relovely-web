@@ -51,7 +51,6 @@ export class ProfileComponent implements OnInit {
           this.userService.getUser(id).subscribe(user => {
             this.owner = false;
             this.user = user;
-            console.log(this.user);
             this.ref.markForCheck();
             this.loading = false;
           });

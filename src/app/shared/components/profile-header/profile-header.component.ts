@@ -52,7 +52,6 @@ export class ProfileHeaderComponent implements OnChanges {
   }
 
   onAction(type: string) {
-    console.log(type);
     this.action.emit(type);
   }
 

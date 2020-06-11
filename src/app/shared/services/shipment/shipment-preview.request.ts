@@ -5,4 +5,5 @@ export interface ShipmentPreviewRequest {
     weight: number;
     sellerId: string;
     price: number;
+    categoryId: string;
 }

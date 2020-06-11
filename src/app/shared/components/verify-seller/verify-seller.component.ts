@@ -41,14 +41,12 @@ export class VerifySellerComponent implements OnInit {
 
   ngOnInit() {
     this.states = this.lookupService.states;
-    console.log(this.verification);
     if (this.verification) {
       this.update = true;
       this.form = new FormGroup({});
       this.verification.missingData.forEach(item => {
         this.setFormData(item);
       });
-      console.log(this.form);
       this.ref.markForCheck();
     }
     else {
@@ -137,7 +135,6 @@ export class VerifySellerComponent implements OnInit {
       }
     }
     if (/address/.test(item)) {
-      console.log(this.formFields.indexOf('address') === -1);
       if (this.formFields.indexOf('address') === -1) {
         this.formFields.push('address');
         this.form.addControl('line1', new FormControl(null, [Validators.required]));
@@ -263,7 +260,7 @@ export class VerifySellerComponent implements OnInit {
   }
 
   onFrontUpload(event) {
-    console.log(event.target.files[0]);
+
   }
 
   verifyFile(event: any): string {

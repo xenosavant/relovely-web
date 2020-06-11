@@ -78,7 +78,6 @@ export class AuthComponent implements OnChanges {
       this.signupFacebookUrl = environment.facebookAuthUrl + `?client_id=${environment.facebookClientId}&redirect_uri=${environment.facebookRedirectUrl}&scope=email&response_type=code`;
       this.ref.markForCheck();
     }
-    console.log(this.token);
     if (this.token) {
       this.authenticated = true;
     }

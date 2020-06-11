@@ -73,6 +73,7 @@ export class AppComponent implements OnInit {
   public authPage = 'signin';
   public authToken: string;
   public authUsername: string;
+  searchTerm: string;
 
   get top(): number {
     return ((this.showFilterBar ? 70 : 0) + (this.showNavBar ? 44 : 0));
@@ -96,6 +97,7 @@ export class AppComponent implements OnInit {
     private headerService: HeaderService,
     private localStorageService: LocalStorageService,
     private route: ActivatedRoute,
+    private router: Router,
     @Inject(DOCUMENT) private document: any
   ) {
     this.showFilterBar = false;
@@ -314,7 +316,6 @@ export class AppComponent implements OnInit {
   }
 
   public onLeaveMenuBar(event: any) {
-    console.log(event);
     if (event.offsetY < 0 || event.offsetX <= 0 || event.offsetX >= 288) {
       this.showMegaMenu = false;
       this.selectedMenuItem = -1;
@@ -394,5 +395,18 @@ export class AppComponent implements OnInit {
 
   public closeModal() {
     this.overlayService.close();
+  }
+
+  setTerm(term: string) {
+    this.searchTerm = term;
+  }
+
+  search() {
+    const path = this.route.snapshot.children[0].routeConfig.path;
+    if (path === 'products') {
+      this.router.navigate([], { queryParams: { search: this.searchTerm }, queryParamsHandling: 'merge', relativeTo: this.route });
+    } else {
+      this.navigationService.navigate({ path: `/products`, queryStrings: [{ key: 'search', value: this.searchTerm }] });
+    }
   }
 }

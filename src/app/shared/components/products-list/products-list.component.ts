@@ -26,7 +26,7 @@ export class ProductsListComponent implements OnInit {
   constructor(private navigationService: NavigationService) { }
 
   ngOnInit() {
-    console.log(this.user)
+
   }
 
   onEnter(index) {

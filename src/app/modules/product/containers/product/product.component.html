@@ -34,7 +34,7 @@
                 </div>
                 <div class="product-size">
                     <span class="title">Size:</span>
-                    <strong>{{product.size | appSize}}</strong>
+                    <strong>{{product.sizeId | appSize}}</strong>
                 </div>
             </div>
             <div class="action">
@@ -93,8 +93,8 @@
                 <div class="product-price">
                     {{product.price | appCurrency}}
                 </div>
-                <div class="size-wrapper">
-                    Size: <strong>{{product.size || 'One Size'}}</strong>
+                <div class="size-wrapper" *ngIf="product.sizeId">
+                    Size: <strong>{{product.sizeId | appSize}}</strong>
                 </div>
                 <ng-container *ngIf="!product.sold">
                     <div class="button-wrapper">

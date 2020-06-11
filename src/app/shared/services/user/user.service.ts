@@ -118,7 +118,6 @@ export class
     addCard(card: PaymentCard): Observable<UserAuth> {
         return this.httpClient.post<UserAuth>(`${this.apiBaseUrl}/users/add-card`, card).pipe(
             map((user: UserAuth) => {
-                console.log(user);
                 this.setCurrentUser(user);
                 return user;
             })

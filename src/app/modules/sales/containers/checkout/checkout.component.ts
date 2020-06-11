@@ -77,28 +77,34 @@ export class CheckoutComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.productService.getProduct(params['id']).subscribe(product => {
         this.product = product;
-        console.log(this.product);
-        const toAddress = this.user.addresses.find(a => a.primary);
-        if (toAddress) {
-          this.shipmentService.previewShipment({ weight: this.product.weight, toAddress: toAddress, sellerId: product.sellerId, price: product.price }).subscribe(response => {
-            this.shippingCost = response.shippingRate;
-            this.total = this.product.price + this.shippingCost;
-            this.shippingRateId = response.rateId;
-            this.shipmentId = response.shipmentId;
-            this.tax = response.taxRate;
-            this.shippingCostLoading = false;
-            this.loading = false;
-            this.ref.markForCheck();
-          });
-        } else {
-          this.shippingCost = 0;
-          this.total = this.product.price + this.shippingCost;
-          this.shippingCostLoading = false
-          this.loading = false;
-          this.ref.markForCheck();
-        }
+        this.selectedAddress = this.user.addresses.find(a => a.primary);
+        this.recalcCosts();
       });
     })
+  }
+
+  recalcCosts() {
+    if (this.selectedAddress) {
+      this.shipmentService.previewShipment({
+        categoryId: this.product.categories.find(c => c.length === 2),
+        weight: this.product.weight, toAddress: this.selectedAddress, sellerId: this.product.sellerId, price: this.product.price
+      }).subscribe(response => {
+        this.shippingCost = response.shippingRate;
+        this.total = this.product.price + this.shippingCost;
+        this.shippingRateId = response.rateId;
+        this.shipmentId = response.shipmentId;
+        this.tax = response.taxRate;
+        this.shippingCostLoading = false;
+        this.loading = false;
+        this.ref.markForCheck();
+      });
+    } else {
+      this.shippingCost = 0;
+      this.total = this.product.price + this.shippingCost;
+      this.shippingCostLoading = false
+      this.loading = false;
+      this.ref.markForCheck();
+    }
   }
 
   onSaveAddress() {
@@ -115,6 +121,7 @@ export class CheckoutComponent implements OnInit {
     this.userService.updateUser(this.userService.currentUser.id, { addresses: [...this.user.addresses, saveAddress] }).subscribe(user => {
       this.user = user;
       this.selectedAddress = saveAddress;
+      this.recalcCosts();
       this.addingAddress = false;
     })
   }

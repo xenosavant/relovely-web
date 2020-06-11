@@ -19,7 +19,6 @@ export class ShipmentService extends BaseService {
     }
 
     previewShipment(request: ShipmentPreviewRequest): Observable<ShipmentPreviewResponse> {
-        console.log(request);
         return this.httpClient.post<ShipmentPreviewResponse>(`${this.apiBaseUrl}/shipments/preview`, request).pipe(
             map((result: ShipmentPreviewResponse) => {
                 return result;

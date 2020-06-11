@@ -55,7 +55,6 @@ export class CurrencyDirective implements OnInit {
                 // 2. format the number (add commas)
                 const usd = '$' + numberFormat;
                 // 3. replace the input value with formatted numbers
-                console.log(usd)
                 this.renderer.setProperty(this.el.nativeElement, 'value', usd);
             } else {
                 this.renderer.setProperty(this.el.nativeElement, 'value', '');

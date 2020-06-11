@@ -29,7 +29,7 @@
         <button class="mat-icon-button black" (click)="onToggleSearchBar()">
           <fa-icon icon="times"></fa-icon>
         </button>
-        <app-search-bar></app-search-bar>
+        <app-search-bar (search)="search()" (term)="setTerm($event)"></app-search-bar>
       </mat-toolbar-row>
     </mat-toolbar>
     <mat-sidenav-container>
@@ -132,11 +132,11 @@
             <img class="logo" src="./assets/images/logo.png" (click)="onGoHome()">
             <div class="search-wrapper">
               <div></div>
-              <app-search-bar></app-search-bar>
+              <app-search-bar (search)="search()" (term)="setTerm($event)"></app-search-bar>
             </div>
             <div class="icon-wrapper desktop">
               <button class="mat-icon-button menu">
-                <fa-icon icon="search" [styles]="{'color': 'black'}"></fa-icon>
+                <fa-icon (click)="search()" icon="search" [styles]="{'color': 'black'}"></fa-icon>
               </button>
               <button class="mat-icon-button menu" (click)="onFavoritesClicked()">
                 <fa-icon icon="heart" [styles]="{'color': 'black'}"></fa-icon>

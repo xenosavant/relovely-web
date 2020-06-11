@@ -94,7 +94,6 @@ export class PaymentCardInputComponent implements OnInit {
   }
 
   onClose() {
-    console.log('close');
     this.close.emit();
   }
 

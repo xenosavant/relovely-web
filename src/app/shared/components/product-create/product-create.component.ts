@@ -94,6 +94,7 @@ export class ProductCreateComponent implements OnInit {
         tag: new FormControl(''),
         weight: new FormControl(this.product.weight, [Validators.required])
       }, this.validateCategories);
+      console.log(this.form)
       this.tags = [...this.product.tags];
       this.images = this.product.images;
       this.video = this.product.videos.length ? this.product.videos[0] : null;
@@ -250,6 +251,7 @@ export class ProductCreateComponent implements OnInit {
       this.images.forEach(image => {
         delete image.id;
       });
+      console.log(+this.form.get('price').value);
       const product: Product = {
         cloudId: this.id,
         title: this.form.get('title').value,
@@ -259,7 +261,7 @@ export class ProductCreateComponent implements OnInit {
         videos: this.video ? [this.video] : [],
         brand: this.form.get('brand').value,
         tags: this.tags,
-        price: parseInt(this.form.get('price').value.replace(this.cuurencyChars, '')),
+        price: this.form.get('price').value,
         weight: this.form.get('weight').value
       };
       if (this.form.get('size').value) {
@@ -269,9 +271,8 @@ export class ProductCreateComponent implements OnInit {
         product.colorId = this.form.get('color').value;
       }
       if (this.form.get('retailPrice').value) {
-        product.retailPrice = parseInt(this.form.get('retailPrice').value.replace(this.cuurencyChars, ''))
+        product.retailPrice = this.form.get('retailPrice').value;
       }
-      console.log(product)
       if (this.edit) {
         this.productService.patchProduct(product, this.product.id).subscribe(response => {
           this.loading = false;

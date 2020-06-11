@@ -40,7 +40,6 @@ export class AddAddressComponent implements OnInit {
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-    console.log(this.user.addresses);
     this.states = this.lookupService.states;
     if (this.address) {
       this.form = new FormGroup({

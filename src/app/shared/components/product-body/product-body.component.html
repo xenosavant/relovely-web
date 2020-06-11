@@ -9,8 +9,8 @@
     <div class="product-name">
       {{product.title}}
     </div>
-    <div class="product-size">
-      Size:
+    <div *ngIf="product.sizeId" class="product-size">
+      Size: {{product.sizeId | appSize}}
     </div>
     <div class="product-price">
       {{product.price | appCurrency}}

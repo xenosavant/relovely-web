@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-search-bar',
@@ -11,29 +12,32 @@ export class SearchBarComponent implements OnInit {
   public readonly placeholderText: string = 'Search';
   public placeholder: string;
 
-  private category: string;
+  form: FormGroup = new FormGroup({
+    term: new FormControl('')
+  })
+
+  @Output() search: EventEmitter<any> = new EventEmitter();
+  @Output() term: EventEmitter<string> = new EventEmitter();
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.placeholder = this.placeholderText;
   }
 
   public ngOnInit(): void {
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      if (params.has('category')) {
-        this.category = params.get('category');
-      } else {
-        this.category = null;
+    this.route.queryParams.subscribe(params => {
+      const newTerm = params['search'];
+      if (this.form.get('term').value !== newTerm) {
+        this.form.get('term').setValue(newTerm);
       }
-    });
+    })
   }
 
-  public submit(searchTerm: string): void {
-    if (searchTerm) {
-      const params: string = this.parseInput(searchTerm);
-      this.router.navigate(['/products'], {
-        queryParams: { searchString: params }
-      });
-    }
+  public submit(): void {
+    this.search.emit();
+  }
+
+  public termChanged() {
+    this.term.emit(this.parseInput(this.form.get('term').value));
   }
 
   private parseInput(input: string): string {

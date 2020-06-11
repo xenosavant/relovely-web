@@ -12,7 +12,7 @@ export class PhoneNumberDirective implements OnInit {
     ngOnInit() {
         this.format(this.el.nativeElement.value); // format any initial values
         this.renderer.listen(this.el.nativeElement, 'paste', (event) => {
-            console.log(event);
+
         })
     }
 
@@ -32,12 +32,10 @@ export class PhoneNumberDirective implements OnInit {
 
     @HostListener('paste', ['$event']) onPaste(event: ClipboardEvent) {
         event.preventDefault();
-        console.log(event);
         this.format(event.clipboardData.getData('text/plain'));
     }
 
     format(val: string): string {
-        console.log(val);
         let newVal = String(val).replace(/\D/g, '');
         if (!newVal) {
             return ''
