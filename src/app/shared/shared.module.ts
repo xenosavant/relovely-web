@@ -98,7 +98,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { CurrencyDirective } from './directives/currency';
 import { ImageViewerComponent } from './components/image-viewer/image-viewer.component';
 import { AppSizePipe } from './pipes/size.pipe';
-import { AddAddressComponent } from './components/add-address/add-address.component';
+import { AddAddressModalComponent } from './components/add-address-modal/add-address-modal.component';
 import { PaymentCardInputComponent } from './components/payment-card-input/payment-card-input.component';
 import { NgxStripeModule, StripeCardComponent } from 'ngx-stripe';
 import { environment } from '@env/environment';
@@ -112,6 +112,7 @@ import { OrderStatusComponent } from './components/order-status/order-status.com
 import { HeaderDetailsComponent } from './components/header-details/header-details.component';
 import { LinkFacebookComponent } from './components/link-facebook/link-facebook.component';
 import { LinkInstagramComponent } from './components/link-instagram/link-instagram.component';
+import { AddAddressComponent } from './components/add-address/add-address.component';
 
 
 library.add(
@@ -217,7 +218,7 @@ library.add(
     AppSizePipe,
     ProductCreateComponent,
     ImageViewerComponent,
-    AddAddressComponent,
+    AddAddressModalComponent,
     PaymentCardInputComponent,
     VerifySellerComponent,
     CardComponent,
@@ -226,7 +227,8 @@ library.add(
     OrderStatusComponent,
     HeaderDetailsComponent,
     LinkFacebookComponent,
-    LinkInstagramComponent],
+    LinkInstagramComponent,
+    AddAddressComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -280,7 +282,7 @@ library.add(
     AppSizePipe,
     ProductCreateComponent,
     ImageViewerComponent,
-    AddAddressComponent,
+    AddAddressModalComponent,
     PaymentCardInputComponent,
     VerifySellerComponent,
     CardComponent,
@@ -289,7 +291,8 @@ library.add(
     OrderStatusComponent,
     HeaderDetailsComponent,
     LinkFacebookComponent,
-    LinkInstagramComponent
+    LinkInstagramComponent,
+    AddAddressComponent
   ],
   providers: [DecimalPipe],
 })

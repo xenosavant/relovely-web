@@ -1,0 +1,17 @@
+<app-center-modal>
+  <div class="inner-container">
+    <div class="inner-wrapper" [class.invisible]="loading">
+      <div class="modal-header">
+        <div class="title">
+          <div>{{title}}</div>
+        </div>
+        <div class="close">
+          <img (click)="onClose($event)" src="./assets/images/close.svg" />
+        </div>
+      </div>
+      <app-add-address [user]="user" [address]="address" (loading)="onLoading($event)" (save)="onSave($event)"
+        (close)="onClose()"></app-add-address>
+    </div>
+    <mat-spinner *ngIf="loading" diameter="25"></mat-spinner>
+  </div>
+</app-center-modal>

@@ -32,6 +32,6 @@
 </div>
 
 <ng-template cdkPortal #addAddressModal="cdkPortal">
-  <app-add-address [address]="editAddress" [user]="user" (save)="onSaved($event)" (close)="close($event)">
-  </app-add-address>
+  <app-add-address-modal [address]="editAddress" [user]="user" (save)="onSaved($event)" (close)="close($event)">
+  </app-add-address-modal>
 </ng-template>
