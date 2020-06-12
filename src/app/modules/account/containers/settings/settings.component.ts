@@ -26,6 +26,7 @@ export class SettingsComponent implements OnInit {
   verificationStatus: string;
   bankAccountLinked = false;
   facebookLinked = false;
+  instagramLinked = false;
 
   constructor(private userService: UserService,
     private overlayService: OverlayService,
@@ -78,6 +79,9 @@ export class SettingsComponent implements OnInit {
     }
     if (this.currentUser.facebookUserId) {
       this.facebookLinked = true;
+    }
+    if (!this.currentUser.instagramUsername) {
+      this.instagramLinked = true;
     }
   }
 

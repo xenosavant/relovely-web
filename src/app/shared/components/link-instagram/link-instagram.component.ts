@@ -24,4 +24,8 @@ export class LinkInstagramComponent implements OnInit {
     location.replace(this.linkUrl);
   }
 
+  onClose() {
+    this.close.emit();
+  }
+
 }
