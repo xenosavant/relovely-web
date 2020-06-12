@@ -37,7 +37,14 @@ export class CheckoutComponent implements OnInit {
   addingPayment = false;
   changingPayment = false;
   states;
-  form: FormGroup;
+  form = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    line1: new FormControl('', [Validators.required]),
+    line2: new FormControl(''),
+    city: new FormControl('', [Validators.required]),
+    state: new FormControl('', [Validators.required]),
+    zip: new FormControl('', [Validators.required, Validators.maxLength(5)]),
+  });
   loadingPayment: boolean;
   checkingOut = false;
   shippingCostLoading = true;
@@ -108,6 +115,11 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSaveAddress() {
+    this.user.addresses.forEach(a => {
+      if (a.primary) {
+        delete a.primary;
+      }
+    })
     const saveAddress: Address = {
       name: this.form.get('name').value,
       line1: this.form.get('line1').value,
@@ -116,11 +128,12 @@ export class CheckoutComponent implements OnInit {
       state: this.form.get('state').value,
       zip: this.form.get('zip').value,
       country: 'US',
+      primary: true,
       id: guid()
     }
     this.userService.updateUser(this.userService.currentUser.id, { addresses: [...this.user.addresses, saveAddress] }).subscribe(user => {
       this.user = user;
-      this.selectedAddress = saveAddress;
+      this.selectedAddress = this.user.addresses.find(a => a.primary);
       this.recalcCosts();
       this.addingAddress = false;
     })

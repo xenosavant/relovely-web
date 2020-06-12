@@ -73,10 +73,10 @@
             </div>
           </div>
           <div class="button-wrapper">
+            <button *ngIf="user.addresses.length" mat-stroked-button (click)="onCancelAdd()">Cancel</button>
             <button mat-stroked-button class="primary" (click)="onSaveAddress()" [disabled]="!form.valid">
               Save
             </button>
-            <button *ngIf="user.addresses.length" mat-stroked-button (click)="onCancelAdd()">Cancel</button>
           </div>
         </form>
       </div>
