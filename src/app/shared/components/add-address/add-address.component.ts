@@ -10,6 +10,7 @@ import { State } from '@app/shared/services/lookup/state';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { UserService } from '@app/shared/services/user/user.service';
 import { ShipmentService } from '@app/shared/services/shipment/shipment.service';
+import { UserAuth } from '@app/shared/models/user-auth.model';
 
 @Component({
   selector: 'app-add-address',
@@ -20,10 +21,10 @@ import { ShipmentService } from '@app/shared/services/shipment/shipment.service'
 export class AddAddressComponent implements OnInit {
 
   @Input() address: Address;
-  @Input() user: UserDetail;
+  @Input() user: UserAuth;
   @Output() close: EventEmitter<any> = new EventEmitter();
   @Output() loading: EventEmitter<boolean> = new EventEmitter();
-  @Output() save: EventEmitter<UserDetail> = new EventEmitter();
+  @Output() save: EventEmitter<UserAuth> = new EventEmitter();
 
 
   public form: FormGroup;
@@ -88,7 +89,12 @@ export class AddAddressComponent implements OnInit {
       this.user.addresses.splice(this.index, 1, saveAddress);
       update = this.user.addresses;
     } else {
-      saveAddress.primary = !this.user.addresses.length ? true : false;
+      saveAddress.primary = true;
+      this.user.addresses.forEach(address => {
+        if (address.primary) {
+          delete address.primary;
+        }
+      })
       update = [...this.user.addresses, saveAddress];
     }
     if (!this.override) {
@@ -117,7 +123,7 @@ export class AddAddressComponent implements OnInit {
         iif(() => (!v.errors && !v.correctedAddress && v.success),
           this.userService.updateUser(this.user.id, { addresses: update }), EMPTY)))
         .subscribe(user => {
-          this.save.emit(this.user);
+          this.save.emit(this.userService.currentUser);
         }, err => {
           this.loading.emit(false);
         })

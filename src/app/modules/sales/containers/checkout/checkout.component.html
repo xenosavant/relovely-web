@@ -4,6 +4,9 @@
       <h1>Checkout</h1>
     </div>
     <div class="divider"></div>
+    <div class="errors">
+      <div class="error" *ngIf="error">{{error}}</div>
+    </div>
     <div class="shipping-address">
       <h2> Shipping Address </h2>
       <ng-container *ngIf="!addingAddress">
@@ -26,7 +29,7 @@
               </div>
             </div>
             <div class="button-wrapper">
-              <button mat-stroked-button (click)="changingAddress = false" class="primary">Save</button>
+              <button mat-stroked-button (click)="onSelectAddress()" class="primary">Save</button>
               <button mat-stroked-button (click)="onAddAddress()">
                 <fa-icon icon="plus"></fa-icon>&nbsp; Add Address
               </button>
@@ -35,50 +38,12 @@
         </ng-container>
       </ng-container>
       <div class="form-wrapper" *ngIf="addingAddress">
-        <form novalidate [formGroup]="form">
-          <div>
-            <mat-form-field appearance="outline">
-              <input matInput placeholder="Full Name" formControlName="name" />
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field appearance="outline">
-              <input matInput placeholder="Address" formControlName="line1" />
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field appearance="outline">
-              <input matInput placeholder="Address Line 2" formControlName="line2" />
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field appearance="outline">
-              <input matInput placeholder="City" formControlName="city" />
-            </mat-form-field>
-          </div>
-          <div class="state-zip">
-            <div>
-              <mat-form-field appearance="outline">
-                <mat-select placeholder="State" class="form-control" formControlName="state">
-                  <mat-option *ngFor="let state of states" [value]="state.abbreviation">
-                    {{state.full}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div>
-              <mat-form-field appearance="outline">
-                <input matInput placeholder="Zip" formControlName="zip" maxlength="5" />
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="button-wrapper">
-            <button *ngIf="user.addresses.length" mat-stroked-button (click)="onCancelAdd()">Cancel</button>
-            <button mat-stroked-button class="primary" (click)="onSaveAddress()" [disabled]="!form.valid">
-              Save
-            </button>
-          </div>
-        </form>
+        <div class="address-container" [class.invisible]="savingAddress">
+          <app-add-address (loading)="onSavingAddress($event)" [user]="user" (close)="onCancelAdd()"
+            (save)="onSaveAddress($event)">
+          </app-add-address>
+        </div>
+        <mat-spinner *ngIf="savingAddress" diameter="25"></mat-spinner>
       </div>
       <div class="divider"></div>
       <div class="payment-method">
@@ -97,7 +62,7 @@
                 <app-card [card]="payment"></app-card>
               </div>
               <div class="button-wrapper">
-                <button mat-stroked-button (click)="changingPayment = false" class="primary">Save</button>
+                <button mat-stroked-button (click)="onSelectAddress()" class="primary">Save</button>
                 <button mat-stroked-button (click)="onAddPayment()">
                   <fa-icon icon="plus"></fa-icon>&nbsp; Add Payment
                 </button>
@@ -142,7 +107,14 @@
         </div>
         <div class="line-item">
           <span class="label">Tax</span>
-          <span class="value">{{tax | appCurrency}} </span>
+          <span class="value">
+            <ng-container *ngIf="shippingCostLoading">
+              <mat-spinner diameter="20"></mat-spinner>
+            </ng-container>
+            <ng-container *ngIf="!shippingCostLoading">
+              <span class="value">{{tax | appCurrency}} </span>
+            </ng-container>
+          </span>
         </div>
         <div class="line-item">
           <span class="label">Shipping</span>

@@ -74,12 +74,12 @@
                 margin-top: 16px;
             }
             .form-wrapper {
-                
-                .state-zip {
-                    display: grid;
-                    grid-template-columns: 1fr 100px;
-                    grid-template-rows: auto;
-                    grid-column-gap: 16px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .address-container {
+                    display: inline-block;
+                    width: 100%;
                 }
             }
         }

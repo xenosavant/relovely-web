@@ -37,19 +37,13 @@ export class CheckoutComponent implements OnInit {
   addingPayment = false;
   changingPayment = false;
   states;
-  form = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    line1: new FormControl('', [Validators.required]),
-    line2: new FormControl(''),
-    city: new FormControl('', [Validators.required]),
-    state: new FormControl('', [Validators.required]),
-    zip: new FormControl('', [Validators.required, Validators.maxLength(5)]),
-  });
   loadingPayment: boolean;
   checkingOut = false;
   shippingCostLoading = true;
   shippingRateId: string;
   shipmentId: string;
+  savingAddress = false;
+  error: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -91,6 +85,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   recalcCosts() {
+    this.shippingCostLoading = true;
     if (this.selectedAddress) {
       this.shipmentService.previewShipment({
         categoryId: this.product.categories.find(c => c.length === 2),
@@ -104,6 +99,11 @@ export class CheckoutComponent implements OnInit {
         this.shippingCostLoading = false;
         this.loading = false;
         this.ref.markForCheck();
+      }, err => {
+        this.error = err.error.error.message;
+        this.shippingCostLoading = false;
+        this.loading = false;
+        this.ref.markForCheck();
       });
     } else {
       this.shippingCost = 0;
@@ -114,45 +114,31 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  onSaveAddress() {
-    this.user.addresses.forEach(a => {
-      if (a.primary) {
-        delete a.primary;
-      }
-    })
-    const saveAddress: Address = {
-      name: this.form.get('name').value,
-      line1: this.form.get('line1').value,
-      line2: this.form.get('line2').value,
-      city: this.form.get('city').value,
-      state: this.form.get('state').value,
-      zip: this.form.get('zip').value,
-      country: 'US',
-      primary: true,
-      id: guid()
-    }
-    this.userService.updateUser(this.userService.currentUser.id, { addresses: [...this.user.addresses, saveAddress] }).subscribe(user => {
-      this.user = user;
-      this.selectedAddress = this.user.addresses.find(a => a.primary);
-      this.recalcCosts();
-      this.addingAddress = false;
-    })
+  onSaveAddress(user: UserAuth) {
+    this.user = user;
+    this.selectedAddress = this.user.addresses.find(a => a.primary);
+    this.addingAddress = false;
+    this.savingAddress = false;
+    this.recalcCosts();
   }
 
-  onCancelAdd($event: any) {
-    this.addingAddress = false;
+  onSavingAddress(saving: boolean) {
+    this.savingAddress = saving;
+    this.ref.markForCheck();
+  }
+
+  onCancelAdd() {
+    if (this.selectedAddress) {
+      this.addingAddress = false;
+    }
   }
 
   onAddAddress() {
-    this.form = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      line1: new FormControl('', [Validators.required]),
-      line2: new FormControl(''),
-      city: new FormControl('', [Validators.required]),
-      state: new FormControl('', [Validators.required]),
-      zip: new FormControl('', [Validators.required, Validators.maxLength(5)]),
-    });
     this.addingAddress = true;
+  }
+
+  onSelectAddress() {
+    this.recalcCosts();
   }
 
   changeAddress() {
@@ -182,7 +168,9 @@ export class CheckoutComponent implements OnInit {
     this.loadingPayment = loading;
   }
   onCancelAddPayment() {
-    this.addingPayment = false;
+    if (this.selectedPayment) {
+      this.addingPayment = false;
+    }
   }
 
   onReady(event: any) {

@@ -9,8 +9,10 @@
           <img (click)="onClose($event)" src="./assets/images/close.svg" />
         </div>
       </div>
-      <app-add-address [user]="user" [address]="address" (loading)="onLoading($event)" (save)="onSave($event)"
-        (close)="onClose()"></app-add-address>
+      <div class="form-wrapper">
+        <app-add-address [user]="user" [address]="address" (loading)="onLoading($event)" (save)="onSave($event)"
+          (close)="onClose()"></app-add-address>
+      </div>
     </div>
     <mat-spinner *ngIf="loading" diameter="25"></mat-spinner>
   </div>
