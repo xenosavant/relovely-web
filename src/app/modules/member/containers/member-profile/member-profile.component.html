@@ -8,12 +8,10 @@
     <div class="desktop-inner">
       <div class="info-wrapper">
         <ul>
-          <li><img src="./assets/images/instagram.png"> @influencer1987</li>
-          <li>
-            <img src="./assets/images/black-heart.svg"> 546 Favorites
+          <li class="link" (click)="goToInstagram()" *ngIf="user.instagramUsername">
+            <img src="./assets/images/instagram.png">
+            <div class="link-text">@{{user.instagramUsername}}</div>
           </li>
-          <li><img src="./assets/images/location.png"> Newark, NJ</li>
-          <li></li>
         </ul>
       </div>
     </div>

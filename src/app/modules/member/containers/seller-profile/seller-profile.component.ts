@@ -53,8 +53,6 @@ export class SellerProfileComponent implements OnInit {
       this.showCreate = true;
     }
 
-    console.log(this.user)
-
     this.following = this.user.followers.some(u => u.id === this.currentUser.id);
     this.followingUsers = this.user.following;
     this.followerUsers = this.user.followers;

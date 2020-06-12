@@ -28,16 +28,26 @@
     .sidebar-wrapper {
         margin: 75px 16px 16px 16px;
         border-radius: 4px;
-        .info-wrapper {
-            margin: 16px;
-            ul {
-                padding:0 !important;
-                li {
-                list-style-type: none;
-                margin-bottom:8px;
-                img {
-                    width:24px !important;
-                    margin-right:8px;
+        .desktop-inner {
+            margin: 0 auto;
+            width: fit-content;
+            .info-wrapper {
+                min-width: 200px;
+                ul {
+                    padding:0 !important;
+                    li {
+                        display: flex;
+                        align-items: center;
+                    
+                    list-style-type: none;
+                    margin-bottom:8px;
+                    &.link {
+                        cursor: pointer;
+                    }
+                    img {
+                        width:24px !important;
+                        margin-right:8px;
+                    }
                 }
             }
           }

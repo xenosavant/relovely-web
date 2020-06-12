@@ -94,4 +94,10 @@ export class MemberProfileComponent implements OnInit {
         break
     }
   }
+
+
+  goToInstagram() {
+    window.open(`https://instagram.com/${this.user.instagramUsername}`)
+  }
+
 }
