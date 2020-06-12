@@ -11,7 +11,7 @@ export const environment = {
   facebookClientId: '498359121110237',
   facebookRedirectUrl: 'https://dev.relovely.com/account/facebook',
   facebooLinkRedirectUrl: 'https://dev.relovely.com/account/facebook?type=link',
-  instagramAuthUrl: `https://api.instagram.com/oauth/authorize`,
+  instagramAuthUrl: `https://api.instagram.com/oauth/authorize?scope=user_profile&response_type=code`,
   instagramLinkRedirectUrl: 'https://dev.relovely.com/account/instagram',
   instagramClientId: '600076470775068',
   instagramSignupRedirectUrl: 'https://dev.relovely.com/account/instagram',

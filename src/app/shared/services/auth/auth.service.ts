@@ -29,7 +29,7 @@ export class AuthService extends BaseService {
                 return response;
             }), catchError(this.errorHandler)
         );
-    }
+    } ß
 
     verifyEmail(request: VerifyRequest): Observable<SignupResponse> {
         return this.httpClient.post(`${this.apiBaseUrl}/auth/verify`, request).pipe(
