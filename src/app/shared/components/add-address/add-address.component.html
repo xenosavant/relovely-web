@@ -41,7 +41,7 @@
     </div>
     <div class="spacer"></div>
     <div class="button-wrapper">
-        <app-button (click)="onClose($event)">
+        <app-button (click)="onClose()">
             <strong>Cancel</strong>
         </app-button>
         <button mat-stroked-button class="primary" (click)="onSave()" [disabled]="!form.valid">
