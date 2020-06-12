@@ -37,6 +37,16 @@
             <span *ngIf="!facebookLinked" class="tag alert"> Unlinked</span>
             <span *ngIf="facebookLinked" class="tag success">Linked</span>
         </div>
+        <div class="verification line clickable" (click)="linkInstagram()">
+            <div class="icon-wrap">
+                <img src="/assets/images/instagram-black.svg" />
+            </div>
+            <span class="title">
+                Instagram
+            </span>
+            <span *ngIf="!instagramLinked" class="tag alert"> Unlinked</span>
+            <span *ngIf="instagramLinked" class="tag success">Linked</span>
+        </div>
     </div>
 </div>
 
@@ -50,4 +60,9 @@
 
 <ng-template cdkPortal #facebook="cdkPortal">
     <app-link-facebook (close)="close($event)"></app-link-facebook>
+</ng-template>
+
+<ng-template cdkPortal #instagram="cdkPortal">
+    <app-link-instagram (close)="close($event)">
+    </app-link-instagram>
 </ng-template>

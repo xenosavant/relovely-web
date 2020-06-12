@@ -1,0 +1,27 @@
+<app-center-modal>
+    <div class="modal-wrapper">
+        <div class="inner-wrapper" [class.invisible]="loading">
+            <div class="modal-header">
+                <div class="title">
+                    <div>Link Instagram Account</div>
+                </div>
+                <div class="close">
+                    <img (click)="onClose()" src="./assets/images/close.svg" />
+                </div>
+            </div>
+            <div class="body-wrapper">
+                <div class="text">
+                    Click the button below to link your Instagram account to Relovely.
+                </div>
+                <div class="button-wrapper">
+                    <button class="instagram primary" mat-stroked-button (click)="linkInstagram()">
+                        <div class="button-wrap"> <img src="./assets/images/instagram-white.png" />
+                            <strong>Link to Instagram</strong>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <mat-spinner *ngIf="loading" diameter="25"></mat-spinner>
+    </div>
+</app-center-modal>

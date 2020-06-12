@@ -83,43 +83,43 @@ export class AuthComponent implements OnChanges {
     }
   }
 
-  memberAuthenticateInstagram() {
-    this.loading = true;
-    const url = `${this.signupInstagramUrl}/member`;
-    location.replace(url);
-  }
+  // memberAuthenticateInstagram() {
+  //   this.loading = true;
+  //   const url = `${this.signupInstagramUrl}/member`;
+  //   location.replace(url);
+  // }
 
-  sellerAuthenticateInstagram() {
-    this.loading = true;
-    const url = `${this.signupInstagramUrl}/seller`;
-    location.replace(url);
-  }
+  // sellerAuthenticateInstagram() {
+  //   this.loading = true;
+  //   const url = `${this.signupInstagramUrl}/seller`;
+  //   location.replace(url);
+  // }
 
-  applyToSell() {
-    this.loading = true;
-    this.authService.sellWithInstagram(this.sellerForm.get('email').value, this.token).subscribe(() => {
-      this.loading = false;
-      this.navigationService.closeAuthWindow();
-      this.navigationService.navigate({ path: '/account/instagram/seller' });
-    }, err => {
-      this.error = err.error.error.message;
-      this.loading = false;
-      this.ref.markForCheck();
-    })
-  }
+  // applyToSell() {
+  //   this.loading = true;
+  //   this.authService.sellWithInstagram(this.sellerForm.get('email').value, this.token).subscribe(() => {
+  //     this.loading = false;
+  //     this.navigationService.closeAuthWindow();
+  //     this.navigationService.navigate({ path: '/account/instagram/seller' });
+  //   }, err => {
+  //     this.error = err.error.error.message;
+  //     this.loading = false;
+  //     this.ref.markForCheck();
+  //   })
+  // }
 
-  applyAsMember() {
-    this.loading = true;
-    this.authService.signupWithInstagram(this.memberForm.get('email').value, this.token).subscribe(() => {
-      this.loading = false;
-      this.navigationService.closeAuthWindow();
-      this.navigationService.navigate({ path: '/account/instagram/member' });
-    }, err => {
-      this.error = err.error.error.message;
-      this.loading = false;
-      this.ref.markForCheck();
-    })
-  }
+  // applyAsMember() {
+  //   this.loading = true;
+  //   this.authService.signupWithInstagram(this.memberForm.get('email').value, this.token).subscribe(() => {
+  //     this.loading = false;
+  //     this.navigationService.closeAuthWindow();
+  //     this.navigationService.navigate({ path: '/account/instagram/member' });
+  //   }, err => {
+  //     this.error = err.error.error.message;
+  //     this.loading = false;
+  //     this.ref.markForCheck();
+  //   })
+  // }
 
 
   continueWithFacebook() {

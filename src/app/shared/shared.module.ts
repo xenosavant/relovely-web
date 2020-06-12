@@ -111,6 +111,7 @@ import { AddBankComponent } from './components/add-bank/add-bank.component';
 import { OrderStatusComponent } from './components/order-status/order-status.component';
 import { HeaderDetailsComponent } from './components/header-details/header-details.component';
 import { LinkFacebookComponent } from './components/link-facebook/link-facebook.component';
+import { LinkInstagramComponent } from './components/link-instagram/link-instagram.component';
 
 
 library.add(
@@ -224,7 +225,8 @@ library.add(
     AddBankComponent,
     OrderStatusComponent,
     HeaderDetailsComponent,
-    LinkFacebookComponent],
+    LinkFacebookComponent,
+    LinkInstagramComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -286,7 +288,8 @@ library.add(
     AddBankComponent,
     OrderStatusComponent,
     HeaderDetailsComponent,
-    LinkFacebookComponent
+    LinkFacebookComponent,
+    LinkInstagramComponent
   ],
   providers: [DecimalPipe],
 })

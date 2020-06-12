@@ -16,6 +16,7 @@ export class SettingsComponent implements OnInit {
   @ViewChild('verify', { static: true }) verifyModal: TemplatePortal<any>;
   @ViewChild('bank', { static: true }) bankModal: TemplatePortal<any>;
   @ViewChild('facebook', { static: true }) facebookModal: TemplatePortal<any>;
+  @ViewChild('instagram', { static: true }) instagramModal: TemplatePortal<any>;
 
   currentUser: UserAuth;
   verficationClass: any;
@@ -99,6 +100,10 @@ export class SettingsComponent implements OnInit {
 
   linkFacebook() {
     this.overlayService.open(this.facebookModal);
+  }
+
+  linkInstagram() {
+    this.overlayService.open(this.instagramModal);
   }
 
 }
