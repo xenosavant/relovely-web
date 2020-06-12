@@ -18,7 +18,7 @@ const routes: Routes = [
         component: AddressesComponent
     },
     {
-        path: 'instagram/:type',
+        path: 'instagram',
         component: InstagramAuthComponent
     },
     {

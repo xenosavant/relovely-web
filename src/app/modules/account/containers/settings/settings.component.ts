@@ -80,7 +80,7 @@ export class SettingsComponent implements OnInit {
     if (this.currentUser.facebookUserId) {
       this.facebookLinked = true;
     }
-    if (!this.currentUser.instagramUsername) {
+    if (this.currentUser.instagramUsername) {
       this.instagramLinked = true;
     }
   }

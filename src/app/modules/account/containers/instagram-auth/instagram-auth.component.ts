@@ -26,20 +26,21 @@ export class InstagramAuthComponent implements OnInit {
     private authService: AuthService,
     private navigationService: NavigationService,
     private router: Router,
+    private userService: UserService,
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     combineLatest([this.activatedRoute.queryParams, this.activatedRoute.params]).subscribe(([query, route]) => {
       this.code = query['code'];
       if (this.code) {
-        // this.authService.linkInstagram(this.code, 'member').subscribe((response) => {
-        //   this.router.navigate(['/account/settings']);
-        // }, err => {
-        //   this.error = err.error.error.message;
-        //   this.router.navigate(['/']);
-        //   this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
-        // });
-        console.log(this.code);
+        this.authService.linkInstagram(this.code).subscribe((response) => {
+          this.userService.setCurrentUser(response);
+          this.router.navigate(['/account/settings']);
+        }, err => {
+          this.error = err.error.error.message;
+          this.router.navigate(['/account/settings'], { queryParams: { error: this.error } });
+          this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
+        });
       } else {
         this.router.navigate(['/']);
       }
