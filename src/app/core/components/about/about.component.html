@@ -1,7 +1,118 @@
 <div class="full-content home">
     <div class="banner-wrapper">
-        <h1>AN INLFUENCER EXCLUSIVE RE-SELLING PLATFORM</h1>
-        <p>Giving great products new life</p>
-        <button mat-stroked-button>Join Now</button>
+        <div class="white-logo">
+            <img src="/assets/images/white-logo.png">
+        </div>
+        <div class="bottom-info">
+            <div class="sub-header">
+                GIVING GREAT PRODUCTS NEW LIFE
+            </div>
+            <div class="sub-info">
+                Relovely is the first ever fashion re-selling marketplace where the sellers are exclusively influencers!
+                Join the community of fellow influencers who are helping create an elevated pre-loved shopping
+                experience online.
+                Only influencers can sell thier clothing + accessories, but anyone can shop!
+            </div>
+            <div class="how">
+                <div class="how-inner">
+                    <img src="/assets/images/down-arrow.svg">
+                    <div class="text">
+                        HOW IT WORKS
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!mobile" class="steps">
+        <div class="step">
+            <div class="step-inner">
+                <div class="number">
+                    1.
+                </div>
+                <div class="step-info">
+                    Influencers apply to sell
+                </div>
+            </div>
+        </div>
+        <div class="step placeholder">
+        </div>
+        <div class="step placeholder">
+        </div>
+        <div class="step">
+            <div class="step-inner">
+                <div class="number">
+                    2.
+                </div>
+                <div class="step-info">
+                    They will be approved based on the following:
+                </div>
+                <div class="step-list">
+                    <ol>
+                        <li>Quality of content + photos</li>
+                        <li>Followers + Engagement (quality over quantity)</li>
+                        <li>Must have a fashion or lifestyle designated Instagram account and/ or blog </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-inner">
+                <div class="number">
+                    3.
+                </div>
+                <div class="step-info">
+                    Start Selling!
+                </div>
+            </div>
+        </div>
+        <div class="step placeholder">
+        </div>
+    </div>
+    <div *ngIf="mobile" class="mobile-steps">
+        <div class="step">
+            <div class="step-inner">
+                <div class="number">
+                    1.
+                </div>
+                <div class="step-info">
+                    Influencers apply to sell
+                </div>
+            </div>
+        </div>
+
+        <div class="step dark">
+            <div class="step-inner">
+                <div class="number">
+                    2.
+                </div>
+                <div class="step-info">
+                    They will be approved based on the following:
+                </div>
+                <div class="step-list">
+                    <ol>
+                        <li>Quality of content + photos</li>
+                        <li>Followers + Engagement (quality over quantity)</li>
+                        <li>Must have a fashion or lifestyle designated Instagram account and/ or blog </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-inner">
+                <div class="number">
+                    3.
+                </div>
+                <div class="step-info">
+                    Start Selling!
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <button mat-stroked-button class="primary sell" (click)="onSell()"> Apply To Sell</button>
+        <div class="text">
+            "It's the biggest compliment for your product to have an afterlife - to me, that's luxury"
+        </div>
+        <div class="by-line">- Stella McCartney</div>
     </div>
 </div>
