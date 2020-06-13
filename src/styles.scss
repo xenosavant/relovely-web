@@ -869,6 +869,7 @@ mat-toolbar-row.mega-menu-bar {
     }
   }
   &.profile { 
+    width: 100%;
     @media(max-width: $mobile-breakpoint) {
       background-color: $medium-gray-background;
     }
