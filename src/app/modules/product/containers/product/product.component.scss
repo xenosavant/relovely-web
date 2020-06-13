@@ -231,3 +231,13 @@
     }
     color: $pink-button;
 }
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    margin: 8px 0px;
+    .hashtag {
+        margin-right: 8px;
+        color: $pink-button
+    }
+}

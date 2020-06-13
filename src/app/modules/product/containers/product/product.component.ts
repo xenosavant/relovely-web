@@ -75,6 +75,7 @@ export class ProductComponent implements OnInit {
         this.mobile = result.matches;
         if (!this.product) {
           this.productService.getProduct(this.id).subscribe(response => {
+            console.log(response)
             if (this.currentUser && this.currentUser.id === response.sellerId) {
               this.seller = true;
             }

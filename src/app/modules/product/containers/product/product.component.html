@@ -36,6 +36,9 @@
                     <span class="title">Size:</span>
                     <strong>{{product.sizeId | appSize}}</strong>
                 </div>
+                <div class="tags">
+                    <div class="hashtag" *ngFor="let tag of product.tags">#{{tag}}</div>
+                </div>
             </div>
             <div class="action">
                 <ng-container *ngIf="!product.sold">
@@ -95,6 +98,9 @@
                 </div>
                 <div class="size-wrapper" *ngIf="product.sizeId">
                     Size: <strong>{{product.sizeId | appSize}}</strong>
+                </div>
+                <div class="tags">
+                    <div class="hashtag" *ngFor="let tag of product.tags">#{{tag}}</div>
                 </div>
                 <ng-container *ngIf="!product.sold">
                     <div class="button-wrapper">
