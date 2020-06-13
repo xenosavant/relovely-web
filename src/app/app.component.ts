@@ -217,7 +217,7 @@ export class AppComponent implements OnInit {
         new NavigationItem([], '/sales/orders', 'Orders', null, [], [], null),
         new NavigationItem([], '/account/payments', 'Payment Methods', null, [], [], null),
         new NavigationItem([], '/account/addresses', 'Addresses', null, [], [], null),
-        new NavigationItem([], '/account/settings', 'Settings', '0', [], [], null)
+        new NavigationItem([], '/account/settings', 'Settings', null, [], [], null)
       ]
     }
     navigationItems.forEach(item => {

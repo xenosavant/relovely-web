@@ -46,9 +46,11 @@ export class FilterBarComponent implements OnInit {
         this.colorFilters = lookupState.colors;
         this.priceFilters = lookupState.prices;
         this.selectedCategoryFilterId = navigationState.selectedCategoryId;
-        this.currentSizeFilters = lookupState.sizes.filter(size => {
-          return navigationState.selectedCategory && navigationState.selectedCategory.id === '-1' || size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
-        });
+        if (navigationState.selectedCategory) {
+          this.currentSizeFilters = lookupState.sizes.filter(size => {
+            return navigationState.selectedCategory && navigationState.selectedCategory.id === '-1' || size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
+          });
+        }
         if (this.userService.currentUser) {
           const cache = this.userService.currentUser.preferences;
           if (cache) {

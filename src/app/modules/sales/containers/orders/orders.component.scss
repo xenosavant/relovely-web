@@ -12,7 +12,10 @@
     margin: 0 auto;
     max-width: $desktop-breakpoint;
     display: grid;
-    grid-gap: 5px;
+    grid-gap: 6px;
+    @media( min-width: $desktop-breakpoint) {
+        grid-gap: 12px;
+    }
  }
  
  .order-card {

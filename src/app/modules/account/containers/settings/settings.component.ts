@@ -4,6 +4,7 @@ import { UserAuth } from '@app/shared/models/user-auth.model';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from '@app/shared/services/overlay.service';
 import { VerificationError } from '@app/shared/services/user/verification-error';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 
 @Component({
   selector: 'app-settings',
@@ -30,12 +31,14 @@ export class SettingsComponent implements OnInit {
 
   constructor(private userService: UserService,
     private overlayService: OverlayService,
+    private navigationService: NavigationService,
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.currentUser = this.userService.currentUser;
     this.verficationClass = {};
     this.setView();
+    this.navigationService.showNavBar(true, 'SETTINGS');
   }
 
   setView() {

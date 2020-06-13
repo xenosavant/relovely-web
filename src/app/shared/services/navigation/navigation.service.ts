@@ -76,6 +76,7 @@ export class NavigationService {
             this.goto(item, back, params);
         }
         else if (item.id) {
+            console.log(item);
             this._navConfig.selectedCategory = this.lookupService.getCategory(item.id);
             this._navConfig.selectedCategoryId = item.id;
             this._navConfig.showFilterBar = true;

@@ -21,7 +21,7 @@ export class SalesComponent implements OnInit {
   constructor(private navigationService: NavigationService,
     private orderServive: OrderService, private ref: ChangeDetectorRef,
     private breakpointObserver: BreakpointObserver) {
-    this.navigationService.showNavBar(true, 'ORDERS');
+    this.navigationService.showNavBar(true, 'SALES');
   }
 
   ngOnInit() {

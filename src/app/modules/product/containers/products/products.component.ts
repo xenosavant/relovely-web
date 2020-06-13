@@ -128,12 +128,12 @@ export class ProductsComponent implements OnInit {
           filteredSizes.push(id);
         }
       });
-      this.productService.getProducts(this.categoryId, this.searchTerm, filteredSizes.length ? state.sizes : null,
+      this.productService.getProducts(this.categoryId || '-1', this.searchTerm, filteredSizes.length ? state.sizes : null,
         state.colors.length ? state.colors : null, state.prices.length ? state.prices : null).subscribe(result => {
           this.products = result.items;
           const cat: Category = this.lookupService.getCategory(this.categoryId);
           if (!this.products.length) {
-            if (this.categoryId === '-1') {
+            if (!cat || this.categoryId === '-1') {
               this.emptyImage = '../../../../../assets/images/women-clothing.svg';
             } else {
               if (cat.parent && cat.parent.parent) {

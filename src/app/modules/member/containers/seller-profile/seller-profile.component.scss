@@ -1,5 +1,12 @@
 @import '../../../../../styles-variables';
 
+
+:host {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+}
+
 .profile-container {
     background-color: $medium-gray-background;
     @media( min-width:$desktop-breakpoint) {
