@@ -18,4 +18,8 @@ export class AboutComponent implements OnInit {
     })
   }
 
+  onSell() {
+
+  }
+
 }
