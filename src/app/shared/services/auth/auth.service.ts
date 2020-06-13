@@ -56,7 +56,7 @@ export class AuthService extends BaseService {
     }
 
     linkInstagram(code: string): Observable<UserAuth> {
-        return this.httpClient.post<UserAuth>(`${this.apiBaseUrl}/instagram/link`, { code: code }).pipe(
+        return this.httpClient.post<UserAuth>(`${this.apiBaseUrl}/instagram/link`, { token: code }).pipe(
             map((user) => {
                 return user;
             })

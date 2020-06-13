@@ -36,6 +36,12 @@ export class VerifyComponent implements OnInit {
       this.type = params['type'];
       if (this.type) {
         switch (this.type) {
+          case 'facebook':
+            this.welcome = true;
+            this.type = 'member'
+            this.loading = false;
+            this.ref.markForCheck();
+            break;
           case 'email':
             this.loading = false;
             this.ref.markForCheck();

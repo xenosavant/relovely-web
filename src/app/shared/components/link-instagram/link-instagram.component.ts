@@ -12,16 +12,18 @@ export class LinkInstagramComponent implements OnInit {
   @Output() close: EventEmitter<boolean> = new EventEmitter();
   loading = false;
 
-  linkUrl = environment.instagramAuthUrl + `?client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramLinkRedirectUrl}&scope=user_profile&response_type=code`;
+  linkUrl = environment.instagramAuthUrl + `&client_id=${environment.instagramClientId}&redirect_uri=${environment.instagramLinkRedirectUrl}`;
 
   constructor() { }
 
   ngOnInit() {
+
   }
 
   linkInstagram() {
     this.loading = true;
-    location.replace(this.linkUrl);
+    console.log(this.linkUrl);
+    // location.replace(this.linkUrl);
   }
 
   onClose() {

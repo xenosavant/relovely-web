@@ -31,44 +31,15 @@ export class InstagramAuthComponent implements OnInit {
 
   ngOnInit() {
     combineLatest([this.activatedRoute.queryParams, this.activatedRoute.params]).subscribe(([query, route]) => {
-      this.type = route['type'];
       this.code = query['code'];
-      if (this.type) {
-        if (this.code) {
-          if (this.type === 'member') {
-            this.authService.getInstagramToken(this.code, 'member').subscribe((response) => {
-              this.router.navigate(['/']);
-              this.navigationService.openAuthWindow({ username: response.username, token: response.token, page: 'instagram' });
-            }, err => {
-              this.error = err.error.error.message;
-              this.router.navigate(['/']);
-              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
-            });
-          }
-          else if (this.type === 'seller') {
-            this.authService.getInstagramToken(this.code, 'seller').subscribe((response) => {
-              this.router.navigate(['/']);
-              this.navigationService.openAuthWindow({ username: response.username, token: response.token, page: 'sell' });
-            }, err => {
-              this.error = err.error.error.message;
-              this.router.navigate(['/']);
-              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'sell' });
-            });
-          }
-          else if (this.type === 'link') {
-            this.authService.linkInstagram(this.code).subscribe((response) => {
-              this.userService.setCurrentUser(response)
-              this.router.navigate(['/account/settings']);
-            }, err => {
-              this.error = err.error.error.message;
-              this.router.navigate(['/account/settings'], { queryParams: { error: this.error } });
-              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'instagram' });
-            });
-          }
-        } else {
-          this.success = true;
-          this.loading = false;
-        }
+      if (this.code) {
+        this.authService.linkInstagram(this.code).subscribe((response) => {
+          this.userService.setCurrentUser(response)
+          this.router.navigate(['/account/settings']);
+        }, err => {
+          this.error = err.error.error.message;
+          this.router.navigate(['/account/settings'], { queryParams: { error: this.error } });
+        });
       } else {
         this.router.navigate(['/']);
       }

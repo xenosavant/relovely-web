@@ -5,6 +5,7 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from '@app/shared/services/overlay.service';
 import { VerificationError } from '@app/shared/services/user/verification-error';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -28,17 +29,25 @@ export class SettingsComponent implements OnInit {
   bankAccountLinked = false;
   facebookLinked = false;
   instagramLinked = false;
+  error: string;
 
   constructor(private userService: UserService,
     private overlayService: OverlayService,
     private navigationService: NavigationService,
-    private ref: ChangeDetectorRef) { }
+    private ref: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.currentUser = this.userService.currentUser;
     this.verficationClass = {};
     this.setView();
     this.navigationService.showNavBar(true, 'SETTINGS');
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params['error']) {
+        this.error = params['error'];
+        this.ref.markForCheck();
+      }
+    });
   }
 
   setView() {

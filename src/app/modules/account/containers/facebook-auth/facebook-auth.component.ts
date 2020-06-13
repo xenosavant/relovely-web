@@ -33,15 +33,15 @@ export class FacebookAuthComponent implements OnInit {
               this.userService.setCurrentUser(user);
               this.router.navigate(['/account/settings']);
             }, err => {
-              this.router.navigate(['/']);
-              this.navigationService.openAuthWindow({ error: err.error.error.message, page: 'signup' });
+              console.log(err)
+              this.router.navigate(['/account/settings'], { queryParams: { error: err.error.error.message } });
             });
             break;
           default:
             this.authService.continueWithFacebook(this.code).subscribe(response => {
               this.userService.setLogin(response.jwt, response.user);
               if (response.existing) {
-                this.router.navigate(['/']);
+                this.router.navigate(['/account/facebook']);
               } else {
                 this.loading = false;
                 this.ref.markForCheck();
