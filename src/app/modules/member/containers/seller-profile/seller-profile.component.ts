@@ -68,8 +68,14 @@ export class SellerProfileComponent implements OnInit {
     this.overlayService.open(this.productCreateModal);
   }
 
-  close() {
+  close(success: boolean) {
     this.overlayService.close();
+    if (success) {
+      this.userService.me().subscribe(me => {
+        this.currentUser = me;
+        this.ref.markForCheck();
+      })
+    }
   }
 
   onUpdate() {

@@ -25,7 +25,7 @@
             <div class="add-image" (click)="input.click()"><img src="./assets/images/plus.png"></div>
         </div>
         <div class="info hint">
-            *Upload a video wearing the product
+            Upload a video wearing the product
         </div>
         <div *ngIf="!video" class="video">
             <app-video-uploader (completed)="videoUploaded($event)" [id]="id"></app-video-uploader>
@@ -98,6 +98,9 @@
                     <input matInput placeholder="Brand" formControlName="brand" />
                 </mat-form-field>
             </div>
+            <div class="info hint tag-hint">
+                Press enter after every tag
+            </div>
             <div class="tags">
                 <mat-form-field appearance="outline">
                     <mat-chip-list #chipList>
@@ -119,7 +122,8 @@
                 </div>
                 <div class="retail-price">
                     <mat-form-field appearance="outline">
-                        <input type="text" currency matInput placeholder="Retail Price" formControlName="retailPrice" />
+                        <input type="text" currency matInput placeholder="Original Retail Price"
+                            formControlName="retailPrice" />
                     </mat-form-field>
                 </div>
             </div>

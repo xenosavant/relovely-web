@@ -28,7 +28,7 @@ export class ProductCreateComponent implements OnInit {
 
   @Input() sellerId: string;
   @Input() product: Product;
-  @Output() close: EventEmitter<any> = new EventEmitter;
+  @Output() close: EventEmitter<boolean> = new EventEmitter;
 
   public imageChangedEvent: any = null;
   public crop = false;
@@ -88,8 +88,8 @@ export class ProductCreateComponent implements OnInit {
           ]
         ),
         size: new FormControl(this.product.sizeId),
-        price: new FormControl(this.product.price, [Validators.required]),
-        retailPrice: new FormControl(this.product.retailPrice),
+        price: new FormControl(this.product.price.toString(), [Validators.required]),
+        retailPrice: new FormControl(this.product.retailPrice ? this.product.retailPrice.toString() : ''),
         color: new FormControl(this.product.colorId),
         tag: new FormControl(''),
         weight: new FormControl(this.product.weight, [Validators.required])
@@ -188,7 +188,7 @@ export class ProductCreateComponent implements OnInit {
   }
 
   onClose($event: any) {
-    this.close.emit($event);
+    this.close.emit(false);
   }
 
   onCloseCropper($event: any) {
@@ -251,6 +251,7 @@ export class ProductCreateComponent implements OnInit {
       this.images.forEach(image => {
         delete image.id;
       });
+      console.log(this.form.get('price').value);
       console.log(+this.form.get('price').value);
       const product: Product = {
         cloudId: this.id,
@@ -261,7 +262,7 @@ export class ProductCreateComponent implements OnInit {
         videos: this.video ? [this.video] : [],
         brand: this.form.get('brand').value,
         tags: this.tags,
-        price: this.form.get('price').value,
+        price: parseInt(this.form.get('price').value.replace(this.cuurencyChars, '')),
         weight: this.form.get('weight').value
       };
       if (this.form.get('size').value) {
@@ -271,19 +272,19 @@ export class ProductCreateComponent implements OnInit {
         product.colorId = this.form.get('color').value;
       }
       if (this.form.get('retailPrice').value) {
-        product.retailPrice = this.form.get('retailPrice').value;
+        product.retailPrice = parseInt(this.form.get('retailPrice').value.replace(this.cuurencyChars, ''));
       }
       if (this.edit) {
         this.productService.patchProduct(product, this.product.id).subscribe(response => {
           this.loading = false;
-          this.close.emit();
+          this.close.emit(true);
         }, error => {
           this.saveError = true;
         })
       } else {
         this.productService.postProduct(product, this.sellerId).subscribe(response => {
           this.loading = false;
-          this.close.emit();
+          this.close.emit(true);
         }, error => {
           this.saveError = true;
         })

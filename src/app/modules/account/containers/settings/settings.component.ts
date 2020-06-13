@@ -63,7 +63,7 @@ export class SettingsComponent implements OnInit {
           break;
         case 'review':
           if (this.currentUser.seller.missingInfo &&
-            !(this.currentUser.seller.missingInfo.indexOf('external_acccount') === -1 || this.currentUser.seller.missingInfo.length > 1)) {
+            (this.currentUser.seller.missingInfo.indexOf('external_acccount') === -1 || this.currentUser.seller.missingInfo.length > 1)) {
             this.allowClick = true;
             this.verification = {
               errors: this.currentUser.seller.errors,
