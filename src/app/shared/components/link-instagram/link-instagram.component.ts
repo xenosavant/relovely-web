@@ -22,8 +22,7 @@ export class LinkInstagramComponent implements OnInit {
 
   linkInstagram() {
     this.loading = true;
-    console.log(this.linkUrl);
-    // location.replace(this.linkUrl);
+    location.replace(this.linkUrl);
   }
 
   onClose() {
