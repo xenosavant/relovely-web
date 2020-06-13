@@ -183,7 +183,7 @@
           </div>
           <div class="menu-wrapper links">
             <div class="menu">
-              <span *ngFor="let item of desktopLinkItems" class="menu-item">
+              <span (click)="navigate(item)" *ngFor="let item of desktopLinkItems" class="menu-item">
                 <h1>{{item.name}}</h1>
               </span>
             </div>

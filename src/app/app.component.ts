@@ -223,8 +223,8 @@ export class AppComponent implements OnInit {
     navigationItems.forEach(item => {
       this.desktopNavigationItems.push(item);
     });
-    this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'Blog', null, [], [], null));
-    this.desktopLinkItems.push(new NavigationItem([], 'account/about', 'About', null, [], [], null));
+    this.desktopLinkItems.push(new NavigationItem([], 'about', 'Blog', null, [], [], null));
+    this.desktopLinkItems.push(new NavigationItem([], 'about', 'About', null, [], [], null));
     if (this.userService.currentUser && this.userService.currentUser.type === 'seller') {
       this.accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', null, [], [], null),
         new NavigationItem([], '/member/listings', 'Listings', null, [], [], null)

@@ -28,6 +28,7 @@ import { FilterBarComponent } from './components/filter-bar/filter-bar.component
 import { SizeFilterComponent } from './components/size-filter/size-filter.component';
 import { ColorFilterComponent } from './components/color-filter/color-filter.component';
 import { SizeFilterGroupComponent } from './components/size-filter/size-filter-group/size-filter-group.component';
+import { AboutComponent } from './components/about/about.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,7 @@ import { SizeFilterGroupComponent } from './components/size-filter/size-filter-g
     HttpClientModule,
     SharedModule
   ],
-  declarations: [SearchBarComponent, ToolbarComponent, HomeComponent, NotFoundComponent, FilterBarComponent, SizeFilterComponent, ColorFilterComponent, SizeFilterGroupComponent],
+  declarations: [SearchBarComponent, ToolbarComponent, HomeComponent, NotFoundComponent, FilterBarComponent, SizeFilterComponent, ColorFilterComponent, SizeFilterGroupComponent, AboutComponent],
   providers: [
     NotificationService,
     httpInterceptorProviders

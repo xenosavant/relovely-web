@@ -4,10 +4,12 @@
             <h1 class="title"> Crop Image</h1>
         </div>
         <div class="cropper-inner" [style.visibility]="visibilty">
-            <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1"
-                [resizeToWidth]="600" format="jpeg" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
-                (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
-            </image-cropper>
+            <div class="crop-wrap">
+                <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1"
+                    [resizeToWidth]="600" format="jpeg" (imageCropped)="imageCropped($event)"
+                    (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
+                </image-cropper>
+            </div>
         </div>
         <div *ngIf="ready" class="button-wrapper">
             <app-button (click)="onCancel()" type="primary">
