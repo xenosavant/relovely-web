@@ -1,19 +1,18 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Product } from '@app/shared/models/product.model';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { UserService } from '@app/shared/services/user/user.service';
 import { ProductService } from '@app/shared/services/product/product.service';
-import { UserDetail } from '@app/shared/models/user-detail.model';
+import { Product } from '@app/shared/models/product.model';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
-  selector: 'app-favorites',
-  templateUrl: './favorites.component.html',
-  styleUrls: ['./favorites.component.scss'],
+  selector: 'app-listings',
+  templateUrl: './listings.component.html',
+  styleUrls: ['./listings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FavoritesComponent implements OnInit {
+export class ListingsComponent implements OnInit {
 
   constructor(private navigationService: NavigationService,
     private userService: UserService,
@@ -25,15 +24,16 @@ export class FavoritesComponent implements OnInit {
   public products: Product[];
   public user: UserAuth;
 
+
   ngOnInit() {
-    this.navigationService.showNavBar(true, 'FAVORITES');
-    this.userService.getCurrentUser().then(user => {
-      this.user = user;
-    });
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
     })
-    this.productService.getFavorites().subscribe(response => {
+    this.navigationService.showNavBar(true, 'LISTINGS');
+    this.userService.getCurrentUser().then(user => {
+      this.user = user;
+    });
+    this.productService.getListings().subscribe(response => {
       this.products = response.items;
       this.ref.markForCheck();
     })

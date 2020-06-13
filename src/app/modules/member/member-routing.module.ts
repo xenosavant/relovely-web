@@ -13,6 +13,10 @@ const routes: Routes = [
         component: FavoritesComponent
     },
     {
+        path: 'listings',
+        component: ListingsComponent
+    },
+    {
         path: 'terms',
         component: TermsComponent
     },

@@ -75,6 +75,14 @@ export class ProductService extends BaseService {
         );
     }
 
+    getListings(): Observable<ListResponse<Product>> {
+        return this.httpClient.get<ListResponse<Product>>(`${this.apiBaseUrl}/products/listings`).pipe(
+            map((result: ListResponse<Product>) => {
+                return result;
+            })
+        );
+    }
+
     favoriteProduct(productId: string): Observable<void> {
         return this.httpClient.patch<void>(`${this.apiBaseUrl}/products/${productId}/favorite/`, {}).pipe();
     }
