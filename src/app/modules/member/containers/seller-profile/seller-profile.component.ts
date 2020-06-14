@@ -52,7 +52,9 @@ export class SellerProfileComponent implements OnInit {
     if (this.owner) {
       this.showCreate = true;
     }
-
+    if (this.user.usernameReset) {
+      this.error = 'Your username has been claimed by another user. Please choose a new one.'
+    }
     this.following = this.user.followers.some(u => u.id === this.currentUser.id);
     this.followingUsers = this.user.following;
     this.followerUsers = this.user.followers;

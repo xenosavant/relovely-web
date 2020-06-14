@@ -41,6 +41,9 @@ export class MemberProfileComponent implements OnInit {
 
   ngOnInit() {
     this.following = this.user.following;
+    if (this.user.usernameReset) {
+      this.error = 'Your username has been claimed by another user. Please choose a new one.'
+    }
   }
 
   onUpdate() {

@@ -231,6 +231,9 @@ export class AppComponent implements OnInit {
         new NavigationItem([], '/member/listings', 'Listings', null, [], [], null)
       );
     }
+    if (this.userService.currentUser && this.userService.currentUser.type === 'admin') {
+      this.accountNav.subItems.push(new NavigationItem([], '/admin/dashboard', 'Sales', null, [], [], null));
+    };
     this.accountNav.subItems.push(
       new NavigationItem([], '/member/terms', 'Terms of Service', null, [], [], null),
       new NavigationItem([], '/account/help', 'Help', null, [], [], null),

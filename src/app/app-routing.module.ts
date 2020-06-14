@@ -35,6 +35,10 @@ const routes: Routes = [
     loadChildren: '../app/modules/account/account.module#AccountModule'
   },
   {
+    path: 'admin',
+    loadChildren: '../app/modules/admin/admin.module#AdminModule'
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }
