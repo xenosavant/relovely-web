@@ -10,7 +10,9 @@
             <span *ngIf="owner">
                 <fa-icon *ngIf="!editing" (click)="onAction('edit')" icon="edit"></fa-icon>
                 <fa-icon *ngIf="editing" (click)="onAction('close')" icon="undo"></fa-icon>
-            </span>{{user.username}}
+            </span>
+            <ng-container *ngIf="user.type === 'seller'">{{user.username || 'Relovely Seller' }}</ng-container>
+            <ng-container *ngIf="user.type === 'member'">{{user.username || 'Relovely Shopper' }}</ng-container>
         </div>
         <div class="rating-wrapper" (click)="goToRatings()" *ngIf="user.type === 'seller' && rating !== 0">
             <div class="number">({{ratingDisplay}})</div>

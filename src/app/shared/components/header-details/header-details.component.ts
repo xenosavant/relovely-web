@@ -30,6 +30,7 @@ export class HeaderDetailsComponent implements OnInit {
     private navigationService: NavigationService) { }
 
   ngOnInit() {
+    console.log(this.user)
     this.rating = (this.user.averageRating / 5) * 100;
     this.ratingDisplay = ((this.rating / 100) * 5).toFixed(1);
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {

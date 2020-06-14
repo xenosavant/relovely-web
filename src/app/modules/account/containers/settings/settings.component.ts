@@ -95,6 +95,7 @@ export class SettingsComponent implements OnInit {
     if (this.currentUser.instagramUsername) {
       this.instagramLinked = true;
     }
+    console.log(this.instagramLinked);
   }
 
   showVerifyModal() {

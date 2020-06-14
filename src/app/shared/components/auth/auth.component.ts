@@ -58,7 +58,6 @@ export class AuthComponent implements OnChanges {
       });
       this.signUpForm = new FormGroup({
         email: new FormControl('', [Validators.required, Validators.email]),
-        username: new FormControl('', [Validators.required]),
         password: new FormControl('', [Validators.required, Validators.minLength(8)]),
         verifyPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
       }, this.validatePassword);
