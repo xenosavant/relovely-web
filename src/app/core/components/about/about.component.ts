@@ -1,5 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { OverlayService } from '@app/shared/services/overlay.service';
 
 @Component({
   selector: 'app-about',
@@ -9,8 +11,11 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 })
 export class AboutComponent implements OnInit {
 
+  @ViewChild('applyToSell', { static: true }) sellerModal: TemplatePortal<any>;
+
   mobile: boolean;
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(private breakpointObserver: BreakpointObserver,
+    private overlayService: OverlayService) { }
 
   ngOnInit() {
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
@@ -19,7 +24,11 @@ export class AboutComponent implements OnInit {
   }
 
   onSell() {
+    this.overlayService.open(this.sellerModal);
+  }
 
+  onClose(success: boolean) {
+    this.overlayService.close();
   }
 
 }

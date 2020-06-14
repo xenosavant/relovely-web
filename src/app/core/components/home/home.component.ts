@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserList } from '@app/shared/models/user-list.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { OverlayService } from '@app/shared/services/overlay.service';
 
 @Component({
     selector: 'app-home',
@@ -13,9 +15,13 @@ export class HomeComponent {
 
     mobile: boolean;
     featuredSellers: UserList[];
+    applied = false;
+
+    @ViewChild('applyToSell', { static: true }) sellerModal: TemplatePortal<any>;
 
     constructor(private breakpointObserver: BreakpointObserver,
         private route: ActivatedRoute,
+        private overlayService: OverlayService,
         private navigationService: NavigationService) { }
 
     ngOnInit() {
@@ -47,6 +53,10 @@ export class HomeComponent {
     }
 
     onSell() {
-        this.navigationService.openAuthWindow({ page: 'sell' })
+        this.overlayService.open(this.sellerModal);
+    }
+
+    onClose(success: boolean) {
+        this.overlayService.close();
     }
 }

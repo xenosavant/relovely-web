@@ -54,7 +54,8 @@
                 <ul>
                     <li><strong>3. Must have a fasion designated Instagram or blog</strong></li>
                 </ul>
-                <button mat-stroked-button class="primary sell" (click)="onSell()"> Apply to Sell</button>
+                <button mat-stroked-button class="primary sell" (click)="onSell()"> Apply to
+                    Sell</button>
             </div>
         </div>
     </div>
@@ -71,3 +72,7 @@
         </p>
     </div>
 </div>
+
+<ng-template cdkPortal #applyToSell="cdkPortal">
+    <app-seller-apply (close)="onClose($event)"></app-seller-apply>
+</ng-template>

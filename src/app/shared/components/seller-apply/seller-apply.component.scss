@@ -1,0 +1,28 @@
+.loading-wrapper {
+    display: grid;
+    align-items: center;
+    align-content: center;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.button-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: 16px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.success-wrap {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    .success {
+        margin-bottom: 24px;
+    }
+}

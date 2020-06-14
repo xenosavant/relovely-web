@@ -113,6 +113,7 @@ import { HeaderDetailsComponent } from './components/header-details/header-detai
 import { LinkFacebookComponent } from './components/link-facebook/link-facebook.component';
 import { LinkInstagramComponent } from './components/link-instagram/link-instagram.component';
 import { AddAddressComponent } from './components/add-address/add-address.component';
+import { SellerApplyComponent } from './components/seller-apply/seller-apply.component';
 
 
 library.add(
@@ -228,7 +229,8 @@ library.add(
     HeaderDetailsComponent,
     LinkFacebookComponent,
     LinkInstagramComponent,
-    AddAddressComponent],
+    AddAddressComponent,
+    SellerApplyComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -292,7 +294,8 @@ library.add(
     HeaderDetailsComponent,
     LinkFacebookComponent,
     LinkInstagramComponent,
-    AddAddressComponent
+    AddAddressComponent,
+    SellerApplyComponent
   ],
   providers: [DecimalPipe],
 })

@@ -29,13 +29,15 @@ import { SizeFilterComponent } from './components/size-filter/size-filter.compon
 import { ColorFilterComponent } from './components/color-filter/color-filter.component';
 import { SizeFilterGroupComponent } from './components/size-filter/size-filter-group/size-filter-group.component';
 import { AboutComponent } from './components/about/about.component';
+import { PortalModule } from '@angular/cdk/portal';
 
 @NgModule({
   imports: [
     // angular
     CommonModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    PortalModule
   ],
   declarations: [SearchBarComponent, ToolbarComponent, HomeComponent, NotFoundComponent, FilterBarComponent, SizeFilterComponent, ColorFilterComponent, SizeFilterGroupComponent, AboutComponent],
   providers: [

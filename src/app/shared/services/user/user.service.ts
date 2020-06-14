@@ -13,6 +13,7 @@ import { BankAccountRequest } from './bank-acount-request';
 import { PaymentCard } from '@app/shared/interfaces/payment-card';
 import { Review } from '@app/shared/models/review.model';
 import { UserReviewsResponse } from './user-reviews.response';
+import { SellerApplicationRequest } from './seller-application.request';
 
 @Injectable({ providedIn: 'root' })
 export class
@@ -129,6 +130,14 @@ export class
             map((user: UserAuth) => {
                 this.setCurrentUser(user);
                 return user;
+            })
+        );
+    }
+
+    applyToSell(request: SellerApplicationRequest): Observable<void> {
+        return this.httpClient.post<void>(`${this.apiBaseUrl}/users/apply`, request).pipe(
+            map(() => {
+                return;
             })
         );
     }

@@ -116,3 +116,7 @@
         <div class="by-line">- Stella McCartney</div>
     </div>
 </div>
+
+<ng-template cdkPortal #applyToSell="cdkPortal">
+    <app-seller-apply (close)="onClose($event)"></app-seller-apply>
+</ng-template>

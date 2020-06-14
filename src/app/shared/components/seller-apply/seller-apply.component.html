@@ -1,0 +1,95 @@
+<app-modal title="Apply To Sell" (close)="onClose($event)">
+    <ng-container *ngIf="!loading && !success">
+        <div class="error">
+            {{error}}
+        </div>
+        <form novalidate [formGroup]="form">
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="First Name" formControlName="first" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Last Name" formControlName="last" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Email Address" formControlName="email" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Address" formControlName="line1" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Address Line 2" formControlName="line2" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="City" formControlName="city" />
+                </mat-form-field>
+            </div>
+            <div class="state-zip">
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-select placeholder="State" class="form-control" formControlName="state">
+                            <mat-option *ngFor="let state of states" [value]="state.abbreviation">
+                                {{state.full}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="Zip" formControlName="zip" maxlength="5" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Instagram Username" formControlName="insta" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Other Social Channel" formControlName="channel1" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Other Social Channel" formControlName="channel2" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Other Social Channel" formControlName="channel3" />
+                </mat-form-field>
+            </div>
+            <div class="button-wrapper">
+                <app-button (click)="onClose()">
+                    <strong>Cancel</strong>
+                </app-button>
+                <button mat-stroked-button class="primary" (click)="onSave()" [disabled]="!form.valid">
+                    <strong> Save </strong>
+                </button>
+            </div>
+        </form>
+    </ng-container>
+    <div *ngIf="success" class="success-wrap">
+        <div class="success">Thanks For Applying! We are reviewing your application and will let you know if you are
+            approved.</div>
+        <button mat-stroked-button class="primary" (click)="onClose()" [disabled]="!form.valid">
+            <strong> Return To Application </strong>
+        </button>
+    </div>
+</app-modal>
+<div class="loading-wrapper" *ngIf="loading">
+    <div class="loading">
+        <mat-spinner diameter="30"></mat-spinner>
+    </div>
+</div>
