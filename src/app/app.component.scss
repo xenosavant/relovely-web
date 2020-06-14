@@ -344,17 +344,56 @@ mat-nav-list {
 
 .footer {
   width: 100%;
-  color: $background-gray;
+  border-top: solid 1px $dark-gray;
+  background-color: $background-gray;
   flex: none;
+  display: flex;
+  align-items: center;
   @media (max-width: $mobile-breakpoint) {
   }
   @media (min-width: $desktop-breakpoint) {
     height: $footer-height;
     position: relative;
     bottom:0;
-    background-color: $background-gray;
-    border-top: solid 1px $header-border;
+  }
+  ul {
+    max-width: 1000px;
+    margin:0 auto;
     display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: auto;
+    list-style: none;
+    width: 100%;
+    a {
+      color: $dark-blue !important;
+    }
+  }
+}
+
+.mobile-footer {
+  background-color: $dark-blue !important;
+  .list-wrapper {
+    margin-bottom: 8px;
+    ul {
+      padding: 0;
+      list-style: none;
+      display: grid;
+      margin: 8px 0px;
+      &.top {
+        grid-template-columns: repeat(5, 1fr);
+      }
+      &.bottom {
+        margin:0 auto;
+        grid-template-columns: repeat(3, 1fr);
+        width: 75vw;
+      }
+      li {
+        text-align: center;
+      }
+      a {
+        color: $background-gray !important;
+      }
+    }
   }
 }
 

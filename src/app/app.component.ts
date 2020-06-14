@@ -80,6 +80,7 @@ export class AppComponent implements OnInit {
   }
 
   @ViewChild('signUpModal', { static: true }) signUpModal: TemplatePortal<any>;
+  @ViewChild('applyToSell', { static: true }) applymodal: TemplatePortal<any>;
   @ViewChild('offsetContent', { static: false }) content: ElementRef;
   @ViewChild(MatSidenavContainer, { static: true }) container: MatSidenavContainer;
   @ViewChild('menuTrigger', { read: MatMenuTrigger, static: false }) trigger: MatMenuTrigger;
@@ -396,6 +397,39 @@ export class AppComponent implements OnInit {
   public closeModal() {
     this.overlayService.close();
   }
+
+  public onApply() {
+    this.overlayService.open(this.applymodal);
+  }
+
+  public onAbout() {
+    this.navigationService.navigate({ path: '/about' })
+  }
+
+  public onContact() {
+
+  }
+
+  public onHelp() {
+
+  }
+
+  public onTerms() {
+    this.navigationService.navigate({ path: '/member/terms' })
+  }
+
+  public onFacebook() {
+    window.open('https://www.facebook.com/relovely.us');
+  }
+
+  public onInstagram() {
+    window.open('https://www.instagram.com/relovely.us');
+  }
+
+  public onPrivacy() {
+    this.navigationService.navigate({ path: '/member/privacy' })
+  }
+
 
   setTerm(term: string) {
     this.searchTerm = term;

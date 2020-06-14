@@ -52,7 +52,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     } else {
       this.grid = this.showGrid;
     }
-    if (this.user.favorites.find(id => id === this.product.id)) {
+    if (this.user && this.user.favorites.find(id => id === this.product.id)) {
       this.product.favorited = true;
     }
     else {
@@ -75,21 +75,28 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   onFavorite() {
     // this.product.favorited = !this.product.favorited;
-    this.favoriting = true;
-    this.productService.favoriteProduct(this.product.id).subscribe(() => {
-      if (this.user.favorites.includes(this.product.id)) {
-        this.user.favorites.splice(this.user.favorites.indexOf(this.product.id), 1);
-        this.product.favorited = false;
-      } else {
-        this.user.favorites.push(this.product.id);
-        this.product.favorited = true;
-      }
-      this.favoriting = false;
-      this.ref.markForCheck();
-    }, err => {
-      this.favoriting = false;
-      this.ref.markForCheck();
-    })
+    if (this.user) {
+
+      this.favoriting = true;
+      this.productService.favoriteProduct(this.product.id).subscribe(() => {
+        if (this.user.favorites.includes(this.product.id)) {
+          this.user.favorites.splice(this.user.favorites.indexOf(this.product.id), 1);
+          this.product.favorited = false;
+        } else {
+          this.user.favorites.push(this.product.id);
+          this.product.favorited = true;
+        }
+        this.favoriting = false;
+        this.ref.markForCheck();
+      }, err => {
+        this.favoriting = false;
+        this.ref.markForCheck();
+      })
+    }
+    else {
+      this.navigationService.navigate({ path: '/' });
+      this.navigationService.openAuthWindow({ page: 'signin' });
+    }
   }
 
   ngOnDestroy() {
@@ -99,7 +106,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   purchase() {
-    this.navigationService.navigate({ path: `/sales/checkout/${this.product.id}` });
+    if (this.user) {
+      this.navigationService.navigate({ path: `/sales/checkout/${this.product.id}` });
+    } else {
+      this.navigationService.navigate({ path: '/' });
+      this.navigationService.openAuthWindow({ page: 'signin' });
+    }
   }
 
 }

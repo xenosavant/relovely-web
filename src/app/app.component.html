@@ -55,6 +55,7 @@
         </mat-toolbar>
         <ng-container *ngIf="!loading">
           <ng-container *ngTemplateOutlet="content"></ng-container>
+          <ng-container *ngTemplateOutlet="mobileFooter"></ng-container>
         </ng-container>
       </div>
       <mat-sidenav [opened]="sidenavOpen" mode="side">
@@ -196,10 +197,43 @@
 
 <ng-template #footer>
   <div class="footer">
+    <ul>
+      <li (click)="onAbout()"><a appClick target="_blank">About</a></li>
+      <li (click)="onApply()"><a appClick target="_blank">Sell</a></li>
+      <li><a appClick target="_blank">Help</a></li>
+      <li><a appClick target="_blank">Contact</a></li>
+      <li (click)="onTerms()"><a appClick target="_blank">Terms</a></li>
+      <li (click)="onPrivacy()"><a appClick target="_blank">Privacy</a></li>
+      <li (click)="onFacebook()"><a appClick target="_blank">Facebook</a></li>
+      <li (click)="onInstagram()"><a appClick target="_blank">Instagram</a></li>
+    </ul>
+  </div>
+</ng-template>
+
+<ng-template #mobileFooter>
+  <div class="mobile-footer">
+    <div class="list-wrapper">
+      <ul class="top">
+        <li><a appClick target="_blank">Help</a></li>
+        <li (click)="onAbout()"><a appClick target="_blank">About</a></li>
+        <li (click)="onApply()"><a appClick target="_blank">Sell</a></li>
+        <li><a appClick target="_blank">Contact</a></li>
+        <li (click)="onTerms()"><a appClick target="_blank">Terms</a></li>
+      </ul>
+      <ul class="bottom">
+        <li (click)="onPrivacy()"><a appClick target="_blank">Privacy</a></li>
+        <li (click)="onFacebook()"><a appClick target="_blank">Facebook</a></li>
+        <li (click)="onInstagram()"><a appClick target="_blank">Instagram</a></li>
+      </ul>
+    </div>
   </div>
 </ng-template>
 
 <ng-template cdkPortal #signUpModal="cdkPortal">
   <app-auth [authUsername]="authUsername" [token]="authToken" [error]="signupError" [state]="authPage"
     (close)="close($event)"></app-auth>
+</ng-template>
+
+<ng-template cdkPortal #applyToSell="cdkPortal">
+  <app-seller-apply (close)="closeModal()"></app-seller-apply>
 </ng-template>

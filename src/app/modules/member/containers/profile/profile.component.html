@@ -1,18 +1,20 @@
-<ng-container *ngIf="!loading">
-  <ng-container [ngSwitch]="user.type">
-    <ng-container *ngSwitchCase="'seller'">
-      <app-seller-profile [mobile]="mobile" [currentUser]="currentUser" (updateImage)="input.click()" [owner]="owner"
-        [user]="user">
-      </app-seller-profile>
+<div class="profile-wrapper">
+  <ng-container *ngIf="!loading">
+    <ng-container [ngSwitch]="user.type">
+      <ng-container *ngSwitchCase="'seller'">
+        <app-seller-profile [mobile]="mobile" [currentUser]="currentUser" (updateImage)="input.click()" [owner]="owner"
+          [user]="user">
+        </app-seller-profile>
+      </ng-container>
+      <ng-container *ngSwitchCase="'member'">
+        <app-member-profile [mobile]="mobile" [currentUser]="currentUser"
+          (updateImage)="input.value = null; input.click()" [owner]="owner" [user]="user">
+        </app-member-profile>
+      </ng-container>
     </ng-container>
-    <ng-container *ngSwitchCase="'member'">
-      <app-member-profile [mobile]="mobile" [currentUser]="currentUser"
-        (updateImage)="input.value = null; input.click()" [owner]="owner" [user]="user">
-      </app-member-profile>
-    </ng-container>
+    <input #input type="file" style="visibility:hidden; height: 0; width: 0;" (change)="onUpdateImage($event)" />
   </ng-container>
-  <input #input type="file" style="visibility:hidden; height: 0; width: 0;" (change)="onUpdateImage($event)" />
-</ng-container>
+</div>
 <ng-container *ngIf="crop">
   <app-image-cropper (cancel)="onCloseCropper($event)" (crop)="onImageCropped($event)"
     [imageChangedEvent]="imageChangedEvent">

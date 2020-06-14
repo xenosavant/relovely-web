@@ -192,6 +192,7 @@
 .bottom {
     @media (min-width: $desktop-breakpoint) {
         margin-top: 50px;
+        margin-bottom: 50px;
     }
     display: flex;
     flex-direction: column;
@@ -210,4 +211,5 @@
         text-align: center;
     }
     margin-top: 24px;
+    margin-bottom: 24px;
 }
