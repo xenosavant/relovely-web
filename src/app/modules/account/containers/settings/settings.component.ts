@@ -40,14 +40,26 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.userService.currentUser;
     this.verficationClass = {};
-    this.setView();
-    this.navigationService.showNavBar(true, 'SETTINGS');
-    this.activatedRoute.queryParams.subscribe(params => {
-      if (params['error']) {
-        this.error = params['error'];
-        this.ref.markForCheck();
+    if (this.currentUser.seller && this.currentUser.seller.verificationStatus !== 'verified' ||
+      this.currentUser.seller.missingInfo.includes('external_account')) {
+      this.error = `To start listing products you'll need to`;
+      let verify = false;
+      if (this.currentUser.seller.verificationStatus === 'unverified') {
+        this.error = this.error + ' verify your identity';
+        verify = true;
       }
-    });
+      if (this.currentUser.seller.verificationStatus === 'review') {
+        this.error = this.error + ' wait for your identity to be verified';
+        verify = true;
+      }
+      if (this.currentUser.seller.missingInfo.includes('external_account')) {
+        this.error = verify ? this.error + ' and' : this.error;
+        this.error = this.error + ' link your bank acount';
+      }
+    }
+    this.setView();
+    console.log(this.error)
+    this.navigationService.showNavBar(true, 'SETTINGS');
   }
 
   setView() {
@@ -95,7 +107,7 @@ export class SettingsComponent implements OnInit {
     if (this.currentUser.instagramUsername) {
       this.instagramLinked = true;
     }
-    console.log(this.instagramLinked);
+    this.ref.markForCheck();
   }
 
   showVerifyModal() {

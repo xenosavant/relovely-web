@@ -133,13 +133,14 @@ export class NavigationService {
             }
             // const queryParamsHandling = this._currentNavigationItem.id && navigationItem.id === this._currentNavigationItem.id ?  'preserve';
             let parsedParams = {};
-            if (!navigationItem.id && navigationItem.path !== '/products') {
-                parsedParams = { search: null }
+            if (!navigationItem.queryStrings) {
+                parsedParams = { search: null, type: null, page: null }
             } else if (navigationItem.queryStrings) {
                 navigationItem.queryStrings.forEach(element => {
                     parsedParams[element.key] = element.value;
                 });
             }
+            console.log(parsedParams)
             this.router.navigate([navigationItem.path], { queryParams: parsedParams, queryParamsHandling: 'merge' });
         }
         this._navConfig.showTopLeveNavigation = true;

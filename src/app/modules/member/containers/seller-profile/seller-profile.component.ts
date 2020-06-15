@@ -11,6 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UserList } from '@app/shared/models/user-list.model';
 import { UserAuth } from '@app/shared/models/user-auth.model';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 
 @Component({
   selector: 'app-seller-profile',
@@ -46,7 +47,8 @@ export class SellerProfileComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private overlayService: OverlayService,
     private userService: UserService,
-    private ref: ChangeDetectorRef) { }
+    private ref: ChangeDetectorRef,
+    private navigationService: NavigationService) { }
 
   ngOnInit() {
     if (this.owner) {
@@ -61,8 +63,12 @@ export class SellerProfileComponent implements OnInit {
   }
 
   showCreateModal($event: any) {
-    this.editProduct = null;
-    this.overlayService.open(this.productCreateModal);
+    if (!this.currentUser.seller.bankAccountLinked || this.currentUser.seller.verificationStatus !== 'verified') {
+      this.navigationService.navigate({ path: '/account/settings', queryStrings: [{ key: 'error', value: 'required' }] })
+    } else {
+      this.editProduct = null;
+      this.overlayService.open(this.productCreateModal);
+    }
   }
 
   showEditModal(product: any) {
