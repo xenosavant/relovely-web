@@ -62,3 +62,8 @@
 .empty-wrapper.clickable {
     cursor: pointer;
 }
+
+.paginator-wrapper {
+    margin:0 auto;
+    max-width: $desktop-width;
+}

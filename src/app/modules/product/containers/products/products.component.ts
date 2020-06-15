@@ -42,6 +42,8 @@ export class ProductsComponent implements OnInit {
   checkBack: boolean;
   loading = true;
   searchTerm: string;
+  total: number;
+  currentPage: number = 0;
 
   @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
 
@@ -121,6 +123,7 @@ export class ProductsComponent implements OnInit {
 
   getProducts(state: IUserPreferences) {
     const filteredSizes = [];
+    this.loading = true;
     this.lookupService.getState().then(lookupValues => {
       state.sizes.forEach(id => {
         const size = lookupValues.sizes.find(size => size.id === id);
@@ -128,9 +131,10 @@ export class ProductsComponent implements OnInit {
           filteredSizes.push(id);
         }
       });
-      this.productService.getProducts(this.categoryId || '-1', this.searchTerm, filteredSizes.length ? state.sizes : null,
+      this.productService.getProducts(this.currentPage, this.categoryId || '-1', this.searchTerm, filteredSizes.length ? state.sizes : null,
         state.colors.length ? state.colors : null, state.prices.length ? state.prices : null).subscribe(result => {
           this.products = result.items;
+          this.total = result.count;
           const cat: Category = this.lookupService.getCategory(this.categoryId);
           if (!this.products.length) {
             if (!cat || this.categoryId === '-1') {
@@ -161,6 +165,11 @@ export class ProductsComponent implements OnInit {
           this.ref.markForCheck();
         })
     })
+  }
+
+  paginate(event: any) {
+    this.currentPage = event.pageIndex;
+    this.getProducts(this.filterService.filterStateSubject$.value);
   }
 
   goToParent() {

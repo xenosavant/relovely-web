@@ -15,7 +15,7 @@ export class ProductService extends BaseService {
         );
     }
 
-    getProducts(categoryId: string, searchTerm: string = null, sizes: string[] = null, colors: string[] = null, prices: PriceRange[] = null): Observable<ListResponse<Product>> {
+    getProducts(page: number, categoryId: string, searchTerm: string = null, sizes: string[] = null, colors: string[] = null, prices: PriceRange[] = null): Observable<ListResponse<Product>> {
         let query = `?category=${categoryId}`;
         if (sizes) {
             let sizeArray = ''
@@ -44,6 +44,10 @@ export class ProductService extends BaseService {
         if (searchTerm) {
             query = query + `&terms=${searchTerm}`
         }
+
+        query = query + `&pageLength=40`;
+        query = query + `&page=${page}`;
+
         return this.httpClient.get<ListResponse<Product>>(`${this.apiBaseUrl}/products${query}`).pipe(
             map((result: ListResponse<Product>) => {
                 return result;

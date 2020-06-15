@@ -16,13 +16,23 @@
     </div>
 </ng-container>
 <div *ngIf="!empty && !loading" class="products">
+    <div *ngIf="total > 40" class="paginator-wrapper">
+        <mat-paginator #paginator [length]="total" [hidePageSize]="true" [pageIndex]="currentPage" [pageSize]="40"
+            (page)="paginate($event)">
+        </mat-paginator>
+    </div>
     <div class="products-content">
         <app-products-list (edit)="editProduct($event)" [user]="currentUser" [products]="products" [showGrid]="grid"
             [showHeader]="true" (close)="onClose()">
         </app-products-list>
     </div>
+    <div *ngIf="total > 40" class="paginator-wrapper">
+        <mat-paginator #paginator [length]="total" [hidePageSize]="true" [pageIndex]="currentPage" [pageSize]="40"
+            (page)="paginate($event)">
+        </mat-paginator>
+    </div>
 </div>
-<div *ngIf="empty" class="empty-state">
+<div *ngIf="empty && !loading" class="empty-state">
     <div class="empty-wrapper clickable" *ngIf="!checkBack" (click)="goToParent()">
         <img [src]="emptyImage">
         <h3>Nothing in this category...yet!</h3>
@@ -34,6 +44,9 @@
         <h3>Nothing in this category...yet!</h3>
         <p> Check back later!</p>
     </div>
+</div>
+<div *ngIf="loading" class="empty-state">
+    <mat-spinner [diameter]="30"></mat-spinner>
 </div>
 <ng-template cdkPortal #productCreateModal="cdkPortal">
     <app-product-create [product]="product" [sellerId]="currentUserId" (close)="onClose($event)">
