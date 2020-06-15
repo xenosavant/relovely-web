@@ -232,7 +232,7 @@ export class AppComponent implements OnInit {
       );
     }
     if (this.userService.currentUser && this.userService.currentUser.type === 'admin') {
-      this.accountNav.subItems.push(new NavigationItem([], '/admin/dashboard', 'Sales', null, [], [], null));
+      this.accountNav.subItems.push(new NavigationItem([], '/admin/dashboard', 'Admin', null, [], [], null));
     };
     this.accountNav.subItems.push(
       new NavigationItem([], '/member/terms', 'Terms of Service', null, [], [], null),

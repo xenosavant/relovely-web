@@ -25,6 +25,10 @@
                 && form.invalid && form.errors && form.errors.passwordMatch">
                     Passwords don't match
                 </div>
+                <div *ngIf="form.get('password').errors && form.get('password').errors.minlength && passwordValue.length && !password.focused"
+                    class="form-error">
+                    Password must be at least 8 characters long
+                </div>
                 <form [formGroup]="form">
                     <div>
                         <mat-form-field appearance="outline">

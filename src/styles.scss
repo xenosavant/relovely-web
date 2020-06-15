@@ -1012,6 +1012,13 @@ button {
     background-color: black !important;
     width: 150px !important;
   }
+  &.destroy {
+    background-color: $alert !important;
+  }
+
+  &.success {
+    background-color: $success !important;
+  }
  }
 }
 

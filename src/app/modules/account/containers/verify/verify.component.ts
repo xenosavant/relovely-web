@@ -20,8 +20,8 @@ export class VerifyComponent implements OnInit {
   public welcome = false;
   public code: string;
   form: FormGroup = new FormGroup({
-    password: new FormControl('', [Validators.required]),
-    verifyPassword: new FormControl('', [Validators.required])
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    verifyPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
   }, this.validatePassword);
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -100,15 +100,13 @@ export class VerifyComponent implements OnInit {
 
   onSavePassword() {
     this.loading = true;
-    this.authService.verifyEmail({ code: this.code }).subscribe(response => {
-      this.authService.resetPassword({ password: this.passwordValue, code: this.code }).subscribe(user => {
-        this.userService.setLogin(response.jwt, response.user);
-        this.welcome = true;
-        this.loading = false;
-        this.ref.markForCheck();
-      }, error => {
-        this.loading = false;
-      });
+    this.authService.verifyEmail({ code: this.code, password: this.form.get('password').value }).subscribe(response => {
+      this.userService.setLogin(response.jwt, response.user);
+      this.welcome = true;
+      this.loading = false;
+      this.ref.markForCheck();
+    }, error => {
+      this.loading = false;
     });
   }
 
