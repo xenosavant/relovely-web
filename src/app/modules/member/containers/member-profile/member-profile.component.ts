@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { UserDetail } from '@app/shared/models/user-detail.model';
 import { users } from '@app/data/users.data';
 import { Product } from '@app/shared/models/product.model';
@@ -7,6 +7,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UserService } from '@app/shared/services/user/user.service';
 import { UserList } from '@app/shared/models/user-list.model';
+import { UserAuth } from '@app/shared/models/user-auth.model';
 
 @Component({
   selector: 'app-member-profile',
@@ -14,7 +15,7 @@ import { UserList } from '@app/shared/models/user-list.model';
   styleUrls: ['./member-profile.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MemberProfileComponent implements OnInit {
+export class MemberProfileComponent implements OnChanges {
 
   @Input()
   user: UserDetail;
@@ -24,7 +25,7 @@ export class MemberProfileComponent implements OnInit {
   @Output() action: EventEmitter<string> = new EventEmitter<string>();
   @Input() mobile: boolean;
 
-  @Input() currentUser: UserDetail;
+  @Input() currentUser: UserAuth;
   following: UserList[];
   products: Product[];
   edit = false;
@@ -39,9 +40,9 @@ export class MemberProfileComponent implements OnInit {
   constructor(private userService: UserService,
     private ref: ChangeDetectorRef) { }
 
-  ngOnInit() {
+  ngOnChanges() {
     this.following = this.user.following;
-    if (this.user.usernameReset) {
+    if (this.currentUser && this.currentUser.id === this.user.id && this.currentUser.usernameReset) {
       this.error = 'Your username has been claimed by another user. Please choose a new one.'
     }
   }

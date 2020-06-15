@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, Output, EventEmitter, ChangeDetectorRef, SimpleChange, SimpleChanges, OnChanges } from '@angular/core';
 import { UserDetail } from '../../../../shared/models/user-detail.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { users } from '@app/data/users.data';
@@ -19,7 +19,7 @@ import { NavigationService } from '@app/shared/services/navigation/navigation.se
   styleUrls: ['./seller-profile.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SellerProfileComponent implements OnInit {
+export class SellerProfileComponent implements OnChanges {
 
   @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
 
@@ -50,11 +50,11 @@ export class SellerProfileComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private navigationService: NavigationService) { }
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges) {
     if (this.owner) {
       this.showCreate = true;
     }
-    if (this.user.usernameReset) {
+    if (this.user.id === this.currentUser.id && this.currentUser.usernameReset) {
       this.error = 'Your username has been claimed by another user. Please choose a new one.'
     }
     this.following = this.user.followers.some(u => u.id === this.currentUser.id);

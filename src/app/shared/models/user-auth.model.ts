@@ -14,6 +14,7 @@ export class UserAuth {
     listings?: string[];
     followers?: string[];
     following?: string[];
+    usernameReset?: boolean;
     sales?: string[];
     favorites?: string[];
     type: string;

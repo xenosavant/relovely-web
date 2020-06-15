@@ -58,7 +58,6 @@ export class SettingsComponent implements OnInit {
       }
     }
     this.setView();
-    console.log(this.error)
     this.navigationService.showNavBar(true, 'SETTINGS');
   }
 

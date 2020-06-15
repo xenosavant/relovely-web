@@ -8,7 +8,6 @@ export class UserDetail {
     firstName: string;
     lastName: string;
     username: string;
-    usernameReset?: boolean;
     profileImageUrl: string;
     instagramUsername?: string;
     listings?: Product[];
