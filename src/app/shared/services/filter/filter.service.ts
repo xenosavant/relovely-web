@@ -24,12 +24,11 @@ export class FilterService extends BaseService {
 
     constructor(private localStorage: LocalStorageService, httpClient: HttpClient, private userService: UserService) {
         super(httpClient);
-        this.userService.getCurrentUser().then(user => {
-            if (user) {
-                this._state = user.preferences || this.emptyState;
-                this.filterStateSubject$.next(this._state);
-            }
-        })
+        const user = this.userService.user$.value;
+        if (user) {
+            this._state = user.preferences || this.emptyState;
+            this.filterStateSubject$.next(this._state);
+        }
     }
 
     public updateColors(colors: string[]) {

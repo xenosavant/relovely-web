@@ -38,24 +38,22 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(param => {
       const id = param.get('id');
-      this.userService.getCurrentUser().then(user => {
-        this.currentUser = user ? user : null;
-        if (id === 'profile' || id === user.id) {
-          this.userService.getUser(this.userService.currentUser.id).subscribe(user => {
-            this.owner = true;
-            this.user = user;
-            this.loading = false;
-            this.ref.markForCheck();
-          });
-        } else {
-          this.userService.getUser(id).subscribe(user => {
-            this.owner = false;
-            this.user = user;
-            this.ref.markForCheck();
-            this.loading = false;
-          });
-        }
-      })
+      this.currentUser = this.userService.user$.value;
+      if (id === 'profile' || id === this.currentUser.id) {
+        this.userService.getUser(this.userService.currentUser.id).subscribe(user => {
+          this.owner = true;
+          this.user = user;
+          this.loading = false;
+          this.ref.markForCheck();
+        });
+      } else {
+        this.userService.getUser(id).subscribe(user => {
+          this.owner = false;
+          this.user = user;
+          this.ref.markForCheck();
+          this.loading = false;
+        });
+      }
       this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
         this.mobile = result.matches;
       });

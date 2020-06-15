@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BaseService } from '../base.service';
 import { UserDetail } from '@app/shared/models/user-detail.model';
 import { catchError, map } from 'rxjs/operators';
-import { throwError, Observable, Subject, of } from 'rxjs';
+import { throwError, Observable, Subject, of, BehaviorSubject } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { LocalStorageService } from '../local-storage/local-storage.service';
@@ -19,11 +19,9 @@ import { SellerApplicationRequest } from './seller-application.request';
 export class
     UserService extends BaseService {
 
-    private userSubject$ = new Subject<UserAuth>();
-    public user$ = this.userSubject$.asObservable();
+    public user$ = new BehaviorSubject<UserAuth>(null);
 
-    private loggedInSubject$ = new Subject<boolean>();
-    public loggedIn$ = this.loggedInSubject$.asObservable();
+    public loggedIn$ = new BehaviorSubject<boolean>(false);
 
     constructor(private localStorageService: LocalStorageService, httpClient: HttpClient) {
         super(httpClient);
@@ -36,14 +34,6 @@ export class
 
     public get currentUser() {
         return this._currentUser;
-    }
-
-    public async getCurrentUser(): Promise<UserAuth> {
-        if (this._currentUser || this._notLoggedIn) {
-            return this._currentUser;
-        } else {
-            return this.user$.toPromise();
-        }
     }
 
     public setCurrentUser(user: UserAuth): void {
@@ -65,8 +55,8 @@ export class
         this._currentUser = user;
         this.localStorageService.setItem('currentUser', user);
         this._notLoggedIn = false;
-        this.userSubject$.next(user);
-        this.loggedInSubject$.next(true);
+        this.user$.next(user);
+        this.loggedIn$.next(true);
     }
 
     public logout() {
@@ -75,8 +65,8 @@ export class
         this._currentUser = null;
         this._jwt = null;
         this._notLoggedIn = true;
-        this.loggedInSubject$.next(false);
-        this.userSubject$.next(null);
+        this.loggedIn$.next(false);
+        this.user$.next(null);
     }
 
     getUser(userId: string): Observable<UserDetail> {

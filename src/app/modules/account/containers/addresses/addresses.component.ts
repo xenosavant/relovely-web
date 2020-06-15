@@ -53,15 +53,13 @@ export class AddressesComponent implements OnInit {
       this.ref.markForCheck();
     })
 
-    this.userService.getCurrentUser().then(user => {
-      this.user = user;
-      this.addresses = [...this.user.addresses];
-      this.primary = this.addresses.find(address => {
-        return address.primary;
-      })
-      this.loading = false;
-      this.ref.markForCheck();
+    this.user = this.userService.user$.value;
+    this.addresses = [...this.user.addresses];
+    this.primary = this.addresses.find(address => {
+      return address.primary;
     })
+    this.loading = false;
+    this.ref.markForCheck();
   }
 
   openModal() {

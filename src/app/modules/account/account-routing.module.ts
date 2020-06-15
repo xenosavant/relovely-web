@@ -10,12 +10,14 @@ import { VerifyComponent } from './containers/verify/verify.component';
 import { ResetPasswordComponent } from './containers/reset-password/reset-password.component';
 import { PaymentsComponent } from './containers/payments/payments.component';
 import { SettingsComponent } from './containers/settings/settings.component';
+import { AuthenticationGuard } from '@app/shared/guards/auth.guard';
 
 
 const routes: Routes = [
     {
         path: 'addresses',
-        component: AddressesComponent
+        component: AddressesComponent,
+        canActivate: [AuthenticationGuard]
     },
     {
         path: 'instagram',
@@ -35,11 +37,13 @@ const routes: Routes = [
     },
     {
         path: 'payments',
-        component: PaymentsComponent
+        component: PaymentsComponent,
+        canActivate: [AuthenticationGuard]
     },
     {
         path: 'settings',
-        component: SettingsComponent
+        component: SettingsComponent,
+        canActivate: [AuthenticationGuard]
     },
     {
         path: 'signout',

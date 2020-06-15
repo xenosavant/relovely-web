@@ -8,11 +8,13 @@ import { TermsComponent } from './containers/terms/terms.component';
 import { ReviewsComponent } from './containers/reviews/reviews.component';
 import { AuthenticationGuard } from '@app/shared/guards/auth.guard';
 import { SellerGuard } from '@app/shared/guards/seller.guard';
+import { PrivacyComponent } from './containers/privacy/privacy.component';
 
 const routes: Routes = [
     {
         path: 'favorites',
-        component: FavoritesComponent
+        component: FavoritesComponent,
+        canActivate: [AuthenticationGuard]
     },
     {
         path: 'listings',
@@ -25,7 +27,7 @@ const routes: Routes = [
     },
     {
         path: 'privacy',
-        component: TermsComponent
+        component: PrivacyComponent
     },
     {
         path: ':id',

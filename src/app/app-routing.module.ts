@@ -6,6 +6,7 @@ import { HomeComponent } from '../app/core/components/home/home.component'
 import { NotFoundComponent } from '../app/core/components/not-found/not-found.component'
 import { ProductsComponent } from './modules/product/containers/products/products.component';
 import { AboutComponent } from './core/components/about/about.component';
+import { AdminGuard } from './shared/guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -36,7 +37,8 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren: '../app/modules/admin/admin.module#AdminModule'
+    loadChildren: '../app/modules/admin/admin.module#AdminModule',
+    canActivate: [AdminGuard]
   },
   {
     path: '**',

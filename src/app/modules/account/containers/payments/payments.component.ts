@@ -40,12 +40,10 @@ export class PaymentsComponent implements OnInit {
       this.mobile = result.matches;
       this.ref.markForCheck();
     });
-    this.userService.getCurrentUser().then(user => {
-      this.user = user;
-      this.primary = this.user.cards.find(card => card.primary)
-      this.loading = false;
-      this.ref.markForCheck();
-    });
+    this.user = this.userService.user$.value;
+    this.primary = this.user.cards.find(card => card.primary)
+    this.loading = false;
+    this.ref.markForCheck();
     const sub = this.primarySubject$.asObservable().pipe(
       debounceTime(500),
       switchMap(val =>

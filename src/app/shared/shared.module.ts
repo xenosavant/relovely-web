@@ -116,6 +116,7 @@ import { AddAddressComponent } from './components/add-address/add-address.compon
 import { SellerApplyComponent } from './components/seller-apply/seller-apply.component';
 import { AuthenticationGuard } from './guards/auth.guard';
 import { SellerGuard } from './guards/seller.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 
 library.add(
@@ -299,6 +300,6 @@ library.add(
     AddAddressComponent,
     SellerApplyComponent
   ],
-  providers: [DecimalPipe, AuthenticationGuard, SellerGuard],
+  providers: [DecimalPipe, AuthenticationGuard, SellerGuard, AdminGuard],
 })
 export class SharedModule { }

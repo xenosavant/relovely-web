@@ -6,25 +6,24 @@ import { map } from 'rxjs/operators';
 import { AuthenticationService, IAuthentication } from '../services/authentication.service';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { UserService } from '@app/shared/services/user/user.service';
+import { UserAuth } from '../models/user-auth.model';
 
 @Injectable()
-export class AuthenticationGuard implements CanActivate, CanActivateChild {
+export class AdminGuard implements CanActivate, CanActivateChild {
     constructor(private userService: UserService) { }
 
     canActivate(): Observable<boolean> {
-        return this.userService.loggedIn$.pipe(
-            map((loggedIn: boolean) => {
-                console.log(loggedIn);
-                return loggedIn;
+        return this.userService.user$.pipe(
+            map((user: UserAuth) => {
+                return user && user.admin;
             })
         );
     }
 
     canActivateChild(): Observable<boolean> {
-        return this.userService.loggedIn$.pipe(
-            map((loggedIn: boolean) => {
-                console.log(loggedIn);
-                return loggedIn;
+        return this.userService.user$.pipe(
+            map((user: UserAuth) => {
+                return user && user.admin;
             })
         );
     }

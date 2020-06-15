@@ -231,7 +231,6 @@ export class AppComponent implements OnInit {
         new NavigationItem([], '/member/listings', 'Listings', null, [], [], null)
       );
     }
-    console.log(this.userService.currentUser);
     if (this.userService.currentUser && this.userService.currentUser.admin) {
       accountNav.subItems.push(new NavigationItem([], '/admin/dashboard', 'Admin', null, [], [], null));
     };
