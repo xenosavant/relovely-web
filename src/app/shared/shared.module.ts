@@ -114,6 +114,8 @@ import { LinkFacebookComponent } from './components/link-facebook/link-facebook.
 import { LinkInstagramComponent } from './components/link-instagram/link-instagram.component';
 import { AddAddressComponent } from './components/add-address/add-address.component';
 import { SellerApplyComponent } from './components/seller-apply/seller-apply.component';
+import { AuthenticationGuard } from './guards/auth.guard';
+import { SellerGuard } from './guards/seller.guard';
 
 
 library.add(
@@ -297,6 +299,6 @@ library.add(
     AddAddressComponent,
     SellerApplyComponent
   ],
-  providers: [DecimalPipe],
+  providers: [DecimalPipe, AuthenticationGuard, SellerGuard],
 })
 export class SharedModule { }

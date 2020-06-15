@@ -212,7 +212,7 @@ export class AppComponent implements OnInit {
     this.desktopLinkItems = [];
     this.desktopNavigationItems = [];
 
-    this.accountNav = {
+    const accountNav = {
       name: 'Account', path: null, subItems: [
         new NavigationItem([], '/member/profile', 'Profile', null, [], [], null),
         new NavigationItem([], '/sales/orders', 'Orders', null, [], [], null),
@@ -227,18 +227,20 @@ export class AppComponent implements OnInit {
     this.desktopLinkItems.push(new NavigationItem([], 'about', 'Blog', null, [], [], null));
     this.desktopLinkItems.push(new NavigationItem([], 'about', 'About', null, [], [], null));
     if (this.userService.currentUser && this.userService.currentUser.type === 'seller') {
-      this.accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', null, [], [], null),
+      accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', null, [], [], null),
         new NavigationItem([], '/member/listings', 'Listings', null, [], [], null)
       );
     }
-    if (this.userService.currentUser && this.userService.currentUser.type === 'admin') {
-      this.accountNav.subItems.push(new NavigationItem([], '/admin/dashboard', 'Admin', null, [], [], null));
+    console.log(this.userService.currentUser);
+    if (this.userService.currentUser && this.userService.currentUser.admin) {
+      accountNav.subItems.push(new NavigationItem([], '/admin/dashboard', 'Admin', null, [], [], null));
     };
-    this.accountNav.subItems.push(
+    accountNav.subItems.push(
       new NavigationItem([], '/member/terms', 'Terms of Service', null, [], [], null),
       new NavigationItem([], '/account/help', 'Help', null, [], [], null),
       new NavigationItem([], '/account/signout', 'Sign Out', null, [], [], null),
     );
+    this.accountNav = accountNav;
     navigationItems.push(this.accountNav);
     this.navigationService.rootNavigationItems = navigationItems;
     this.navigationService.setCurrentNavigationItems(navigationItems);

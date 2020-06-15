@@ -6,6 +6,7 @@ import { PaymentCard } from "../interfaces/payment-card";
 export class UserAuth {
     id: string;
     email: string;
+    admin?: boolean;
     firstName: string;
     lastName: string;
     username: string;

@@ -6,6 +6,8 @@ import { ListingsComponent } from './containers/listings/listings.component';
 import { InstagramAuthComponent } from './components/instagram-auth/instagram-auth.component';
 import { TermsComponent } from './containers/terms/terms.component';
 import { ReviewsComponent } from './containers/reviews/reviews.component';
+import { AuthenticationGuard } from '@app/shared/guards/auth.guard';
+import { SellerGuard } from '@app/shared/guards/seller.guard';
 
 const routes: Routes = [
     {
@@ -14,7 +16,8 @@ const routes: Routes = [
     },
     {
         path: 'listings',
-        component: ListingsComponent
+        component: ListingsComponent,
+        canActivate: [SellerGuard]
     },
     {
         path: 'terms',
@@ -26,7 +29,7 @@ const routes: Routes = [
     },
     {
         path: ':id',
-        component: ProfileComponent
+        component: ProfileComponent,
     },
     {
         path: 'ratings/:id',
