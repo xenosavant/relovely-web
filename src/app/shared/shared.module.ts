@@ -117,6 +117,7 @@ import { SellerApplyComponent } from './components/seller-apply/seller-apply.com
 import { AuthenticationGuard } from './guards/auth.guard';
 import { SellerGuard } from './guards/seller.guard';
 import { AdminGuard } from './guards/admin.guard';
+import { HorizontalUserListComponent } from './components/horizontal-user-list/horizontal-user-list.component';
 
 
 library.add(
@@ -233,7 +234,8 @@ library.add(
     LinkFacebookComponent,
     LinkInstagramComponent,
     AddAddressComponent,
-    SellerApplyComponent],
+    SellerApplyComponent,
+    HorizontalUserListComponent],
   exports: [
     CommonModule,
     FormsModule,

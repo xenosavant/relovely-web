@@ -7,6 +7,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { environment } from '@env/environment';
 import { VerificationError } from '@app/shared/services/user/verification-error';
 import { SellerVerificationRequest } from '@app/shared/services/user/seller-verification.request';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-verify-seller',
@@ -36,8 +37,12 @@ export class VerifySellerComponent implements OnInit {
   backUploading: boolean;
   formFields: string[] = [];
   update = false;
+  mobile: boolean;
 
-  constructor(private lookupService: LookupService, private userService: UserService, private ref: ChangeDetectorRef) { }
+  constructor(private lookupService: LookupService,
+    private userService: UserService,
+    private ref: ChangeDetectorRef,
+    private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() {
     this.states = this.lookupService.states;
@@ -78,6 +83,7 @@ export class VerifySellerComponent implements OnInit {
         this.frontUploader.uploadItem(file);
       } else {
         this.frontError = validity;
+        this.ref.markForCheck()
       }
     }
     this.backUploader.onAfterAddingFile = (file) => {
@@ -87,6 +93,7 @@ export class VerifySellerComponent implements OnInit {
         this.backUploader.uploadItem(file);
       } else {
         this.backError = validity;
+        this.ref.markForCheck()
       }
     }
     this.frontUploader.onSuccessItem = (item, response, status, headers) => {
@@ -111,6 +118,9 @@ export class VerifySellerComponent implements OnInit {
       this.backError = 'Upload failed';
       this.ref.markForCheck();
     }
+    this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
+      this.mobile = result.matches;
+    });
     this.loading = false;
   }
 
@@ -265,8 +275,9 @@ export class VerifySellerComponent implements OnInit {
 
   verifyFile(event: any): string {
     const file: File = event.file;
-    if (!file.type.startsWith('image')) {
-      return 'File is not an image';
+    console.log(file.name);
+    if (!RegExp('([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg|HEIC)', 'g').test(file.name)) {
+      return 'file is not an image';
     }
     if (file.size > 10000000) {
       return 'File is too large, must be less than 10MB.'
