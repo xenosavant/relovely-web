@@ -150,12 +150,12 @@
             </button>
         </div>
     </form>
-    <ng-conatiner capture="!mobile">
+    <ng-container capture="!mobile">
         <input #front type="file" ng2FileSelect [uploader]="frontUploader" style="visibility:hidden; height:0px;" />
         <input #back type="file" ng2FileSelect [uploader]="backUploader" style="visibility:hidden; height:0px;" />
-    </ng-conatiner>
-    <ng-conatiner capture="mobile">
+    </ng-container>
+    <ng-container capture="mobile">
         <input #front type="file" ng2FileSelect [uploader]="frontUploader" style="visibility:hidden; height:0px;" />
         <input #back type="file" ng2FileSelect [uploader]="backUploader" style="visibility:hidden; height:0px;" />
-    </ng-conatiner>
+    </ng-container>
 </app-modal>
