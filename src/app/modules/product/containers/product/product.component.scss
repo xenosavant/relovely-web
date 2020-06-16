@@ -206,8 +206,6 @@
 }
 
 .video-slide-wrapper {
-    width: calc(100vw - 32px);
-    height: calc(100vw - 32px);
     position: absolute;
     display: flex;
     align-items: center;
@@ -238,7 +236,8 @@
     margin: 8px 0px;
     .hashtag {
         margin-right: 8px;
-        color: $pink-button
+        font-weight: 600;
+        color: #5e3340;
     }
 }
 
