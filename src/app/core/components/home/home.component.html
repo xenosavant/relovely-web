@@ -15,7 +15,7 @@
     <div class="banner-wrapper">
         <h1>AN INLFUENCER EXCLUSIVE RE-SELLING PLATFORM</h1>
         <p>Giving great products new life</p>
-        <button mat-stroked-button>Join Now</button>
+        <button *ngIf="!user" (click)="onSignup()" mat-stroked-button>Join Now</button>
     </div>
     <div class="featured-sellers">
         <div class="header">

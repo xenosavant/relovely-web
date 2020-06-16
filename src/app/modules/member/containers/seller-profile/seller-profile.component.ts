@@ -65,7 +65,7 @@ export class SellerProfileComponent implements OnChanges {
   }
 
   showCreateModal($event: any) {
-    if (!this.currentUser.seller.bankAccountLinked || this.currentUser.seller.verificationStatus !== 'verified') {
+    if (this.currentUser.seller.missingInfo.includes('external_account') || this.currentUser.seller.verificationStatus !== 'verified') {
       this.navigationService.navigate({ path: '/account/settings', queryStrings: [{ key: 'error', value: 'required' }] })
     } else {
       this.editProduct = null;
