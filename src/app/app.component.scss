@@ -51,6 +51,11 @@ mat-toolbar {
   position: relative;
 }
 
+.header-placeholder {
+  background-color: $medium-gray-background;
+  height: 56px;
+}
+
 .content-noscroll {
   height: 100%;
 }
@@ -59,8 +64,6 @@ mat-toolbar {
   position: sticky;
   position: -webkit-sticky; /* For macOS/iOS Safari */
   top: 0; /* Sets the sticky toolbar to be on top */
-  z-index: 1000;
-  z-index:1;
 }
 
 .toolbar {

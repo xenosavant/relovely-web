@@ -36,8 +36,10 @@ form {
 .search__input {
   border: none;
   flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 14px;
-  height:30px;
   .mat-icon-button {
     width: $search-bar-height !important;
     height:$search-bar-height !important

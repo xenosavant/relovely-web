@@ -56,7 +56,7 @@ export class LookupService extends BaseService {
                 this.buildColorDictionary(this._state.colors);
                 this._stateSubject$.next(this._state);
                 return response;
-            }), catchError(this.errorHandler)
+            })
         );
     }
 

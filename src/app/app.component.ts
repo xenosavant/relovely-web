@@ -73,6 +73,7 @@ export class AppComponent implements OnInit {
   public authPage = 'signin';
   public authToken: string;
   public authUsername: string;
+  error = false;
   searchTerm: string;
 
   get top(): number {
@@ -137,19 +138,32 @@ export class AppComponent implements OnInit {
       this.userService.jwt = jwt;
       this.userService.me().pipe(tap(me => {
         this.userService.setLogin(jwt, me);
+      }, err => {
+        this.handleError();
       }), mergeMap(value => this.getLookup()))
         .subscribe(final => {
           if (this.loginSubscription) {
             this.loginSubscription.unsubscribe();
           }
           this.loginSubscription = this.userService.loggedIn$.subscribe(loggedIn => {
-            this.getLookup();
-            this.ref.markForCheck();
+            this.lookupService.getLookupData().subscribe(value => {
+              this.navSetup(JSON.parse(value.categories.json));
+              this.loading = false;
+              this.ref.markForCheck();
+              console.log(value);
+            }, err => {
+              this.handleError();
+            });
           });
         });
     } else {
       this.userService.logout();
-      this.getLookup().subscribe(value => {
+      this.lookupService.getLookupData().subscribe(value => {
+        this.navSetup(JSON.parse(value.categories.json));
+        this.loading = false;
+        this.ref.markForCheck();
+      }, err => {
+        this.handleError();
       });
     }
     this.navigationService.showAuthWindow$.subscribe(item => {
@@ -169,12 +183,14 @@ export class AppComponent implements OnInit {
     });
   }
 
+  handleError() {
+    this.error = true;
+    this.loading = false;
+    this.ref.markForCheck();
+  }
+
   getLookup(): Observable<LookupResponse> {
-    return from(this.lookupService.getLookupData().toPromise().then(lookup => {
-      this.navSetup(JSON.parse(lookup.categories.json));
-      this.loading = false;
-      return lookup;
-    }))
+    return this.lookupService.getLookupData();
   }
 
   navSetup(cats: Category[]) {
