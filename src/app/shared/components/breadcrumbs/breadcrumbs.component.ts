@@ -12,24 +12,31 @@ export class BreadcrumbsComponent implements OnChanges {
 
   crumbs: NavigationItem[];
   @Input() navItem: NavigationItem;
+  @Input() items: NavigationItem[];
 
   constructor(private navigationService: NavigationService) { }
 
   ngOnChanges() {
     this.crumbs = [];
     this.crumbs.push({ path: '/', name: 'Home' });
-    let currentItem = this.navItem;
-    if (currentItem.id && currentItem.id !== '-1') {
-      this.crumbs.push({ path: '/products', name: 'All Products' });
-    }
-    const navStack = [];
-    while (currentItem) {
-      navStack.push(currentItem);
-      currentItem = currentItem.parent;
-    }
-    const length = navStack.length
-    for (let i = 0; i < length; i++) {
-      this.crumbs.push(navStack.pop());
+    if (this.navItem) {
+      let currentItem = this.navItem;
+      if (currentItem.id && currentItem.id !== '-1') {
+        this.crumbs.push({ path: '/products', name: 'All Products' });
+      }
+      const navStack = [];
+      while (currentItem) {
+        navStack.push(currentItem);
+        currentItem = currentItem.parent;
+      }
+      const length = navStack.length
+      for (let i = 0; i < length; i++) {
+        this.crumbs.push(navStack.pop());
+      }
+    } else {
+      this.items.forEach(item => {
+        this.crumbs.push(item);
+      })
     }
   }
 

@@ -163,8 +163,8 @@
               <ng-container *ngIf="accountNav">
                 <div class="menu-item-wrapper">
                   <ul>
-                    <li *ngFor="let item of accountNav.subItems" class="menu-item"
-                      (click)="onAccountMenuAction(item.path)"> {{item.name}}</li>
+                    <li *ngFor="let item of accountNav.subItems" class="menu-item" (click)="onAccountMenuAction(item)">
+                      {{item.name}}</li>
                   </ul>
                 </div>
               </ng-container>
@@ -177,7 +177,7 @@
           <div class="menu-wrapper" style="z-index:1050" (mouseleave)="onLeaveMenuBar($event)">
             <span class="menu">
               <span *ngFor="let item of desktopNavigationItems; let i = index" class="menu-item">
-                <h1 [class.current]="selectedMenuItem === i" (click)="onAccountMenuAction(item.path)"
+                <h1 [class.current]="selectedMenuItem === i" (click)="onAccountMenuAction(item)"
                   (mouseenter)="onOpenMegaMenu(item)">{{item.name}}</h1>
               </span>
             </span>

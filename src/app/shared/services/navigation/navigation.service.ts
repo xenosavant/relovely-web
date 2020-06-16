@@ -32,13 +32,16 @@ export class NavigationService {
     private navConfigSubject$ = new Subject<INavigationState>();
     public navConfig$ = this.navConfigSubject$.asObservable();
 
-    private currentNavSubject$ = new Subject<NavigationItem>();
-    public currentNavConfig$ = this.currentNavSubject$.asObservable();
+    public currentNavSubject$ = new BehaviorSubject<NavigationItem>(null);
 
     private authWindowSubject$ = new Subject<IAuthItem>();
     public showAuthWindow$ = this.authWindowSubject$.asObservable();
 
     public rootNavigationItems: NavigationItem[];
+
+    public get navigationStack() {
+        return this._navigationStack;
+    }
 
     constructor(private router: Router, private lookupService: LookupService) {
         this.router.events.pipe(
@@ -179,11 +182,6 @@ export class NavigationService {
 
     public getNavigationItem() {
         return this._currentNavigationItem;
-    }
-
-    public init(item: NavigationItem) {
-        this._currentNavigationItem = item;
-        this.currentNavSubject$.next(this._currentNavigationItem);
     }
 
     public openAuthWindow(item: IAuthItem) {

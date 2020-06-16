@@ -5,6 +5,8 @@ import { OrderService } from '@app/shared/services/order/order.service';
 import { UserService } from '@app/shared/services/user/user.service';
 import { CARD_TYPE_MAP } from '@app/shared/services/lookup/payment-card-map';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
+import { NavigationItem } from '@app/shared/models/navigation-item.model';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-order',
@@ -18,20 +20,28 @@ export class OrderComponent implements OnInit {
   public loading = true;
   seller: boolean;
   typeMap = CARD_TYPE_MAP;
+  navigationItems: NavigationItem[];
+  public mobile: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
     private userService: UserService,
     private ref: ChangeDetectorRef,
+    private breakpointObserver: BreakpointObserver,
     private navigationService: NavigationService) { }
 
   ngOnInit() {
+    this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
+      this.mobile = result.matches;
+    })
     this.activatedRoute.params.subscribe(params => {
       this.orderService.getOrder(params['id']).subscribe(order => {
         this.order = order;
+        this.navigationItems = [{ path: '/sales/orders', name: 'Orders' }, { path: `/sales/orders/${this.order.id}`, name: this.order.orderNumber }];
         this.seller = this.userService.currentUser.id === this.order.seller.id;
         this.loading = false;
+        console.log(this.navigationItems);
         this.ref.markForCheck();
       })
     })

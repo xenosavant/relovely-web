@@ -11,11 +11,6 @@
 .orders-wrapper {
     margin: 0 auto;
     max-width: $desktop-breakpoint;
-    display: grid;
-    grid-gap: 6px;
-    @media( min-width: $desktop-breakpoint) {
-        grid-gap: 12px;
-    }
  }
  
  .order-card {
@@ -29,3 +24,10 @@
      position: relative;
      bottom:0;
  }
+
+ .breadcrumb-wrapper {
+    max-width: $desktop-width;
+    margin: 0 auto;
+    margin-top:16px;
+    margin-bottom:16px;
+}

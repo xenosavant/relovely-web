@@ -157,6 +157,10 @@ export class CheckoutComponent implements OnInit {
     })
   }
 
+  onSelectPayment() {
+    this.changingPayment = false;
+  }
+
   changePayment() {
     this.changingPayment = true;
   }
@@ -168,6 +172,7 @@ export class CheckoutComponent implements OnInit {
   onLoadingPaymentForm(loading) {
     this.loadingPayment = loading;
   }
+
   onCancelAddPayment() {
     if (this.selectedPayment) {
       this.addingPayment = false;

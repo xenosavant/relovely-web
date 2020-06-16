@@ -14,6 +14,9 @@ import { ThrowStmt } from '@angular/compiler';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from '@app/shared/services/overlay.service';
 import { UserAuth } from '@app/shared/models/user-auth.model';
+import { NavigationItem } from '@app/shared/models/navigation-item.model';
+import { Category } from '@app/shared/models/category.model';
+import { LookupService } from '@app/shared/services/lookup/lookup.service';
 
 @Component({
   selector: 'app-product',
@@ -46,6 +49,7 @@ export class ProductComponent implements OnInit {
       0: { items: 1 }
     }
   };
+  navItems: NavigationItem[] = [];
 
   public thumbnailsCarouselOptions: Partial<OwlCarouselOConfig> = {
     dots: false,
@@ -65,6 +69,7 @@ export class ProductComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private productService: ProductService,
     private userService: UserService,
+    private lookupService: LookupService,
     private overlayService: OverlayService) { }
 
   ngOnInit() {
@@ -75,11 +80,16 @@ export class ProductComponent implements OnInit {
         this.mobile = result.matches;
         if (!this.product) {
           this.productService.getProduct(this.id).subscribe(response => {
-            console.log(response)
             if (this.currentUser && this.currentUser.id === response.sellerId) {
               this.seller = true;
             }
+            const stack = this.navigationService.navigationStack;
             this.product = response;
+            if (stack.length > 1) {
+              this.navItems.push(stack[stack.length - 2]);
+            }
+            this.navItems.push({ path: `/products/${this.product.id}`, name: `${this.product.title}` });
+            console.log(stack);
             this.currentItem = this.product.videos[0] ? this.product.videos[0] : this.product.images[0].cropped;
             this.currentImage = this.product.videos[0] ? null : this.product.images[0].original;
             if (this.product.videos[0]) {

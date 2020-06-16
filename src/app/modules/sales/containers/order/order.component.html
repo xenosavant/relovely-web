@@ -1,4 +1,9 @@
 <div class="page-wrapper">
+    <div *ngIf="!mobile && !loading" class="breadcrumb-wrapper">
+        <div class="breadcrumbs">
+            <app-breadcrumbs [items]="navigationItems"></app-breadcrumbs>
+        </div>
+    </div>
     <div *ngIf="!loading" class="order-wrapper">
         <app-order-list [seller]="seller" [detail]="true" [order]="order"></app-order-list>
         <div class="divider"></div>

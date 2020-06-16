@@ -4,6 +4,7 @@ import { NavigationService } from '@app/shared/services/navigation/navigation.se
 import { Router } from '@angular/router';
 import { OrderService } from '@app/shared/services/order/order.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { NavigationItem } from '@app/shared/models/navigation-item.model';
 
 @Component({
   selector: 'app-orders',
@@ -17,6 +18,8 @@ export class OrdersComponent implements OnInit {
   public hoverIndex: number;
   public mobile: boolean;
   public title = 'Orders';
+  public loading = true;
+  navigationItems: NavigationItem[] = [{ path: 'sales/orders', name: 'Orders' }];
 
   constructor(private navigationService: NavigationService,
     private orderServive: OrderService, private ref: ChangeDetectorRef,
@@ -30,6 +33,7 @@ export class OrdersComponent implements OnInit {
     })
     this.orderServive.getOrders().subscribe(orders => {
       this.orders = orders.items;
+      this.loading = false;
       this.ref.markForCheck();
     });
   }

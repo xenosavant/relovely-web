@@ -60,6 +60,12 @@
             [products]="product.similarItems">
         </app-horizontal-product-list>
     </ng-container>
+    <div *ngIf="!mobile && !loading" class="breadcrumb-wrapper">
+        <div class="breadcrumbs">
+            <app-breadcrumbs [items]="navItems">
+            </app-breadcrumbs>
+        </div>
+    </div>
     <div *ngIf="!mobile && !loading" class="grid-wrapper">
         <div class="image-wrapper">
             <div class="product">

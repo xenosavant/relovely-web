@@ -308,10 +308,10 @@ export class AppComponent implements OnInit {
     this.navigationService.navigate({ path: '/' })
   }
 
-  public onAccountMenuAction(path: string) {
+  public onAccountMenuAction(item: NavigationItem) {
     this.showMegaMenu = false;
     this.selectedMenuItem = -1;
-    this.navigationService.navigate({ path: path })
+    this.navigationService.navigate({ path: item.path, name: item.name })
   }
 
   public onOpenMegaMenu(item: NavigationItem) {
