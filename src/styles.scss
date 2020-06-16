@@ -1184,3 +1184,10 @@ div.filter-bar {
   color: green;
   font-weight: 600;
 }
+
+image-cropper {
+  padding: 0px !important;;
+  div.overlay {
+    outline: none !important;
+  }
+}
