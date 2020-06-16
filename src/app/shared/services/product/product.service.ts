@@ -2,14 +2,15 @@ import { Injectable } from "@angular/core"; import { BaseService } from "../base
 import { Product } from "@app/shared/models/product.model";
 import { ListResponse } from "../list-response";
 import { PriceRange } from "../filter/filter-state";
+import { ProductDetailResponse } from "./product-detail.response";
 
 @Injectable({ providedIn: 'root' })
 export class ProductService extends BaseService {
 
 
-    getProduct(productId: string): Observable<Product> {
-        return this.httpClient.get<Product>(`${this.apiBaseUrl}/products/${productId}/`).pipe(
-            map((result: Product) => {
+    getProduct(productId: string): Observable<ProductDetailResponse> {
+        return this.httpClient.get<ProductDetailResponse>(`${this.apiBaseUrl}/products/${productId}/`).pipe(
+            map((result: ProductDetailResponse) => {
                 return result;
             })
         );

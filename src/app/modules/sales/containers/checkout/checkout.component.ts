@@ -78,7 +78,7 @@ export class CheckoutComponent implements OnInit {
     })
     this.activatedRoute.params.subscribe(params => {
       this.productService.getProduct(params['id']).subscribe(product => {
-        this.product = product;
+        this.product = product.product;
         this.selectedAddress = this.user.addresses.find(a => a.primary);
         this.recalcCosts();
       });

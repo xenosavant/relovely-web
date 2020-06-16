@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, NgZone, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, NgZone, ChangeDetectorRef, ViewChild, OnChanges } from '@angular/core';
 import { Product } from '@app/shared/models/product.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { products } from '@app/data/products.data';
@@ -50,6 +50,7 @@ export class ProductComponent implements OnInit {
     }
   };
   navItems: NavigationItem[] = [];
+  more: Product[];
 
   public thumbnailsCarouselOptions: Partial<OwlCarouselOConfig> = {
     dots: false,
@@ -74,56 +75,15 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.userService.currentUser;
+    this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
+      this.mobile = result.matches;
+      if (!this.product) {
+        this.refreshProduct();
+      }
+    });
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.id = params.get('id');
-      this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
-        this.mobile = result.matches;
-        if (!this.product) {
-          this.productService.getProduct(this.id).subscribe(response => {
-            if (this.currentUser && this.currentUser.id === response.sellerId) {
-              this.seller = true;
-            }
-            const stack = this.navigationService.navigationStack;
-            this.product = response;
-            if (stack.length > 1) {
-              this.navItems.push(stack[stack.length - 2]);
-            }
-            this.navItems.push({ path: `/products/${this.product.id}`, name: `${this.product.title}` });
-            console.log(stack);
-            this.currentItem = this.product.videos[0] ? this.product.videos[0] : this.product.images[0].cropped;
-            this.currentImage = this.product.videos[0] ? null : this.product.images[0].original;
-            if (this.product.videos[0]) {
-              this.videoThumbnail = this.product.videos[0].url.replace(this.product.videos[0].format, 'jpg');
-              const aspect = this.product.videos[0].height / this.product.videos[0].width;
-              if (aspect < 1) {
-                this.videoPadding = Math.round(((1 - aspect) * 100) / 2);
-              }
-            }
-            if (!this.mobile) {
-              this.carouselOptions = {
-                dots: false,
-                autoplay: false,
-                responsive: {
-                  800: { items: 4 },
-                  900: { items: 5 }
-                }
-              };
-            } else {
-              this.carouselOptions = {
-                dots: true,
-                autoplay: false,
-                responsive: {
-                  0: { items: 1 }
-                }
-              };
-            }
-            this.zone.run(() => {
-              this.loading = false;
-              this.ref.markForCheck();
-            })
-          })
-        }
-      });
+      this.refreshProduct();
     });
   }
 
@@ -156,6 +116,54 @@ export class ProductComponent implements OnInit {
       this.currentItem = (item as ImageSet).cropped;
       this.currentImage = (item as ImageSet).original;
     }
+  }
+
+  refreshProduct() {
+    this.loading = true;
+    this.productService.getProduct(this.id).subscribe(response => {
+      console.log(response);
+      if (this.currentUser && this.currentUser.id === response.product.sellerId) {
+        this.seller = true;
+      }
+      const stack = this.navigationService.navigationStack;
+      this.product = response.product;
+      this.more = response.more;
+      if (stack.length > 1) {
+        this.navItems.push(stack[stack.length - 2]);
+      }
+      this.navItems.push({ path: `/products/${this.product.id}`, name: `${this.product.title}` });
+      this.currentItem = this.product.videos[0] ? this.product.videos[0] : this.product.images[0].cropped;
+      this.currentImage = this.product.videos[0] ? null : this.product.images[0].original;
+      if (this.product.videos[0]) {
+        this.videoThumbnail = this.product.videos[0].url.replace(this.product.videos[0].format, 'jpg');
+        const aspect = this.product.videos[0].height / this.product.videos[0].width;
+        if (aspect < 1) {
+          this.videoPadding = Math.round(((1 - aspect) * 100) / 2);
+        }
+      }
+      if (!this.mobile) {
+        this.carouselOptions = {
+          dots: false,
+          autoplay: false,
+          responsive: {
+            800: { items: 4 },
+            900: { items: 5 }
+          }
+        };
+      } else {
+        this.carouselOptions = {
+          dots: true,
+          autoplay: false,
+          responsive: {
+            0: { items: 1 }
+          }
+        };
+      }
+      this.zone.run(() => {
+        this.loading = false;
+        this.ref.markForCheck();
+      })
+    }, err => console.log(err))
   }
 
   viewCurrentImage(image: ImageSet) {

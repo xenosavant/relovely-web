@@ -20,11 +20,10 @@ export class Product {
     public asset?: string;
     public price: number;
     public retailPrice?: number;
-    public moreItems?: Product[];
+    public more?: any[];
     public similarItems?: Product[];
     public favorited?: boolean;
     public sold?: boolean = false;
-    public auction?: boolean = false;
     public tags?: string[];
     public cloudId?: string;
     public weight: number;

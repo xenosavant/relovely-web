@@ -26,10 +26,10 @@
   }
 
   .product-card {
-    min-width: 27vw;
+    width: 27vw;
     margin: 2vw;
     img {
-        width:100%;
+        width: 27vw;
     }
   }
 
@@ -46,13 +46,13 @@
         width:29vw;
         line-height: 1.3;
         .top {
-            font-size: .6em;
+            font-size: .75em;
             font-weight:300;
             color: $light-gray;
             text-align: center;
         }
         .bottom {
-            font-size: .6em;
+            font-size: .8em;
             color: $dark-gray;
             text-align: center;
         }
