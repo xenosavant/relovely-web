@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { UserList } from '@app/shared/models/user-list.model';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
+import { ProductService } from '@app/shared/services/product/product.service';
 
 @Component({
   selector: 'app-seller-profile',
@@ -47,6 +48,7 @@ export class SellerProfileComponent implements OnChanges {
   constructor(private route: ActivatedRoute,
     private overlayService: OverlayService,
     private userService: UserService,
+    private productService: ProductService,
     private ref: ChangeDetectorRef,
     private navigationService: NavigationService) { }
 
@@ -90,6 +92,13 @@ export class SellerProfileComponent implements OnChanges {
     if (this.owner) {
       this.updateImage.emit(true);
     }
+  }
+
+  onDelete(id: string) {
+    this.productService.deleteProduct(id).subscribe(() => {
+      this.user.listings.splice(this.user.listings.findIndex(p => p.id === id), 1);
+      Object.assign(this.user, { ...this.user });
+    })
   }
 
   goToInstagram() {

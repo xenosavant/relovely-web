@@ -36,4 +36,11 @@ export class ListingsComponent implements OnInit {
       this.ref.markForCheck();
     })
   }
+
+  onDelete(id: string) {
+    this.productService.deleteProduct(id).subscribe(() => {
+      this.products.splice(this.products.findIndex(p => p.id === id), 1);
+      Object.assign(this.products, { ...this.products });
+    })
+  }
 }

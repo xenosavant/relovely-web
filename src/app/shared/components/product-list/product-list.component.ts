@@ -25,6 +25,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
 
   @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
+  @Output() delete: EventEmitter<Product> = new EventEmitter<Product>();
   @Output() favorite: EventEmitter<Product> = new EventEmitter<Product>();
 
   subscriptions: Subscription[] = [];
@@ -103,6 +104,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => {
       s.unsubscribe();
     })
+  }
+
+  onDelete() {
+    this.delete.emit(this.product);
   }
 
   purchase() {
