@@ -80,6 +80,7 @@ export class VerifySellerComponent implements OnInit {
       const validity = this.verifyFile(file);
       if (validity === 'valid') {
         this.frontUploading = true;
+        file.withCredentials = false;
         this.frontUploader.uploadItem(file);
       } else {
         this.frontError = validity;
@@ -90,6 +91,7 @@ export class VerifySellerComponent implements OnInit {
       const validity = this.verifyFile(file);
       if (validity === 'valid') {
         this.backUploading = true;
+        file.withCredentials = false;
         this.backUploader.uploadItem(file);
       } else {
         this.backError = validity;
