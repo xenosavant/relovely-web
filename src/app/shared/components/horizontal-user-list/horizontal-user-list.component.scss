@@ -1,0 +1,44 @@
+@import '../../../../styles-variables.scss';
+
+.list-wrapper {
+    overflow: hidden;
+    .list-inner {
+        overflow-x: auto;
+        display: flex;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        .user-item {
+            text-align: center;
+            flex: 0 0 calc(25vw - 4px);
+            padding:4px;
+            @media (min-width: $desktop-breakpoint) {
+                flex: 0 0 calc(25vw);
+                padding: 4vw;
+            }
+            @media (min-width: $header-width) {
+                flex: 0 0 323px;
+            }
+            .name {
+                color: $light-gray;
+                font-size: .5em;
+            }
+            .shop {
+                font-size: .8em;
+                font-weight: 600;
+            }
+            @media (min-width: $desktop-breakpoint) {
+                .name {
+                    color: $light-gray;
+                    font-size: 1em;
+                    line-height: 1.3em;
+                }
+                .shop {
+                    font-size: 1.1em;
+                    line-height: 1.5em;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}

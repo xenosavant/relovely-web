@@ -77,6 +77,14 @@ export class
         );
     }
 
+    getFeatured(): Observable<UserDetail[]> {
+        return this.httpClient.get<UserDetail[]>(`${this.apiBaseUrl}/users/featured`).pipe(
+            map((users: UserDetail[]) => {
+                return users;
+            })
+        );
+    }
+
     getReviews(userId: string): Observable<UserReviewsResponse> {
         return this.httpClient.get<UserReviewsResponse>(`${this.apiBaseUrl}/users/${userId}/reviews`).pipe(
             map((reviews: UserReviewsResponse) => {

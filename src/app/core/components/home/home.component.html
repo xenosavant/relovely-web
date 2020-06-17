@@ -21,13 +21,7 @@
         <div class="header">
             <h1>FEATURED SELLERS</h1>
         </div>
-        <div class="inner">
-            <div class="seller" *ngFor="let seller of featuredSellers">
-                <app-avatar [image]="seller.profileImageUrl"></app-avatar>
-                <div class="name">{{seller.username}}</div>
-                <div class="shop">SHOP NOW</div>
-            </div>
-        </div>
+        <app-horizontal-user-list [users]="featuredSellers"></app-horizontal-user-list>
     </div>
     <div class="become">
         <h1>Become a Seller!</h1>

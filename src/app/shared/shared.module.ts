@@ -300,7 +300,8 @@ library.add(
     LinkFacebookComponent,
     LinkInstagramComponent,
     AddAddressComponent,
-    SellerApplyComponent
+    SellerApplyComponent,
+    HorizontalUserListComponent
   ],
   providers: [DecimalPipe, AuthenticationGuard, SellerGuard, AdminGuard],
 })

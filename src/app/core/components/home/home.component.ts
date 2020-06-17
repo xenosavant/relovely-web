@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserList } from '@app/shared/models/user-list.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,35 +26,19 @@ export class HomeComponent {
         private route: ActivatedRoute,
         private userService: UserService,
         private overlayService: OverlayService,
-        private navigationService: NavigationService) { }
+        private navigationService: NavigationService,
+        private ref: ChangeDetectorRef) { }
 
     ngOnInit() {
         this.user = this.userService.user$.value;
         this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
             this.mobile = result.matches;
         });
-        this.featuredSellers = [
-            {
-                profileImageUrl: '../../../assets/images/influencer.jpeg',
-                username: 'Influencer1',
-                type: 'seller'
-            },
-            {
-                profileImageUrl: '../../../assets/images/influencer.jpeg',
-                username: 'Influencer2',
-                type: 'seller'
-            },
-            {
-                profileImageUrl: '../../../assets/images/influencer.jpeg',
-                username: 'Influencer3',
-                type: 'seller'
-            },
-            {
-                profileImageUrl: '../../../assets/images/influencer.jpeg',
-                username: 'Influencer4',
-                type: 'seller'
-            },
-        ]
+        this.userService.getFeatured().subscribe(sellers => {
+            console.log(sellers)
+            this.featuredSellers = sellers;
+            this.ref.markForCheck();
+        })
     }
 
     onSell() {

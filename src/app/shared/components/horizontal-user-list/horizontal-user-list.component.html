@@ -1,1 +1,9 @@
-<p>horizontal-user-list works!</p>
+<div class="list-wrapper">
+    <div class="list-inner">
+        <div *ngFor="let user of users" class="user-item">
+            <app-avatar [image]="user.profileImageUrl"></app-avatar>
+            <div class="name">{{user.username}}</div>
+            <div class="shop">SHOP NOW</div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { UserList } from '@app/shared/models/user-list.model';
 
 @Component({
   selector: 'app-horizontal-user-list',
@@ -8,9 +9,12 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class HorizontalUserListComponent implements OnInit {
 
+  @Input() users: UserList[];
+
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }
