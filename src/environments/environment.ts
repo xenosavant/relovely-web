@@ -7,7 +7,7 @@ const packageJson = require('../../package.json');
 
 export const environment = {
   appName: 'Relovely',
-  envName: 'DEV',
+  envName: 'PROD',
   production: false,
   test: false,
   i18nPrefix: '',
