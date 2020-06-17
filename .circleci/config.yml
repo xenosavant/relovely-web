@@ -30,13 +30,18 @@ jobs:
       - run: npm install --silent
       
       # ng build --prod
-      - run: npm run build-prod
- 
+      - run: 
+          name: Build
+          command: |
+            if [ $CIRCLE_BRANCH = 'develop' ]; then
+               npm run build
+            elif [ $CIRCLE_BRANCH = 'master' ]; then
+               npm run build --prod
+            fi
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      
       - run:
           name: Set IP
           command: |
