@@ -14,7 +14,6 @@ export class HorizontalUserListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
   }
 
 }
