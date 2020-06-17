@@ -34,9 +34,9 @@ jobs:
           name: Build
           command: |
             if [ $CIRCLE_BRANCH = 'develop' ]; then
-               ng build
+               npm run build
             elif [ $CIRCLE_BRANCH = 'master' ]; then
-               ng build --prod
+               npm run build-prod
             fi
       - save_cache:
           paths:
