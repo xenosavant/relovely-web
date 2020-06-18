@@ -1,6 +1,6 @@
 {
     "/api/*": {
-        "target": "https://dev.api.relovely.com",
+        "target": "https://apidev.relovely.com",
         "secure": false,
         "pathRewrite": {
             "^/api": ""
