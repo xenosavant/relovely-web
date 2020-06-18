@@ -41,8 +41,7 @@
             </div>
         </div>
         <input #input type="file" style="visibility:hidden; height:0px;" (change)="imageChanged($event)" />
-        <input #inputMobile type="file" style="visibility:hidden; height:0px;" capture="camera"
-            (change)="imageChanged($event)" />
+        <input #inputMobile type="file" style="visibility:hidden; height:0px;" (change)="imageChanged($event)" />
     </ng-container>
     <form novalidate [formGroup]="form">
         <div>
