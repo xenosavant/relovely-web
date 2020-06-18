@@ -60,12 +60,12 @@
         </button>
         <div class="sidenav-wrapper">
           <div class="sidenav-header-wrap">
-            <div class="holder">
-              <button *ngIf="sidenavOpen && !showTopLevel" class="mat-icon-button black" (click)="goBack()">
-                <fa-icon icon="arrow-left"></fa-icon>
-              </button>
-            </div>
-            <div class="title">
+            <div *ngIf="showTopLevel" class="holder"></div>
+            <button *ngIf="!showTopLevel" class="mat-icon-button black" (click)="goBack()">
+              <fa-icon icon="arrow-left"></fa-icon>
+            </button>
+            <div *ngIf="showTopLevel" class="title"><img class="logo" src="./assets/images/logo.png"> </div>
+            <div class="title" *ngIf="!showTopLevel">
               <div class="branding">
                 <span class="text-wrapper">
                   <span class="text">{{navHeader}}</span>

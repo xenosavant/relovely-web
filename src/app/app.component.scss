@@ -34,8 +34,11 @@ mat-sidenav-container {
   height: 56px;
   align-items: center;
   .title {
-    flex-grow: 1
-  }
+    flex: 1;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
   .holder {
     width: 50px;
   }
@@ -292,6 +295,7 @@ mat-nav-list {
     }
 
     &.sub {
+      margin-top:30px;
       a {
         height: 52px !important;
         padding-bottom:2px;
