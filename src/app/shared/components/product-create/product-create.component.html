@@ -22,7 +22,9 @@
                     <mat-icon (click)="onRemoveImage(url)">cancel</mat-icon>
                 </div>
             </div>
-            <div class="add-image" (click)="input.click()"><img src="./assets/images/plus.png"></div>
+            <div *ngIf="!mobile" class="add-image" (click)="input.click()"><img src="./assets/images/plus.png"></div>
+            <div *ngIf="mobile" class="add-image" (click)="inputMobile.click()"><img src="./assets/images/plus.png">
+            </div>
         </div>
         <div class="info hint">
             Upload a video wearing the product
@@ -39,98 +41,101 @@
             </div>
         </div>
         <input #input type="file" style="visibility:hidden; height:0px;" (change)="imageChanged($event)" />
-        <form novalidate [formGroup]="form">
-            <div>
-                <mat-form-field appearance="outline">
-                    <input matInput placeholder="Product Title" formControlName="title" />
-                </mat-form-field>
-            </div>
-            <div class="description">
-                <mat-form-field appearance="outline">
-                    <textarea matInput placeholder="Product Description" formControlName="description"></textarea>
-                </mat-form-field>
-            </div>
-            <div class="categories">
-                <ng-container formArrayName="categories" *ngFor="let item of categoryArray['controls']; let i = index;">
-                    <div [formGroupName]="i">
-                        <mat-form-field appearance="outline">
-                            <mat-select placeholder="Category" class="form-control"
-                                (selectionChange)="selectCategory($event, i)" formControlName="id">
-                                <mat-option *ngFor="let cat of categories[i]" [value]="cat.id">{{cat.name}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                </ng-container>
-            </div>
-            <div class="double-field">
-                <div class="size">
+        <input #inputMobile type="file" style="visibility:hidden; height:0px;" capture="camera"
+            (change)="imageChanged($event)" />
+    </ng-container>
+    <form novalidate [formGroup]="form">
+        <div>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Product Title" formControlName="title" />
+            </mat-form-field>
+        </div>
+        <div class="description">
+            <mat-form-field appearance="outline">
+                <textarea matInput placeholder="Product Description" formControlName="description"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="categories">
+            <ng-container formArrayName="categories" *ngFor="let item of categoryArray['controls']; let i = index;">
+                <div [formGroupName]="i">
                     <mat-form-field appearance="outline">
-                        <mat-select placeholder="Size" class="form-control" formControlName="size">
-                            <mat-option *ngFor="let size of currentSizes" [value]="size.key">{{size.value}}
+                        <mat-select placeholder="Category" class="form-control"
+                            (selectionChange)="selectCategory($event, i)" formControlName="id">
+                            <mat-option *ngFor="let cat of categories[i]" [value]="cat.id">{{cat.name}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="color">
-                    <mat-form-field appearance="outline">
-                        <mat-select placeholder="Color" class="form-control" formControlName="color">
-                            <mat-option *ngFor="let color of colors" [value]="color.key">
-                                <div class="dot-wrapper">
-                                    <div class="dot" [style.background-color]="color.color"></div>
-                                    <div>{{color.value}}</div>
-                                </div>
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="weight">
+            </ng-container>
+        </div>
+        <div class="double-field">
+            <div class="size">
                 <mat-form-field appearance="outline">
-                    <mat-select placeholder="Shipping Weight" class="form-control" formControlName="weight">
-                        <mat-option *ngFor="let weight of weights" [value]="weight.key">{{weight.value}}
+                    <mat-select placeholder="Size" class="form-control" formControlName="size">
+                        <mat-option *ngFor="let size of currentSizes" [value]="size.key">{{size.value}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="brand">
+            <div class="color">
                 <mat-form-field appearance="outline">
-                    <input matInput placeholder="Brand" formControlName="brand" />
+                    <mat-select placeholder="Color" class="form-control" formControlName="color">
+                        <mat-option *ngFor="let color of colors" [value]="color.key">
+                            <div class="dot-wrapper">
+                                <div class="dot" [style.background-color]="color.color"></div>
+                                <div>{{color.value}}</div>
+                            </div>
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
-            <div class="info hint tag-hint">
-                Press enter after every tag
-            </div>
-            <div class="tags">
+        </div>
+        <div class="weight">
+            <mat-form-field appearance="outline">
+                <mat-select placeholder="Shipping Weight" class="form-control" formControlName="weight">
+                    <mat-option *ngFor="let weight of weights" [value]="weight.key">{{weight.value}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="brand">
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Brand" formControlName="brand" />
+            </mat-form-field>
+        </div>
+        <div class="info hint tag-hint">
+            Press enter after every tag
+        </div>
+        <div class="tags">
+            <mat-form-field appearance="outline">
+                <mat-chip-list #chipList>
+                    <mat-chip [selectable]="false" (removed)="onRemoveTag(tag)" [removable]="true"
+                        *ngFor="let tag of tags">
+                        {{tag}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                    <input matInput [matChipInputFor]="chipList" type="text" class="form-control" formControlName="tag"
+                        (keyup)="onKeyup($event)" placeholder="Tags (up to 16)" />
+                </mat-chip-list>
+            </mat-form-field>
+        </div>
+        <div class="double-field">
+            <div class="price">
                 <mat-form-field appearance="outline">
-                    <mat-chip-list #chipList>
-                        <mat-chip [selectable]="false" (removed)="onRemoveTag(tag)" [removable]="true"
-                            *ngFor="let tag of tags">
-                            {{tag}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                        <input matInput [matChipInputFor]="chipList" type="text" class="form-control"
-                            formControlName="tag" (keyup)="onKeyup($event)" placeholder="Tags (up to 16)" />
-                    </mat-chip-list>
+                    <input type="text" currency matInput placeholder="Price" formControlName="price" />
                 </mat-form-field>
             </div>
-            <div class="double-field">
-                <div class="price">
-                    <mat-form-field appearance="outline">
-                        <input type="text" currency matInput placeholder="Price" formControlName="price" />
-                    </mat-form-field>
-                </div>
-                <div class="retail-price">
-                    <mat-form-field appearance="outline">
-                        <input type="text" currency matInput placeholder="Original Retail Price"
-                            formControlName="retailPrice" />
-                    </mat-form-field>
-                </div>
+            <div class="retail-price">
+                <mat-form-field appearance="outline">
+                    <input type="text" currency matInput placeholder="Original Retail Price"
+                        formControlName="retailPrice" />
+                </mat-form-field>
             </div>
-            <button mat-stroked-button [disabled]="!form.valid" (click)="onSave()" [class.primary]="true">
-                List
-            </button>
-        </form>
+        </div>
+        <button mat-stroked-button [disabled]="!form.valid" (click)="onSave()" [class.primary]="true">
+            List
+        </button>
+    </form>
     </ng-container>
 </app-modal>
 <div class="loading-wrapper" *ngIf="loading">

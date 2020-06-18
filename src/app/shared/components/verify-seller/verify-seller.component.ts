@@ -120,7 +120,7 @@ export class VerifySellerComponent implements OnInit {
       this.backError = 'Upload failed';
       this.ref.markForCheck();
     }
-    this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
+    this.breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
       this.mobile = result.matches;
     });
     this.loading = false;

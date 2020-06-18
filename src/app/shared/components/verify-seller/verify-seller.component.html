@@ -98,7 +98,7 @@
             <div class="error">{{backError}}</div>
         </div>
         <div class="documents" *ngIf="formFields.indexOf('document') > -1">
-            <div class="add-document" (click)="front.click()">
+            <div *ngIf="mobile" class="add-document" (click)="frontMobile.click()">
                 <div class="spinner-wrapper" *ngIf="frontUploading">
                     <mat-spinner diameter="25" class="white">
                     </mat-spinner>
@@ -116,7 +116,43 @@
                     </div>
                 </ng-container>
             </div>
-            <div class="add-document" (click)="back.click()">
+            <div *ngIf="!mobile" class="add-document" (click)="frontDesktop.click()" class="add-document"
+                (click)="frontDesktop.click()">
+                <div class="spinner-wrapper" *ngIf="frontUploading">
+                    <mat-spinner diameter="25" class="white">
+                    </mat-spinner>
+                </div>
+                <ng-container *ngIf="!frontUploading">
+                    <div *ngIf="!frontImage && !frontError">
+                        <fa-icon icon="plus"></fa-icon>
+                        <div>Front of ID</div>
+                    </div>
+                    <div class="success" *ngIf="frontImage && !frontError">
+                        <fa-icon icon="check"></fa-icon>
+                    </div>
+                    <div class="error" *ngIf="frontError">
+                        <fa-icon icon="times"></fa-icon>
+                    </div>
+                </ng-container>
+            </div>
+            <div *ngIf="mobile" class="add-document" (click)="backMobile.click()">
+                <div class="spinner-wrapper" *ngIf="backUploading">
+                    <mat-spinner diameter="25" class="white"></mat-spinner>
+                </div>
+                <ng-container *ngIf="!backUploading">
+                    <div *ngIf="!backImage && !backError">
+                        <fa-icon icon="plus"></fa-icon>
+                        <div *ngIf="!backImage">Back of ID</div>
+                    </div>
+                    <div class="success" *ngIf="backImage && !backError">
+                        <fa-icon icon="check"></fa-icon>
+                    </div>
+                    <div class="error" *ngIf="backError">
+                        <fa-icon icon="times"></fa-icon>
+                    </div>
+                </ng-container>
+            </div>
+            <div *ngIf="!mobile" class="add-document" (click)="backDesktop.click()">
                 <div class="spinner-wrapper" *ngIf="backUploading">
                     <mat-spinner diameter="25" class="white"></mat-spinner>
                 </div>
@@ -150,12 +186,10 @@
             </button>
         </div>
     </form>
-    <ng-container capture="!mobile">
-        <input #front type="file" ng2FileSelect [uploader]="frontUploader" style="visibility:hidden; height:0px;" />
-        <input #back type="file" ng2FileSelect [uploader]="backUploader" style="visibility:hidden; height:0px;" />
-    </ng-container>
-    <ng-container capture="mobile">
-        <input #front type="file" ng2FileSelect [uploader]="frontUploader" style="visibility:hidden; height:0px;" />
-        <input #back type="file" ng2FileSelect [uploader]="backUploader" style="visibility:hidden; height:0px;" />
-    </ng-container>
+    <input #frontDesktop type="file" ng2FileSelect [uploader]="frontUploader" style="visibility:hidden; height:0px;" />
+    <input #backDesktop type="file" ng2FileSelect [uploader]="backUploader" style="visibility:hidden; height:0px;" />
+    <input #frontMobile type="file" ng2FileSelect [uploader]="frontUploader" capture="camera"
+        style="visibility:hidden; height:0px;" />
+    <input #backMobile type="file" ng2FileSelect [uploader]="backUploader" capture="camera"
+        style="visibility:hidden; height:0px;" />
 </app-modal>

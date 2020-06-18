@@ -16,6 +16,7 @@ import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { KeyValue } from '@app/shared/interfaces/key-value.interface';
 import { FileUploadService } from '@app/shared/services/file-upload.service';
 import { weights } from '../../../data/weights.ts';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-product-create',
@@ -55,6 +56,7 @@ export class ProductCreateComponent implements OnInit {
   title: string;
   cuurencyChars = new RegExp('[\.,$]', 'g');
   weights = weights;
+  mobile: boolean;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -62,11 +64,15 @@ export class ProductCreateComponent implements OnInit {
     private readonly zone: NgZone,
     private lookupService: LookupService,
     private ref: ChangeDetectorRef,
-    private productService: ProductService) {
+    private productService: ProductService,
+    private breakpointObserver: BreakpointObserver) {
 
   }
 
   ngOnInit() {
+    this.breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
+      this.mobile = result.matches;
+    });
     if (this.product) {
       this.edit = true;
       this.title = 'Edit Product';
