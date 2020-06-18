@@ -27,7 +27,7 @@ export const cloudinaryLib = {
   Cloudinary: Cloudinary
 };
 
-export const config: CloudinaryConfiguration = { cloud_name: environment.cloudinaryCloudName, upload_preset: environment.cloudinaryUploadPreset };
+export const config: CloudinaryConfiguration = { cloud_name: environment.cloudinaryCloudName };
 
 @NgModule({
   imports: [

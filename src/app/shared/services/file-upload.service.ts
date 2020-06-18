@@ -19,7 +19,7 @@ export class FileUploadService extends BaseService {
         const formData = new FormData();
         const timestamp = Date.now().toString();
         formData.append('file', data);
-        formData.append('upload_preset', environment.cloudinaryUploadPreset);
+        formData.append('upload_preset', environment.cloudinaryImageUploadPreset);
         formData.append('api_key', environment.cloudinaryApiKey);
         formData.append('timestamp', timestamp);
         formData.append('folder', id);
@@ -28,20 +28,24 @@ export class FileUploadService extends BaseService {
         }
         // formData.append('background_removal', 'cloudinary_ai');
 
-        const payload: any = { folder: id, timestamp: timestamp }
+        console.log(environment.cloudinaryImageUploadPreset);
+        console.log(id);
+        const payload: any = { folder: id, timestamp: timestamp, uploadPreset: environment.cloudinaryImageUploadPreset }
         if (publicId) {
             payload.publicId = publicId;
         }
         return this.httpClient.post<{ signature: string }>(`${this.apiBaseUrl}/storage/signature`, payload).pipe(
             concatMap(response => {
                 formData.append('signature', response.signature);
-                return this.httpClient.post<any>(`${this.cloudinaryUploadUrl}/${type}/upload`, formData)
+                return this.httpClient.post<any>(`${this.cloudinaryUploadUrl}/upload`, formData)
                     .pipe(map((result: any) => result))
             }))
     }
 
-    public getSignature(id: string, timestamp: string, publicId: string = null) {
-        return this.httpClient.post<{ signature: string }>(`${this.apiBaseUrl}/storage/signature`, { folder: id, timestamp: timestamp }).pipe(map(response => {
+    public getSignature(id: string, timestamp: string, preset: string) {
+        console.log(preset);
+        console.log(id);
+        return this.httpClient.post<{ signature: string }>(`${this.apiBaseUrl}/storage/signature`, { folder: id, timestamp: timestamp, uploadPreset: preset }).pipe(map(response => {
             return response.signature;
         }));
     }

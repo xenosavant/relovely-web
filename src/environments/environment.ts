@@ -22,7 +22,8 @@ export const environment = {
   instagramSignupRedirectUrl: 'https://dev.relovely.com/account/instagram',
   cloudinaryApiKey: '398779565118789',
   cloudinaryCloudName: 'relovely',
-  cloudinaryUploadPreset: 'ml_default',
+  cloudinaryImageUploadPreset: 'images',
+  cloudinaryVideoUploadPreset: 'videos',
   cloudinaryUploadUrl: 'https://api.cloudinary.com/v1_1/relovely',
   stripePublishableKey: 'pk_test_t9a6DNSxt1hqrd6kzctGFgHI00JZoXOBuP',
   versions: {

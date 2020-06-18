@@ -63,6 +63,9 @@ import {
   faEllipsisV,
   faLandmark,
   faStore,
+  faLock,
+  faShieldAlt,
+  faClock,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -158,7 +161,10 @@ library.add(
   faHeart,
   faUndo,
   faLandmark,
-  faStore
+  faStore,
+  faLock,
+  faShieldAlt,
+  faClock
 );
 
 

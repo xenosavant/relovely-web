@@ -6,7 +6,7 @@ export const environment = {
   production: true,
   test: false,
   i18nPrefix: '/relovely',
-  apiUrl: 'https://api.relovely.com',
+  apiUrl: '/api',
   facebookAuthUrl: 'https://www.facebook.com/v6.0/dialog/oauth',
   facebookClientId: '498359121110237',
   facebookRedirectUrl: 'https://www.relovely.com/account/facebook',
@@ -17,7 +17,8 @@ export const environment = {
   instagramSignupRedirectUrl: 'https://www.relovely.com/account/instagram',
   cloudinaryApiKey: '398779565118789',
   cloudinaryCloudName: 'relovely',
-  cloudinaryUploadPreset: 'ml_default',
+  cloudinaryImageUploadPreset: 'images',
+  cloudinaryVideoUploadPreset: 'videos',
   cloudinaryUploadUrl: 'https://api.cloudinary.com/v1_1/relovely',
   stripePublishableKey: 'pk_test_t9a6DNSxt1hqrd6kzctGFgHI00JZoXOBuP',
   versions: {

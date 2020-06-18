@@ -1,9 +1,9 @@
 <div class=cropper-container>
-    <div class="inner-container">
+    <div class="inner-container" [style.visibility]="visibilty">
         <div class="title-wrapper">
             <h1 class="title"> Crop Image</h1>
         </div>
-        <div class="cropper-inner" [style.visibility]="visibilty">
+        <div class="cropper-inner">
             <div class="crop-wrap">
                 <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1"
                     [resizeToWidth]="600" format="jpeg" (imageCropped)="imageCropped($event)"
@@ -12,8 +12,12 @@
             </div>
         </div>
         <div *ngIf="ready" class="button-wrapper">
-            <div class="info">Cropped image only used for thumbnail. Full-size image will be viewable for shoppers when
-                clicked</div>
+            <div class="info">
+                <div class="text">
+                    Cropped image only used for thumbnail. Full-size image will be viewable for shoppers when
+                    clicked
+                </div>
+            </div>
             <div class="buttons">
                 <app-button (click)="onCancel()" type="primary">
                     Cancel
@@ -21,7 +25,9 @@
                 <app-button (click)="onImageCropped()" type="primary"> Crop
                 </app-button>
             </div>
-
         </div>
+    </div>
+    <div *ngIf="!ready" class="loading-container">
+        <mat-spinner [diameter]="25"></mat-spinner>
     </div>
 </div>

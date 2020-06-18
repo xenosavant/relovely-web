@@ -39,6 +39,7 @@ export class ImageCropperComponent implements OnInit {
   }
 
   public onImageCropped(): void {
+    this.ready = false;
     this.crop.emit(this.currentImage);
   }
 

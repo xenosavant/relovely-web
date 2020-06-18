@@ -10,6 +10,7 @@ import { concatMap, tap } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { HeaderService } from '@app/shared/services/header.service';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 
 @Component({
   selector: 'app-profile',
@@ -31,6 +32,7 @@ export class ProfileComponent implements OnInit {
   edit = false;
   public form: FormGroup;
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
+    private navigationService: NavigationService,
     private userService: UserService, private zone: NgZone, private ref: ChangeDetectorRef,
     private uploadService: FileUploadService,
     private headerService: HeaderService) { }
@@ -39,20 +41,25 @@ export class ProfileComponent implements OnInit {
     this.route.paramMap.subscribe(param => {
       const id = param.get('id');
       this.currentUser = this.userService.user$.value;
-      if (id === 'profile' || id === this.currentUser.id) {
-        this.userService.getUser(this.userService.currentUser.id).subscribe(user => {
-          this.owner = true;
-          this.user = user;
-          this.loading = false;
-          this.ref.markForCheck();
-        });
+      if (!this.currentUser) {
+        this.navigationService.navigate({ path: '/' });
+        this.navigationService.openAuthWindow({ page: 'signin' });
       } else {
-        this.userService.getUser(id).subscribe(user => {
-          this.owner = false;
-          this.user = user;
-          this.ref.markForCheck();
-          this.loading = false;
-        });
+        if (id === 'profile' || id === this.currentUser.id) {
+          this.userService.getUser(this.userService.user$.value.id).subscribe(user => {
+            this.owner = true;
+            this.user = user;
+            this.loading = false;
+            this.ref.markForCheck();
+          });
+        } else {
+          this.userService.getUser(id).subscribe(user => {
+            this.owner = false;
+            this.user = user;
+            this.ref.markForCheck();
+            this.loading = false;
+          });
+        }
       }
       this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
         this.mobile = result.matches;

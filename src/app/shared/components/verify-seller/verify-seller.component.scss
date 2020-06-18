@@ -70,3 +70,20 @@
     }
     margin-bottom: 16px;
 }
+
+.security-info {
+    .security-header {
+        font-weight: 600;
+        margin-bottom: 16px;
+    }
+    ul {
+        padding: 0 !important;
+        list-style: none;
+        li {
+            margin-bottom: 8px;
+            display: grid;
+            grid-template-columns: 30px 1fr;
+            
+        }
+    }
+}

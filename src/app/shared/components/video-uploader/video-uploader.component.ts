@@ -27,7 +27,7 @@ export class VideoUploaderComponent implements OnInit {
     private uploadService: FileUploadService) { }
 
   ngOnInit(): void {
-    this.uploadService.getSignature(`${this.id}/videos`, this.timestamp).subscribe(signature => {
+    this.uploadService.getSignature(`products/${this.id}/videos`, this.timestamp, environment.cloudinaryVideoUploadPreset).subscribe(signature => {
 
       // Create the file uploader, wire it to upload to your account
       const uploaderOptions: FileUploaderOptions = {
@@ -50,8 +50,8 @@ export class VideoUploaderComponent implements OnInit {
 
       this.uploader.onBuildItemForm = (fileItem: any, form: FormData): any => {
         // Add Cloudinary's unsigned upload preset to the upload form
-        form.append('upload_preset', environment.cloudinaryUploadPreset);
-        form.append('folder', `${this.id}/videos`);
+        form.append('upload_preset', environment.cloudinaryVideoUploadPreset);
+        form.append('folder', `products/${this.id}/videos`);
         form.append('file', fileItem);
         form.append('timestamp', this.timestamp);
         form.append('api_key', environment.cloudinaryApiKey);

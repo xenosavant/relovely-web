@@ -58,11 +58,12 @@
         }
        .crop-wrap {
         @media(max-width:799px) {
-           height: fit-content;
+           height: inherit;
            flex:auto;
         }
         @media(min-width:800px) {
-            width:700px;
+            max-width: 500px;
+            min-width: 400px;
             margin: 0;
             position: absolute;
             top: 50%;
@@ -89,6 +90,10 @@
             width: 100%;
         }
         .info {
+            .text {
+                width: fit-content;
+                margin: 0 auto;
+            }
             color: white;
             margin: 8px;
         }
@@ -97,4 +102,12 @@
             margin-right: 16px;
         }
     }
+}
+
+.loading-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
 }

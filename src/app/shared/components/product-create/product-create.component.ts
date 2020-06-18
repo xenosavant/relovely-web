@@ -17,6 +17,7 @@ import { KeyValue } from '@app/shared/interfaces/key-value.interface';
 import { FileUploadService } from '@app/shared/services/file-upload.service';
 import { weights } from '../../../data/weights.ts';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-product-create',
@@ -79,7 +80,7 @@ export class ProductCreateComponent implements OnInit {
       this.form = new FormGroup({
         title: new FormControl(this.product.title, [Validators.required]),
         description: new FormControl(this.product.description, [Validators.required]),
-        brand: new FormControl(this.product.brand, [Validators.required]),
+        brand: new FormControl(this.product.brand),
         categories: this.formBuilder.array(
           [
             this.formBuilder.group({
@@ -113,7 +114,7 @@ export class ProductCreateComponent implements OnInit {
           this.formBuilder.group({
             id: null
           })]),
-        brand: new FormControl('', [Validators.required]),
+        brand: new FormControl(''),
         size: new FormControl('', [Validators.required]),
         tag: new FormControl(''),
         price: new FormControl(null, [Validators.required]),
@@ -211,7 +212,7 @@ export class ProductCreateComponent implements OnInit {
   }
 
   onImageCropped(cropped: string) {
-    this.uploadService.upload('data:image/jpeg;base64,' + cropped, `products/${this.id}/images`, 'image').pipe(
+    this.uploadService.upload('data:image/jpeg;base64,' + cropped, `products/${this.id}/images`, environment.cloudinaryImageUploadPreset).pipe(
       concatMap(croppedResult => this.uploadService.upload('data:image/jpeg;base64,' + this.originalImage, `products/${this.id}/images`, 'image')
         .pipe(map((originalResult: any) => {
           this.images.push({ cropped: croppedResult.secure_url, original: originalResult.secure_url });
@@ -231,8 +232,8 @@ export class ProductCreateComponent implements OnInit {
     this.images.splice(this.images.indexOf(url), 1);
   }
 
-  onKeyup(key: any) {
-    if (key.key === ',' || key.key === 'Enter') {
+  onKeyup(event: any) {
+    if (event.key === ',' || event.key === 'Enter') {
       this.onAddTag();
     }
   }
@@ -240,7 +241,7 @@ export class ProductCreateComponent implements OnInit {
   onAddTag() {
     const tag = this.form.get('tag').value;
     if (this.tags.indexOf(tag) < 0) {
-      this.tags = this.tags.concat(tag);
+      this.tags = this.tags.concat(tag.replace(/,/g, ' '));
     }
     this.form.get('tag').setValue('');
   }
@@ -279,6 +280,9 @@ export class ProductCreateComponent implements OnInit {
       }
       if (this.form.get('retailPrice').value) {
         product.retailPrice = parseInt(this.form.get('retailPrice').value.replace(this.cuurencyChars, ''));
+      }
+      if (this.form.get('brand').value) {
+        product.brand = this.form.get('brand').value;
       }
       if (this.edit) {
         this.productService.patchProduct(product, this.product.id).subscribe(response => {

@@ -1,4 +1,4 @@
-<app-modal [title]="'Seller Verification'" (close)="onClose($event)">
+<app-modal [title]="'Secure Identity Verification'" (close)="onClose($event)">
     <div class="error" *ngIf="verification">
         <div>We need to get a little more information to verify your identity...</div>
         <div *ngFor="let error of verification.errors">
@@ -6,6 +6,32 @@
         </div>
     </div>
     <form *ngIf="!loading" novalidate [formGroup]="form">
+        <div class="security-info">
+            <div class="security-header">
+                Relovely uses Stripe to quickly verify your identity
+            </div>
+            <ul>
+                <li>
+                    <fa-icon icon="lock"></fa-icon>
+                    <div class="info">
+                        Stripe handles billions of transactions with world-class security and identity verification
+                    </div>
+                </li>
+                <li>
+                    <fa-icon icon="shield-alt"></fa-icon>
+                    <div class="info">
+                        Your personal information is used only for verification purposes and will never be shared with
+                        third-parties
+                    </div>
+                </li>
+                <li>
+                    <fa-icon icon="clock"></fa-icon>
+                    <div class="info">
+                        This process should take less than 5 minutes
+                    </div>
+                </li>
+            </ul>
+        </div>
         <ng-container *ngIf="formFields.indexOf('name') > -1">
             <div>
                 <mat-form-field appearance="outline">
@@ -182,7 +208,7 @@
                 <strong>Cancel</strong>
             </app-button>
             <button mat-stroked-button class="primary" [disabled]="!isFormValid()" (click)="onSave()">
-                <strong> Save </strong>
+                <strong> Submit </strong>
             </button>
         </div>
     </form>
