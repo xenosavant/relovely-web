@@ -107,18 +107,6 @@ export class NavigationService {
         }
     }
 
-    public sideNavigate(item: NavigationItem) {
-        this._navConfig.selectedCategoryId = item.id;
-        this._navConfig.selectedCategory = this.lookupService.getCategory(item.id);
-        if (item.subItems && item.subItems.length) {
-            this._navConfig.currentNavigationItems = item.subItems;
-            this._navConfig.navigationHeader = item.parent ? item.parent.name : item.name;
-            this._navConfig.showTopLeveNavigation = false;
-            this.navConfigSubject$.next(this._navConfig);
-            return false;
-        } else return this.navigate(item);
-    }
-
     private goto(navigationItem: NavigationItem, back: boolean, queryParams: KeyValue<string, string>[] = null) {
         this._navConfig.categoryItems = navigationItem.subCategories;
         if (navigationItem.id) {

@@ -11,12 +11,6 @@
           <button class="mat-icon-button black" *ngIf="!sidenavOpen" (click)="openSidenav()">
             <fa-icon icon="bars"></fa-icon>
           </button>
-          <button *ngIf="sidenavOpen && showTopLevel" class="mat-icon-button black" (click)="closeSidenav()">
-            <fa-icon icon="times"></fa-icon>
-          </button>
-          <button *ngIf="sidenavOpen && !showTopLevel" class="mat-icon-button black" (click)="goBack()">
-            <fa-icon icon="arrow-left"></fa-icon>
-          </button>
           <div class="toolbar-filler"><img class="logo" src="./assets/images/logo.png" (click)="onGoHome()"> </div>
           <div></div>
           <div class="icon-wrapper mobile">
@@ -61,13 +55,26 @@
         </ng-container>
       </div>
       <mat-sidenav [opened]="sidenavOpen" mode="side">
+        <button *ngIf="sidenavOpen" class="close mat-icon-button black" (click)="closeSidenav()">
+          <fa-icon icon="times"></fa-icon>
+        </button>
         <div class="sidenav-wrapper">
-          <div class="sidenav-inner">
-            <div *ngIf="!showTopLevel" [ngClass]="{'branding': true, 'border-bottom' : !showTopLevel}">
-              <span class="text-wrapper">
-                <span class="text">{{navHeader}}</span>
-              </span>
+          <div class="sidenav-header-wrap">
+            <div class="holder">
+              <button *ngIf="sidenavOpen && !showTopLevel" class="mat-icon-button black" (click)="goBack()">
+                <fa-icon icon="arrow-left"></fa-icon>
+              </button>
             </div>
+            <div class="title">
+              <div class="branding">
+                <span class="text-wrapper">
+                  <span class="text">{{navHeader}}</span>
+                </span>
+              </div>
+            </div>
+            <div class="holder"></div>
+          </div>
+          <div class="sidenav-inner">
             <mat-nav-list *ngIf="showTopLevel" class="top">
               <a mat-list-item *ngFor="let item of currentNavigationItems" (click)="sideNavigate(item)"
                 routerLinkActive="nav-item-active">

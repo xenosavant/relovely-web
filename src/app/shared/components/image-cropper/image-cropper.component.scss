@@ -37,7 +37,7 @@
     background-color: black;
     max-width:800px;
     display: grid;
-    grid-template-rows: 50px 1fr 50px;
+    grid-template-rows: 50px 1fr 70px;
     @media(max-width:799) {
         display: flex;
         flex-direction: column;
@@ -82,6 +82,10 @@
         align-items: center;
         @media(max-width:$mobile-breakpoint) {
             width: 100%;
+        }
+        .info {
+            color: white;
+            margin: 8px;
         }
         app-button {
             margin-left: 16px;

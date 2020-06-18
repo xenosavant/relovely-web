@@ -75,6 +75,7 @@ export class AppComponent implements OnInit {
   public authUsername: string;
   error = false;
   searchTerm: string;
+  private _navMap = {};
 
   get top(): number {
     return ((this.showFilterBar ? 70 : 0) + (this.showNavBar ? 44 : 0));
@@ -150,7 +151,6 @@ export class AppComponent implements OnInit {
               this.navSetup(JSON.parse(value.categories.json));
               this.loading = false;
               this.ref.markForCheck();
-              console.log(value);
             }, err => {
               this.handleError();
             });
@@ -370,6 +370,7 @@ export class AppComponent implements OnInit {
 
   public openSidenav() {
     this.sidenavOpen = true;
+    this.navHeader = 'Menu';
     this.showOverlay = true;
   }
 
@@ -394,15 +395,26 @@ export class AppComponent implements OnInit {
     if (!this.userService.currentUser && item.name === 'Account') {
       this.showSignin();
     } else {
-      const close = this.navigationService.sideNavigate(item);
+      const close = item.subItems.length === 0;
       if (close) {
+        this.navigationService.navigate(item);
         this.closeSidenav();
+      } else {
+        this.showTopLevel = false;
+        this.currentNavigationItems = item.subItems;
+        this.navHeader = item.name;
       }
     }
   }
 
-  public goBack(item: NavigationItem) {
-    this.navigationService.setCurrentNavigationItems(this.navigationService.rootNavigationItems);
+  public goBack() {
+    if (this.currentNavigationItems[0].parent.parent) {
+      this.sideNavigate(this.currentNavigationItems[0].parent.parent)
+    } else {
+      this.currentNavigationItems = this.navigationService.rootNavigationItems;
+      this.navHeader = 'Menu';
+      this.showTopLevel = true;
+    }
   }
 
   public showSignin() {

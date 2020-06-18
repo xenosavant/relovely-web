@@ -16,7 +16,7 @@ mat-sidenav-container {
   width: 100%;
   background-color: white;
   position:fixed;
-  top:56px;
+  top:0px;
   bottom:0;
   left:0;
   right:0;
@@ -25,6 +25,19 @@ mat-sidenav-container {
     .content {
       // margin-bottom: 50px !important;
     }
+  }
+}
+
+.sidenav-header-wrap{ 
+  display: flex;
+  flex-direction: row;
+  height: 56px;
+  align-items: center;
+  .title {
+    flex-grow: 1
+  }
+  .holder {
+    width: 50px;
   }
 }
 

@@ -491,10 +491,22 @@ mat-sidenav-content {
   background-color: $background-gray !important;
   position:fixed !important;
   height:auto !important;
-  top: 56px;
+  top: 0px;
   bottom: 0px;
   left: 0px;
   right: 0px;
+}
+
+mat-sidenav {
+  overflow: initial !important;
+}
+
+.mat-drawer-inner-container {
+  button.close {
+    position: absolute;
+    top: 8px;
+    right: -40px;
+  }
 }
 
 mat-basic-chip {
