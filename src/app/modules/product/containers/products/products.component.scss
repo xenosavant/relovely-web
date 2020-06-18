@@ -33,7 +33,7 @@
 }
 
 .breadcrumbs {
-    max-width: $desktop-width;
+    max-width: $products-width;
     margin: 0 auto;
     margin-top:32px;
     margin-bottom:32px;
@@ -43,11 +43,11 @@
 .products-content {
     flex:auto;
     margin: 0 auto;
-    max-width: $desktop-width;
+    max-width: $products-width;
   }
 
 .paginator {
-    max-width: $desktop-width;
+    max-width: $products-width;
     margin: 0 auto;
 }
 

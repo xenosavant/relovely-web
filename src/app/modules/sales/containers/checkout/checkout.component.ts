@@ -194,12 +194,13 @@ export class CheckoutComponent implements OnInit {
         address: this.selectedAddress,
         paymentId: this.selectedPayment.stripeId,
         rateId: this.shippingRateId,
-        shipmentId: this.shipmentId
+        shipmentId: this.shipmentId,
+        tax: this.tax
       }, this.product.id)
       .subscribe(order => {
         this.navigationService.navigate({ path: `/sales/orders/${order.id}` })
       }, err => {
-        console.log(err);
+        this.error = err.error.error.message;
       })
   }
 

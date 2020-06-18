@@ -5,4 +5,5 @@ export interface PostOrderRequest {
     paymentId: string;
     rateId: string;
     shipmentId: string;
+    tax: number;
 }
