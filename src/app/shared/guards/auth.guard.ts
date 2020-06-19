@@ -14,7 +14,6 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild {
     canActivate(): Observable<boolean> {
         return this.userService.loggedIn$.pipe(
             map((loggedIn: boolean) => {
-                console.log(loggedIn);
                 return loggedIn;
             })
         );
@@ -23,7 +22,6 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild {
     canActivateChild(): Observable<boolean> {
         return this.userService.loggedIn$.pipe(
             map((loggedIn: boolean) => {
-                console.log(loggedIn);
                 return loggedIn;
             })
         );

@@ -79,7 +79,6 @@ export class PaymentCardInputComponent implements OnInit {
         }
 
       }, err => {
-        console.log(err);
         this.isLoading.emit(false);
         this.ref.markForCheck();
       })

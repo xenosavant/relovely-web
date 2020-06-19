@@ -41,7 +41,6 @@ export class OrderComponent implements OnInit {
         this.navigationItems = [{ path: '/sales/orders', name: 'Orders' }, { path: `/sales/orders/${this.order.id}`, name: this.order.orderNumber }];
         this.seller = this.userService.currentUser.id === this.order.seller.id;
         this.loading = false;
-        console.log(this.navigationItems);
         this.ref.markForCheck();
       })
     })

@@ -30,7 +30,6 @@ export class ProductsListComponent implements OnChanges {
     private ref: ChangeDetectorRef) { }
 
   ngOnChanges() {
-    console.log(this.products);
     this.ref.markForCheck();
   }
 

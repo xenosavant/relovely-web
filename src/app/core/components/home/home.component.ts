@@ -35,7 +35,6 @@ export class HomeComponent {
             this.mobile = result.matches;
         });
         this.userService.getFeatured().subscribe(sellers => {
-            console.log(sellers)
             this.featuredSellers = sellers;
             this.ref.markForCheck();
         })

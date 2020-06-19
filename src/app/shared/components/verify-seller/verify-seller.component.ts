@@ -277,7 +277,6 @@ export class VerifySellerComponent implements OnInit {
 
   verifyFile(event: any): string {
     const file: File = event.file;
-    console.log(file.name);
     if (!RegExp('([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg|HEIC)', 'g').test(file.name)) {
       return 'file is not an image';
     }

@@ -106,7 +106,6 @@ export class ProfileComponent implements OnInit {
       const ctx = canvas.getContext("2d");
       ctx.drawImage(data.image, 0, 0);
       const dataURL = canvas.toDataURL("image/jpg");
-      console.log(dataURL)
       context.currentImage = dataURL;
       context.crop = true;
       context.ref.markForCheck();

@@ -65,7 +65,6 @@ export class ProductsComponent implements OnInit {
     this.navigationService.navConfig$.subscribe(state => {
       this.grid = state.showProductGrid;
       this.title = state.pageHeader;
-      console.log(this.title);
       this.zone.run(() => {
         this.ref.markForCheck();
       })

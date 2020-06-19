@@ -28,8 +28,6 @@ export class FileUploadService extends BaseService {
         }
         // formData.append('background_removal', 'cloudinary_ai');
 
-        console.log(environment.cloudinaryImageUploadPreset);
-        console.log(id);
         const payload: any = { folder: id, timestamp: timestamp, uploadPreset: environment.cloudinaryImageUploadPreset }
         if (publicId) {
             payload.publicId = publicId;

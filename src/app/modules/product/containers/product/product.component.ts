@@ -121,7 +121,6 @@ export class ProductComponent implements OnInit {
   refreshProduct() {
     this.loading = true;
     this.productService.getProduct(this.id).subscribe(response => {
-      console.log(response);
       if (this.currentUser && this.currentUser.id === response.product.sellerId) {
         this.seller = true;
       }

@@ -45,7 +45,6 @@ export class AddAddressModalComponent implements OnInit {
 
   onLoading(loading: boolean) {
     this.loading = loading;
-    console.log(this.loading);
     this.ref.markForCheck();
   }
 

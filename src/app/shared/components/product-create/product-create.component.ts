@@ -79,6 +79,7 @@ export class ProductCreateComponent implements OnInit {
     if (this.product) {
       this.edit = true;
       this.title = 'Edit Product';
+      this.id = this.product.cloudId;
       this.form = new FormGroup({
         title: new FormControl(this.product.title, [Validators.required]),
         description: new FormControl(this.product.description, [Validators.required]),
@@ -103,7 +104,6 @@ export class ProductCreateComponent implements OnInit {
         tag: new FormControl(''),
         weight: new FormControl(this.product.weight, [Validators.required])
       }, this.validateCategories);
-      console.log(this.form)
       this.tags = [...this.product.tags];
       this.images = this.product.images;
       this.video = this.product.videos.length ? this.product.videos[0] : null;
@@ -124,8 +124,8 @@ export class ProductCreateComponent implements OnInit {
         color: new FormControl(null),
         weight: new FormControl(null, [Validators.required])
       }, this.validateCategories);
+      this.id = guid();
     }
-    this.id = guid();
     this.form.get('categories').valueChanges.subscribe((val: any) => {
       this.setSizes(val);
     })
@@ -188,7 +188,6 @@ export class ProductCreateComponent implements OnInit {
 
   public imageChanged($event: any): void {
     const context = this;
-    console.log($event.target.files[0]);
     loadImage($event.target.files[0], {
       orientation: true
     }).then(function (data) {
@@ -198,7 +197,6 @@ export class ProductCreateComponent implements OnInit {
       const ctx = canvas.getContext("2d");
       ctx.drawImage(data.image, 0, 0);
       const dataURL = canvas.toDataURL("image/jpg");
-      console.log(dataURL)
       context.originalImage = dataURL;
       context.crop = true;
       context.ref.markForCheck();
@@ -269,8 +267,6 @@ export class ProductCreateComponent implements OnInit {
       this.images.forEach(image => {
         delete image.id;
       });
-      console.log(this.form.get('price').value);
-      console.log(+this.form.get('price').value);
       const product: Product = {
         cloudId: this.id,
         title: this.form.get('title').value,

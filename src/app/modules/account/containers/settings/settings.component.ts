@@ -100,7 +100,6 @@ export class SettingsComponent implements OnInit {
           break;
       }
     }
-    console.log(this.currentUser.facebookUserId);
     if (this.currentUser) {
       this.facebookLinked = true;
     }
