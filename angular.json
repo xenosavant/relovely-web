@@ -45,9 +45,7 @@
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/cloudinary-video-player/dist/cld-video-player.min.css"
             ],
-            "scripts": [
-              "node_modules/blueimp-load-image"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
