@@ -47,6 +47,9 @@ mat-sidenav-container {
 mat-toolbar {
   top:0;
   mat-toolbar-row {
+    button {
+      width: 40px;
+    }
     z-index:2;
     &.header {
       background-color: $header  !important;
@@ -270,14 +273,24 @@ mat-toolbar-row {
   }
  
   &.top-bar {
+    width: 100vw;
+    overflow: hidden;
+    margin: 0;
     height: 56px;
     align-items: center;
     background-color: $medium-gray-background;
     padding:0px 10px 0px 10px !important;
     display: grid;
-    grid-template-columns: 40px 120px auto 80px;
+    grid-template-columns: 40px auto 80px;
     grid-template-rows: auto;
-    align-content: center;
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0px;
+      padding: 0px;
+      width: 40px !important;
+    }
   }
   &.header {
     height: 44px !important;

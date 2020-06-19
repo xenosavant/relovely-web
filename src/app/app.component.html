@@ -12,7 +12,6 @@
             <fa-icon icon="bars"></fa-icon>
           </button>
           <div class="toolbar-filler"><img class="logo" src="./assets/images/logo.png" (click)="onGoHome()"> </div>
-          <div></div>
           <div class="icon-wrapper mobile">
             <button class="mat-icon-button black" (click)="onToggleSearchBar()">
               <fa-icon icon="search"></fa-icon>
@@ -161,7 +160,7 @@
                 </ng-container>
                 <!-- <img class="caret" src="./assets/images/caret.png"> -->
               </button>
-              <div class="signin" (click)="showSignin()" *ngIf="!userService.user$.value">
+              <div class="signin" (click)="showSignin()" *ngIf="!loading && !(userService.user$ | async)">
                 <div> SIGN IN</div>
               </div>
             </div>

@@ -444,9 +444,10 @@ div.left {
 }
 
 .icon-wrapper.mobile {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
+  display: flex;
+    // display: grid;
+    // grid-template-columns: 1fr 1fr;
+    // grid-template-rows: auto;
 }
 
 
@@ -498,14 +499,15 @@ mat-sidenav-content {
 }
 
 mat-sidenav {
-  overflow: initial !important;
+  overflow: hidden !important;
 }
 
 .mat-drawer-inner-container {
+  overflow: hidden !important;
   button.close {
     position: absolute;
     top: 8px;
-    right: -40px;
+    right: 0px;
   }
 }
 
