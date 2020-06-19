@@ -43,22 +43,13 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run:
-          name: Set IP
-          command: |
-            if [ $CIRCLE_BRANCH = 'develop' ]; then
-              CURRENT_DROPLET_IP=$DEVELOPMENT_DROPLET_IP
-            elif [ $CIRCLE_BRANCH = 'master' ]; then
-              CURRENT_DROPLET_IP=$DROPLET_IP
-            fi
-            echo "export CURRENT_DROPLET_IP=$CURRENT_DROPLET_IP" >> $BASH_ENV
       - run: 
           name: Deploy
           command: |
             if [ $CIRCLE_BRANCH = 'master' ]; then
-              scp -o StrictHostKeyChecking=no -r ./dist/* circle@$CURRENT_DROPLET_IP://var/www/html/
+              scp -o StrictHostKeyChecking=no -r ./dist/* circle@$DROPLET_IP://var/www/html/
             elif [ $CIRCLE_BRANCH = 'develop' ]; then
-              scp -o StrictHostKeyChecking=no -r ./dist/* root@$CURRENT_DROPLET_IP://var/www/html/
+              scp -o StrictHostKeyChecking=no -r ./dist/* root@$DEVELOPMENT_DROPLET_IP://var/www/html/
             fi
  
       ################ WARNING WARNING #####################
