@@ -74,7 +74,7 @@ export class ProductComponent implements OnInit {
     private overlayService: OverlayService) { }
 
   ngOnInit() {
-    this.currentUser = this.userService.currentUser;
+    this.currentUser = this.userService.user$.value;
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
       if (!this.product) {

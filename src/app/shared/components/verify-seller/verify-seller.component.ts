@@ -68,7 +68,7 @@ export class VerifySellerComponent implements OnInit {
         city: new FormControl('', [Validators.required]),
         state: new FormControl(null, [Validators.required]),
         zip: new FormControl('', [Validators.required]),
-        email: new FormControl(this.userService.currentUser.email, [Validators.required]),
+        email: new FormControl(this.userService.user$.value.email, [Validators.required]),
         country: new FormControl({ value: 'United States', disabled: true }, [Validators.required]),
         tos: new FormControl(false, [Validators.requiredTrue])
       });

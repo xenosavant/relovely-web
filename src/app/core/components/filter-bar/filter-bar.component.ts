@@ -51,8 +51,8 @@ export class FilterBarComponent implements OnInit {
             return navigationState.selectedCategory && navigationState.selectedCategory.id === '-1' || size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
           });
         }
-        if (this.userService.currentUser) {
-          const cache = this.userService.currentUser.preferences;
+        if (this.userService.user$.value) {
+          const cache = this.userService.user$.value.preferences;
           if (cache) {
             if (cache.sizes) {
               cache.sizes.forEach(sizeId => {

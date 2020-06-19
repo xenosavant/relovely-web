@@ -41,6 +41,7 @@ export class PaymentsComponent implements OnInit {
       this.ref.markForCheck();
     });
     this.user = this.userService.user$.value;
+    console.log(this.user);
     this.primary = this.user.cards.find(card => card.primary)
     this.loading = false;
     this.ref.markForCheck();
@@ -49,7 +50,7 @@ export class PaymentsComponent implements OnInit {
       switchMap(val =>
         this.primaryChanged())
     ).subscribe(result => {
-      this.user = this.userService.currentUser;
+      this.user = this.userService.user$.value;
       this.primary = this.user.cards.find(card => card.primary);
       this.ref.markForCheck();
     })
@@ -57,7 +58,7 @@ export class PaymentsComponent implements OnInit {
 
   cardCreated(card: PaymentCard) {
     this.userService.addCard(card).subscribe(result => {
-      this.user = this.userService.currentUser;
+      this.user = this.userService.user$.value;
       this.primary = this.user.cards.find(c => c.primary);
       this.overlayService.close();
       this.ref.markForCheck();

@@ -242,12 +242,12 @@ export class AppComponent implements OnInit {
     });
     this.desktopLinkItems.push(new NavigationItem([], 'about', 'Blog', null, [], [], null));
     this.desktopLinkItems.push(new NavigationItem([], 'about', 'About', null, [], [], null));
-    if (this.userService.currentUser && this.userService.currentUser.type === 'seller') {
+    if (this.userService.user$.value && this.userService.user$.value.type === 'seller') {
       accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', null, [], [], null),
         new NavigationItem([], '/member/listings', 'Listings', null, [], [], null)
       );
     }
-    if (this.userService.currentUser && this.userService.currentUser.admin) {
+    if (this.userService.user$.value && this.userService.user$.value.admin) {
       accountNav.subItems.push(new NavigationItem([], '/admin/dashboard', 'Admin', null, [], [], null));
     };
     accountNav.subItems.push(
@@ -309,7 +309,7 @@ export class AppComponent implements OnInit {
   }
 
   public onFavoritesClicked() {
-    if (this.userService.currentUser) {
+    if (this.userService.user$.value) {
       this.goToFavorites();
     } else {
       this.showSignin();
@@ -392,7 +392,7 @@ export class AppComponent implements OnInit {
   }
 
   public sideNavigate(item: NavigationItem) {
-    if (!this.userService.currentUser && item.name === 'Account') {
+    if (!this.userService.user$.value && item.name === 'Account') {
       this.showSignin();
     } else {
       const close = item.subItems.length === 0;

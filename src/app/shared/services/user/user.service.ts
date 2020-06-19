@@ -32,10 +32,6 @@ export class
     private _jwt: string;
     private _notLoggedIn = false;
 
-    public get currentUser() {
-        return this._currentUser;
-    }
-
     public setCurrentUser(user: UserAuth): void {
         this._currentUser = user;
         this.user$.next(user);

@@ -39,7 +39,7 @@ export class OrderComponent implements OnInit {
       this.orderService.getOrder(params['id']).subscribe(order => {
         this.order = order;
         this.navigationItems = [{ path: '/sales/orders', name: 'Orders' }, { path: `/sales/orders/${this.order.id}`, name: this.order.orderNumber }];
-        this.seller = this.userService.currentUser.id === this.order.seller.id;
+        this.seller = this.userService.user$.value.id === this.order.seller.id;
         this.loading = false;
         this.ref.markForCheck();
       })

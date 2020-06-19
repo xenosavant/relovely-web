@@ -39,7 +39,6 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.userService.user$.value;
-    console.log(this.currentUser);
     this.verficationClass = {};
     this.setErrors();
     this.setView();
@@ -48,7 +47,7 @@ export class SettingsComponent implements OnInit {
 
   setErrors() {
     if (this.currentUser.seller && this.currentUser.seller.verificationStatus !== 'verified' ||
-      this.currentUser.seller.missingInfo.includes('external_account')) {
+      this.currentUser.seller && (this.currentUser.seller.missingInfo.includes('external_account'))) {
       this.error = `To start listing products you'll need to`;
       let verify = false;
       if (this.currentUser.seller.verificationStatus === 'unverified') {
@@ -110,7 +109,7 @@ export class SettingsComponent implements OnInit {
           break;
       }
     }
-    if (this.currentUser) {
+    if (this.currentUser.facebookUserId) {
       this.facebookLinked = true;
     }
     if (this.currentUser.instagramUsername) {
