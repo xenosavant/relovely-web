@@ -38,7 +38,7 @@ export class SettingsComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.currentUser = this.userService.currentUser;
+    this.currentUser = this.userService.user$.value;
     this.verficationClass = {};
     if (this.currentUser.seller && this.currentUser.seller.verificationStatus !== 'verified' ||
       this.currentUser.seller.missingInfo.includes('external_account')) {
@@ -100,7 +100,8 @@ export class SettingsComponent implements OnInit {
           break;
       }
     }
-    if (this.currentUser.facebookUserId) {
+    console.log(this.currentUser.facebookUserId);
+    if (this.currentUser) {
       this.facebookLinked = true;
     }
     if (this.currentUser.instagramUsername) {
