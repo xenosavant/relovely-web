@@ -22,6 +22,7 @@ export class ProductsListComponent implements OnChanges {
   @Output() close: EventEmitter<any> = new EventEmitter;
   @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
   @Output() delete: EventEmitter<string> = new EventEmitter<string>();
+  @Output() unfavorite: EventEmitter<string> = new EventEmitter<string>();
 
   hoverIndex = -1;
 
@@ -50,9 +51,11 @@ export class ProductsListComponent implements OnChanges {
   }
 
   onDelete(product: Product) {
-
     this.delete.emit(product.id);
+  }
 
+  onUnfavorite(id: string) {
+    this.unfavorite.emit(id);
   }
 
 }

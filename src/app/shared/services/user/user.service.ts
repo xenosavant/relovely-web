@@ -38,6 +38,7 @@ export class
 
     public setCurrentUser(user: UserAuth): void {
         this._currentUser = user;
+        this.user$.next(user);
         this.localStorageService.setItem('currentUser', user);
     }
 

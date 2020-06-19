@@ -26,7 +26,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
   @Output() delete: EventEmitter<Product> = new EventEmitter<Product>();
-  @Output() favorite: EventEmitter<Product> = new EventEmitter<Product>();
+  @Output() unfavorite: EventEmitter<string> = new EventEmitter<string>();
 
   subscriptions: Subscription[] = [];
   favoriting: boolean = false;
@@ -83,6 +83,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
         if (this.user.favorites.includes(this.product.id)) {
           this.user.favorites.splice(this.user.favorites.indexOf(this.product.id), 1);
           this.product.favorited = false;
+          this.unfavorite.emit(this.product.id);
         } else {
           this.user.favorites.push(this.product.id);
           this.product.favorited = true;

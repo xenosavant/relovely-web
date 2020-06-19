@@ -45,6 +45,7 @@ export class VerifySellerComponent implements OnInit {
     private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() {
+    console.log(this.verification);
     this.states = this.lookupService.states;
     if (this.verification) {
       this.update = true;
@@ -233,11 +234,15 @@ export class VerifySellerComponent implements OnInit {
         updates.phone = this.form.get('phone').value;
       }
       this.userService.updateSeller(updates).subscribe(user => {
+        console.log(user);
+        this.userService.setCurrentUser(user);
         this.loading = false;
         this.close.emit();
       }, err => {
         this.loading = false;
-        this.error = 'Something went wrong. Please try again.'
+        this.error = err.error.error.message;
+        console.log(this.error);
+        this.ref.markForCheck();
       })
     } else {
       const birth = (this.form.get('birthday').value as Date);
@@ -261,12 +266,16 @@ export class VerifySellerComponent implements OnInit {
         },
         documentBack: this.backImage,
         documentFront: this.frontImage
-      }).subscribe(response => {
+      }).subscribe(user => {
+        console.log(user);
+        this.userService.setCurrentUser(user);
         this.loading = false;
         this.close.emit();
       }, err => {
         this.loading = false;
-        this.error = 'Something went wrong. Please try again.'
+        this.error = err.error.error.message;
+        console.log(this.error);
+        this.ref.markForCheck();
       });
     }
   }

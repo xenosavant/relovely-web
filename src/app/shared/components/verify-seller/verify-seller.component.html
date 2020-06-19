@@ -1,10 +1,4 @@
 <app-modal [title]="'Secure Identity Verification'" (close)="onClose($event)">
-    <div class="error" *ngIf="verification">
-        <div>We need to get a little more information to verify your identity...</div>
-        <div *ngFor="let error of verification.errors">
-            {{error}}
-        </div>
-    </div>
     <form *ngIf="!loading" novalidate [formGroup]="form">
         <div class="security-info">
             <div class="security-header">
@@ -31,6 +25,15 @@
                     </div>
                 </li>
             </ul>
+        </div>
+        <div class="error" *ngIf="verification">
+            <div>We need to get a little more information to verify your identity...</div>
+            <div *ngFor="let error of verification.errors">
+                {{error}}
+            </div>
+        </div>
+        <div class="error" *ngIf="error">
+            {{error}}
         </div>
         <ng-container *ngIf="formFields.indexOf('name') > -1">
             <div>
@@ -218,4 +221,7 @@
         style="visibility:hidden; height:0px;" />
     <input #backMobile type="file" ng2FileSelect [uploader]="backUploader" capture="camera"
         style="visibility:hidden; height:0px;" />
+    <div *ngIf="loading" class="loading">
+        <mat-spinner [diameter]="25"></mat-spinner>
+    </div>
 </app-modal>

@@ -39,7 +39,14 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.userService.user$.value;
+    console.log(this.currentUser);
     this.verficationClass = {};
+    this.setErrors();
+    this.setView();
+    this.navigationService.showNavBar(true, 'SETTINGS');
+  }
+
+  setErrors() {
     if (this.currentUser.seller && this.currentUser.seller.verificationStatus !== 'verified' ||
       this.currentUser.seller.missingInfo.includes('external_account')) {
       this.error = `To start listing products you'll need to`;
@@ -48,17 +55,20 @@ export class SettingsComponent implements OnInit {
         this.error = this.error + ' verify your identity';
         verify = true;
       }
-      if (this.currentUser.seller.verificationStatus === 'review') {
+      else if (this.currentUser.seller.missingInfo &&
+        (this.currentUser.seller.missingInfo.indexOf('external_account') === -1 || this.currentUser.seller.missingInfo.length > 1)) {
+        this.error = this.error + ' provide a bit more information to verify your identity';
+        verify = true;
+      }
+      else if (this.currentUser.seller.verificationStatus === 'review') {
         this.error = this.error + ' wait for your identity to be verified';
         verify = true;
       }
       if (this.currentUser.seller.missingInfo.includes('external_account')) {
-        this.error = verify ? this.error + ' and' : this.error;
+        this.error = verify ? this.error + ' and then' : this.error;
         this.error = this.error + ' link your bank acount';
       }
     }
-    this.setView();
-    this.navigationService.showNavBar(true, 'SETTINGS');
   }
 
   setView() {
@@ -70,11 +80,11 @@ export class SettingsComponent implements OnInit {
         case 'unverified':
           this.allowClick = true;
           this.verificationStatus = 'Unverified';
-          this.verficationClass.alert = true;
+          this.verficationClass = { alert: true };
           break;
         case 'review':
           if (this.currentUser.seller.missingInfo &&
-            (this.currentUser.seller.missingInfo.indexOf('external_acccount') === -1 || this.currentUser.seller.missingInfo.length > 1)) {
+            (this.currentUser.seller.missingInfo.indexOf('external_account') === -1 || this.currentUser.seller.missingInfo.length > 1)) {
             this.allowClick = true;
             this.verification = {
               errors: this.currentUser.seller.errors,
@@ -84,14 +94,14 @@ export class SettingsComponent implements OnInit {
             this.verficationClass.alert = true;
           } else {
             this.verificationStatus = 'In Review';
-            this.verficationClass.review = true;
+            this.verficationClass = { review: true }
             this.allowClick = false;
           }
           break;
         case 'rejected':
           this.verificationStatus = 'Rejected';
           this.allowClick = true;
-          this.verficationClass.alert = true;
+          this.verficationClass = { alert: true };
           break;
         case 'verified':
           this.verificationStatus = 'Verified';
@@ -121,7 +131,9 @@ export class SettingsComponent implements OnInit {
 
   close(event: any) {
     this.overlayService.close();
-    this.currentUser = this.userService.currentUser;
+    this.currentUser = this.userService.user$.value;
+    console.log(this.currentUser);
+    this.setErrors();
     this.setView();
     this.ref.markForCheck();
   }
