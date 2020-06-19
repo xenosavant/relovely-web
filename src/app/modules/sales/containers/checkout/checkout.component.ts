@@ -204,4 +204,8 @@ export class CheckoutComponent implements OnInit {
       })
   }
 
+  onGoToProduct() {
+    this.navigationService.navigate({ path: `/products/detail/${this.product.id}` })
+  }
+
 }

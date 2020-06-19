@@ -17,7 +17,7 @@ export class ImageCropperComponent implements OnInit {
   @Output() public crop: EventEmitter<string> = new EventEmitter<string>();
   @Output() public cancel: EventEmitter<boolean> = new EventEmitter();
 
-  @Input() public imageChangedEvent: any;
+  @Input() public image: string;
 
   constructor() { }
 

@@ -31,7 +31,7 @@ export class VideoUploaderComponent implements OnInit {
 
       // Create the file uploader, wire it to upload to your account
       const uploaderOptions: FileUploaderOptions = {
-        url: `${environment.cloudinaryUploadUrl}/video/upload`,
+        url: `${environment.cloudinaryUploadUrl}/upload`,
         // Upload files automatically upon addition to upload queue
         autoUpload: true,
         // Use xhrTransport in favor of iframeTransport
@@ -55,7 +55,9 @@ export class VideoUploaderComponent implements OnInit {
         form.append('file', fileItem);
         form.append('timestamp', this.timestamp);
         form.append('api_key', environment.cloudinaryApiKey);
+
         form.append('signature', signature);
+        form.append('public_id', "video");
 
         // Use default "withCredentials" value for CORS requests
         fileItem.withCredentials = false;

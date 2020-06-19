@@ -73,6 +73,9 @@
         }
         image-cropper {
             background-color: black;
+            img {
+                image-orientation: from-image;
+            }
         }
        }
     }

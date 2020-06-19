@@ -11,6 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { HeaderService } from '@app/shared/services/header.service';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
+const loadImage = require('blueimp-load-image');
 
 @Component({
   selector: 'app-profile',
@@ -30,6 +31,7 @@ export class ProfileComponent implements OnInit {
   currentUser: UserAuth;
   editForm: FormGroup;
   edit = false;
+  currentImage: string;
   public form: FormGroup;
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private navigationService: NavigationService,
@@ -92,7 +94,23 @@ export class ProfileComponent implements OnInit {
 
   public onUpdateImage($event: any): void {
     this.imageChangedEvent = $event;
-    this.headerService.hideHeader(true);
-    this.crop = true;
+    const fileReader = new FileReader();
+    this.currentImage = null;
+    const context = this;
+    loadImage($event.target.files[0], {
+      orientation: true
+    }).then(function (data) {
+      const canvas = document.createElement("canvas");
+      canvas.width = data.image.width;
+      canvas.height = data.image.height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(data.image, 0, 0);
+      const dataURL = canvas.toDataURL("image/jpg");
+      console.log(dataURL)
+      context.currentImage = dataURL;
+      context.crop = true;
+      context.ref.markForCheck();
+    })
+    fileReader.readAsDataURL($event.target.files[0]);
   }
 }

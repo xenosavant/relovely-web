@@ -42,10 +42,12 @@ export class FileUploadService extends BaseService {
             }))
     }
 
-    public getSignature(id: string, timestamp: string, preset: string) {
-        console.log(preset);
-        console.log(id);
-        return this.httpClient.post<{ signature: string }>(`${this.apiBaseUrl}/storage/signature`, { folder: id, timestamp: timestamp, uploadPreset: preset }).pipe(map(response => {
+    public getSignature(id: string, timestamp: string, preset: string, publicId?: string) {
+        const request = { folder: id, timestamp: timestamp, uploadPreset: preset };
+        if (publicId) {
+            request['publicId'] = publicId;
+        }
+        return this.httpClient.post<{ signature: string }>(`${this.apiBaseUrl}/storage/signature`, request).pipe(map(response => {
             return response.signature;
         }));
     }

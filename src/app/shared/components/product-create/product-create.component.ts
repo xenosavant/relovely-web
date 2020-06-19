@@ -18,6 +18,8 @@ import { FileUploadService } from '@app/shared/services/file-upload.service';
 import { weights } from '../../../data/weights.ts';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { environment } from '@env/environment';
+const loadImage = require('blueimp-load-image');
+
 
 @Component({
   selector: 'app-product-create',
@@ -185,13 +187,22 @@ export class ProductCreateComponent implements OnInit {
   }
 
   public imageChanged($event: any): void {
-    this.imageChangedEvent = $event;
-    const fileReader = new FileReader();
-    fileReader.onload = (e) => {
-      this.originalImage = fileReader.result as string;
-    }
-    fileReader.readAsDataURL($event.target.files[0]);
-    this.crop = true;
+    const context = this;
+    console.log($event.target.files[0]);
+    loadImage($event.target.files[0], {
+      orientation: true
+    }).then(function (data) {
+      const canvas = document.createElement("canvas");
+      canvas.width = data.image.width;
+      canvas.height = data.image.height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(data.image, 0, 0);
+      const dataURL = canvas.toDataURL("image/jpg");
+      console.log(dataURL)
+      context.originalImage = dataURL;
+      context.crop = true;
+      context.ref.markForCheck();
+    })
   }
 
   onClose($event: any) {

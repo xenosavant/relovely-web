@@ -82,7 +82,7 @@
   <div class="checkout-product">
     <div class="product">
       <div class="product-image">
-        <div class="image-wrapper mat-elevation-z2">
+        <div (click)="onGoToProduct()" class="image-wrapper mat-elevation-z2">
           <img [src]="product.images[0].cropped">
         </div>
       </div>

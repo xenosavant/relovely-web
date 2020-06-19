@@ -5,7 +5,7 @@
         </div>
         <div class="cropper-inner">
             <div class="crop-wrap">
-                <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1"
+                <image-cropper [imageBase64]="image" [maintainAspectRatio]="true" [aspectRatio]="1"
                     [resizeToWidth]="600" format="jpeg" (imageCropped)="imageCropped($event)"
                     (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
                 </image-cropper>
