@@ -153,14 +153,12 @@ export class AuthComponent implements OnChanges {
         this.navigationService.closeAuthWindow();
         this.loading = false;
       }, (err) => {
-        if (err.status === 403) {
-          this.error = err.error.error.message,
-            this.loading = false;
-          this.zone.run(() => {
-            this.ref.detectChanges();
-          });
-        }
-      });
+        this.error = err.error.error.message,
+          this.loading = false;
+        this.zone.run(() => {
+          this.ref.detectChanges();
+        });
+      })
   }
 
   reset() {
