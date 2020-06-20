@@ -1,6 +1,5 @@
 <div class="product-container-wrapper">
     <ng-container *ngIf="mobile && !loading">
-        {{product.seller.profileImageUrl}}
         <div class="profile-container" (click)="goToProfile($event)">
             <div class="profile-image-wrapper">
                 <app-avatar [image]="product.seller.profileImageUrl"></app-avatar>

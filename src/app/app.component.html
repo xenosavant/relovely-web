@@ -41,13 +41,13 @@
               </button>
             </div>
           </mat-toolbar-row>
-          <!-- <mat-toolbar-row style="width: 100%; height: 70px;" *ngIf="showFilterBar">
+          <mat-toolbar-row style="width: 100%; height: 70px;" *ngIf="showFilterBar">
             <app-filter-bar style="width: 100%; height: 70px;" [categoryFilters]="chipItems"> </app-filter-bar>
-          </mat-toolbar-row> -->
+          </mat-toolbar-row>
         </mat-toolbar>
         <ng-container *ngIf="!loading">
           <ng-container *ngTemplateOutlet="content"></ng-container>
-          <ng-container *ngTemplateOutlet="mobileFooter"></ng-container>
+          <!-- <ng-container *ngTemplateOutlet="mobileFooter"></ng-container> -->
         </ng-container>
       </div>
       <mat-sidenav [opened]="sidenavOpen" mode="side">
