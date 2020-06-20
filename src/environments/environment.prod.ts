@@ -20,7 +20,7 @@ export const environment = {
   cloudinaryImageUploadPreset: 'images',
   cloudinaryVideoUploadPreset: 'videos',
   cloudinaryUploadUrl: 'https://api.cloudinary.com/v1_1/relovely',
-  stripePublishableKey: 'pk_test_t9a6DNSxt1hqrd6kzctGFgHI00JZoXOBuP',
+  stripePublishableKey: 'pk_live_xbVCEJi1UZHkF5Dlwo87kIEx00nirGQprR',
   versions: {
     app: packageJson.version,
     angular: packageJson.dependencies['@angular/core'],
