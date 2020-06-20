@@ -54,7 +54,7 @@ export class SettingsComponent implements OnInit {
         this.error = this.error + ' verify your identity';
         verify = true;
       }
-      else if (this.currentUser.seller.missingInfo &&
+      else if (this.currentUser.seller.missingInfo.length > 0 &&
         (this.currentUser.seller.missingInfo.indexOf('external_account') === -1 || this.currentUser.seller.missingInfo.length > 1)) {
         this.error = this.error + ' provide a bit more information to verify your identity';
         verify = true;
@@ -82,7 +82,7 @@ export class SettingsComponent implements OnInit {
           this.verficationClass = { alert: true };
           break;
         case 'review':
-          if (this.currentUser.seller.missingInfo &&
+          if (this.currentUser.seller.missingInfo.length > 0 &&
             (this.currentUser.seller.missingInfo.indexOf('external_account') === -1 || this.currentUser.seller.missingInfo.length > 1)) {
             this.allowClick = true;
             this.verification = {
