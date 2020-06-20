@@ -190,6 +190,10 @@ export class ProductCreateComponent implements OnInit {
   public imageChanged($event: any): void {
     const context = this;
     loadImage($event.target.files[0], {
+      maxHeight: 1333,
+      maxwidth: 1333,
+      contain: true,
+      canvas: true,
       orientation: true
     }).then(function (data) {
       const canvas = document.createElement("canvas");

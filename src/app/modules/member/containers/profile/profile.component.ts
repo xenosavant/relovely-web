@@ -98,7 +98,11 @@ export class ProfileComponent implements OnInit {
     this.currentImage = null;
     const context = this;
     loadImage($event.target.files[0], {
-      orientation: true
+      orientation: true,
+      maxHeight: 1333,
+      maxwidth: 1333,
+      contain: true,
+      canvas: true
     }).then(function (data) {
       const canvas = document.createElement("canvas");
       canvas.width = data.image.width;

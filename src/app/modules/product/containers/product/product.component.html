@@ -38,6 +38,9 @@
                     <span class="title">Size:</span>
                     <strong>{{product.sizeId | appSize}}</strong>
                 </div>
+                <div class="product-size">
+                    {{product.brand}}
+                </div>
             </div>
             <div class="action">
                 <ng-container *ngIf="!product.sold">
@@ -55,7 +58,7 @@
         <div class="tags">
             <div class="hashtag" *ngFor="let tag of product.tags">#{{tag}}</div>
         </div>
-        <app-horizontal-product-list (clicked)="goToProduct($event)" [products]="more"
+        <app-horizontal-product-list *ngIf="more && more.length" (clicked)="goToProduct($event)" [products]="more"
             [subtitle]="product.seller.username" [title]="'MORE FROM'">
         </app-horizontal-product-list>
     </ng-container>
@@ -95,7 +98,7 @@
                     <app-avatar [image]="product.seller.profileImageUrl" (click)="goToProfile()">
                     </app-avatar>
                     <div>
-                        @{{product.seller.username || 'Relovely Seller'}}
+                        {{product.seller.username || 'Relovely Seller'}}
                     </div>
                 </div>
                 <div class="product-price">
@@ -103,6 +106,9 @@
                 </div>
                 <div class="size-wrapper" *ngIf="product.sizeId">
                     Size: <strong>{{product.sizeId | appSize}}</strong>
+                </div>
+                <div class="size-wrapper" *ngIf="product.brand">
+                    <strong>{{product.brand}}</strong>
                 </div>
                 <ng-container *ngIf="!product.sold">
                     <div class="button-wrapper">

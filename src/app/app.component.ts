@@ -299,6 +299,14 @@ export class AppComponent implements OnInit {
     this.navigationService.setCurrentNavigationItems(navigationItems);
   }
 
+  goToSell() {
+    this.onApply()
+  }
+
+  goToAbout() {
+    this.navigationService.navigate({ path: '/about' });
+  }
+
   ngAfterViewInit() {
     this.resetScrollSubscription();
   }
