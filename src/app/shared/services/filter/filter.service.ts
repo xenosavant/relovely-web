@@ -18,7 +18,7 @@ import { UserService } from '../user/user.service';
 export class FilterService extends BaseService {
 
     private emptyState = { sizes: [], colors: [], prices: [] };
-    private _state: IUserPreferences;
+    private _state: IUserPreferences = this.emptyState;
 
     public filterStateSubject$ = new BehaviorSubject<IUserPreferences>(this.emptyState);
 

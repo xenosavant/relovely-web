@@ -1,5 +1,9 @@
 @import '../../../../../styles-variables.scss';
 
+:host {
+    position: relative;
+    height: 40px;
+}
 .group-wrapper {
     display: flex;
     height: 40px;
@@ -7,11 +11,12 @@
     div {
         margin-left: 5px;
         margin-right: 5px;
-        font-size: .7em;
+        font-size: .8em;
         display: flex;
         align-items: center;
         div.selected {
-            color: $pink-text;
+            font-size:.9em;
+            color: $alert;
         }
     }
 }
