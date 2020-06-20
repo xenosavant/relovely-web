@@ -15,7 +15,9 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild {
     canActivate(): Observable<boolean> {
         return this.userService.loggedIn$.pipe(
             map((loggedIn: boolean) => {
-                this.navigationService.openAuthWindow({ page: 'signin' });
+                if (!loggedIn) {
+                    this.navigationService.openAuthWindow({ page: 'signin' });
+                }
                 return loggedIn;
             })
         );
