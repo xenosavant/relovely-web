@@ -3,10 +3,8 @@
     <mat-sidenav-container>
       <div class="header-placeholder" *ngIf="loading || error">
       </div>
-      <mat-toolbar class="topbar" color="primary" *ngIf="showMobileHeader && !error && !loading"
-        [class.mat-elevation-z2]="(!(showNavBar || showFilterBar) && !scrolledToTop) && !sidenavOpen">
-        <mat-toolbar-row [class.no-border]=" scrolledToTop && (showFilterBar || showNavBar)" class="top-bar gray"
-          *ngIf="!showSearch">
+      <mat-toolbar class="topbar" color="primary" *ngIf="showMobileHeader && !error && !loading">
+        <mat-toolbar-row class="top-bar gray" *ngIf="!showSearch">
           <button class="mat-icon-button black" *ngIf="!sidenavOpen" (click)="openSidenav()">
             <fa-icon icon="bars"></fa-icon>
           </button>
@@ -29,7 +27,7 @@
       </mat-toolbar>
       <div class="mobile-wrapper">
         <mat-toolbar class="toolbar" [class.sticky]="true" *ngIf="showNavBar || showFilterBar"
-          [class.mat-elevation-z2]="scrolledToTop && !sidenavOpen">
+          [class.mat-elevation-z2]="true">
           <mat-toolbar-row class="header" [hidden]="!showNavBar">
             <div class="header-bar">
               <h3 [class.center]="!showFilterBar">{{header}}</h3>

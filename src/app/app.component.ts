@@ -309,22 +309,22 @@ export class AppComponent implements OnInit {
     }
     const content = document.querySelector('.mat-sidenav-content');
     if (content) {
-      const scroll = fromEvent(content, 'scroll').pipe(
-        throttleTime(10), // only emit every 10 ms
-        map(() => content.scrollTop) // get vertical scroll positio
-      );
+      // const scroll = fromEvent(content, 'scroll').pipe(
+      //   throttleTime(10), // only emit every 10 ms
+      //   map(() => content.scrollTop) // get vertical scroll positio
+      // );
 
-      this.scrollSubscription$ = scroll.subscribe(result => {
-        if (result <= this.top) {
-          if (result === 0) {
-            this.scroll0 = true;
-          }
-          this.scrolledToTop = true;
-        } else if (this.scrolledToTop) {
-          this.scroll0 = false;
-          this.scrolledToTop = false;
-        }
-      });
+      // this.scrollSubscription$ = scroll.subscribe(result => {
+      //   if (result <= this.top) {
+      //     if (result === 0) {
+      //       this.scroll0 = true;
+      //     }
+      //     this.scrolledToTop = true;
+      //   } else if (this.scrolledToTop) {
+      //     this.scroll0 = false;
+      //     this.scrolledToTop = false;
+      //   }
+      // });
     }
   }
 
