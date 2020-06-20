@@ -33,6 +33,7 @@ export class ProductCreateComponent implements OnInit {
   @Input() sellerId: string;
   @Input() product: Product;
   @Output() close: EventEmitter<boolean> = new EventEmitter;
+  @Output() saved: EventEmitter<any> = new EventEmitter;
 
   public imageChangedEvent: any = null;
   public crop = false;
@@ -129,7 +130,7 @@ export class ProductCreateComponent implements OnInit {
     this.form.get('categories').valueChanges.subscribe((val: any) => {
       this.setSizes(val);
     })
-    this.lookupService.getState().then(state => {
+    this.lookupService.getLookupData().subscribe(state => {
       this.sizes = state.sizes;
       this.colors = state.colors;
       this.rootCategories = state.categories;
@@ -294,14 +295,14 @@ export class ProductCreateComponent implements OnInit {
       if (this.edit) {
         this.productService.patchProduct(product, this.product.id).subscribe(response => {
           this.loading = false;
-          this.close.emit(true);
+          this.saved.emit();
         }, error => {
           this.saveError = true;
         })
       } else {
         this.productService.postProduct(product, this.sellerId).subscribe(response => {
           this.loading = false;
-          this.close.emit(true);
+          this.saved.emit(true);
         }, error => {
           this.saveError = true;
         })

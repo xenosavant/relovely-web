@@ -44,6 +44,9 @@ export class ReviewComponent implements OnInit {
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    if (!this.userService.user$.value) {
+      this.navigationService.navigate({ 'path': '/' })
+    }
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
     })

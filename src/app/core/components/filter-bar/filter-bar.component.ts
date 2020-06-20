@@ -41,7 +41,7 @@ export class FilterBarComponent implements OnInit {
 
   ngOnInit() {
     this.navigationService.navConfig$.subscribe(navigationState => {
-      this.lookupService.getState().then(lookupState => {
+      this.lookupService.getLookupData().subscribe(lookupState => {
         this.sizeFilters = lookupState.sizes;
         this.colorFilters = lookupState.colors;
         this.priceFilters = lookupState.prices;
@@ -53,6 +53,7 @@ export class FilterBarComponent implements OnInit {
         }
         if (this.userService.user$.value) {
           const cache = this.userService.user$.value.preferences;
+          console.log(cache);
           if (cache) {
             if (cache.sizes) {
               cache.sizes.forEach(sizeId => {

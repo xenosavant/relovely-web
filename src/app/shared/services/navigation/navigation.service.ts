@@ -83,11 +83,14 @@ export class NavigationService {
             this._navConfig.selectedCategoryId = item.id;
             this._navConfig.showFilterBar = true;
             if (item.parent) {
-                if (item.subItems && item.subItems.length) {
+                if (item.name.startsWith('All')) {
+                    this._navConfig.chipItems = item.subItems;
+                    this._navConfig.pageHeader = item.name;
+                } else if (item.subItems && item.subItems.length) {
                     this._navConfig.pageHeader = item.parent ? item.parent.plural + ' ' + item.name : item.name;
                     this._navConfig.chipItems = item.subItems;
                 }
-                else {
+                else if (item.parent.parent) {
                     this._navConfig.chipItems = item.parent.subItems;
                     this._navConfig.pageHeader = item.parent.parent.plural + ' ' + item.parent.name;
                 }

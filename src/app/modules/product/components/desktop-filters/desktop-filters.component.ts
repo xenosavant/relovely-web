@@ -41,7 +41,7 @@ export class DesktopFiltersComponent implements OnInit {
 
   ngOnInit() {
     this.navigationService.navConfig$.subscribe(navigationState => {
-      this.lookupService.getState().then(state => {
+      this.lookupService.getLookupData().subscribe(state => {
         this.sizeFilters = state.sizes;
         this.colors = state.colors;
         this.priceFilters = state.prices;

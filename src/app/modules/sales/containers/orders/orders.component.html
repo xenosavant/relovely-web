@@ -3,7 +3,7 @@
     <h1>{{title}}</h1>
   </div>
   <ng-container *ngIf="!loading">
-    <div *ngIf="!mobile" class="breadcrumb-wrapper">
+    <div *ngIf="!mobile && orders && orders.length > 0" class=" breadcrumb-wrapper">
       <div class="breadcrumbs">
         <app-breadcrumbs [items]="navigationItems"></app-breadcrumbs>
       </div>

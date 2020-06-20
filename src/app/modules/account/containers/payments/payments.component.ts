@@ -35,13 +35,15 @@ export class PaymentsComponent implements OnInit {
     private overlayService: OverlayService) { }
 
   ngOnInit() {
+    this.user = this.userService.user$.value;
+    if (!this.user) {
+      this.navigationService.navigate({ 'path': '/' })
+    }
     this.navigationService.showNavBar(true, 'Payment Methods');
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
       this.ref.markForCheck();
     });
-    this.user = this.userService.user$.value;
-    console.log(this.user);
     this.primary = this.user.cards.find(card => card.primary)
     this.loading = false;
     this.ref.markForCheck();

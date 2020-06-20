@@ -120,7 +120,7 @@ export class ProductsComponent implements OnInit {
   getProducts(state: IUserPreferences) {
     const filteredSizes = [];
     this.loading = true;
-    this.lookupService.getState().then(lookupValues => {
+    this.lookupService.getLookupData().subscribe(lookupValues => {
       state.sizes.forEach(id => {
         const size = lookupValues.sizes.find(size => size.id === id);
         if (size.categoryIds.includes(this.categoryId)) {

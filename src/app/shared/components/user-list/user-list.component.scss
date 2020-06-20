@@ -3,11 +3,14 @@
 
 .user-list-container {
     display: grid;
-    grid-template-columns: 70px 1fr 100px;
+    grid-template-columns: 70px 1fr 70px;
     grid-template-rows: auto;
     align-items:  center;
     height:86px;
     .avatar-wrapper {
 
+    }
+    .info {
+        margin-left: 24px;
     }
 }

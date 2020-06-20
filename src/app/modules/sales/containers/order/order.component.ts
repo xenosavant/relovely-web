@@ -32,6 +32,9 @@ export class OrderComponent implements OnInit {
     private navigationService: NavigationService) { }
 
   ngOnInit() {
+    if (!this.userService.user$.value) {
+      this.navigationService.navigate({ 'path': '/' })
+    }
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
     })

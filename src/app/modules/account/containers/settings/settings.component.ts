@@ -39,6 +39,10 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.userService.user$.value;
+    if (!this.currentUser) {
+      this.navigationService.navigate({ 'path': '/' })
+      this.navigationService.openAuthWindow({ page: 'signin' });
+    }
     this.verficationClass = {};
     this.setErrors();
     this.setView();
@@ -89,7 +93,7 @@ export class SettingsComponent implements OnInit {
               errors: this.currentUser.seller.errors,
               missingData: this.currentUser.seller.missingInfo
             };
-            this.verificationStatus = 'Info Missing';
+            this.verificationStatus = 'Add Info';
             this.verficationClass.alert = true;
           } else {
             this.verificationStatus = 'In Review';

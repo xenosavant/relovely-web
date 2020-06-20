@@ -60,6 +60,9 @@ export class CheckoutComponent implements OnInit {
   ngOnInit() {
     this.navigationService.showNavBar(false);
     this.user = this.userService.user$.value;
+    if (!this.user) {
+      this.navigationService.navigate({ 'path': '/' })
+    }
     this.states = this.lookupService.states;
     if (this.user.addresses.length) {
       this.selectedAddress = this.user.addresses.find(a => a.primary);

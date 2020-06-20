@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { OrderService } from '@app/shared/services/order/order.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { NavigationItem } from '@app/shared/models/navigation-item.model';
+import { UserService } from '@app/shared/services/user/user.service';
 
 @Component({
   selector: 'app-orders',
@@ -23,11 +24,15 @@ export class OrdersComponent implements OnInit {
 
   constructor(private navigationService: NavigationService,
     private orderServive: OrderService, private ref: ChangeDetectorRef,
+    private userService: UserService,
     private breakpointObserver: BreakpointObserver) {
     this.navigationService.showNavBar(true, 'ORDERS');
   }
 
   ngOnInit() {
+    if (!this.userService.user$.value) {
+      this.navigationService.navigate({ 'path': '/' })
+    }
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
     })

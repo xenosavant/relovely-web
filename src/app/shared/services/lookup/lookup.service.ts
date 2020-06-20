@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject, of, BehaviorSubject } from 'rxjs';
 import { Category } from '../../models/category.model';
 import { SizeFilterGroup } from '../../models/size-filter-group.model';
 import { BaseService } from '../base.service';
@@ -11,6 +11,7 @@ import { LookupState } from './lookup-state';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { states } from '../../../data/states'
 import { State } from './state';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class LookupService extends BaseService {
@@ -22,42 +23,43 @@ export class LookupService extends BaseService {
     private _colorMap = {};
     private _states: State[] = [];
 
-    private _stateSubject$ = new Subject<LookupState>();
+    private _stateSubject$ = new BehaviorSubject<LookupState>(null);
     public state$ = this._stateSubject$.asObservable();
 
-    public navLookup = {};
-
-    public async getState(): Promise<LookupState> {
-        if (this._state) {
-            return this._state;
-        } else {
-            return this.state$.toPromise();
-        }
-    }
-
-    public getLookupData(): Observable<LookupResponse> {
+    constructor(httpClient: HttpClient) {
+        super(httpClient);
         Object.entries(states).forEach(item => {
             this._states.push({ abbreviation: item[0], full: item[1] })
         })
-        return this.httpClient.get(`${this.apiBaseUrl}/lookup`).pipe(
-            map((response: LookupResponse) => {
-                this._state = {
-                    categories: JSON.parse(response.categories.json),
-                    sizes: JSON.parse(response.sizes.json),
-                    colors: JSON.parse(response.colors.json),
-                    prices: JSON.parse(response.prices.json),
-                }
-                this._state.categories.forEach(cat => {
-                    this.populateParents(cat);
-                });
-                this._state.sizes.forEach(sizes => {
-                    this.buildSizeDictionary(sizes);
-                });
-                this.buildColorDictionary(this._state.colors);
-                this._stateSubject$.next(this._state);
-                return response;
-            })
-        );
+    }
+    public navLookup = {};
+
+    public getLookupData(): Observable<LookupState> {
+        if (this._stateSubject$.value) {
+            return of(this._stateSubject$.value);
+        } else {
+            return this.httpClient.get(`${this.apiBaseUrl}/lookup`).pipe(
+                map((response: LookupResponse) => {
+                    this._state = {
+                        categories: JSON.parse(response.categories.json),
+                        sizes: JSON.parse(response.sizes.json),
+                        colors: JSON.parse(response.colors.json),
+                        prices: JSON.parse(response.prices.json),
+                    }
+                    this._state.categories.forEach(cat => {
+                        this.populateParents(cat);
+                    });
+                    this._state.sizes.forEach(sizes => {
+                        this.buildSizeDictionary(sizes);
+                    });
+                    this.buildColorDictionary(this._state.colors);
+                    this._stateSubject$.next(this._state);
+                    console.log(this._stateSubject$.value);
+                    return this._state;
+                })
+            );
+        }
+
     }
 
     public getCategory(id: string) {

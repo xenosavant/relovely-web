@@ -38,7 +38,6 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: '../app/modules/admin/admin.module#AdminModule',
-    canActivate: [AdminGuard]
   },
   {
     path: '**',

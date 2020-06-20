@@ -35,7 +35,7 @@ export class SellerProfileComponent implements OnChanges {
   showCreate = false;
   editProduct: Product;
   editForm: FormGroup;
-  loading = false;
+  loading = true;
   disableSave = true;
   actionProcessing = false;
   formWatcher: Subscription;
@@ -44,6 +44,7 @@ export class SellerProfileComponent implements OnChanges {
   followerUsers: UserList[];
   error: string = null;
   saving = false;
+  productsLoading = false;
 
   constructor(private route: ActivatedRoute,
     private overlayService: OverlayService,
@@ -62,6 +63,7 @@ export class SellerProfileComponent implements OnChanges {
     this.following = this.user.followers.some(u => u.id === this.currentUser.id);
     this.followingUsers = this.user.following;
     this.followerUsers = this.user.followers;
+    this.loading = false;
   }
 
   showCreateModal($event: any) {
@@ -86,6 +88,16 @@ export class SellerProfileComponent implements OnChanges {
         this.ref.markForCheck();
       })
     }
+  }
+
+  onProductSaved() {
+    this.overlayService.close();
+    this.productsLoading = true;
+    this.userService.getUser(this.user.id).subscribe(user => {
+      this.user = user;
+      this.productsLoading = false;
+      this.ref.markForCheck();
+    })
   }
 
   onUpdate() {

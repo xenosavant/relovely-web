@@ -2,7 +2,7 @@
     <div class="list-inner">
         <div *ngFor="let user of users" class="user-item">
             <app-avatar [image]="user.profileImageUrl"></app-avatar>
-            <div class="name">{{user.username}}</div>
+            <div class="name">{{user.username || user.type === 'member' ? 'Relovely Shopper' : 'Relovely Seller'}}</div>
             <div class="shop">SHOP NOW</div>
         </div>
     </div>

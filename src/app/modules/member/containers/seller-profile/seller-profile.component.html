@@ -1,12 +1,13 @@
 <ng-template cdkPortal #productCreateModal="cdkPortal">
-    <app-product-create [product]="editProduct" [sellerId]="user.id" (close)="close($event)"></app-product-create>
+    <app-product-create [product]="editProduct" [sellerId]="user.id" (saved)="onProductSaved()" (close)="close($event)">
+    </app-product-create>
 </ng-template>
 <div *ngIf="!mobile" class="header-bar">
     <app-header-details (update)="onUpdate()" (action)="onAction($event)" *ngIf="!loading" [owner]="owner"
         [editing]="edit" [disableSave]="disableSave" [following]="following" [user]="user">
     </app-header-details>
 </div>
-<div class="full-content profile" *ngIf="!loading">
+<div class="full-content profile">
     <div class="sidebar-wrapper" *ngIf="!mobile">
         <div class="desktop-inner">
             <div class="info-wrapper">
@@ -28,9 +29,12 @@
         </app-profile-header>
         <mat-tab-group *ngIf="!edit">
             <mat-tab label="Listings">
-                <app-products-list (delete)="onDelete($event)" [user]="currentUser" (edit)="showEditModal($event)"
-                    (create)="showCreateModal($event)" [showCreate]="showCreate" [showGrid]="true" [showHeader]="false"
-                    [products]="user.listings">
+                <div class="relative-loading" *ngIf="productsLoading">
+                    <mat-spinner [diameter]="25"></mat-spinner>
+                </div>
+                <app-products-list *ngIf="!productsLoading" (delete)="onDelete($event)" [user]="currentUser"
+                    (edit)="showEditModal($event)" (create)="showCreateModal($event)" [showCreate]="showCreate"
+                    [showGrid]="true" [showHeader]="false" [products]="user.listings">
                 </app-products-list>
             </mat-tab>
             <mat-tab label="Sales">

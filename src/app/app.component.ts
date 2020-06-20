@@ -27,6 +27,8 @@ import { LocalStorageService } from './shared/services/local-storage/local-stora
 import { LookupResponse } from './shared/services/lookup/lookup.response';
 import { IUserPreferences } from './shared/services/filter/filter-state';
 import { HeaderService } from './shared/services/header.service';
+import { LookupState } from './shared/services/lookup/lookup-state';
+import { ParseSpan } from '@angular/compiler';
 
 @Component({
   selector: 'app-root',
@@ -134,32 +136,43 @@ export class AppComponent implements OnInit {
         this.ref.detectChanges();
       });
     });
+    this.loginSubscription = this.userService.loggedIn$.subscribe(loggedIn => {
+      console.log(loggedIn)
+      this.lookupService.getLookupData().subscribe(value => {
+        this.navSetup(value.categories);
+        this.loading = false;
+        this.ref.markForCheck();
+      }, err => {
+        this.handleError();
+      });
+    });
     const jwt = this.localStorageService.getItem('jwt');
     if (jwt) {
       this.userService.jwt = jwt;
       this.userService.me().pipe(tap(me => {
-        this.userService.setLogin(jwt, me);
+        if (me) {
+          this.userService.setLogin(jwt, me);
+        } else {
+          this.userService.logout();
+          this.loading = false;
+        }
       }, err => {
-        this.handleError();
+        if (err.status === 401) {
+          this.loading = false;
+        } else {
+          this.loading = false;
+          this.userService.logout();
+        }
       }), mergeMap(value => this.getLookup()))
         .subscribe(final => {
           if (this.loginSubscription) {
             this.loginSubscription.unsubscribe();
           }
-          this.loginSubscription = this.userService.loggedIn$.subscribe(loggedIn => {
-            this.lookupService.getLookupData().subscribe(value => {
-              this.navSetup(JSON.parse(value.categories.json));
-              this.loading = false;
-              this.ref.markForCheck();
-            }, err => {
-              this.handleError();
-            });
-          });
         });
     } else {
       this.userService.logout();
       this.lookupService.getLookupData().subscribe(value => {
-        this.navSetup(JSON.parse(value.categories.json));
+        this.navSetup(value.categories);
         this.loading = false;
         this.ref.markForCheck();
       }, err => {
@@ -189,20 +202,20 @@ export class AppComponent implements OnInit {
     this.ref.markForCheck();
   }
 
-  getLookup(): Observable<LookupResponse> {
+  getLookup(): Observable<LookupState> {
     return this.lookupService.getLookupData();
   }
 
   navSetup(cats: Category[]) {
-    const navigationItems = cats.map(cat => {
+    const navigationItems = [new NavigationItem([], '/products/', 'All Products', '-1', [], [], null), ...cats.map(cat => {
       return new NavigationItem([], '/products/' + cat.id.toString(), cat.name, cat.id,
-        cat.children.map(c1 => {
+        [new NavigationItem([], `/products/${cat.id}`, `All  ${cat.plural}`, cat.id, [], [], null, cat.plural), ...cat.children.map(c1 => {
           return new NavigationItem(
             null,
             '/products/' + c1.id.toString(),
             c1.name,
             c1.id,
-            c1.children.map(c2 => {
+            [new NavigationItem([], `/products/${c1.id}`, `All ${cat.plural} ${c1.name}`, c1.id, [], [], null, c1.plural), ...c1.children.map(c2 => {
               return new NavigationItem(
                 null,
                 '/products/' + c2.id.toString(),
@@ -211,15 +224,15 @@ export class AppComponent implements OnInit {
                 [],
                 [],
                 null)
-            }),
+            })],
             c1.children,
             null
           )
-        }),
+        })],
         [],
         null,
         cat.plural)
-    });
+    })];
 
     navigationItems.forEach(item => {
       this.setParents(item);
@@ -256,6 +269,7 @@ export class AppComponent implements OnInit {
       new NavigationItem([], '/account/signout', 'Sign Out', null, [], [], null),
     );
     this.accountNav = accountNav;
+    console.log(this.accountNav);
     navigationItems.push(this.accountNav);
     this.navigationService.rootNavigationItems = navigationItems;
     this.navigationService.setCurrentNavigationItems(navigationItems);
@@ -292,11 +306,14 @@ export class AppComponent implements OnInit {
 
   setParents(parent: NavigationItem) {
     this.lookupService.navLookup[parent.id] = parent;
+    // set children for top level here
     if (parent.subItems) {
       parent.subItems.forEach(item => {
         item.parent = parent;
         this.setParents(item);
       })
+    } else if (parent.name.startsWith('All')) {
+      parent.subItems = parent.parent ? parent.parent.subItems : [];
     }
   }
 
