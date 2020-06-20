@@ -71,6 +71,8 @@ export class SettingsComponent implements OnInit {
         this.error = verify ? this.error + ' and then' : this.error;
         this.error = this.error + ' link your bank acount';
       }
+    } else {
+      this.error = null;
     }
   }
 
@@ -135,7 +137,6 @@ export class SettingsComponent implements OnInit {
   close(event: any) {
     this.overlayService.close();
     this.currentUser = this.userService.user$.value;
-    console.log(this.currentUser);
     this.setErrors();
     this.setView();
     this.ref.markForCheck();
