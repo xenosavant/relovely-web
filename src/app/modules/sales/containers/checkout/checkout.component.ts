@@ -116,6 +116,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSaveAddress(user: UserAuth) {
+    console.log()
     this.user = user;
     this.selectedAddress = this.user.addresses.find(a => a.primary);
     this.addingAddress = false;
@@ -140,6 +141,8 @@ export class CheckoutComponent implements OnInit {
 
   onSelectAddress() {
     this.recalcCosts();
+    this.changingAddress = false;
+    this.ref.markForCheck();
   }
 
   changeAddress() {

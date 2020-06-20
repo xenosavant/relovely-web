@@ -58,7 +58,8 @@ export class PaymentsComponent implements OnInit {
 
   cardCreated(card: PaymentCard) {
     this.userService.addCard(card).subscribe(result => {
-      this.user = this.userService.user$.value;
+      this.userService.setCurrentUser(result);
+      this.user = result;
       this.primary = this.user.cards.find(c => c.primary);
       this.overlayService.close();
       this.ref.markForCheck();

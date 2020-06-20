@@ -77,9 +77,6 @@ export class ProductComponent implements OnInit {
     this.currentUser = this.userService.user$.value;
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
-      if (!this.product) {
-        this.refreshProduct();
-      }
     });
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.id = params.get('id');
@@ -126,6 +123,7 @@ export class ProductComponent implements OnInit {
       }
       const stack = this.navigationService.navigationStack;
       this.product = response.product;
+      console.log(this.product);
       this.more = response.more;
       if (stack.length > 1) {
         this.navItems.push(stack[stack.length - 2]);

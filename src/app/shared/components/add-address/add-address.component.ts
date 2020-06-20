@@ -123,14 +123,14 @@ export class AddAddressComponent implements OnInit {
         iif(() => (!v.errors && !v.correctedAddress && v.success),
           this.userService.updateUser(this.user.id, { addresses: update }), EMPTY)))
         .subscribe(user => {
-          this.save.emit(this.userService.user$.value);
+          this.save.emit(user);
         }, err => {
           this.loading.emit(false);
         })
     } else {
       this.userService.updateUser(this.user.id, { addresses: update })
         .subscribe(user => {
-          this.save.emit(this.user);
+          this.save.emit(user);
         }, err => {
           this.loading.emit(false);
         })

@@ -23,7 +23,6 @@ export class AddPaymentCardComponent implements OnInit {
 
   onCardCreated(card: PaymentCard) {
     this.save.emit(card);
-    this.loading = false;
   }
 
   onReady() {

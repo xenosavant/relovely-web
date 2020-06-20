@@ -18,6 +18,7 @@ export class AvatarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.image)
   }
 
   onSelect($event: any) {

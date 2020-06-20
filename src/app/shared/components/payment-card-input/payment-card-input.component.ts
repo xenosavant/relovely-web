@@ -59,6 +59,7 @@ export class PaymentCardInputComponent implements OnInit {
       .createToken(this.cardElement.getCard(), { name: this.form.get('name').value })
       .subscribe(result => {
         if (result.token) {
+          console.log('emit save');
           this.save.emit({
             last4: result.token.card.last4,
             name: this.form.get('name').value,
@@ -77,15 +78,16 @@ export class PaymentCardInputComponent implements OnInit {
           this.isLoading.emit(false);
           this.ref.markForCheck();
         }
-
       }, err => {
         this.isLoading.emit(false);
+        this.loading = false;
         this.ref.markForCheck();
       })
   }
 
   onCardChanged(event: any) {
     if (event.type === 'ready') {
+      console.log('card changed');
       this.ready.emit(true);
       this.loading = false;
       this.ref.markForCheck()
