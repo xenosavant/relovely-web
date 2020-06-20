@@ -523,7 +523,8 @@ mat-sidenav {
   }
 }
 mat-drawer-content {
--webkit-overflow-scrolling: touch;
+   -webkit-overflow-scrolling: touch  !important;
+   overflow-y: scroll !important;
 }
 
 mat-basic-chip {
