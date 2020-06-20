@@ -588,6 +588,7 @@ mat-chip-list mat-chip {
   }
 
   div.mat-tab-body-content {
+    overflow-y: hidden;
     width:100%;
     position: absolute;
     top:0;
