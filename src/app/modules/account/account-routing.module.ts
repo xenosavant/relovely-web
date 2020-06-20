@@ -17,7 +17,6 @@ const routes: Routes = [
     {
         path: 'addresses',
         component: AddressesComponent,
-        canActivate: [AuthenticationGuard]
     },
     {
         path: 'instagram',
@@ -38,12 +37,10 @@ const routes: Routes = [
     {
         path: 'payments',
         component: PaymentsComponent,
-        canActivate: [AuthenticationGuard]
     },
     {
         path: 'settings',
         component: SettingsComponent,
-        canActivate: [AuthenticationGuard]
     },
     {
         path: 'signout',

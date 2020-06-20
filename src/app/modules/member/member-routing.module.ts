@@ -14,12 +14,10 @@ const routes: Routes = [
     {
         path: 'favorites',
         component: FavoritesComponent,
-        canActivate: [AuthenticationGuard]
     },
     {
         path: 'listings',
         component: ListingsComponent,
-        canActivate: [SellerGuard]
     },
     {
         path: 'terms',

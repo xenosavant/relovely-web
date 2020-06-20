@@ -12,28 +12,23 @@ import { SellerGuard } from '@app/shared/guards/seller.guard';
 const routes: Routes = [
     {
         path: 'orders',
-        component: OrdersComponent,
-        canActivate: [AuthenticationGuard]
+        component: OrdersComponent
     },
     {
         path: 'sales',
-        component: SalesComponent,
-        canActivate: [SellerGuard]
+        component: SalesComponent
     },
     {
         path: 'orders/:id',
-        component: OrderComponent,
-        canActivate: [AuthenticationGuard]
+        component: OrderComponent
     },
     {
         path: 'checkout/:id',
-        component: CheckoutComponent,
-        canActivate: [AuthenticationGuard]
+        component: CheckoutComponent
     },
     {
         path: 'review/:id',
-        component: ReviewComponent,
-        canActivate: [AuthenticationGuard]
+        component: ReviewComponent
     }
 ];
 
