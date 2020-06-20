@@ -404,6 +404,10 @@ div.left {
 .header-bar {
   width:100%;
   background-color: $dark-blue;
+  padding-left: 10px;
+  &.center {
+    padding-left: 0px;
+  }
 }
 
 .icon-wrapper.desktop {
@@ -566,6 +570,7 @@ mat-chip-list mat-chip {
 
   mat-tab-group {
     height:70px;
+    overflow: hidden;
     mat-tab-header {
         div.mat-tab-label-container {
             div.mat-tab-list {

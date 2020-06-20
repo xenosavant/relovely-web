@@ -3,7 +3,9 @@
 .theme-wrapper {
   height: 100%;
   width: 100%;
-  overflow-y: auto;
+  @media(min-width: $desktop-breakpoint) {
+    overflow-y: auto;
+  }
 }
 
 .extended-header {
