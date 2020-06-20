@@ -234,12 +234,39 @@ export class AppComponent implements OnInit {
         cat.plural)
     })];
 
+    const desktopNavigationItems = [...cats.map(cat => {
+      return new NavigationItem([], '/products/' + cat.id.toString(), cat.name, cat.id,
+        [...cat.children.map(c1 => {
+          return new NavigationItem(
+            null,
+            '/products/' + c1.id.toString(),
+            c1.name,
+            c1.id,
+            [...c1.children.map(c2 => {
+              return new NavigationItem(
+                null,
+                '/products/' + c2.id.toString(),
+                c2.name,
+                c2.id,
+                [],
+                [],
+                null)
+            })],
+            c1.children,
+            null
+          )
+        })],
+        [],
+        null,
+        cat.plural)
+    })];
+
     navigationItems.forEach(item => {
       this.setParents(item);
     });
 
     this.desktopLinkItems = [];
-    this.desktopNavigationItems = [];
+    this.desktopNavigationItems = desktopNavigationItems;
 
     const accountNav = {
       name: 'Account', path: null, subItems: [
@@ -250,9 +277,6 @@ export class AppComponent implements OnInit {
         new NavigationItem([], '/account/settings', 'Settings', null, [], [], null)
       ]
     }
-    navigationItems.forEach(item => {
-      this.desktopNavigationItems.push(item);
-    });
     this.desktopLinkItems.push(new NavigationItem([], 'about', 'Blog', null, [], [], null));
     this.desktopLinkItems.push(new NavigationItem([], 'about', 'About', null, [], [], null));
     if (this.userService.user$.value && this.userService.user$.value.type === 'seller') {

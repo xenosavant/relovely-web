@@ -18,6 +18,8 @@ export class ImageCropperComponent implements OnInit {
   @Output() public cancel: EventEmitter<boolean> = new EventEmitter();
 
   @Input() public image: string;
+  @Input() public showInfo = false;
+
 
   constructor() { }
 

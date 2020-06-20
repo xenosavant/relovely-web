@@ -146,6 +146,7 @@
 </div>
 
 <ng-container *ngIf="crop">
-    <app-image-cropper (cancel)="onCloseCropper($event)" (crop)="onImageCropped($event)" [image]="originalImage">
+    <app-image-cropper [showInfo]="true" (cancel)="onCloseCropper($event)" (crop)="onImageCropped($event)"
+        [image]="originalImage">
     </app-image-cropper>
 </ng-container>
