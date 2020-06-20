@@ -101,7 +101,6 @@ export class FilterBarComponent implements OnInit {
   }
 
   sizeFiltersChanged(change: any) {
-    console.log(change);
     let sizeArray = [];
     this.sizeFilters.forEach(filter => {
       if (filter.id !== change.groupId) {

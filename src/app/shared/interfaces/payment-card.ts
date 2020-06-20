@@ -4,7 +4,7 @@ export interface PaymentCard {
     name: string;
     stripeId: string;
     last4: string;
-    type: PaymentCardType;
+    type: string;
     expirationMonth: number;
     expirationYear: number;
     primary?: boolean;

@@ -59,11 +59,11 @@ export class PaymentCardInputComponent implements OnInit {
       .createToken(this.cardElement.getCard(), { name: this.form.get('name').value })
       .subscribe(result => {
         if (result.token) {
-          console.log('emit save');
+          console.log(result);
           this.save.emit({
             last4: result.token.card.last4,
             name: this.form.get('name').value,
-            type: REVERSE_CARD_TYPE_MAP[result.token.card.brand],
+            type: result.token.card.brand,
             stripeId: result.token.id,
             expirationMonth: result.token.card.exp_month,
             expirationYear: result.token.card.exp_year,

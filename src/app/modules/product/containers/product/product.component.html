@@ -5,7 +5,7 @@
                 <app-avatar [image]="product.seller.profileImageUrl"></app-avatar>
             </div>
             <div class="product-user-name">
-                {{product.seller.username}}
+                {{product.seller.username || 'Relovely Seller'}}
             </div>
         </div>
         <owl-carousel-o [options]="carouselOptions" (changed)="carouselTranslated($event)" appOwlPreventClick
@@ -95,7 +95,7 @@
                     <app-avatar [image]="product.seller.profileImageUrl" (click)="goToProfile()">
                     </app-avatar>
                     <div>
-                        @{{product.seller.username}}
+                        @{{product.seller.username || 'Relovely Seller'}}
                     </div>
                 </div>
                 <div class="product-price">
