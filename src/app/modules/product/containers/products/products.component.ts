@@ -82,16 +82,17 @@ export class ProductsComponent implements OnInit {
         if (this.filterSub) {
           this.filterSub.unsubscribe();
         }
-        this.filterSub = this.filterService.filterStateSubject$.subscribe(state => {
-          this.loading = true;
-          this.getProducts(state);
-        });
       } else {
         const root = this.navigationService.rootNavigationItems;
         this.currentNavItem = new NavigationItem([], '/products', 'All Products', "-1", root, [], null);
         this.categoryId = '0';
         this.getProducts(this.filterService.filterStateSubject$.value);
       }
+      this.filterSub = this.filterService.filterStateSubject$.subscribe(state => {
+        console.log(state);
+        this.loading = true;
+        this.getProducts(state);
+      });
       this.navigationService.navigate(this.currentNavItem);
       this.ref.markForCheck();
     })
@@ -120,10 +121,11 @@ export class ProductsComponent implements OnInit {
   getProducts(state: IUserPreferences) {
     const filteredSizes = [];
     this.loading = true;
-    this.lookupService.getLookupData().subscribe(lookupValues => {
+    this.lookupService.getLookupData().subscribe(lookup => {
+      const a = lookup.sizes;
+      const validGroups = lookup.sizes.filter(group => this.categoryId === '0' || group.categoryIds.includes(this.categoryId));
       state.sizes.forEach(id => {
-        const size = lookupValues.sizes.find(size => size.id === id);
-        if (size.categoryIds.includes(this.categoryId)) {
+        if (validGroups.some(g => g.filters.some(f => f.key === id))) {
           filteredSizes.push(id);
         }
       });

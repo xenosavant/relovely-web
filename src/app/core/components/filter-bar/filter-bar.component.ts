@@ -53,7 +53,6 @@ export class FilterBarComponent implements OnInit {
         }
         if (this.userService.user$.value) {
           const cache = this.userService.user$.value.preferences;
-          console.log(cache);
           if (cache) {
             if (cache.sizes) {
               cache.sizes.forEach(sizeId => {
@@ -102,6 +101,7 @@ export class FilterBarComponent implements OnInit {
   }
 
   sizeFiltersChanged(change: any) {
+    console.log(change);
     let sizeArray = [];
     this.sizeFilters.forEach(filter => {
       if (filter.id !== change.groupId) {

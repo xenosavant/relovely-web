@@ -29,7 +29,8 @@ p {
 }
 
 .form {
-    width: 400px;
+    max-width:412px;
+    padding: 0px 6px;
     .info {
         font-weight: 600;
         margin-bottom: 16px;

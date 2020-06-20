@@ -24,7 +24,6 @@ export class LookupService extends BaseService {
     private _states: State[] = [];
 
     private _stateSubject$ = new BehaviorSubject<LookupState>(null);
-    public state$ = this._stateSubject$.asObservable();
 
     constructor(httpClient: HttpClient) {
         super(httpClient);
@@ -54,7 +53,6 @@ export class LookupService extends BaseService {
                     });
                     this.buildColorDictionary(this._state.colors);
                     this._stateSubject$.next(this._state);
-                    console.log(this._stateSubject$.value);
                     return this._state;
                 })
             );

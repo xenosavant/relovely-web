@@ -52,6 +52,7 @@ export class FilterService extends BaseService {
                 this.localStorage.setItem('currentUser', user);
             });
         }
+        console.log('calling subject')
         this.filterStateSubject$.next(this._state);
     }
 
