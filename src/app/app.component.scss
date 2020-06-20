@@ -46,6 +46,7 @@ mat-sidenav-container {
 
 mat-toolbar {
   top:0;
+  z-index: 101;
   mat-toolbar-row {
     button {
       width: 40px;

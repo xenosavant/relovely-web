@@ -4,8 +4,7 @@
       <div class="header-placeholder" *ngIf="loading || error">
       </div>
       <mat-toolbar class="topbar" color="primary" *ngIf="showMobileHeader && !error && !loading"
-        [class.mat-elevation-z2]="(!(showNavBar || showFilterBar) && !scrolledToTop) && !sidenavOpen"
-        [ngStyle]="{'z-index':(!(showNavBar || showFilterBar) || !scrolledToTop) && !sidenavOpen ? 101 : 1 }">
+        [class.mat-elevation-z2]="(!(showNavBar || showFilterBar) && !scrolledToTop) && !sidenavOpen">
         <mat-toolbar-row [class.no-border]=" scrolledToTop && (showFilterBar || showNavBar)" class="top-bar gray"
           *ngIf="!showSearch">
           <button class="mat-icon-button black" *ngIf="!sidenavOpen" (click)="openSidenav()">
