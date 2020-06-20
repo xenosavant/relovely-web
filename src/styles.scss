@@ -522,6 +522,9 @@ mat-sidenav {
     right: 0px;
   }
 }
+mat-drawer-content {
+-webkit-overflow-scrolling: touch;
+}
 
 mat-basic-chip {
   background-color: $dark-gray-47 !important;
