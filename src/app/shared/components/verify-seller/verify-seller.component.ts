@@ -62,7 +62,7 @@ export class VerifySellerComponent implements OnInit {
         last: new FormControl('', [Validators.required]),
         birthday: new FormControl(null, [Validators.required]),
         ssn4: new FormControl(null, [Validators.required, Validators.minLength(4)]),
-        phone: new FormControl('', [Validators.required, Validators.minLength(12)]),
+        phone: new FormControl('', [Validators.required, Validators.minLength(10)]),
         line1: new FormControl('', [Validators.required]),
         line2: new FormControl(''),
         city: new FormControl('', [Validators.required]),
@@ -137,7 +137,7 @@ export class VerifySellerComponent implements OnInit {
     if (/id_number/.test(item)) {
       if (this.formFields.indexOf('ssn') === -1) {
         this.formFields.push('ssn');
-        this.form.addControl('ssn', new FormControl(null, [Validators.required, Validators.minLength(11)]));
+        this.form.addControl('ssn', new FormControl(null, [Validators.required, Validators.minLength(9)]));
       }
     }
     if (/first_name/.test(item) || /last_name/.test(item)) {

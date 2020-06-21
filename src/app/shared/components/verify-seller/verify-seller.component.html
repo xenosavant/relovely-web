@@ -58,7 +58,7 @@
             </ng-container>
             <ng-container *ngIf="formFields.indexOf('ssn') > -1">
                 <mat-form-field appearance="outline">
-                    <input type="text" autocomplete="off" ssn matInput placeholder="Social Security Number"
+                    <input type="text" autocomplete="off" maxlength="9" matInput placeholder="Social Security Number"
                         formControlName="ssn" />
                 </mat-form-field>
             </ng-container>
@@ -78,7 +78,7 @@
                 </div>
                 <div>
                     <mat-form-field appearance="outline">
-                        <input autocomplete="phone-number-no-fill" matInput phone placeholder="Phone Number"
+                        <input autocomplete="phone-number-no-fill" maxlength="10" matInput placeholder="Phone Number"
                             formControlName="phone" />
                     </mat-form-field>
                 </div>
