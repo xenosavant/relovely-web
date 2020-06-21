@@ -26,7 +26,9 @@ export class BreadcrumbsComponent implements OnChanges {
       }
       const navStack = [];
       while (currentItem) {
-        navStack.push(currentItem);
+        if (!(currentItem.name && currentItem.name.startsWith('All') && currentItem.name !== 'All Products')) {
+          navStack.push(currentItem);
+        }
         currentItem = currentItem.parent;
       }
       const length = navStack.length
