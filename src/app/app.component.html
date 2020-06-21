@@ -126,7 +126,7 @@
 
 <ng-template #content>
   <router-outlet *ngIf="!error"></router-outlet>
-  <div *ngIf="error">ERROR</div>
+  <div class="error" *ngIf="error">ERROR</div>
 </ng-template>
 
 <ng-template #desktopToolbar>
@@ -177,7 +177,7 @@
           </mat-menu>
         </div>
       </mat-toolbar-row>
-      <mat-toolbar-row *ngIf="!error" (click)="toggleHeader()" class="desktop-menu-bar">
+      <mat-toolbar-row *ngIf="!error && !loading" (click)="toggleHeader()" class="desktop-menu-bar">
         <div class="menu-bar-container">
           <div class="menu-wrapper" style="z-index:1050" (mouseleave)="onLeaveMenuBar($event)">
             <span class="menu">

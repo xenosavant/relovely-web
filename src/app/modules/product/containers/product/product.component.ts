@@ -177,8 +177,7 @@ export class ProductComponent implements OnInit {
     if (this.currentUser) {
       this.navigationService.navigate({ path: `/sales/checkout/${this.product.id}` });
     } else {
-      this.navigationService.navigate({ path: '/' });
-      this.navigationService.openAuthWindow({ page: 'signin' });
+      this.navigationService.openAuthWindow({ page: 'signin', redirect: `/sales/checkout/${this.product.id}` });
     }
   }
 }

@@ -75,6 +75,7 @@ export class AppComponent implements OnInit {
   public authPage = 'signin';
   public authToken: string;
   public authUsername: string;
+  public authRedirect: string;
   error = false;
   searchTerm: string;
   private _navMap = {};
@@ -136,25 +137,26 @@ export class AppComponent implements OnInit {
         this.ref.detectChanges();
       });
     });
-    this.loginSubscription = this.userService.loggedIn$.subscribe(loggedIn => {
-      this.lookupService.getLookupData().subscribe(value => {
-        this.navSetup(value.categories);
-        this.loading = false;
-        this.ref.markForCheck();
-      }, err => {
-        this.handleError();
-      });
-    });
     const jwt = this.localStorageService.getItem('jwt');
     if (jwt) {
       this.userService.jwt = jwt;
       this.userService.me().pipe(tap(me => {
         if (me) {
           this.userService.setLogin(jwt, me);
+          this.lookupService.getLookupData().subscribe(value => {
+            this.navSetup(value.categories);
+            this.resetLoginSubscription();
+            this.loading = false;
+            this.ref.markForCheck();
+          }, err => {
+            this.handleError();
+          });
         } else {
           this.userService.logout();
           this.loading = false;
         }
+        this.resetLoginSubscription();
+        this.ref.markForCheck();
       }, err => {
         if (err.status === 401) {
           this.loading = false;
@@ -164,17 +166,16 @@ export class AppComponent implements OnInit {
         }
       }), mergeMap(value => this.getLookup()))
         .subscribe(final => {
-          if (this.loginSubscription) {
-            this.loginSubscription.unsubscribe();
-          }
+          this.resetLoginSubscription();
         });
     } else {
-      this.userService.logout();
       this.lookupService.getLookupData().subscribe(value => {
         this.navSetup(value.categories);
         this.loading = false;
+        this.resetLoginSubscription();
         this.ref.markForCheck();
       }, err => {
+        this.resetLoginSubscription();
         this.handleError();
       });
     }
@@ -183,6 +184,7 @@ export class AppComponent implements OnInit {
         this.authToken = item.token;
         this.authPage = item.page;
         this.authUsername = item.username;
+        this.authRedirect = item.redirect;
         if (item.error) {
           this.signupError = item.error;
         } else {
@@ -192,6 +194,21 @@ export class AppComponent implements OnInit {
       } else {
         this.closeModal();
       }
+    });
+  }
+
+  resetLoginSubscription() {
+    if (this.loginSubscription) {
+      this.loginSubscription.unsubscribe();
+    }
+    this.loginSubscription = this.userService.loggedIn$.subscribe(loggedIn => {
+      this.lookupService.getLookupData().subscribe(value => {
+        this.navSetup(value.categories);
+        this.loading = false;
+        this.ref.markForCheck();
+      }, err => {
+        this.handleError();
+      });
     });
   }
 
@@ -264,7 +281,7 @@ export class AppComponent implements OnInit {
       this.setParents(item);
     });
 
-    this.desktopLinkItems = [];
+    this.desktopLinkItems = [new NavigationItem([], 'about', 'Sell', null, [], [], null), new NavigationItem([], 'about', 'About', null, [], [], null)];
     this.desktopNavigationItems = desktopNavigationItems;
 
     const accountNav = {
@@ -272,14 +289,14 @@ export class AppComponent implements OnInit {
         new NavigationItem([], '/member/profile', 'Profile', null, [], [], null),
         new NavigationItem([], '/sales/orders', 'Orders', null, [], [], null),
         new NavigationItem([], '/account/payments', 'Payment Methods', null, [], [], null),
-        new NavigationItem([], '/account/addresses', 'Addresses', null, [], [], null),
-        new NavigationItem([], '/account/settings', 'Settings', null, [], [], null)
+        new NavigationItem([], '/account/addresses', 'Addresses', null, [], [], null)
       ]
     }
-    this.desktopLinkItems.push(new NavigationItem([], 'about', 'Sell', null, [], [], null));
-    this.desktopLinkItems.push(new NavigationItem([], 'about', 'About', null, [], [], null));
+
     if (this.userService.user$.value && this.userService.user$.value.type === 'seller') {
-      accountNav.subItems.push(new NavigationItem([], '/sales/sales', 'Sales', null, [], [], null),
+      accountNav.subItems.push(
+        new NavigationItem([], '/account/settings', 'Settings', null, [], [], null),
+        new NavigationItem([], '/sales/sales', 'Sales', null, [], [], null),
         new NavigationItem([], '/member/listings', 'Listings', null, [], [], null)
       );
     }
@@ -292,7 +309,6 @@ export class AppComponent implements OnInit {
       new NavigationItem([], '/account/signout', 'Sign Out', null, [], [], null),
     );
     this.accountNav = accountNav;
-    console.log(this.accountNav);
     navigationItems.push(this.accountNav);
     this.navigationService.rootNavigationItems = navigationItems;
     this.navigationService.setCurrentNavigationItems(navigationItems);
@@ -476,6 +492,10 @@ export class AppComponent implements OnInit {
 
   public closeModal() {
     this.overlayService.close();
+    if (this.authRedirect) {
+      this.navigationService.navigate({ path: this.authRedirect });
+      this.authRedirect = null;
+    }
   }
 
   public onApply() {

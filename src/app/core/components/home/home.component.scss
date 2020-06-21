@@ -3,24 +3,23 @@
 :host {
     flex: auto;
 }
-.header-bar {
-    height:100px;
+.home-header-bar {
+    height:fit-content;
     padding:16px;
     background-color: $dark-blue !important;
     .header-inner {
-        display: grid;
-        grid-template-rows: 1fr 1fr;
-        grid-template-columns: auto;
         .text-wrapper {
-            width: $desktop-width;
+            max-width: $desktop-width;
             margin: 0 auto;
+            line-height: 1.3em;
             text-align:center;
             color:white;
-    
             font-size: 1.2em;
             font-family: "Helvetica Neue", sans-serif;
             font-weight: 500;
-            letter-spacing: .1em;
+            a {
+                color: #ebf7ff !important;
+            }
         }
     }
 }
