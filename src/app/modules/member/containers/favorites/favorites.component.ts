@@ -36,4 +36,10 @@ export class FavoritesComponent implements OnInit {
       this.ref.markForCheck();
     })
   }
+
+  onUnFavorite(id: string) {
+    this.products.splice(this.products.findIndex(p => p.id === id));
+    this.products = [...this.products];
+    this.ref.markForCheck();
+  }
 }
