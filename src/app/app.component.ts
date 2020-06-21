@@ -137,7 +137,6 @@ export class AppComponent implements OnInit {
       });
     });
     this.loginSubscription = this.userService.loggedIn$.subscribe(loggedIn => {
-      console.log(loggedIn)
       this.lookupService.getLookupData().subscribe(value => {
         this.navSetup(value.categories);
         this.loading = false;
@@ -457,7 +456,7 @@ export class AppComponent implements OnInit {
   }
 
   public goBack() {
-    if (this.currentNavigationItems[0].parent.parent) {
+    if (this.currentNavigationItems[0].parent && this.currentNavigationItems[0].parent.parent) {
       this.sideNavigate(this.currentNavigationItems[0].parent.parent)
     } else {
       this.currentNavigationItems = this.navigationService.rootNavigationItems;

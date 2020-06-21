@@ -1,6 +1,6 @@
-<div class="user-list-container">
+<div class="user-list-container" (click)="goToProfile()">
   <div class="avatar-wrapper">
-    <app-avatar (click)="goToProfile()" [image]="user.profileImageUrl"></app-avatar>
+    <app-avatar [image]="user.profileImageUrl"></app-avatar>
   </div>
   <div class="info">
     {{user.username}}

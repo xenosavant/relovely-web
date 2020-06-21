@@ -27,7 +27,7 @@ export class VideoUploaderComponent implements OnInit {
     private uploadService: FileUploadService) { }
 
   ngOnInit(): void {
-    this.uploadService.getSignature(`products/${this.id}/videos`, this.timestamp, environment.cloudinaryVideoUploadPreset).subscribe(signature => {
+    this.uploadService.getSignature(`products/${this.id}/videos`, this.timestamp, environment.cloudinaryVideoUploadPreset, 'video').subscribe(signature => {
 
       // Create the file uploader, wire it to upload to your account
       const uploaderOptions: FileUploaderOptions = {
