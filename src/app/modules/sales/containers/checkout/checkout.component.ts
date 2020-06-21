@@ -153,13 +153,14 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSavePayment(card: PaymentCard) {
+    this.error = null;
     this.userService.addCard(card).subscribe(result => {
       this.user = this.userService.user$.value;
       this.selectedPayment = this.user.cards.find(a => a.primary);
       this.addingPayment = false;
       this.ref.markForCheck();
     }, err => {
-      console.log(err);
+      this.error = `Something went wrong there...let's try that again.`
     })
   }
 

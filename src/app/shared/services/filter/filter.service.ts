@@ -33,11 +33,10 @@ export class FilterService extends BaseService {
 
     public updateColors(colors: string[]) {
         this._state.colors = colors || [];
-        const user = this.localStorage.getItem('currentUser');
+        const user = this.userService.user$.value;
         if (user) {
-            this.setPreferences(user.id, this._state).subscribe(result => {
-                user.preferences = this._state;
-                this.localStorage.setItem('currentUser', user);
+            this.userService.updateUser(user.id, { preferences: this._state }).subscribe(u => {
+                this.userService.setCurrentUser(u);
             });
         }
         this.filterStateSubject$.next(this._state);
@@ -45,35 +44,24 @@ export class FilterService extends BaseService {
 
     public updateSizes(sizes: string[]) {
         this._state.sizes = sizes || [];
-        const user = this.localStorage.getItem('currentUser');
+        const user = this.userService.user$.value;
+        console.log(user);
         if (user) {
-            this.setPreferences(user.id, this._state).subscribe(result => {
-                user.preferences = this._state;
-                this.localStorage.setItem('currentUser', user);
+            this.userService.updateUser(user.id, { preferences: this._state }).subscribe(u => {
+                this.userService.setCurrentUser(u);
             });
         }
-        console.log('calling subject')
         this.filterStateSubject$.next(this._state);
     }
 
     public updatePrices(prices: PriceRange[]) {
         this._state.prices = prices || [];
-        const user = this.localStorage.getItem('currentUser');
+        const user = this.userService.user$.value;
         if (user) {
-            this.setPreferences(user.id, this._state).subscribe(result => {
-                user.preferences = this._state;
-                this.localStorage.setItem('currentUser', user);
+            this.userService.updateUser(user.id, { preferences: this._state }).subscribe(u => {
+                this.userService.setCurrentUser(u);
             });
         }
         this.filterStateSubject$.next(this._state);
-    }
-
-
-    setPreferences(userId: string, preferences: IUserPreferences): Observable<boolean> {
-        return this.httpClient.patch<IUserPreferences>(`${this.apiBaseUrl}/users/${userId}`, { preferences: preferences }).pipe(
-            map(() => {
-                return true;
-            })
-        );
     }
 }

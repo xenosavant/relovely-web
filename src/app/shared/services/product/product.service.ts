@@ -38,8 +38,11 @@ export class ProductService extends BaseService {
             });
             query = query + `&colors=${colors}`;
         }
+        console.log(prices)
         if (prices) {
+            console.log(prices);
             const json = JSON.stringify(prices);
+            console.log(json);
             query = query + `&prices=${json}`
         }
         if (searchTerm) {

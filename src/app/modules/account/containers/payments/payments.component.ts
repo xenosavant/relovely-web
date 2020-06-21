@@ -25,6 +25,7 @@ export class PaymentsComponent implements OnInit {
   user: UserAuth;
   primary: PaymentCard;
   loading = true;
+  error: string = null;
 
   primarySubject$ = new Subject<boolean>();
 
@@ -60,6 +61,7 @@ export class PaymentsComponent implements OnInit {
 
   cardCreated(card: PaymentCard) {
     this.userService.addCard(card).subscribe(result => {
+      this.error = null;
       this.userService.setCurrentUser(result);
       this.user = result;
       this.primary = this.user.cards.find(c => c.primary);
@@ -67,6 +69,7 @@ export class PaymentsComponent implements OnInit {
       this.ref.markForCheck();
     }, err => {
       this.overlayService.close();
+      this.error = `Something went wrong...let's try that again`;
     })
   }
 

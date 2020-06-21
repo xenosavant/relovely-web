@@ -84,13 +84,19 @@ export class FilterBarComponent implements OnInit {
     });
   }
 
-  setPriceFilter(filter: PriceFilter) {
-    const index = this.selectedPriceFilters.indexOf(filter);
-    if (index > -1) {
-      this.selectedPriceFilters.splice(index, 1);
-    } else {
+  setPriceFilter(filter: PriceFilter, add: boolean) {
+    if (add) {
       this.selectedPriceFilters.push(filter);
+    } else {
+      const temp = [];
+      this.selectedPriceFilters.forEach(f => {
+        if (f.id !== filter.id) {
+          temp.push(f);
+        }
+      });
+      this.selectedPriceFilters = [];
     }
+
     this.filterService.updatePrices(this.selectedPriceFilters.map(f => {
       return {
         id: f.id,

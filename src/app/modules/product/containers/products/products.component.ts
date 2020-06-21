@@ -129,6 +129,7 @@ export class ProductsComponent implements OnInit {
           filteredSizes.push(id);
         }
       });
+      console.log(state.prices);
       this.productService.getProducts(this.currentPage, this.categoryId || '-1', this.searchTerm, filteredSizes.length ? state.sizes : null,
         state.colors.length ? state.colors : null, state.prices.length ? state.prices : null).subscribe(result => {
           this.products = result.items;

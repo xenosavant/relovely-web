@@ -177,7 +177,7 @@
           </mat-menu>
         </div>
       </mat-toolbar-row>
-      <mat-toolbar-row (click)="toggleHeader()" class="desktop-menu-bar">
+      <mat-toolbar-row *ngIf="!error" (click)="toggleHeader()" class="desktop-menu-bar">
         <div class="menu-bar-container">
           <div class="menu-wrapper" style="z-index:1050" (mouseleave)="onLeaveMenuBar($event)">
             <span class="menu">

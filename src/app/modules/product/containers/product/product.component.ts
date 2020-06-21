@@ -123,7 +123,6 @@ export class ProductComponent implements OnInit {
       }
       const stack = this.navigationService.navigationStack;
       this.product = response.product;
-      console.log(this.product);
       this.more = response.more;
       if (stack.length > 1) {
         this.navItems.push(stack[stack.length - 2]);

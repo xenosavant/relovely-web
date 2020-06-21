@@ -22,7 +22,6 @@ export class AddPaymentCardComponent implements OnInit {
   }
 
   onCardCreated(card: PaymentCard) {
-    console.log(card);
     this.save.emit(card);
   }
 
