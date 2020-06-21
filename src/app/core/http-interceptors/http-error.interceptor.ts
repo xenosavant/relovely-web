@@ -49,7 +49,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 401) {
             this.userSerice.logout();
-            this.navigationService.openAuthWindow({ page: 'signin' });
           }
           const appErrorHandler = this.injector.get(ErrorHandler);
           appErrorHandler.handleError(err);
