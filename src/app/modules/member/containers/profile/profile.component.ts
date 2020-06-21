@@ -86,15 +86,16 @@ export class ProfileComponent implements OnInit {
         this.headerService.hideHeader(false);
         this.crop = false;
         this.user = { ...this.user, profileImageUrl: tempUrl }
+        this.ref.markForCheck();
       }, error => {
         this.headerService.hideHeader(false);
         this.crop = false;
+        this.ref.markForCheck();
       })
   }
 
   public onUpdateImage($event: any): void {
     this.imageChangedEvent = $event;
-    const fileReader = new FileReader();
     this.currentImage = null;
     const context = this;
     loadImage($event.target.files[0], {
@@ -105,15 +106,14 @@ export class ProfileComponent implements OnInit {
       canvas: true
     }).then(function (data) {
       const canvas = document.createElement("canvas");
-      canvas.width = data.image.width;
-      canvas.height = data.image.height;
+      canvas.width = data.image.width + 1;
+      canvas.height = data.image.height + 1;
       const ctx = canvas.getContext("2d");
-      ctx.drawImage(data.image, 0, 0);
+      ctx.drawImage(data.image, 0, 0, data.image.width, data.image.height);
       const dataURL = canvas.toDataURL("image/jpg");
       context.currentImage = dataURL;
       context.crop = true;
       context.ref.markForCheck();
     })
-    fileReader.readAsDataURL($event.target.files[0]);
   }
 }

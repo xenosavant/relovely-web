@@ -197,10 +197,10 @@ export class ProductCreateComponent implements OnInit {
       orientation: true
     }).then(function (data) {
       const canvas = document.createElement("canvas");
-      canvas.width = data.image.width;
-      canvas.height = data.image.height;
+      canvas.width = data.image.width + 1;
+      canvas.height = data.image.height + 1;
       const ctx = canvas.getContext("2d");
-      ctx.drawImage(data.image, 0, 0);
+      ctx.drawImage(data.image, 0, 0, data.image.width, data.image.height);
       const dataURL = canvas.toDataURL("image/jpg");
       context.originalImage = dataURL;
       context.crop = true;
