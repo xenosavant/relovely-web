@@ -23,7 +23,7 @@ export class AddBankComponent implements OnInit {
       first: new FormControl('', [Validators.required]),
       last: new FormControl('', [Validators.required]),
       account: new FormControl('', [Validators.required]),
-      routing: new FormControl('', [Validators.required]),
+      routing: new FormControl('', [Validators.required, Validators.minLength(9)]),
     });
   }
 
