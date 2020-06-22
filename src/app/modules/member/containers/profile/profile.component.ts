@@ -76,7 +76,7 @@ export class ProfileComponent implements OnInit {
 
   onImageCropped(image: ImageSet) {
     let tempUrl: string;
-    this.uploadService.upload('data:image/jpeg;base64,' + image, `users/${this.user.id}/images`, 'image', 'profile').pipe(
+    this.uploadService.upload('data:image/jpeg;base64,' + image, `users/${this.user.id}/images`, 'profile').pipe(
       tap(response => {
         tempUrl = response.secure_url;
       }),
