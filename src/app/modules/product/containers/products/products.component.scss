@@ -53,9 +53,13 @@
 
 .empty-state {
     flex: auto;
+    min-height: calc(100vh - 160px);
     display: flex;
     align-items: center;
     justify-content: center;
+    @media(min-width: $desktop-width) {
+        min-height: 0px;
+    }
     text-align: center;
 }
 
