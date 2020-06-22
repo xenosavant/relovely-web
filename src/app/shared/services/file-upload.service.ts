@@ -14,7 +14,7 @@ export class FileUploadService extends BaseService {
         super(httpClient);
     }
 
-    public upload(data: any, id: string, type: string, publicId: string = null) {
+    public upload(data: any, folder: string, publicId: string = null) {
 
         const formData = new FormData();
         const timestamp = Date.now().toString();
@@ -22,13 +22,14 @@ export class FileUploadService extends BaseService {
         formData.append('upload_preset', environment.cloudinaryImageUploadPreset);
         formData.append('api_key', environment.cloudinaryApiKey);
         formData.append('timestamp', timestamp);
-        formData.append('folder', id);
+        formData.append('folder', folder);
         if (publicId) {
             formData.append('public_id', publicId)
+            formData.append('unique_filename', 'false');
         }
         // formData.append('background_removal', 'cloudinary_ai');
 
-        const payload: any = { folder: id, timestamp: timestamp, uploadPreset: environment.cloudinaryImageUploadPreset }
+        const payload: any = { folder: folder, timestamp: timestamp, uploadPreset: environment.cloudinaryImageUploadPreset }
         if (publicId) {
             payload.publicId = publicId;
         }
