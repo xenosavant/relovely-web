@@ -35,7 +35,6 @@ export class
     public setCurrentUser(user: UserAuth): void {
         this._currentUser = user;
         this.user$.next(user);
-        this.localStorageService.setItem('currentUser', user);
     }
 
     public get jwt() {
@@ -50,7 +49,6 @@ export class
         this._jwt = jwt;
         this.localStorageService.setItem('jwt', jwt);
         this._currentUser = user;
-        this.localStorageService.setItem('currentUser', user);
         this._notLoggedIn = false;
         this.user$.next(user);
         this.loggedIn$.next(true);

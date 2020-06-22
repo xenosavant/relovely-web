@@ -457,6 +457,8 @@ export class AppComponent implements OnInit {
 
   public sideNavigate(item: NavigationItem) {
     if (!this.userService.user$.value && item.name === 'Account') {
+      this.sidenavOpen = false;
+      this.showOverlay = false
       this.showSignin();
     } else {
       const close = item.subItems.length === 0;

@@ -52,19 +52,13 @@
         </div>
     </div>
     <div *ngIf="mobile" class="mobile-banner-wrapper">
-        <h1> Stay in the know!</h1>
-        <div class="cta-wrapper">
-            <input class="email-input">
-            <app-button type="primary">
-                Submit
-            </app-button>
+        <div>WELCOME TO RELOVELY!</div>
+        <div>We just launched, so keep checking back as new product will be trickling in throughout the coming
+            weeks. </div>
+        <div>Follow us on Instagram for updates at <a href="https://instagram.com/relovely.us"> relolely.us</a>
         </div>
-        <p>Sign up for our newsletter to receive exclusive offers, and be the first to know about new product launches.
-            By subscribing, you are also agreeing to relovely's <a href="">privacy policy</a>
-        </p>
     </div>
-</div>
 
-<ng-template cdkPortal #applyToSell="cdkPortal">
-    <app-seller-apply (close)="onClose($event)"></app-seller-apply>
-</ng-template>
+    <ng-template cdkPortal #applyToSell="cdkPortal">
+        <app-seller-apply (close)="onClose($event)"></app-seller-apply>
+    </ng-template>
