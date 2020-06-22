@@ -474,6 +474,7 @@ export class AppComponent implements OnInit {
   public closeSidenav() {
     this.sidenavOpen = false;
     this.showOverlay = false
+    this.currentNavigationItems = this.navigationService.rootNavigationItems;
   }
 
   public toggleProductMode() {

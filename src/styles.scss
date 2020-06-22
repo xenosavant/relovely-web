@@ -404,9 +404,8 @@ div.left {
 .header-bar {
   width:100%;
   background-color: $dark-blue;
-  padding-left: 10px;
-  &.center {
-    padding-left: 0px;
+  &.home {
+    padding-left: 10px;
   }
 }
 

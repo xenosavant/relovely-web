@@ -24,6 +24,7 @@ export class FavoritesComponent implements OnInit {
   mobile: boolean;
   public products: Product[];
   public user: UserAuth;
+  public loading = true;
 
   ngOnInit() {
     this.navigationService.showNavBar(true, 'FAVORITES');
@@ -34,6 +35,7 @@ export class FavoritesComponent implements OnInit {
     this.productService.getFavorites().subscribe(response => {
       this.products = response.items;
       this.ref.markForCheck();
+      this.loading = false;
     })
   }
 
