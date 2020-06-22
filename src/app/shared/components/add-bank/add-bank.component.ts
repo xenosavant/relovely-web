@@ -39,7 +39,6 @@ export class AddBankComponent implements OnInit {
       firstName: this.form.get('first').value,
       lastName: this.form.get('last').value
     }).subscribe(user => {
-      console.log(user);
       this.userService.setCurrentUser(user);
       this.loading = false;
       this.close.emit();

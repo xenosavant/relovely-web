@@ -89,7 +89,6 @@ export class ProductsComponent implements OnInit {
         this.getProducts(this.filterService.filterStateSubject$.value);
       }
       this.filterSub = this.filterService.filterStateSubject$.subscribe(state => {
-        console.log(state);
         this.loading = true;
         this.getProducts(state);
       });

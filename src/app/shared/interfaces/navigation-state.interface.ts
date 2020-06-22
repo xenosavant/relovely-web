@@ -3,7 +3,6 @@ import { NavigationItem } from '../models/navigation-item.model';
 
 export interface INavigationState {
     showNavBar: boolean;
-    showTopLeveNavigation: boolean;
     pageHeader: string;
     navigationHeader: string;
     showFilterBar: boolean;
@@ -12,6 +11,5 @@ export interface INavigationState {
     chipItems: NavigationItem[];
     selectedCategoryId: string;
     selectedCategory: Category;
-    currentNavigationItems: NavigationItem[];
 }
 

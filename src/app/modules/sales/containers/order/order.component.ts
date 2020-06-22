@@ -62,7 +62,6 @@ export class OrderComponent implements OnInit {
     this.orderService.shipOrder(this.order.id).subscribe(() => {
       const user = this.userService.user$.getValue();
       user.sales.splice(user.sales.findIndex(o => o.id === this.order.id));
-      console.log(user);
       this.userService.setCurrentUser(user);
       const newWindow = window.open();
       newWindow.document.write(`<html><body onload="window.print();"><img style="height:600px;" src="${this.order.shippingLabelUrl}"/></body></html>`);

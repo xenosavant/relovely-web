@@ -18,7 +18,6 @@ export class NavigationService {
 
     private _navConfig: INavigationState = {
         showNavBar: false,
-        showTopLeveNavigation: true,
         pageHeader: '',
         navigationHeader: '',
         showFilterBar: false,
@@ -26,7 +25,6 @@ export class NavigationService {
         categoryItems: [],
         chipItems: [],
         selectedCategoryId: null,
-        currentNavigationItems: [],
         selectedCategory: null
     }
     private navConfigSubject$ = new Subject<INavigationState>();
@@ -70,7 +68,6 @@ export class NavigationService {
 
     public navigate(item: NavigationItem, back = false): boolean {
         const params = item.queryStrings;
-        console.log(item.id)
         if (item.id === "-1") {
             this._navConfig.pageHeader = 'All Products';
             this._navConfig.showFilterBar = true;
@@ -136,8 +133,6 @@ export class NavigationService {
             }
             this.router.navigate([navigationItem.path], { queryParams: parsedParams, queryParamsHandling: 'merge' });
         }
-        this._navConfig.showTopLeveNavigation = true;
-        this._navConfig.currentNavigationItems = this.rootNavigationItems;
         this.navConfigSubject$.next(this._navConfig);
     }
 
@@ -164,18 +159,8 @@ export class NavigationService {
         this.navConfigSubject$.next(this._navConfig);
     }
 
-    public setCurrentNavigationItems(items: NavigationItem[]) {
-        this._navConfig.currentNavigationItems = items;
-        this._navConfig.showTopLeveNavigation = true;
-        this.navConfigSubject$.next(this._navConfig);
-    }
-
     public getNavigationItem() {
         return this._currentNavigationItem;
-    }
-
-    public getNavigationItems() {
-        return this._navConfig.currentNavigationItems;
     }
 
     public openAuthWindow(item: IAuthItem) {

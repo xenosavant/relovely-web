@@ -39,7 +39,6 @@ export class
             if (user.sales && user.sales.length) {
                 this.alertService.setAlert({ menuItem: 'Sales', alert: true });
             } else {
-                console.log('remove');
                 this.alertService.setAlert({ menuItem: 'Sales', alert: false });
             }
         }

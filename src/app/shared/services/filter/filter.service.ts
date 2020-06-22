@@ -45,7 +45,6 @@ export class FilterService extends BaseService {
     public updateSizes(sizes: string[]) {
         this._state.sizes = sizes || [];
         const user = this.userService.user$.getValue();
-        console.log(user);
         if (user) {
             this.userService.updateUser(user.id, { preferences: this._state }).subscribe(u => {
                 this.userService.setCurrentUser(u);

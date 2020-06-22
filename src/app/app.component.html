@@ -29,7 +29,7 @@
         <mat-toolbar class="toolbar" [class.sticky]="true" *ngIf="showNavBar || showFilterBar"
           [class.mat-elevation-z2]="true">
           <mat-toolbar-row class="header" [hidden]="!showNavBar">
-            <div class="header-bar" [class.home]="showFilterBar">
+            <div class="header-bar" [class.home]="showFilterBar" [class.center]="!showFilterBar">
               <h3>{{header}}</h3>
             </div>
             <div *ngIf="showFilterBar" class="grid-toggle" style="float:right;">

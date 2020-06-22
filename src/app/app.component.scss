@@ -266,10 +266,13 @@ mat-toolbar-row {
     padding-top:6px;
     padding-bottom:6px;
     margin-bottom:1px;
+    &.center {
       h3 {
-        &.center {
-          text-align: center;
-        }
+        margin: 0 auto;
+        width: fit-content;
+      }
+    }
+      h3 {
         font-weight: 350 !important;
       }
   }

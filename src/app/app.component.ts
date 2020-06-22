@@ -127,16 +127,13 @@ export class AppComponent implements OnInit {
       this.showMobileHeader = !hide;
     });
     this.navigationService.navConfig$.subscribe(nav => {
-      console.log(nav);
       this.categoryFilters = nav.categoryItems;
       this.navHeader = nav.navigationHeader;
       this.header = nav.pageHeader;
       this.showNavBar = nav.showNavBar;
       this.showFilterBar = nav.showFilterBar;
       this.showProductGrid = nav.showProductGrid;
-      this.showTopLevel = nav.showTopLeveNavigation;
       this.chipItems = nav.chipItems;
-      this.currentNavigationItems = nav.currentNavigationItems;
       this.zone.run(() => {
         this.ref.detectChanges();
       });
@@ -225,7 +222,6 @@ export class AppComponent implements OnInit {
             this.accountNav.subItems.forEach(item => {
               if (item.name === notification.menuItem) {
                 if (notification.alert) {
-                  console.log('hit');
                   item.alert = true;
                 } else {
                   item.alert = false;
@@ -466,6 +462,8 @@ export class AppComponent implements OnInit {
   }
 
   public openSidenav() {
+    this.showTopLevel = true;
+    this.currentNavigationItems = this.navigationService.rootNavigationItems;
     this.sidenavOpen = true;
     this.navHeader = 'Menu';
     this.showOverlay = true;
@@ -474,7 +472,6 @@ export class AppComponent implements OnInit {
   public closeSidenav() {
     this.sidenavOpen = false;
     this.showOverlay = false
-    this.currentNavigationItems = this.navigationService.rootNavigationItems;
   }
 
   public toggleProductMode() {

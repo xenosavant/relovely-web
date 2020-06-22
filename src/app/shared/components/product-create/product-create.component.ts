@@ -221,7 +221,6 @@ export class ProductCreateComponent implements OnInit {
   }
 
   videoUploaded($event: any) {
-    console.log($event);
     this.video = $event;
     this.videoThumbnail = this.video.url.replace(this.video.format, 'jpg');
   }
@@ -305,7 +304,6 @@ export class ProductCreateComponent implements OnInit {
         this.productService.patchProduct(product, this.product.id).subscribe(response => {
           this.loading = false;
           this.saved.emit(true);
-          console.log('emit')
         }, error => {
           this.saveError = true;
         })
