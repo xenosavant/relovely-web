@@ -41,7 +41,7 @@ export class ReviewsComponent implements OnInit {
       if (this.id = map['id']) {
         this.userService.getReviews(this.id).subscribe(response => {
           this.reviews = response.reviews;
-          this.name = this.userService.user$.value.id === this.id ? 'My' : response.name + `'s`;
+          this.name = this.userService.user$.getValue().id === this.id ? 'My' : response.name + `'s`;
           this.loading = false;
           this.ref.markForCheck();
         })

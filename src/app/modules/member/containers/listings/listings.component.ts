@@ -30,7 +30,7 @@ export class ListingsComponent implements OnInit {
       this.mobile = result.matches;
     })
     this.navigationService.showNavBar(true, 'LISTINGS');
-    this.user = this.userService.user$.value;
+    this.user = this.userService.user$.getValue();
     this.productService.getListings().subscribe(response => {
       this.products = response.items;
       this.ref.markForCheck();

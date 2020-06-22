@@ -35,4 +35,12 @@ export class OrderService extends BaseService {
             })
         );
     }
+
+    shipOrder(id: string): Observable<void> {
+        return this.httpClient.post<void>(`${this.apiBaseUrl}/orders/${id}/ship/`, {}).pipe(
+            map(() => {
+                return;
+            })
+        );
+    }
 }

@@ -2,6 +2,7 @@ import { IUserPreferences } from "../services/filter/filter-state";
 import { Address } from "../interfaces/address.interface";
 import { Card } from "../interfaces/card.interface";
 import { PaymentCard } from "../interfaces/payment-card";
+import { Order } from "./order.model";
 
 export class UserAuth {
     id: string;
@@ -15,7 +16,7 @@ export class UserAuth {
     followers?: string[];
     following?: string[];
     usernameReset?: boolean;
-    sales?: string[];
+    sales?: Order[];
     favorites?: string[];
     type: string;
     preferences: IUserPreferences;

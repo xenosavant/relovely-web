@@ -3,6 +3,11 @@
     <app-avatar [image]="user.profileImageUrl"></app-avatar>
   </div>
   <div class="info">
-    {{user.username}}
+    <ng-container *ngIf="user.type === 'seller'">
+      {{user.username || 'Relovely Seller'}}
+    </ng-container>
+    <ng-container *ngIf="user.type === 'member'">
+      {{user.username || 'Relovely Shopper'}}
+    </ng-container>
   </div>
 </div>

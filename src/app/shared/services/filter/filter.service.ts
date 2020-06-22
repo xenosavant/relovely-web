@@ -24,7 +24,7 @@ export class FilterService extends BaseService {
 
     constructor(private localStorage: LocalStorageService, httpClient: HttpClient, private userService: UserService) {
         super(httpClient);
-        const user = this.userService.user$.value;
+        const user = this.userService.user$.getValue();
         if (user) {
             this._state = user.preferences || this.emptyState;
             this.filterStateSubject$.next(this._state);
@@ -33,7 +33,7 @@ export class FilterService extends BaseService {
 
     public updateColors(colors: string[]) {
         this._state.colors = colors || [];
-        const user = this.userService.user$.value;
+        const user = this.userService.user$.getValue();
         if (user) {
             this.userService.updateUser(user.id, { preferences: this._state }).subscribe(u => {
                 this.userService.setCurrentUser(u);
@@ -44,7 +44,7 @@ export class FilterService extends BaseService {
 
     public updateSizes(sizes: string[]) {
         this._state.sizes = sizes || [];
-        const user = this.userService.user$.value;
+        const user = this.userService.user$.getValue();
         console.log(user);
         if (user) {
             this.userService.updateUser(user.id, { preferences: this._state }).subscribe(u => {
@@ -56,7 +56,7 @@ export class FilterService extends BaseService {
 
     public updatePrices(prices: PriceRange[]) {
         this._state.prices = prices || [];
-        const user = this.userService.user$.value;
+        const user = this.userService.user$.getValue();
         if (user) {
             this.userService.updateUser(user.id, { preferences: this._state }).subscribe(u => {
                 this.userService.setCurrentUser(u);

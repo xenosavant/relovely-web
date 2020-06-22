@@ -485,6 +485,15 @@ div.left {
     align-items: center;
     span {
       padding-left:10px;
+      &.alert::after {
+        content:"\A";
+        width:10px;
+        height:10px;
+        margin-left: 4px;
+        border-radius:50%;
+        background: $alert;
+        display:inline-block;
+      }
     }
   }
   .nested::after {
@@ -625,11 +634,25 @@ mat-chip-list mat-chip {
 
 // Profile Tabs
 
+.profile .profile-container {
+  @media( max-width:$mobile-breakpoint) {
+      mat-tab-body {
+          background-color: $background-gray !important;
+      }
+  }
+}
+
 .member-profile-container {
   overflow: hidden;
   .mat-tab-body-wrapper {
     margin-top: -25px;
   }
+
+  @media( max-width:$mobile-breakpoint) {
+    mat-tab-body {
+        background-color: $background-gray !important;
+    }
+  } 
 
   mat-tab-header {
     height: 50px !important;
@@ -702,6 +725,21 @@ mat-chip-list mat-chip {
       }
     }
   }
+
+  .profile-container {
+    background-color: $medium-gray-background;
+    @media( min-width:$desktop-breakpoint) {
+        padding-top: 8px;
+        border-left: solid $header-border 1px;
+        border-right: solid $header-border 1px;
+    }
+    @media( max-width:$mobile-breakpoint) {
+        mat-tab-body {
+            background-color: $background-gray !important;
+        }
+    }
+}
+
 
 
 .profile-container {
@@ -902,9 +940,6 @@ mat-toolbar-row.mega-menu-bar {
   }
   &.profile { 
     width: 100%;
-    @media(max-width: $mobile-breakpoint) {
-      background-color: $medium-gray-background;
-    }
     @media(min-width: $desktop-breakpoint) {
       grid-template-rows:auto;
       display:grid;
@@ -1133,14 +1168,25 @@ div.filter-bar {
           ul {
             list-style-type: none;
             padding:0;
+            
             margin-bottom: 0 !important;
             li {
               height:30px;
-              display: grid;
               align-items: center;
+              display: grid;
+              grid-template-columns: 1fr 12px;
               padding: 0px 16px;
               &:hover {
                 background-color: $medium-gray-background;
+              }
+              &.alert::after {
+                content:"\A";
+                width:10px;
+                height:10px;
+                margin-left: 4px;
+                border-radius:50%;
+                background: $alert;
+                display:inline-block;
               }
             }
           }

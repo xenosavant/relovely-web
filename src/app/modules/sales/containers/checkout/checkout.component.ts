@@ -59,7 +59,7 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit() {
     this.navigationService.showNavBar(false);
-    this.user = this.userService.user$.value;
+    this.user = this.userService.user$.getValue();
     if (!this.user) {
       this.navigationService.navigate({ 'path': '/' })
     }
@@ -155,7 +155,7 @@ export class CheckoutComponent implements OnInit {
   onSavePayment(card: PaymentCard) {
     this.error = null;
     this.userService.addCard(card).subscribe(result => {
-      this.user = this.userService.user$.value;
+      this.user = this.userService.user$.getValue();
       this.selectedPayment = this.user.cards.find(a => a.primary);
       this.addingPayment = false;
       this.ref.markForCheck();

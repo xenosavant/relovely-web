@@ -173,6 +173,10 @@ export class NavigationService {
         return this._currentNavigationItem;
     }
 
+    public getNavigationItems() {
+        return this._navConfig.currentNavigationItems;
+    }
+
     public openAuthWindow(item: IAuthItem) {
         this.authWindowSubject$.next(item);
     }

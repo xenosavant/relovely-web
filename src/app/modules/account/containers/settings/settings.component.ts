@@ -38,7 +38,7 @@ export class SettingsComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.currentUser = this.userService.user$.value;
+    this.currentUser = this.userService.user$.getValue();
     if (!this.currentUser) {
       this.navigationService.navigate({ 'path': '/' })
       this.navigationService.openAuthWindow({ page: 'signin' });
@@ -136,7 +136,7 @@ export class SettingsComponent implements OnInit {
 
   close(event: any) {
     this.overlayService.close();
-    this.currentUser = this.userService.user$.value;
+    this.currentUser = this.userService.user$.getValue();
     this.setErrors();
     this.setView();
     this.ref.markForCheck();

@@ -32,7 +32,7 @@ export class OrderComponent implements OnInit {
     private navigationService: NavigationService) { }
 
   ngOnInit() {
-    if (!this.userService.user$.value) {
+    if (!this.userService.user$.getValue()) {
       this.navigationService.navigate({ 'path': '/' })
     }
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
@@ -42,7 +42,7 @@ export class OrderComponent implements OnInit {
       this.orderService.getOrder(params['id']).subscribe(order => {
         this.order = order;
         this.navigationItems = [{ path: '/sales/orders', name: 'Orders' }, { path: `/sales/orders/${this.order.id}`, name: this.order.orderNumber }];
-        this.seller = this.userService.user$.value.id === this.order.seller.id;
+        this.seller = this.userService.user$.getValue().id === this.order.seller.id;
         this.loading = false;
         this.ref.markForCheck();
       })
@@ -59,10 +59,16 @@ export class OrderComponent implements OnInit {
   }
 
   onPrint() {
-    const newWindow = window.open();
-    newWindow.document.write(`<html><body onload="window.print();"><img style="height:600px;" src="${this.order.shippingLabelUrl}"/></body></html>`);
-    newWindow.document.close();
-    newWindow.focus();
+    this.orderService.shipOrder(this.order.id).subscribe(() => {
+      const user = this.userService.user$.getValue();
+      user.sales.splice(user.sales.findIndex(o => o.id === this.order.id));
+      console.log(user);
+      this.userService.setCurrentUser(user);
+      const newWindow = window.open();
+      newWindow.document.write(`<html><body onload="window.print();"><img style="height:600px;" src="${this.order.shippingLabelUrl}"/></body></html>`);
+      newWindow.document.close();
+      newWindow.focus();
+    });
   }
 
 }

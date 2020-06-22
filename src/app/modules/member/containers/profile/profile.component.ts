@@ -42,13 +42,13 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(param => {
       const id = param.get('id');
-      this.currentUser = this.userService.user$.value;
+      this.currentUser = this.userService.user$.getValue();
       if (!this.currentUser) {
         this.navigationService.navigate({ path: '/' });
         this.navigationService.openAuthWindow({ page: 'signin' });
       } else {
         if (id === 'profile' || id === this.currentUser.id) {
-          this.userService.getUser(this.userService.user$.value.id).subscribe(user => {
+          this.userService.getUser(this.userService.user$.getValue().id).subscribe(user => {
             this.owner = true;
             this.user = user;
             this.loading = false;

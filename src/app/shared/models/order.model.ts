@@ -23,6 +23,7 @@ export class Order {
     public review?: Review
     public address: Address;
     public orderNumber: string;
+    public labelPrinted?: boolean;
 }
 
 export type OrderStatus = 'purchased' | 'shipped' | 'delivered' | 'refunded' | 'cancelled' | 'error' | 'disputed';

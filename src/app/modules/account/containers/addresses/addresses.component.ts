@@ -48,12 +48,12 @@ export class AddressesComponent implements OnInit {
       switchMap(val =>
         this.primaryChanged())
     ).subscribe(result => {
-      this.user = this.userService.user$.value;
+      this.user = this.userService.user$.getValue();
       this.primary = this.user.addresses.find(address => address.primary);
       this.ref.markForCheck();
     })
 
-    this.user = this.userService.user$.value;
+    this.user = this.userService.user$.getValue();
     this.addresses = [...this.user.addresses];
     this.primary = this.addresses.find(address => {
       return address.primary;
@@ -72,7 +72,7 @@ export class AddressesComponent implements OnInit {
   }
 
   onSaved(user: UserAuth) {
-    this.user = this.userService.user$.value;
+    this.user = this.userService.user$.getValue();
     this.addresses = [...this.user.addresses];
     this.primary = this.addresses.find(address => address.primary);
     this.ref.markForCheck();

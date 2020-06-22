@@ -10,6 +10,7 @@ export class NavigationItem {
     subItems?: NavigationItem[];
     subCategories?: Category[];
     parent?: NavigationItem;
+    alert?: boolean;
     constructor(queryStrings: KeyValue<string, string>[], path: string, name: string, id: string,
         subItems: NavigationItem[], subCategories: Category[], parent: NavigationItem, plural: string = null) {
         this.queryStrings = queryStrings;
@@ -20,5 +21,6 @@ export class NavigationItem {
         this.name = name;
         this.id = id;
         this.plural = plural
+        this.alert = false;
     }
 }

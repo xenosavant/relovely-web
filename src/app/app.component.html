@@ -85,7 +85,7 @@
               <a mat-list-item *ngFor="let item of currentNavigationItems" (click)="sideNavigate(item)"
                 routerLinkActive="nav-item-active">
                 <div class="nested">
-                  <span>{{ showTopLevel ? item.name.ToUpper() : item.name }}</span>
+                  <span [class.alert]="item.alert">{{ showTopLevel ? item.name.ToUpper() : item.name }}</span>
                 </div>
               </a>
             </mat-nav-list>
@@ -150,11 +150,11 @@
                 <fa-icon icon="heart" [styles]="{'color': 'black'}"></fa-icon>
               </button>
               <button #menuTrigger (mouseenter)="onTriggerAccountMenu($event)" class="mat-icon-button menu"
-                style="z-index:1050" *ngIf="userService.user$.value" [matMenuTriggerFor]="accountMenu">
-                <ng-container *ngIf="userService.user$.value">
-                  <img *ngIf="userService.user$.value.profileImageUrl" class="profile"
-                    [src]="userService.user$.value.profileImageUrl">
-                  <img *ngIf="!userService.user$.value.profileImageUrl" class="profile"
+                style="z-index:1050" *ngIf="userService.user$.getValue()" [matMenuTriggerFor]="accountMenu">
+                <ng-container *ngIf="userService.user$.getValue()">
+                  <img *ngIf="userService.user$.getValue().profileImageUrl" class="profile"
+                    [src]="userService.user$.getValue().profileImageUrl">
+                  <img *ngIf="!userService.user$.getValue().profileImageUrl" class="profile"
                     src="./assets/images/account.png">
                 </ng-container>
                 <!-- <img class="caret" src="./assets/images/caret.png"> -->
@@ -170,7 +170,8 @@
               <ng-container *ngIf="accountNav">
                 <div class="menu-item-wrapper">
                   <ul>
-                    <li *ngFor="let item of accountNav.subItems" class="menu-item" (click)="onAccountMenuAction(item)">
+                    <li [class.alert]="item.alert" *ngFor="let item of accountNav.subItems" class="menu-item"
+                      (click)="onAccountMenuAction(item)">
                       {{item.name}}</li>
                   </ul>
                 </div>

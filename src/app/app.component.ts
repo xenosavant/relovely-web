@@ -29,6 +29,7 @@ import { IUserPreferences } from './shared/services/filter/filter-state';
 import { HeaderService } from './shared/services/header.service';
 import { LookupState } from './shared/services/lookup/lookup-state';
 import { ParseSpan } from '@angular/compiler';
+import { AlertService } from './shared/services/alert/alert.service';
 
 @Component({
   selector: 'app-root',
@@ -71,6 +72,7 @@ export class AppComponent implements OnInit {
   public showMegaMenu = false;
   public selectedMenuItem = -1;
   public loginSubscription: Subscription;
+  public alertSubsciption: Subscription;
   public signupError: string = null;
   public authPage = 'signin';
   public authToken: string;
@@ -104,6 +106,7 @@ export class AppComponent implements OnInit {
     private localStorageService: LocalStorageService,
     private route: ActivatedRoute,
     private router: Router,
+    private alertService: AlertService,
     @Inject(DOCUMENT) private document: any
   ) {
     this.showFilterBar = false;
@@ -124,6 +127,7 @@ export class AppComponent implements OnInit {
       this.showMobileHeader = !hide;
     });
     this.navigationService.navConfig$.subscribe(nav => {
+      console.log(nav);
       this.categoryFilters = nav.categoryItems;
       this.navHeader = nav.navigationHeader;
       this.header = nav.pageHeader;
@@ -143,8 +147,10 @@ export class AppComponent implements OnInit {
       this.userService.me().pipe(tap(me => {
         if (me) {
           this.userService.setLogin(jwt, me);
+          if (this.alertSubsciption) {
+            this.alertSubsciption.unsubscribe()
+          }
           this.lookupService.getLookupData().subscribe(value => {
-            this.navSetup(value.categories);
             this.resetLoginSubscription();
             this.loading = false;
             this.ref.markForCheck();
@@ -152,12 +158,18 @@ export class AppComponent implements OnInit {
             this.handleError();
           });
         } else {
+          if (this.alertSubsciption) {
+            this.alertSubsciption.unsubscribe()
+          }
           this.userService.logout();
           this.loading = false;
         }
         this.resetLoginSubscription();
         this.ref.markForCheck();
       }, err => {
+        if (this.alertSubsciption) {
+          this.alertSubsciption.unsubscribe()
+        }
         if (err.status === 401) {
           this.loading = false;
         } else {
@@ -204,6 +216,27 @@ export class AppComponent implements OnInit {
     this.loginSubscription = this.userService.loggedIn$.subscribe(loggedIn => {
       this.lookupService.getLookupData().subscribe(value => {
         this.navSetup(value.categories);
+        if (this.alertSubsciption) {
+          this.alertSubsciption.unsubscribe();
+        }
+        this.alertSubsciption = this.alertService.notification$.subscribe(notification => {
+          if (notification.menuItem) {
+            const temp: NavigationItem[] = [];
+            this.accountNav.subItems.forEach(item => {
+              if (item.name === notification.menuItem) {
+                if (notification.alert) {
+                  console.log('hit');
+                  item.alert = true;
+                } else {
+                  item.alert = false;
+                }
+              }
+              temp.push(item);
+            });
+            this.currentNavigationItems = [this.currentNavigationItems[0], this.currentNavigationItems[1], this.currentNavigationItems[2], this.accountNav];
+            this.ref.markForCheck();
+          }
+        })
         this.loading = false;
         this.ref.markForCheck();
       }, err => {
@@ -293,14 +326,14 @@ export class AppComponent implements OnInit {
       ]
     }
 
-    if (this.userService.user$.value && this.userService.user$.value.type === 'seller') {
+    if (this.userService.user$.getValue() && this.userService.user$.getValue().type === 'seller') {
       accountNav.subItems.push(
         new NavigationItem([], '/account/settings', 'Settings', null, [], [], null),
         new NavigationItem([], '/sales/sales', 'Sales', null, [], [], null),
         new NavigationItem([], '/member/listings', 'Listings', null, [], [], null)
       );
     }
-    if (this.userService.user$.value && this.userService.user$.value.admin) {
+    if (this.userService.user$.getValue() && this.userService.user$.getValue().admin) {
       accountNav.subItems.push(new NavigationItem([], '/admin/dashboard', 'Admin', null, [], [], null));
     };
     accountNav.subItems.push(
@@ -311,7 +344,7 @@ export class AppComponent implements OnInit {
     this.accountNav = accountNav;
     navigationItems.push(this.accountNav);
     this.navigationService.rootNavigationItems = navigationItems;
-    this.navigationService.setCurrentNavigationItems(navigationItems);
+    this.currentNavigationItems = navigationItems
   }
 
   goToSell() {
@@ -373,7 +406,7 @@ export class AppComponent implements OnInit {
   }
 
   public onFavoritesClicked() {
-    if (this.userService.user$.value) {
+    if (this.userService.user$.getValue()) {
       this.goToFavorites();
     } else {
       this.showSignin();
@@ -456,7 +489,7 @@ export class AppComponent implements OnInit {
   }
 
   public sideNavigate(item: NavigationItem) {
-    if (!this.userService.user$.value && item.name === 'Account') {
+    if (!this.userService.user$.getValue() && item.name === 'Account') {
       this.sidenavOpen = false;
       this.showOverlay = false
       this.showSignin();

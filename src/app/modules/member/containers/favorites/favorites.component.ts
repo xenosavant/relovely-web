@@ -27,7 +27,7 @@ export class FavoritesComponent implements OnInit {
 
   ngOnInit() {
     this.navigationService.showNavBar(true, 'FAVORITES');
-    this.user = this.userService.user$.value;
+    this.user = this.userService.user$.getValue();
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
     })

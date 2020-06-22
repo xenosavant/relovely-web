@@ -30,7 +30,7 @@ export class HomeComponent {
         private ref: ChangeDetectorRef) { }
 
     ngOnInit() {
-        this.user = this.userService.user$.value;
+        this.user = this.userService.user$.getValue();
         this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
             this.mobile = result.matches;
         });

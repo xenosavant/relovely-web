@@ -36,7 +36,7 @@ export class PaymentsComponent implements OnInit {
     private overlayService: OverlayService) { }
 
   ngOnInit() {
-    this.user = this.userService.user$.value;
+    this.user = this.userService.user$.getValue();
     if (!this.user) {
       this.navigationService.navigate({ 'path': '/' })
     }
@@ -53,7 +53,7 @@ export class PaymentsComponent implements OnInit {
       switchMap(val =>
         this.primaryChanged())
     ).subscribe(result => {
-      this.user = this.userService.user$.value;
+      this.user = this.userService.user$.getValue();
       this.primary = this.user.cards.find(card => card.primary);
       this.ref.markForCheck();
     })

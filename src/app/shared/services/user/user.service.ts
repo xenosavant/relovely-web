@@ -14,6 +14,7 @@ import { PaymentCard } from '@app/shared/interfaces/payment-card';
 import { Review } from '@app/shared/models/review.model';
 import { UserReviewsResponse } from './user-reviews.response';
 import { SellerApplicationRequest } from './seller-application.request';
+import { AlertService } from '../alert/alert.service';
 
 @Injectable({ providedIn: 'root' })
 export class
@@ -23,7 +24,7 @@ export class
 
     public loggedIn$ = new BehaviorSubject<boolean>(false);
 
-    constructor(private localStorageService: LocalStorageService, httpClient: HttpClient) {
+    constructor(private localStorageService: LocalStorageService, httpClient: HttpClient, private alertService: AlertService) {
         super(httpClient);
     }
 
@@ -34,6 +35,14 @@ export class
 
     public setCurrentUser(user: UserAuth): void {
         this._currentUser = user;
+        if (user) {
+            if (user.sales && user.sales.length) {
+                this.alertService.setAlert({ menuItem: 'Sales', alert: true });
+            } else {
+                console.log('remove');
+                this.alertService.setAlert({ menuItem: 'Sales', alert: false });
+            }
+        }
         this.user$.next(user);
     }
 
@@ -48,20 +57,19 @@ export class
     public setLogin(jwt: string, user: UserAuth) {
         this._jwt = jwt;
         this.localStorageService.setItem('jwt', jwt);
-        this._currentUser = user;
         this._notLoggedIn = false;
-        this.user$.next(user);
+
+        this.setCurrentUser(user);
         this.loggedIn$.next(true);
     }
 
     public logout() {
         this.localStorageService.removeItem('jwt');
         this.localStorageService.removeItem('currentUser');
-        this._currentUser = null;
         this._jwt = null;
         this._notLoggedIn = true;
         this.loggedIn$.next(false);
-        this.user$.next(null);
+        this.setCurrentUser(null);
     }
 
     getUser(userId: string): Observable<UserDetail> {

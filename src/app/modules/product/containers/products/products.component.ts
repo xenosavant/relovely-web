@@ -105,7 +105,7 @@ export class ProductsComponent implements OnInit {
       }
     })
 
-    this.currentUser = this.userService.user$.value;
+    this.currentUser = this.userService.user$.getValue();
   }
 
   selectProduct(id: string) {

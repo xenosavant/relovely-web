@@ -28,7 +28,7 @@ export class SalesComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.userService.user$.value) {
+    if (!this.userService.user$.getValue()) {
       this.navigationService.navigate({ 'path': '/' })
     }
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {

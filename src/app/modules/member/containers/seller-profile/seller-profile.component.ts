@@ -171,7 +171,7 @@ export class SellerProfileComponent implements OnChanges {
   followUnfollow(follow: boolean) {
     this.actionProcessing = true;
     this.userService.followUser(this.user.id, follow).subscribe(() => {
-      const me = this.userService.user$.value;
+      const me = this.userService.user$.getValue();
       if (follow) {
         this.followerUsers.push({
           id: me.id,

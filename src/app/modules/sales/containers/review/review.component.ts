@@ -44,7 +44,7 @@ export class ReviewComponent implements OnInit {
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-    if (!this.userService.user$.value) {
+    if (!this.userService.user$.getValue()) {
       this.navigationService.navigate({ 'path': '/' })
     }
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
