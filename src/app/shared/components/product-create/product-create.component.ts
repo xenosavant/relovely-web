@@ -33,7 +33,7 @@ export class ProductCreateComponent implements OnInit {
   @Input() sellerId: string;
   @Input() product: Product;
   @Output() close: EventEmitter<boolean> = new EventEmitter;
-  @Output() saved: EventEmitter<any> = new EventEmitter;
+  @Output() saved: EventEmitter<boolean> = new EventEmitter;
 
   public imageChangedEvent: any = null;
   public crop = false;
@@ -80,6 +80,10 @@ export class ProductCreateComponent implements OnInit {
     if (this.product) {
       this.edit = true;
       this.title = 'Edit Product';
+      if (this.product.videos.length) {
+        this.video = this.product.videos[0];
+        this.videoThumbnail = this.product.videos[0].url.replace(this.video.format, 'jpg');
+      }
       this.id = this.product.cloudId;
       this.form = new FormGroup({
         title: new FormControl(this.product.title, [Validators.required]),
@@ -209,7 +213,7 @@ export class ProductCreateComponent implements OnInit {
   }
 
   onClose($event: any) {
-    this.close.emit(false);
+    this.close.emit(true);
   }
 
   onCloseCropper($event: any) {
@@ -300,7 +304,8 @@ export class ProductCreateComponent implements OnInit {
       if (this.edit) {
         this.productService.patchProduct(product, this.product.id).subscribe(response => {
           this.loading = false;
-          this.saved.emit();
+          this.saved.emit(true);
+          console.log('emit')
         }, error => {
           this.saveError = true;
         })

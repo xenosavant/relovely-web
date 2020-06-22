@@ -11,7 +11,7 @@ export const environment = {
   production: false,
   test: false,
   i18nPrefix: '',
-  apiUrl: 'https://apidev.relovely.com',
+  apiUrl: '/api',
   facebookAuthUrl: 'https://www.facebook.com/v6.0/dialog/oauth',
   facebookClientId: '498359121110237',
   facebookRedirectUrl: 'https://dev.relovely.com/account/facebook',
@@ -25,7 +25,7 @@ export const environment = {
   cloudinaryImageUploadPreset: 'images',
   cloudinaryVideoUploadPreset: 'videos',
   cloudinaryUploadUrl: 'https://api.cloudinary.com/v1_1/relovely',
-  stripePublishableKey: 'pk_test_t9a6DNSxt1hqrd6kzctGFgHI00JZoXOBuP',
+  stripePublishableKey: 'pk_live_xbVCEJi1UZHkF5Dlwo87kIEx00nirGQprR',
   versions: {
     app: packageJson.version,
     angular: packageJson.dependencies['@angular/core'],

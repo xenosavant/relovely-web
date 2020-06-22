@@ -165,6 +165,12 @@ export class ProductsComponent implements OnInit {
     })
   }
 
+  onProductSaved(save: boolean) {
+    this.overlayService.close();
+    this.getProducts(this.filterService.filterStateSubject$.value);
+  }
+
+
   paginate(event: any) {
     this.currentPage = event.pageIndex;
     this.getProducts(this.filterService.filterStateSubject$.value);

@@ -173,6 +173,11 @@ export class ProductComponent implements OnInit {
     this.overlayService.close();
   }
 
+  onProductSaved(save: boolean) {
+    this.overlayService.close();
+    this.refreshProduct();
+  }
+
   purchase() {
     if (this.currentUser) {
       this.navigationService.navigate({ path: `/sales/checkout/${this.product.id}` });

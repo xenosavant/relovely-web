@@ -90,7 +90,7 @@ export class SellerProfileComponent implements OnChanges {
     }
   }
 
-  onProductSaved() {
+  onProductSaved(close: boolean) {
     this.overlayService.close();
     this.productsLoading = true;
     this.userService.getUser(this.user.id).subscribe(user => {

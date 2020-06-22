@@ -1,5 +1,6 @@
 <ng-template cdkPortal #productCreateModal="cdkPortal">
-    <app-product-create [product]="editProduct" [sellerId]="user.id" (saved)="onProductSaved()" (close)="close($event)">
+    <app-product-create [product]="editProduct" [sellerId]="user.id" (saved)="onProductSaved($event)"
+        (close)="close($event)">
     </app-product-create>
 </ng-template>
 <div *ngIf="!mobile" class="header-bar">
