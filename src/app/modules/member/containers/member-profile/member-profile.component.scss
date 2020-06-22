@@ -13,12 +13,6 @@
     }
     border-left: solid $header-border 1px;
     border-right: solid $header-border 1px;
-
-    @media( max-width:$mobile-breakpoint) {
-        mat-tab-body {
-            background-color: $background-gray !important;
-        }
-    }
 }
 
 .edit {
