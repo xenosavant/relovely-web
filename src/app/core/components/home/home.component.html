@@ -1,5 +1,5 @@
 <div class="full-content home">
-    <div *ngIf="!mobile" class="home-header-bar">
+    <!-- <div *ngIf="!mobile" class="home-header-bar">
         <div class="header-inner">
             <div class="text-wrapper">
                 <div>WELCOME TO RELOVELY!</div>
@@ -9,7 +9,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="banner-wrapper">
         <h1>AN INLFUENCER EXCLUSIVE RE-SELLING PLATFORM</h1>
         <p>Giving great products new life</p>
@@ -51,13 +51,13 @@
             </div>
         </div>
     </div>
-    <div *ngIf="mobile" class="mobile-banner-wrapper">
+    <!-- <div *ngIf="mobile" class="mobile-banner-wrapper">
         <div>WELCOME TO RELOVELY!</div>
         <div>We just launched, so keep checking back as new product will be trickling in throughout the coming
             weeks. </div>
         <div>Follow us on Instagram for updates at <a href="https://instagram.com/relovely.us"> relolely.us</a>
         </div>
-    </div>
+    </div> -->
 
     <ng-template cdkPortal #applyToSell="cdkPortal">
         <app-seller-apply (close)="onClose($event)"></app-seller-apply>
