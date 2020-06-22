@@ -46,7 +46,9 @@
           </mat-toolbar-row>
         </mat-toolbar>
         <ng-container *ngIf="!loading">
-          <ng-container *ngTemplateOutlet="content"></ng-container>
+          <div class="mobile-content">
+            <ng-container *ngTemplateOutlet="content"></ng-container>
+          </div>
           <ng-container *ngTemplateOutlet="mobileFooter"></ng-container>
         </ng-container>
       </div>

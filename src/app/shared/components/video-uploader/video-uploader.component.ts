@@ -50,6 +50,12 @@ export class VideoUploaderComponent implements OnInit {
 
       this.uploader.onBuildItemForm = (fileItem: any, form: FormData): any => {
         // Add Cloudinary's unsigned upload preset to the upload form
+        let folder;
+        if (environment.envName !== 'PROD') {
+          folder = `products/${this.id}/videos`;
+        } else {
+          folder = `test/products/${this.id}/videos`;
+        }
         form.append('upload_preset', environment.cloudinaryVideoUploadPreset);
         form.append('folder', `products/${this.id}/videos`);
         form.append('file', fileItem);
