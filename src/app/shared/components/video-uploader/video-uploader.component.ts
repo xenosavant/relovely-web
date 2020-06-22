@@ -58,6 +58,7 @@ export class VideoUploaderComponent implements OnInit {
 
         form.append('signature', signature);
         form.append('public_id', "video");
+        form.append('unique_filename', 'false');
 
         // Use default "withCredentials" value for CORS requests
         fileItem.withCredentials = false;

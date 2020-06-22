@@ -16,6 +16,7 @@ export class FileUploadService extends BaseService {
 
     public upload(data: any, folder: string, publicId: string = null) {
 
+        console.log(publicId);
         const formData = new FormData();
         const timestamp = Date.now().toString();
         formData.append('file', data);
