@@ -33,10 +33,13 @@
         </div>
     </div>
     <div class="button-wrapper">
-        <button mat-stroked-button *ngIf="!owner && !following" class="primary"
-            (click)="onAction('follow')">Follow</button>
-        <button mat-stroked-button *ngIf="!owner && following" class="primary"
-            (click)="onAction('unfollow')">Unfollow</button>
+        <ng-container *ngIf="user.type === 'seller'">
+            <button mat-stroked-button *ngIf="!owner && !following" class="primary"
+                (click)="onAction('follow')">Follow</button>
+            <button mat-stroked-button *ngIf="!owner && following" class="primary"
+                (click)="onAction('unfollow')">Unfollow</button>
+        </ng-container>
+
         <button mat-stroked-button *ngIf="owner && editing" class="primary" (click)="onAction('save')"
             [disabled]="disableSave">Save
         </button>
