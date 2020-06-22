@@ -33,7 +33,6 @@ export class FacebookAuthComponent implements OnInit {
               this.userService.setCurrentUser(user);
               this.router.navigate(['/account/settings']);
             }, err => {
-              console.log(err)
               this.router.navigate(['/account/settings'], { queryParams: { error: err.error.error.message } });
             });
             break;

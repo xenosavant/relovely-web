@@ -70,6 +70,7 @@ export class NavigationService {
 
     public navigate(item: NavigationItem, back = false): boolean {
         const params = item.queryStrings;
+        console.log(item.id)
         if (item.id === "-1") {
             this._navConfig.pageHeader = 'All Products';
             this._navConfig.showFilterBar = true;
@@ -84,7 +85,7 @@ export class NavigationService {
             this._navConfig.showFilterBar = true;
             if (item.parent) {
                 if (item.name.startsWith('All')) {
-                    this._navConfig.chipItems = item.subItems;
+                    this._navConfig.chipItems = item.parent.subItems;
                     this._navConfig.pageHeader = item.name;
                 } else if (item.subItems && item.subItems.length) {
                     this._navConfig.pageHeader = item.parent ? item.parent.plural + ' ' + item.name : item.name;
