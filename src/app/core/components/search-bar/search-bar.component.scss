@@ -33,6 +33,12 @@ form {
   border-radius: 8px 4px 4px 8px;
 }
 
+fa-icon {
+  position: fixed;
+  right: 24px;
+  top: 12px;
+}
+
 .search__input {
   border: none;
   flex-grow: 1;

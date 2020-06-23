@@ -393,8 +393,14 @@ export class AppComponent implements OnInit {
     }
   }
 
-  public onToggleSearchBar() {
-    this.showSearch = !this.showSearch;
+  public onOpenSearch() {
+    this.showSearch = true;
+  }
+
+  public onCloseSearch() {
+    this.showSearch = false;
+    this.searchTerm = null;
+    this.search();
   }
 
   public goToFavorites() {
@@ -566,11 +572,13 @@ export class AppComponent implements OnInit {
 
   setTerm(term: string) {
     this.searchTerm = term;
+    console.log(this.searchTerm)
   }
 
   search() {
     const path = this.route.snapshot.children[0].routeConfig.path;
     this.showSearch = false;
+    console.log(this.searchTerm)
     if (path === 'products') {
       this.router.navigate([], { queryParams: { search: this.searchTerm }, queryParamsHandling: 'merge', relativeTo: this.route });
     } else {

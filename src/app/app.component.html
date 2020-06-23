@@ -10,7 +10,7 @@
           </button>
           <div class="toolbar-filler"><img class="logo" src="./assets/images/logo.png" (click)="onGoHome()"> </div>
           <div class="icon-wrapper mobile">
-            <button class="mat-icon-button black" (click)="onToggleSearchBar()">
+            <button class="mat-icon-button black" (click)="onOpenSearch()">
               <fa-icon icon="search"></fa-icon>
             </button>
             <button class="mat-icon-button black" (click)="onFavoritesClicked()">
@@ -19,7 +19,7 @@
           </div>
         </mat-toolbar-row>
         <mat-toolbar-row *ngIf="showSearch" class="search-tool-bar">
-          <button class="mat-icon-button black" (click)="onToggleSearchBar()">
+          <button class="mat-icon-button black" (click)="onCloseSearch()">
             <fa-icon icon="times"></fa-icon>
           </button>
           <app-search-bar (search)="search()" (term)="setTerm($event)"></app-search-bar>
