@@ -91,21 +91,24 @@
 .list-wrapper {
     max-width: $products-width;
     margin:0 auto;
-    display:grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto;
     padding: 0px 16px;
     ul {
         margin-top:24px;
         margin-bottom:0px;
         padding-inline-start:0px !important;
         height:30px;
+        display: flex;
         li {
             height:30px !important;
             display:inline-block;
             list-style-type:none;
             margin-right:2rem;
             color: $action-button;
+            &.hidden {
+                width: 0 !important;
+                height: 0 !important;
+                visibility: hidden;
+            }
             img {
                 height:15px;
             }

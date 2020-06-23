@@ -1,6 +1,6 @@
 <div class="search">
   <form novalidate [formGroup]="form" class="search__form">
-    <input class="search__input" formControlName="term" type="text" autocomplete="off" (keyup.enter)="submit()"
+    <input class="search__input" formControlName="term" type="search" autocomplete="off" (keyup.enter)="submit()"
       (keyup)="termChanged()" placeholder="search">
   </form>
 </div>

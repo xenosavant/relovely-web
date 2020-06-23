@@ -20,7 +20,12 @@ export class UserListComponent implements OnInit {
   }
 
   goToProfile() {
-    this.navigationService.navigate({ path: `/member/${this.user.id}` });
+    if (this.user.username) {
+      this.navigationService.navigate({ path: `/${this.user.username}` });
+    } else {
+      this.navigationService.navigate({ path: `/member/${this.user.id}` });
+    }
+
   }
 
 }

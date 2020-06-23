@@ -22,7 +22,7 @@
           <button class="mat-icon-button black" (click)="onToggleSearchBar()">
             <fa-icon icon="times"></fa-icon>
           </button>
-          <app-search-bar (search)="search()" (term)="setTerm($event)"></app-search-bar>
+          <app-search-bar [mobile]="true" (search)="search()" (term)="setTerm($event)"></app-search-bar>
         </mat-toolbar-row>
       </mat-toolbar>
       <div class="mobile-wrapper">

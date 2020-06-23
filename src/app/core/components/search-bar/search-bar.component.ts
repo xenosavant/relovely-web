@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -15,6 +15,8 @@ export class SearchBarComponent implements OnInit {
   form: FormGroup = new FormGroup({
     term: new FormControl('')
   })
+
+  @Input() mobile = false;
 
   @Output() search: EventEmitter<any> = new EventEmitter();
   @Output() term: EventEmitter<string> = new EventEmitter();
