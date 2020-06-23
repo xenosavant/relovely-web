@@ -34,10 +34,8 @@ export class SearchBarComponent implements OnInit {
     })
   }
 
-  onSearch(event: any) {
-    if (event.keyCode === 13) {
-      this.search.emit();
-    }
+  onSearch() {
+    this.search.emit();
   }
 
 
