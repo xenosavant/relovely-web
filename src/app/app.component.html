@@ -182,13 +182,24 @@
       </mat-toolbar-row>
       <mat-toolbar-row *ngIf="!error && !loading" (click)="toggleHeader()" class="desktop-menu-bar">
         <div class="menu-bar-container">
-          <div class="menu-wrapper" style="z-index:1050" (mouseleave)="onLeaveMenuBar($event)">
+          <div *ngIf="!error && desktopNavigationItems && desktopNavigationItems.length" class="menu-wrapper"
+            style="z-index:1050" (mouseleave)="onLeaveMenuBar($event)">
             <span class="menu">
               <span *ngFor="let item of desktopNavigationItems; let i = index" class="menu-item">
                 <h1 [class.current]="selectedMenuItem === i" (click)="onAccountMenuAction(item)"
                   (mouseenter)="onOpenMegaMenu(item)">{{item.name}}</h1>
               </span>
             </span>
+          </div>
+          <div *ngIf="error || !desktopNavigationItems || !desktopNavigationItems.length" class="menu-wrapper">
+            <div class="menu">
+              <span class="menu-item">
+                <h1>Women</h1>
+              </span>
+              <span class="menu-item">
+                <h1>Men</h1>
+              </span>
+            </div>
           </div>
           <div class="menu-wrapper links">
             <div class="menu">
