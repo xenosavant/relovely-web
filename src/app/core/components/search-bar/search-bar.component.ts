@@ -34,11 +34,11 @@ export class SearchBarComponent implements OnInit {
     })
   }
 
-  public submit(): void {
-    this.search.emit();
-  }
 
-  public termChanged() {
+  public termChanged(event: any) {
+    if (event.keyCode === 13 || event.keyCode === 14) {
+      this.search.emit();
+    }
     this.term.emit(this.parseInput(this.form.get('term').value));
   }
 

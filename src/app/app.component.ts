@@ -570,6 +570,7 @@ export class AppComponent implements OnInit {
 
   search() {
     const path = this.route.snapshot.children[0].routeConfig.path;
+    this.showSearch = false;
     if (path === 'products') {
       this.router.navigate([], { queryParams: { search: this.searchTerm }, queryParamsHandling: 'merge', relativeTo: this.route });
     } else {
