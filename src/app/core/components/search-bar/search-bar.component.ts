@@ -34,9 +34,15 @@ export class SearchBarComponent implements OnInit {
     })
   }
 
+  onSearch(event: any) {
+    if (event.keyCode === 13) {
+      this.search.emit();
+    }
+  }
+
 
   public termChanged(event: any) {
-    if (event.keyCode === 13 || event.keyCode === 14) {
+    if (event.keyCode === 13) {
       this.search.emit();
     }
     this.term.emit(this.parseInput(this.form.get('term').value));
