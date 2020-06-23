@@ -106,8 +106,8 @@ export class ProfileComponent implements OnInit {
       canvas: true
     }).then(function (data) {
       const canvas = document.createElement("canvas");
-      canvas.width = data.image.width + 1;
-      canvas.height = data.image.height + 1;
+      canvas.width = data.image.width;
+      canvas.height = data.image.height;
       const ctx = canvas.getContext("2d");
       ctx.drawImage(data.image, 0, 0, data.image.width, data.image.height);
       const dataURL = canvas.toDataURL("image/jpg");
