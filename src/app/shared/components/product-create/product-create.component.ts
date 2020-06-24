@@ -74,7 +74,7 @@ export class ProductCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
+    this.breakpointObserver.observe(['(max-width: 500px)']).subscribe(result => {
       this.mobile = result.matches;
     });
     if (this.product) {

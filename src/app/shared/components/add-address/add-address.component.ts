@@ -107,42 +107,41 @@ export class AddAddressComponent implements OnInit {
       }
     }
     if (!this.override) {
-      this.shipmentService.verifyAddress(this.savedAddress).pipe(tap(val => {
-        if (val.success) {
-          this.address = val.correctedAddress ? {
-            line1: val.correctedAddress.line1,
-            line2: val.correctedAddress.line2,
-            city: val.correctedAddress.city,
-            state: val.correctedAddress.state,
-            zip: val.correctedAddress.zip,
-            country: 'US'
-          } : update;
-          this.errors = val.errors || [];
-          this.message = val.correctedAddress ? 'This address looks like a better match' : null;
-          this.updateFormFields();
-          this.loading.emit(false);
-          this.ref.markForCheck();
+      this.shipmentService.verifyAddress(this.savedAddress).subscribe(val => {
+        if ((!val.errors || !val.errors.length) && !val.correctedAddress && val.success) {
+          this.saveOrEmit(update).subscribe(user => {
+            if (user) {
+              this.save.emit(user);
+            }
+          }, err => {
+            this.loading.emit(false);
+          });
         } else {
-          this.override = true;
-          this.message = `This address doesn't look quite right. If you're sure it's correct click save`;
-          this.loading.emit(false);
-          this.ref.markForCheck();
-        }
-      }), mergeMap((v: AddressVerificationResponse) =>
-        iif(() => (!v.errors && !v.correctedAddress && v.success),
-          this.saveOrEmit(update), EMPTY)))
-        .subscribe(user => {
-          console.log(user);
-          if (user) {
-            this.save.emit(user);
+          if (val.success) {
+            this.address = val.correctedAddress ? {
+              line1: val.correctedAddress.line1,
+              line2: val.correctedAddress.line2,
+              city: val.correctedAddress.city,
+              state: val.correctedAddress.state,
+              zip: val.correctedAddress.zip,
+              country: 'US'
+            } : update;
+            this.errors = val.errors || [];
+            this.message = val.correctedAddress ? 'This address looks like a better match' : null;
+            this.updateFormFields();
+            this.loading.emit(false);
+            this.ref.markForCheck();
+          } else {
+            this.message = `This address doesn't look quite right. If you're sure it's correct click save`;
+            this.loading.emit(false);
+            this.ref.markForCheck();
           }
-        }, err => {
-          this.loading.emit(false);
-        })
+          this.override = true;
+        }
+      })
     } else {
       this.saveOrEmit(update)
         .subscribe(user => {
-          console.log(user);
           if (user) {
             this.save.emit(user);
           }

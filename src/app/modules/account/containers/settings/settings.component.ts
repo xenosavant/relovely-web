@@ -170,6 +170,10 @@ export class SettingsComponent implements OnInit {
   onSaveAddress(address: Address) {
     this.userService.updateUser(this.currentUser.id, { returnAddress: address }).subscribe(result => {
       this.returnAddress = address;
+      this.setErrors();
+      this.setView();
+      console.log(this.message);
+      console.log(this.completed)
       this.ref.markForCheck();
     })
   }
