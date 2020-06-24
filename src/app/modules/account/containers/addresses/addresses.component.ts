@@ -43,7 +43,7 @@ export class AddressesComponent implements OnInit {
       this.ref.markForCheck();
     });
 
-    const sub = this.primarySubject$.asObservable().pipe(
+    const sub = this.primarySubject$.pipe(
       debounceTime(500),
       switchMap(val =>
         this.primaryChanged())

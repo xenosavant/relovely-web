@@ -1,5 +1,5 @@
-<div class="modal-wrapper">
-    <div class="modal-container">
+<div class="modal-wrapper" (window:resize)="onClose($event)">
+    <div *ngIf="!rotating" class="modal-container">
         <div class="modal-header">
             <h1 class="modal-title">{{title}}</h1>
             <div class="close" (click)="onClose($event)">

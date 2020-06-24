@@ -58,7 +58,7 @@ export class SettingsComponent implements OnInit {
   setErrors() {
     if (this.currentUser.seller && this.currentUser.seller.verificationStatus !== 'verified' ||
       this.currentUser.seller && (this.currentUser.seller.missingInfo.includes('external_account')) ||
-      !this.currentUser.returnAddress) {
+      !this.returnAddress) {
       this.message = `Once you`;
       let verify = false;
       if (this.currentUser.seller.verificationStatus === 'unverified') {
