@@ -1,5 +1,5 @@
 <ng-container *ngIf="!uploading">
-    <div *ngIf="!video" class="add-image" (click)="fileUpload.click()">
+    <div *ngIf="!video" class="add-image" (click)="fileUpload.value = null; fileUpload.click()">
         <img src="./assets/images/plus.png">
     </div>
 </ng-container>

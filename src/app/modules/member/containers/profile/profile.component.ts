@@ -43,25 +43,20 @@ export class ProfileComponent implements OnInit {
     this.route.paramMap.subscribe(param => {
       const id = param.get('id');
       this.currentUser = this.userService.user$.getValue();
-      if (!this.currentUser) {
-        this.navigationService.navigate({ path: '/' });
-        this.navigationService.openAuthWindow({ page: 'signin' });
+      if (this.currentUser && (id === 'profile' || id === this.currentUser.id || id === this.currentUser.username)) {
+        this.userService.getUser(this.userService.user$.getValue().id).subscribe(user => {
+          this.owner = true;
+          this.user = user;
+          this.loading = false;
+          this.ref.markForCheck();
+        });
       } else {
-        if (id === 'profile' || id === this.currentUser.id) {
-          this.userService.getUser(this.userService.user$.getValue().id).subscribe(user => {
-            this.owner = true;
-            this.user = user;
-            this.loading = false;
-            this.ref.markForCheck();
-          });
-        } else {
-          this.userService.getUser(id).subscribe(user => {
-            this.owner = false;
-            this.user = user;
-            this.ref.markForCheck();
-            this.loading = false;
-          });
-        }
+        this.userService.getUser(id).subscribe(user => {
+          this.owner = false;
+          this.user = user;
+          this.ref.markForCheck();
+          this.loading = false;
+        });
       }
       this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
         this.mobile = result.matches;
