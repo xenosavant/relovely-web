@@ -221,6 +221,7 @@ export class ProductCreateComponent implements OnInit {
   }
 
   videoUploaded($event: any) {
+    console.log($event);
     this.video = $event;
     this.videoThumbnail = this.video.url.replace(this.video.format, 'jpg');
   }

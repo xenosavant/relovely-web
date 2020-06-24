@@ -17,7 +17,7 @@ export class FileUploadService extends BaseService {
     public upload(data: any, folder: string, publicId: string = null) {
 
         if (environment.envName !== 'PROD') {
-            folder = 'test' + folder;
+            folder = 'test/' + folder;
         }
         const formData = new FormData();
         const timestamp = Date.now().toString();
