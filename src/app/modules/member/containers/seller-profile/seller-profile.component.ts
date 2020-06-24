@@ -57,7 +57,7 @@ export class SellerProfileComponent implements OnChanges {
     if (this.owner) {
       this.showCreate = true;
     }
-    if (this.user.id === this.currentUser.id && this.currentUser.usernameReset) {
+    if (this.currentUser && this.user.id === this.currentUser.id && this.currentUser.usernameReset) {
       this.error = 'Your username has been claimed by another user. Please choose a new one.'
     }
     this.following = this.user.followers.some(u => u.id === this.currentUser.id);
@@ -67,7 +67,7 @@ export class SellerProfileComponent implements OnChanges {
   }
 
   showCreateModal($event: any) {
-    if (this.currentUser.seller.missingInfo.includes('external_account') || this.currentUser.seller.verificationStatus !== 'verified' || !this.currentUser.returnAddress) {
+    if (this.currentUser && this.currentUser.seller.missingInfo.includes('external_account') || this.currentUser.seller.verificationStatus !== 'verified' || !this.currentUser.returnAddress) {
       this.navigationService.navigate({ path: '/account/settings', queryStrings: [{ key: 'error', value: 'required' }] })
     } else {
       this.editProduct = null;
