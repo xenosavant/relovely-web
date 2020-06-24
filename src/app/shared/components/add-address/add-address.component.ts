@@ -5,7 +5,7 @@ import { UserDetail } from '@app/shared/models/user-detail.model';
 import { guid } from '@app/shared/utils/rand';
 import { tap, mergeMap } from 'rxjs/operators';
 import { AddressVerificationResponse } from '@app/shared/services/shipment/address-verification.response';
-import { iif, EMPTY } from 'rxjs';
+import { iif, EMPTY, Observable, from, of } from 'rxjs';
 import { State } from '@app/shared/services/lookup/state';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { UserService } from '@app/shared/services/user/user.service';
@@ -25,6 +25,8 @@ export class AddAddressComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter();
   @Output() loading: EventEmitter<boolean> = new EventEmitter();
   @Output() save: EventEmitter<UserAuth> = new EventEmitter();
+  @Output() saveAddress: EventEmitter<Address> = new EventEmitter();
+
 
 
   public form: FormGroup;
@@ -35,6 +37,7 @@ export class AddAddressComponent implements OnInit {
   errors: string[];
   message: string;
   override = false;
+  savedAddress: Address;
 
   constructor(private lookupService: LookupService,
     private userService: UserService,
@@ -54,7 +57,9 @@ export class AddAddressComponent implements OnInit {
         zip: new FormControl(this.address.zip, [Validators.required, Validators.maxLength(5)]),
       });
       this.edit = true;
-      this.index = this.user.addresses.indexOf(this.address);
+      if (this.user) {
+        this.index = this.user.addresses.indexOf(this.address);
+      }
     } else {
       this.form = new FormGroup({
         name: new FormControl('', [Validators.required]),
@@ -73,7 +78,7 @@ export class AddAddressComponent implements OnInit {
 
   onSave() {
     this.loading.emit(true);
-    const saveAddress: Address = {
+    this.savedAddress = {
       name: this.form.get('name').value,
       line1: this.form.get('line1').value,
       line2: this.form.get('line2').value,
@@ -85,20 +90,24 @@ export class AddAddressComponent implements OnInit {
     }
     let update;
     if (this.edit) {
-      saveAddress.primary = this.address.primary;
-      this.user.addresses.splice(this.index, 1, saveAddress);
-      update = this.user.addresses;
+      this.savedAddress.primary = this.address.primary;
+      if (this.user) {
+        this.user.addresses.splice(this.index, 1, this.savedAddress);
+        update = this.user.addresses;
+      }
     } else {
-      saveAddress.primary = true;
-      this.user.addresses.forEach(address => {
-        if (address.primary) {
-          delete address.primary;
-        }
-      })
-      update = [...this.user.addresses, saveAddress];
+      this.savedAddress.primary = true;
+      if (this.user) {
+        this.user.addresses.forEach(address => {
+          if (address.primary) {
+            delete address.primary;
+          }
+        })
+        update = [...this.user.addresses, this.savedAddress];
+      }
     }
     if (!this.override) {
-      this.shipmentService.verifyAddress(saveAddress).pipe(tap(val => {
+      this.shipmentService.verifyAddress(this.savedAddress).pipe(tap(val => {
         if (val.success) {
           this.address = val.correctedAddress ? {
             line1: val.correctedAddress.line1,
@@ -121,16 +130,22 @@ export class AddAddressComponent implements OnInit {
         }
       }), mergeMap((v: AddressVerificationResponse) =>
         iif(() => (!v.errors && !v.correctedAddress && v.success),
-          this.userService.updateUser(this.user.id, { addresses: update }), EMPTY)))
+          this.saveOrEmit(update), EMPTY)))
         .subscribe(user => {
-          this.save.emit(user);
+          console.log(user);
+          if (user) {
+            this.save.emit(user);
+          }
         }, err => {
           this.loading.emit(false);
         })
     } else {
-      this.userService.updateUser(this.user.id, { addresses: update })
+      this.saveOrEmit(update)
         .subscribe(user => {
-          this.save.emit(user);
+          console.log(user);
+          if (user) {
+            this.save.emit(user);
+          }
         }, err => {
           this.loading.emit(false);
         })
@@ -144,5 +159,17 @@ export class AddAddressComponent implements OnInit {
     this.form.get('state').setValue(this.address.state);
     this.form.get('zip').setValue(this.address.zip);
   }
+
+  saveOrEmit(addresses: Address[]): Observable<UserAuth> {
+    console.log(addresses)
+    if (this.user) {
+      return this.userService.updateUser(this.user.id, { addresses: addresses });
+    } else {
+      this.saveAddress.emit(this.savedAddress);
+      return of(null);
+    }
+  }
+
+
 
 }

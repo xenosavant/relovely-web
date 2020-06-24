@@ -22,20 +22,23 @@ export class AddAddressModalComponent implements OnInit {
 
   @Output() close: EventEmitter<any> = new EventEmitter();
   @Output() save: EventEmitter<UserDetail> = new EventEmitter();
+  @Output() saveAddress: EventEmitter<Address> = new EventEmitter();
 
   @Input() address: Address;
   @Input() user: UserDetail;
+  @Input() title: string;
 
-  title: string;
   loading = false;
 
   constructor(private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-    if (this.address) {
-      this.title = "Edit Address";
-    } else {
-      this.title = "Add an Address";
+    if (!this.title) {
+      if (this.address) {
+        this.title = "Edit Address";
+      } else {
+        this.title = "Add an Address";
+      }
     }
   }
 
@@ -50,6 +53,11 @@ export class AddAddressModalComponent implements OnInit {
 
   onSave(user: UserDetail) {
     this.save.emit(user);
+    this.close.emit();
+  }
+
+  onSaveAddress(address: Address) {
+    this.saveAddress.emit(address);
     this.close.emit();
   }
 }

@@ -6,6 +6,7 @@ import { OverlayService } from '@app/shared/services/overlay.service';
 import { VerificationError } from '@app/shared/services/user/verification-error';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { ActivatedRoute } from '@angular/router';
+import { Address } from '@app/shared/interfaces/address.interface';
 
 @Component({
   selector: 'app-settings',
@@ -19,6 +20,7 @@ export class SettingsComponent implements OnInit {
   @ViewChild('bank', { static: true }) bankModal: TemplatePortal<any>;
   @ViewChild('facebook', { static: true }) facebookModal: TemplatePortal<any>;
   @ViewChild('instagram', { static: true }) instagramModal: TemplatePortal<any>;
+  @ViewChild('address', { static: true }) addressModal: TemplatePortal<any>;
 
   currentUser: UserAuth;
   verficationClass: any;
@@ -30,6 +32,9 @@ export class SettingsComponent implements OnInit {
   facebookLinked = false;
   instagramLinked = false;
   error: string;
+  message: string;
+  returnAddress: Address;
+  completed: boolean;
 
   constructor(private userService: UserService,
     private overlayService: OverlayService,
@@ -39,6 +44,7 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.userService.user$.getValue();
+    this.returnAddress = this.currentUser.returnAddress;
     if (!this.currentUser) {
       this.navigationService.navigate({ 'path': '/' })
       this.navigationService.openAuthWindow({ page: 'signin' });
@@ -51,28 +57,35 @@ export class SettingsComponent implements OnInit {
 
   setErrors() {
     if (this.currentUser.seller && this.currentUser.seller.verificationStatus !== 'verified' ||
-      this.currentUser.seller && (this.currentUser.seller.missingInfo.includes('external_account'))) {
-      this.error = `To start listing products you'll need to`;
+      this.currentUser.seller && (this.currentUser.seller.missingInfo.includes('external_account')) ||
+      !this.currentUser.returnAddress) {
+      this.message = `Once you`;
       let verify = false;
       if (this.currentUser.seller.verificationStatus === 'unverified') {
-        this.error = this.error + ' verify your identity';
+        this.message = this.message + ' verify your identity';
         verify = true;
       }
       else if (this.currentUser.seller.missingInfo.length > 0 &&
         (this.currentUser.seller.missingInfo.indexOf('external_account') === -1 || this.currentUser.seller.missingInfo.length > 1)) {
-        this.error = this.error + ' provide a bit more information to verify your identity';
+        this.message = this.message + ' provide a bit more information to verify your identity';
         verify = true;
       }
       else if (this.currentUser.seller.verificationStatus === 'review') {
-        this.error = this.error + ' wait for your identity to be verified';
+        this.message = this.message + ' identity is verified';
         verify = true;
       }
       if (this.currentUser.seller.missingInfo.includes('external_account')) {
-        this.error = verify ? this.error + ' and then' : this.error;
-        this.error = this.error + ' link your bank acount';
+        this.message = verify ? this.message + ' and' : this.message;
+        this.message = this.message + ' you link your bank acount';
       }
+      if (!this.currentUser.returnAddress) {
+        this.message = verify ? this.message + ' and ' : this.message;
+        this.message = this.message + ' provide a return shipping address';
+      }
+      this.message = this.message + ', you can start uploading products in your profile.'
     } else {
-      this.error = null;
+      this.message = `You're all set! You can start you can start uploading products in your profile.`;
+      this.completed = true;
     }
   }
 
@@ -130,6 +143,10 @@ export class SettingsComponent implements OnInit {
     }
   }
 
+  showAddressModal() {
+    this.overlayService.open(this.addressModal);
+  }
+
   showBankAccountModal() {
     this.overlayService.open(this.bankModal);
   }
@@ -148,6 +165,13 @@ export class SettingsComponent implements OnInit {
 
   linkInstagram() {
     this.overlayService.open(this.instagramModal);
+  }
+
+  onSaveAddress(address: Address) {
+    this.userService.updateUser(this.currentUser.id, { returnAddress: address }).subscribe(result => {
+      this.returnAddress = address;
+      this.ref.markForCheck();
+    })
   }
 
 }

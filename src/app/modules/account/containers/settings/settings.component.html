@@ -29,6 +29,16 @@
                 <span *ngIf="!bankAccountLinked" class="tag alert"> Unlinked</span>
                 <span *ngIf="bankAccountLinked" class="tag success">Linked</span>
             </div>
+            <div class="bank line clickable" (click)="showAddressModal()">
+                <div class="icon-wrap">
+                    <fa-icon icon="home"></fa-icon>
+                </div>
+                <span class="title">
+                    Return Address
+                </span>
+                <span *ngIf="!returnAddress" class="tag alert"> Not Provided</span>
+                <span *ngIf="returnAddress" class="tag success">Provided</span>
+            </div>
         </ng-container>
         <!-- <div class="verification line clickable" (click)="linkFacebook()">
             <div class="icon-wrap">
@@ -50,6 +60,9 @@
             <span *ngIf="!instagramLinked" class="tag alert"> Unlinked</span>
             <span *ngIf="instagramLinked" class="tag success">Linked</span>
         </div> -->
+        <div class="alert-box" [class.success]="completed" [class.warning]="!completed">
+            {{message}}
+        </div>
     </div>
 </div>
 
@@ -59,6 +72,12 @@
 
 <ng-template cdkPortal #bank="cdkPortal">
     <app-add-bank (close)="close($event)"></app-add-bank>
+</ng-template>
+
+<ng-template cdkPortal #address="cdkPortal">
+    <app-add-address-modal (close)="close($event)" (saveAddress)="onSaveAddress($event)" [address]="returnAddress"
+        (close)="close($event)">
+    </app-add-address-modal>
 </ng-template>
 
 <ng-template cdkPortal #facebook="cdkPortal">
