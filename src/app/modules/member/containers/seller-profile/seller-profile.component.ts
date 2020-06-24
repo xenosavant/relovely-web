@@ -60,7 +60,9 @@ export class SellerProfileComponent implements OnChanges {
     if (this.currentUser && this.user.id === this.currentUser.id && this.currentUser.usernameReset) {
       this.error = 'Your username has been claimed by another user. Please choose a new one.'
     }
-    this.following = this.user.followers.some(u => u.id === this.currentUser.id);
+    if (this.currentUser) {
+      this.following = this.user.followers.some(u => u.id === this.currentUser.id);
+    }
     this.followingUsers = this.user.following;
     this.followerUsers = this.user.followers;
     this.loading = false;
@@ -169,29 +171,33 @@ export class SellerProfileComponent implements OnChanges {
   }
 
   followUnfollow(follow: boolean) {
-    this.actionProcessing = true;
-    this.userService.followUser(this.user.id, follow).subscribe(() => {
-      const me = this.userService.user$.getValue();
-      if (follow) {
-        this.followerUsers.push({
-          id: me.id,
-          username: me.username,
-          profileImageUrl: me.profileImageUrl,
-          type: me.type
-        });
-        this.followerUsers = Object.assign([], this.followerUsers);
-        this.following = true;
-      } else {
-        this.following = false;
-        this.followerUsers.splice(this.followerUsers.indexOf(this.followerUsers.find(u => u.id === this.currentUser.id)), 1);
-        this.followerUsers = Object.assign([], this.followerUsers);
-      }
-      this.user.followers = this.followerUsers;
-      this.user = Object.assign({}, this.user);
-      this.actionProcessing = false;
-      this.ref.markForCheck();
-    }, err => {
-      this.actionProcessing = false;
-    })
+    if (this.currentUser) {
+      this.actionProcessing = true;
+      this.userService.followUser(this.user.id, follow).subscribe(() => {
+        const me = this.userService.user$.getValue();
+        if (follow) {
+          this.followerUsers.push({
+            id: me.id,
+            username: me.username,
+            profileImageUrl: me.profileImageUrl,
+            type: me.type
+          });
+          this.followerUsers = Object.assign([], this.followerUsers);
+          this.following = true;
+        } else {
+          this.following = false;
+          this.followerUsers.splice(this.followerUsers.indexOf(this.followerUsers.find(u => u.id === this.currentUser.id)), 1);
+          this.followerUsers = Object.assign([], this.followerUsers);
+        }
+        this.user.followers = this.followerUsers;
+        this.user = Object.assign({}, this.user);
+        this.actionProcessing = false;
+        this.ref.markForCheck();
+      }, err => {
+        this.actionProcessing = false;
+      })
+    } else {
+      this.navigationService.openAuthWindow({ page: 'signin' });
+    }
   }
 }
