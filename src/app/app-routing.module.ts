@@ -8,6 +8,7 @@ import { ProductsComponent } from './modules/product/containers/products/product
 import { AboutComponent } from './core/components/about/about.component';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { ProfileComponent } from './modules/member/containers/profile/profile.component';
+import { HelpComponent } from './core/components/help/help.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,11 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'help',
+    component: HelpComponent,
     pathMatch: 'full'
   },
   {

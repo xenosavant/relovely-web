@@ -1,1 +1,32 @@
-<p>help works!</p>
+<div *ngIf="!mobile" class="page-title">
+    <h1>Help</h1>
+</div>
+<div class="text">
+    If you have questions, suggestions, or problems with your order please fill out the form below or email
+    us at support@relovely.com
+</div>
+<div class="page-wrapper">
+    <div class="form">
+        <form *ngIf="!success" [formGroup]="form">
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Email" formControlName="email" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <textarea matInput placeholder="Describe in detail the question, problem, or suggestion"
+                    formControlName="body"></textarea>
+            </mat-form-field>
+            <div class="button-wrapper">
+                <button mat-stroked-button [disabled]="!form.valid || rating === 0" (click)="onSubmit()"
+                    [class.primary]="true">
+                    <ng-container *ngIf="!saving">Submit</ng-container>
+                    <ng-container *ngIf="saving">
+                        <mat-spinner class="white" diameter="20"></mat-spinner>
+                    </ng-container>
+                </button>
+            </div>
+        </form>
+        <div class="success" *ngIf="success">
+            Thanks! We are reviewing your comment and will get back with you soon.
+        </div>
+    </div>
+</div>

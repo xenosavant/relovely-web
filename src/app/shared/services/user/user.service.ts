@@ -15,6 +15,7 @@ import { Review } from '@app/shared/models/review.model';
 import { UserReviewsResponse } from './user-reviews.response';
 import { SellerApplicationRequest } from './seller-application.request';
 import { AlertService } from '../alert/alert.service';
+import { SupportRequest } from './support.request';
 
 @Injectable({ providedIn: 'root' })
 export class
@@ -147,6 +148,14 @@ export class
             map((user: UserAuth) => {
                 this.setCurrentUser(user);
                 return user;
+            })
+        );
+    }
+
+    support(request: SupportRequest): Observable<void> {
+        return this.httpClient.post<UserAuth>(`${this.apiBaseUrl}/users/support`, request).pipe(
+            map(() => {
+                return;
             })
         );
     }

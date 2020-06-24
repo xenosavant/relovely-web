@@ -553,7 +553,7 @@ export class AppComponent implements OnInit {
   }
 
   public onHelp() {
-
+    this.navigationService.navigate({ path: '/help' });
   }
 
   public onTerms() {
