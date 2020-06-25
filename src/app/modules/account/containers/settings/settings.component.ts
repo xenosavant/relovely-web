@@ -84,7 +84,7 @@ export class SettingsComponent implements OnInit {
       }
       this.message = this.message + ', you can start uploading products in your profile.'
     } else {
-      this.message = `You're all set! You can start you can start uploading products in your profile.`;
+      this.message = `You're all set! You can start uploading products in your profile.`;
       this.completed = true;
     }
   }
