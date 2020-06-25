@@ -24,6 +24,7 @@ export class UserAuth {
     cards: PaymentCard[];
     facebookUserId: string;
     instagramUsername: string;
+    returnAddress: Address;
     seller?: {
         missingInfo: string[];
         errors: [],

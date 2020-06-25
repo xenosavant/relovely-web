@@ -44,10 +44,30 @@ a {
   }
 }
 
+.alert-box {
+  background-color: $light-blue;
+  padding: 16px;
+  border-radius: 4px;
+  border: 1px solid $medium-blue;
+  color: #31708f;
+  font-weight: 500;
+  &.success {
+    background-color: #dff0d8;
+    border-color: #d0e9c6;
+    color: #3c763d;
+  }
+  &.warning {
+    background-color: #f2dede;
+    border-color: #ebcccc;
+    color: #a94442;
+  }
+}
+
 .invisible {
   visibility: hidden;
   width: 0 !important;
   height: 0 !important;
+  
 }
 
 .loading {
@@ -1038,18 +1058,11 @@ html {
     }
   }
 
-  app-verify {
+  app-verify,  app-facebook-auth, app-reset-password  {
     @media(max-width: $mobile-breakpoint) {
       min-height: calc(100vh - 56px);
     }
   }
-
-  app-facebook-auth {
-    @media(max-width: $mobile-breakpoint) {
-      min-height: calc(100vh - 56px);
-    }
-  }
-
 
 
 button.mat-stroked-button {
@@ -1129,7 +1142,7 @@ div.filter-bar {
         }
       }
         button  {   
-          margin:auto;
+          // display: contents;
       }
   }
 

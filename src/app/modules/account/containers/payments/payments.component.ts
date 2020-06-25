@@ -48,7 +48,7 @@ export class PaymentsComponent implements OnInit {
     this.primary = this.user.cards.find(card => card.primary)
     this.loading = false;
     this.ref.markForCheck();
-    const sub = this.primarySubject$.asObservable().pipe(
+    const sub = this.primarySubject$.pipe(
       debounceTime(500),
       switchMap(val =>
         this.primaryChanged())

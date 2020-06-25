@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { OverlayService } from '@app/shared/services/overlay.service';
 
 @Component({
   selector: 'app-modal',
@@ -12,15 +14,23 @@ export class ModalComponent implements OnInit {
 
   @Input() title: string;
   @Output() close: EventEmitter<any> = new EventEmitter;
+  private viewportInitialized = false;
 
-  constructor() { }
+  constructor(private breakpointObserver: BreakpointObserver, private overlayService: OverlayService) { }
 
   ngOnInit() {
+    this.breakpointObserver.observe(['(orientation: portrait)',
+      '(orientation: landscape)']).subscribe(result => {
+        if (this.viewportInitialized) {
+          this.overlayService.close();
+        };
+        this.viewportInitialized = true;
+      })
   }
 
 
-  onClose($event: any) {
-    this.close.emit($event);
+  onClose() {
+    this.close.emit();
   }
 
 }

@@ -74,7 +74,7 @@ export class ProductCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
+    this.breakpointObserver.observe(['(max-width: 500px)']).subscribe(result => {
       this.mobile = result.matches;
     });
     if (this.product) {
@@ -201,8 +201,8 @@ export class ProductCreateComponent implements OnInit {
       orientation: true
     }).then(function (data) {
       const canvas = document.createElement("canvas");
-      canvas.width = data.image.width + 1;
-      canvas.height = data.image.height + 1;
+      canvas.width = data.image.width;
+      canvas.height = data.image.height;
       const ctx = canvas.getContext("2d");
       ctx.drawImage(data.image, 0, 0, data.image.width, data.image.height);
       const dataURL = canvas.toDataURL("image/jpg");
@@ -221,6 +221,7 @@ export class ProductCreateComponent implements OnInit {
   }
 
   videoUploaded($event: any) {
+    console.log($event);
     this.video = $event;
     this.videoThumbnail = this.video.url.replace(this.video.format, 'jpg');
   }

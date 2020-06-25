@@ -1,0 +1,30 @@
+:host {
+    flex: auto;
+}
+
+.page-wrapper {
+    margin: 0 auto;
+    max-width: 500px;
+
+}
+
+.form {
+    margin: 0px 8px;
+    .button-wrapper {
+        width: fit-content;
+        margin:0 auto;
+    }
+}
+.text {
+    padding: 32px;
+    margin: 0 auto;
+    max-width: 800px;
+    text-align: center;
+    font-size: 1.1em;
+    line-height: 1.3em;
+    font-weight: bold;
+}
+
+.success {
+    text-align: center;
+}

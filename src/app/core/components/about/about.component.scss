@@ -116,15 +116,15 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     row-gap: 16px;
-    column-gap: 16px;
     .step {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 400px;
+        height: 430px;
         &.placeholder {
-
-            background-color: rgba(100, 99, 99, 0.75);;
+            img {
+                height: inherit;
+            }
         }
         .step-inner {
             width: fit-content;
@@ -163,13 +163,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 400px;
-        &.placeholder {
-
-            background-color: rgba(100, 99, 99, 0.75);;
+        height: 430px;
+        img {
+            height: inherit;
         }
         .step-inner {
             width: fit-content;
+            z-index: 2;
             .number {
                 font-size: 3em;
                 text-align: center;
@@ -184,8 +184,23 @@
             }
         }
         &.dark {
-            background-color: rgba(100, 99, 99);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            margin-top: 16px;
+            position: relative;
+            background-image: url('../../../../assets/images/about-page-one.jpg');
             color: white;
+            &::after {
+                content: "";
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom:0;
+                background: rgba(0, 0, 0, .5);
+            }
     }
 }
 }

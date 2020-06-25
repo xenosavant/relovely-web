@@ -66,6 +66,8 @@ import {
   faLock,
   faShieldAlt,
   faClock,
+  faLocationArrow,
+  faHome,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -164,7 +166,8 @@ library.add(
   faStore,
   faLock,
   faShieldAlt,
-  faClock
+  faClock,
+  faHome
 );
 
 

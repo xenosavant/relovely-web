@@ -30,6 +30,8 @@ import { ColorFilterComponent } from './components/color-filter/color-filter.com
 import { SizeFilterGroupComponent } from './components/size-filter/size-filter-group/size-filter-group.component';
 import { AboutComponent } from './components/about/about.component';
 import { PortalModule } from '@angular/cdk/portal';
+import { HelpComponent } from './components/help/help.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 @NgModule({
   imports: [
@@ -39,7 +41,7 @@ import { PortalModule } from '@angular/cdk/portal';
     SharedModule,
     PortalModule
   ],
-  declarations: [SearchBarComponent, ToolbarComponent, HomeComponent, NotFoundComponent, FilterBarComponent, SizeFilterComponent, ColorFilterComponent, SizeFilterGroupComponent, AboutComponent],
+  declarations: [SearchBarComponent, ToolbarComponent, HomeComponent, NotFoundComponent, FilterBarComponent, SizeFilterComponent, ColorFilterComponent, SizeFilterGroupComponent, AboutComponent, HelpComponent, ContactComponent],
   providers: [
     NotificationService,
     httpInterceptorProviders

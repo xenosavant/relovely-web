@@ -7,6 +7,8 @@ import { NotFoundComponent } from '../app/core/components/not-found/not-found.co
 import { ProductsComponent } from './modules/product/containers/products/products.component';
 import { AboutComponent } from './core/components/about/about.component';
 import { AdminGuard } from './shared/guards/admin.guard';
+import { ProfileComponent } from './modules/member/containers/profile/profile.component';
+import { HelpComponent } from './core/components/help/help.component';
 
 const routes: Routes = [
   {
@@ -17,6 +19,11 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'help',
+    component: HelpComponent,
     pathMatch: 'full'
   },
   {
@@ -38,6 +45,10 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: '../app/modules/admin/admin.module#AdminModule',
+  },
+  {
+    path: ':id',
+    redirectTo: `/member/:id`
   },
   {
     path: '**',

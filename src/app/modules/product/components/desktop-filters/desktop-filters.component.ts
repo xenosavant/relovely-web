@@ -22,6 +22,7 @@ export class DesktopFiltersComponent implements OnInit {
   currentSizeFilters: SizeFilterGroup[];
   colors: ColorFilter[];
   selectedColors: string[] = [];
+  hideSizeMenu = false;
 
   selectedPriceFilters: PriceFilter[] = [];
   priceFilters: PriceFilter[];
@@ -46,8 +47,13 @@ export class DesktopFiltersComponent implements OnInit {
         this.colors = state.colors;
         this.priceFilters = state.prices;
         this.currentSizeFilters = this.sizeFilters.filter(size => {
-          return navigationState.selectedCategory && size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
+          return navigationState.selectedCategory && navigationState.selectedCategory.id === '-1' || size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
         });
+        if (!this.currentSizeFilters.length) {
+          this.hideSizeMenu = true;
+        } else {
+          this.hideSizeMenu = false;
+        }
         if (this.userService.user$.getValue()) {
           const cache = this.userService.user$.getValue().preferences;
           if (cache) {
@@ -84,6 +90,8 @@ export class DesktopFiltersComponent implements OnInit {
       })
     });
   }
+
+
 
   selectSize(group: SizeFilterGroup, key: string) {
     let sizeArray = [];

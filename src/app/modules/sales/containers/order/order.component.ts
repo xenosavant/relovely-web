@@ -41,7 +41,12 @@ export class OrderComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.orderService.getOrder(params['id']).subscribe(order => {
         this.order = order;
-        this.navigationItems = [{ path: '/sales/orders', name: 'Orders' }, { path: `/sales/orders/${this.order.id}`, name: this.order.orderNumber }];
+        if (this.seller) {
+          this.navigationItems = [{ path: '/sales/sales', name: 'Sales' }, { path: `/sales/orders/${this.order.id}`, name: this.order.orderNumber }];
+        } else {
+          this.navigationItems = [{ path: '/sales/orders', name: 'Orders' }, { path: `/sales/orders/${this.order.id}`, name: this.order.orderNumber }];
+        }
+
         this.seller = this.userService.user$.getValue().id === this.order.seller.id;
         this.loading = false;
         this.ref.markForCheck();
@@ -59,14 +64,14 @@ export class OrderComponent implements OnInit {
   }
 
   onPrint() {
+    const newWindow = window.open();
+    newWindow.document.write(`<html><body onload="window.print();"><img style="height:600px;" src="${this.order.shippingLabelUrl}"/></body></html>`);
+    newWindow.document.close();
+    newWindow.focus();
     this.orderService.shipOrder(this.order.id).subscribe(() => {
       const user = this.userService.user$.getValue();
       user.sales.splice(user.sales.findIndex(o => o.id === this.order.id));
       this.userService.setCurrentUser(user);
-      const newWindow = window.open();
-      newWindow.document.write(`<html><body onload="window.print();"><img style="height:600px;" src="${this.order.shippingLabelUrl}"/></body></html>`);
-      newWindow.document.close();
-      newWindow.focus();
     });
   }
 

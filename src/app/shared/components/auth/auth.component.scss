@@ -10,20 +10,16 @@
     }
 
     &.reset {
+        min-height: 225px;
         form {
-            height: 200px;
+            margin-top: 16px;
             .email-input {
                 position: relative;
-                top: 32px;
             }
             button {
-                position: relative;
-                top: 100px;
+                margin-bottom: 24px;
             }
         }
-    }
-    &.sell {
-        height: 200px;
     }
     &.sell {
         height: 250px;
@@ -62,10 +58,13 @@
         min-height:515px;
     }
     &.signin {
-        min-height:486px;
+        min-height:500px;
     }
     &.instagram {
-        min-height:325;
+        min-height:325px;
+    }
+    &.reset {
+        min-height: 307px;
     }
 }
 

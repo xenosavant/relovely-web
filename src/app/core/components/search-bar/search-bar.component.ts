@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -16,6 +16,8 @@ export class SearchBarComponent implements OnInit {
     term: new FormControl('')
   })
 
+  @Input() mobile = false;
+
   @Output() search: EventEmitter<any> = new EventEmitter();
   @Output() term: EventEmitter<string> = new EventEmitter();
 
@@ -32,11 +34,15 @@ export class SearchBarComponent implements OnInit {
     })
   }
 
-  public submit(): void {
+  onSearch() {
     this.search.emit();
   }
 
-  public termChanged() {
+
+  public termChanged(event: any) {
+    if (event.keyCode === 13) {
+      this.search.emit();
+    }
     this.term.emit(this.parseInput(this.form.get('term').value));
   }
 

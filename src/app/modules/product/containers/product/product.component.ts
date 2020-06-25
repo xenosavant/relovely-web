@@ -49,7 +49,7 @@ export class ProductComponent implements OnInit {
       0: { items: 1 }
     }
   };
-  navItems: NavigationItem[] = [];
+  navItems: NavigationItem[];
   more: Product[];
 
   public thumbnailsCarouselOptions: Partial<OwlCarouselOConfig> = {
@@ -121,13 +121,22 @@ export class ProductComponent implements OnInit {
       if (this.currentUser && this.currentUser.id === response.product.sellerId) {
         this.seller = true;
       }
-      const stack = this.navigationService.navigationStack;
       this.product = response.product;
       this.more = response.more;
-      if (stack.length > 1) {
-        this.navItems.push(stack[stack.length - 2]);
+      this.navItems = [];
+      let item = this.lookupService.navLookup[this.product.categories.find(id => id.length === 4)];
+      const navStack = [];
+      while (item) {
+        if (!(item.name && item.name.startsWith('All') && item.name !== 'All Products')) {
+          navStack.push(item);
+        }
+        item = item.parent;
       }
-      this.navItems.push({ path: `/products/${this.product.id}`, name: `${this.product.title}` });
+      const length = navStack.length
+      for (let i = 0; i < length; i++) {
+        this.navItems.push(navStack.pop());
+      }
+      this.navItems.push({ path: `/products/${this.product.id}`, name: this.product.title });
       this.currentItem = this.product.videos[0] ? this.product.videos[0] : this.product.images[0].cropped;
       this.currentImage = this.product.videos[0] ? null : this.product.images[0].original;
       if (this.product.videos[0]) {

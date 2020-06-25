@@ -43,25 +43,20 @@ export class ProfileComponent implements OnInit {
     this.route.paramMap.subscribe(param => {
       const id = param.get('id');
       this.currentUser = this.userService.user$.getValue();
-      if (!this.currentUser) {
-        this.navigationService.navigate({ path: '/' });
-        this.navigationService.openAuthWindow({ page: 'signin' });
+      if (this.currentUser && (id === 'profile' || id === this.currentUser.id || id === this.currentUser.username)) {
+        this.userService.getUser(this.userService.user$.getValue().id).subscribe(user => {
+          this.owner = true;
+          this.user = user;
+          this.loading = false;
+          this.ref.markForCheck();
+        });
       } else {
-        if (id === 'profile' || id === this.currentUser.id) {
-          this.userService.getUser(this.userService.user$.getValue().id).subscribe(user => {
-            this.owner = true;
-            this.user = user;
-            this.loading = false;
-            this.ref.markForCheck();
-          });
-        } else {
-          this.userService.getUser(id).subscribe(user => {
-            this.owner = false;
-            this.user = user;
-            this.ref.markForCheck();
-            this.loading = false;
-          });
-        }
+        this.userService.getUser(id).subscribe(user => {
+          this.owner = false;
+          this.user = user;
+          this.ref.markForCheck();
+          this.loading = false;
+        });
       }
       this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
         this.mobile = result.matches;
@@ -106,8 +101,8 @@ export class ProfileComponent implements OnInit {
       canvas: true
     }).then(function (data) {
       const canvas = document.createElement("canvas");
-      canvas.width = data.image.width + 1;
-      canvas.height = data.image.height + 1;
+      canvas.width = data.image.width;
+      canvas.height = data.image.height;
       const ctx = canvas.getContext("2d");
       ctx.drawImage(data.image, 0, 0, data.image.width, data.image.height);
       const dataURL = canvas.toDataURL("image/jpg");

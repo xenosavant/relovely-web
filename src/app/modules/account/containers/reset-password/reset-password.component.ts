@@ -1,8 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { UserService } from '@app/shared/services/user/user.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-reset-password',
@@ -16,16 +16,19 @@ export class ResetPasswordComponent implements OnInit {
   public form: FormGroup;
   public code: string;
   public showForm = false;
+  public error = false;
+  public success = false;
 
   constructor(private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.form = new FormGroup({
-      password: new FormControl('', [Validators.required]),
-      verifyPassword: new FormControl('', [Validators.required]),
-    });
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      verifyPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    }, this.validatePassword);
     this.code = this.activatedRoute.snapshot.queryParams['code'];
     if (this.code) {
       this.showForm = true;
@@ -36,12 +39,40 @@ export class ResetPasswordComponent implements OnInit {
   submit() {
     this.loading = true;
     this.authService.resetPassword({
-      code: this.code.replace(/ /g, '+'),
+      code: this.code,
       password: this.form.value['password']
     }).subscribe(response => {
-      this.router.navigate(['/'], { queryParams: { signin: true } });
+      this.showForm = false;
       this.loading = false;
+      this.success = true;
+      this.ref.markForCheck();
+    }, err => {
+      this.error = true;
+      this.showForm = false;
+      this.loading = false;
+      this.ref.markForCheck();
     });
   }
+
+  validatePassword(control: FormGroup): ValidationErrors {
+    const password = control.get('password').value;
+    const verify = control.get('verifyPassword').value;
+    if (!password || !verify) {
+      return null;
+    } else if (password === verify) {
+      return null;
+    } else {
+      return { passwordMatch: `Passwords don't match` }
+    }
+  }
+
+  get passwordValue() {
+    return this.form.get('password').value;
+  }
+
+  get passwordVerifyValue() {
+    return this.form.get('verifyPassword').value;
+  }
+
 
 }

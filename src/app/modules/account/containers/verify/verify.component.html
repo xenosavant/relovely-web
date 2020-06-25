@@ -2,14 +2,14 @@
     <ng-container *ngIf="!loading">
         <ng-container *ngIf="type === 'email'">
             <div class="center">
-                <img src="../../../../../assets/images/heart.png">
+                <img src="../../../../../assets/images/clipart-heart.svg">
                 <h2> Thank You For Joining Relovely!</h2>
                 <p>Please check your email for a verification link. </p>
             </div>
         </ng-container>
         <div class="center" *ngIf="type !== 'email'">
             <ng-container *ngIf="welcome">
-                <img src="../../../../../assets/images/heart.png">
+                <img src="../../../../../assets/images/clipart-heart.svg">
                 <h2> Welcome to Relovely!</h2>
                 <p *ngIf="type === 'member'">Click<a (click)="goToProducts()" appClick target="_blank"> here </a>to see
                     what's in stock </p>
@@ -26,18 +26,18 @@
                 </div>
                 <div *ngIf="form.get('password').errors && form.get('password').errors.minlength && passwordValue.length && !password.focused"
                     class="form-error">
-                    Password must be at least 8 characters long
+                    Password must be a least 8 characters long
                 </div>
                 <form [formGroup]="form">
                     <div>
                         <mat-form-field appearance="outline">
-                            <input autocomplete="off" #password="matInput" matInput type="password"
+                            <input autocomplete="new-password" #password="matInput" matInput type="password"
                                 placeholder="Password" formControlName="password" />
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field appearance="outline">
-                            <input autocomplete="off" #verify="matInput" matInput type="password"
+                            <input autocomplete="new-password" #verify="matInput" matInput type="password"
                                 placeholder="Verify Password" formControlName="verifyPassword" />
                         </mat-form-field>
                     </div>

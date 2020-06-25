@@ -62,7 +62,7 @@ export class AuthComponent implements OnChanges {
         verifyPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
       }, this.validatePassword);
       this.resetForm = new FormGroup({
-        identifier: new FormControl('', [Validators.required])
+        identifier: new FormControl('', [Validators.required, Validators.email])
       });
       this.sellerForm = new FormGroup({
         email: new FormControl('', [Validators.required])
@@ -163,13 +163,15 @@ export class AuthComponent implements OnChanges {
 
   reset() {
     this.loading = true;
-    this.authService.emailPasswordReset({ identifier: this.signInForm.value['identifier'] as string })
+    this.authService.emailPasswordReset({ identifier: this.resetForm.value['identifier'] as string })
       .subscribe(response => {
         this.navigationService.closeAuthWindow();
         this.loading = false;
         this.router.navigate(['/account/reset-password'])
       }, err => {
-        this.navigationService.closeAuthWindow();
+        this.error = err.error.error.message;
+        this.loading = false;
+        this.ref.markForCheck();
       });
   }
 

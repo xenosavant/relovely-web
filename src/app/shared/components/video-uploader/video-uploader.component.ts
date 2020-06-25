@@ -17,6 +17,7 @@ export class VideoUploaderComponent implements OnInit {
   public percentage = 0;
   public video: VideoMetaData;
   public timestamp = Date.now().toString();
+  folder: string;
 
   @Input() id: string;
   @Output() completed: EventEmitter<VideoMetaData> = new EventEmitter<VideoMetaData>();
@@ -27,7 +28,12 @@ export class VideoUploaderComponent implements OnInit {
     private uploadService: FileUploadService) { }
 
   ngOnInit(): void {
-    this.uploadService.getSignature(`products/${this.id}/videos`, this.timestamp, environment.cloudinaryVideoUploadPreset, 'video').subscribe(signature => {
+    if (environment.envName === 'PROD') {
+      this.folder = `products/${this.id}/videos`;
+    } else {
+      this.folder = `test/products/${this.id}/videos`;
+    }
+    this.uploadService.getSignature(this.folder, this.timestamp, environment.cloudinaryVideoUploadPreset).subscribe(signature => {
 
       // Create the file uploader, wire it to upload to your account
       const uploaderOptions: FileUploaderOptions = {
@@ -50,21 +56,14 @@ export class VideoUploaderComponent implements OnInit {
 
       this.uploader.onBuildItemForm = (fileItem: any, form: FormData): any => {
         // Add Cloudinary's unsigned upload preset to the upload form
-        let folder;
-        if (environment.envName !== 'PROD') {
-          folder = `products/${this.id}/videos`;
-        } else {
-          folder = `test/products/${this.id}/videos`;
-        }
+
         form.append('upload_preset', environment.cloudinaryVideoUploadPreset);
-        form.append('folder', `products/${this.id}/videos`);
+        form.append('folder', this.folder);
         form.append('file', fileItem);
         form.append('timestamp', this.timestamp);
         form.append('api_key', environment.cloudinaryApiKey);
 
         form.append('signature', signature);
-        form.append('public_id', "video");
-        form.append('unique_filename', 'false');
 
         // Use default "withCredentials" value for CORS requests
         fileItem.withCredentials = false;
