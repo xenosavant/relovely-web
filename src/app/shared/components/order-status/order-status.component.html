@@ -3,9 +3,9 @@
         {{ order.status | titlecase }} on {{order.purchaseDate | date}}
     </ng-container>
     <ng-container *ngSwitchCase="'shipped'">
-        {{ order.status | titlecase }} on {{order.deliveryDate | date}}
+        {{ order.status | titlecase }} on {{order.shipDate | date}}
     </ng-container>
     <ng-container *ngSwitchCase="'delivered'">
-        {{ order.status | titlecase }} on {{order.shipDate | date}}
+        {{ order.status | titlecase }} on {{order.deliveryDate | date}}
     </ng-container>
 </ng-container>
