@@ -5,7 +5,8 @@
       </div>
       <mat-toolbar class="topbar" color="primary" *ngIf="showMobileHeader && !error && !loading">
         <mat-toolbar-row class="top-bar gray" *ngIf="!showSearch">
-          <button class="mat-icon-button black" *ngIf="!sidenavOpen" (click)="openSidenav()">
+          <button class="mat-icon-button black" *ngIf="!sidenavOpen" (click)="openSidenav()"
+            [class.alert]="accountAlert">
             <fa-icon icon="bars"></fa-icon>
           </button>
           <div class="toolbar-filler"><img class="logo" src="./assets/images/logo.png" (click)="onGoHome()"> </div>
@@ -76,7 +77,7 @@
             <mat-nav-list *ngIf="showTopLevel" class="top">
               <a mat-list-item *ngFor="let item of currentNavigationItems" (click)="sideNavigate(item)"
                 routerLinkActive="nav-item-active">
-                <div class="top-level">
+                <div class="top-level" [class.alert]="accountAlert && item.name === 'Account'">
                   <span>{{ item.name }}</span>
                 </div>
               </a>
@@ -149,8 +150,9 @@
               <button class="mat-icon-button menu" (click)="onFavoritesClicked()">
                 <fa-icon icon="heart" [styles]="{'color': 'black'}"></fa-icon>
               </button>
-              <button #menuTrigger (mouseenter)="onTriggerAccountMenu($event)" class="mat-icon-button menu"
-                style="z-index:1050" *ngIf="userService.user$.getValue()" [matMenuTriggerFor]="accountMenu">
+              <button [class.alert]="accountAlert" #menuTrigger (mouseenter)="onTriggerAccountMenu($event)"
+                class="mat-icon-button menu" style="z-index:1050" *ngIf="userService.user$.getValue()"
+                [matMenuTriggerFor]="accountMenu">
                 <ng-container *ngIf="userService.user$.getValue()">
                   <img *ngIf="userService.user$.getValue().profileImageUrl" class="profile"
                     [src]="userService.user$.getValue().profileImageUrl">

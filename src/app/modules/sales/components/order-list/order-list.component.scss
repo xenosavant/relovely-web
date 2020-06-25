@@ -68,6 +68,7 @@
            }
            @media( max-width:$mobile-breakpoint) {
                visibility: hidden;
+               display: none;
                height:0px;
                width: 0px;
            }
@@ -90,4 +91,22 @@
            }
         }
     }
+    .print {
+        margin-top: 8px;
+        font-weight: 600;
+        &.alert::before {
+            content:"\A";
+            width:10px;
+            height:10px;
+            border-radius:50%;
+            background: $alert;
+            display:inline-block;
+            position: relative;
+            left: 0px;
+            top: -2px;
+            margin-right: 8px;
+          }
+        
+    }
+    
 }

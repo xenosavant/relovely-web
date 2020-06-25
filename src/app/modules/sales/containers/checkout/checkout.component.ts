@@ -160,6 +160,8 @@ export class CheckoutComponent implements OnInit {
       this.ref.markForCheck();
     }, err => {
       this.error = `Something went wrong there...let's try that again.`
+      this.loadingPayment = false;
+      this.ref.markForCheck();
     })
   }
 

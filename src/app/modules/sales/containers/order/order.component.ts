@@ -70,8 +70,10 @@ export class OrderComponent implements OnInit {
     newWindow.focus();
     this.orderService.shipOrder(this.order.id).subscribe(() => {
       const user = this.userService.user$.getValue();
-      user.sales.splice(user.sales.findIndex(o => o.id === this.order.id));
-      this.userService.setCurrentUser(user);
+      if (user.sales) {
+        user.sales.splice(user.sales.findIndex(o => o.id === this.order.id));
+        this.userService.setCurrentUser(user);
+      }
     });
   }
 

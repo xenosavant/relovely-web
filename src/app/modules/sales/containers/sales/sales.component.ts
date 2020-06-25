@@ -50,7 +50,7 @@ export class SalesComponent implements OnInit {
   }
 
   goToOrder(id: string) {
-    this.navigationService.navigate({ path: `/sales/orders/${id}?sales=true` });
+    this.navigationService.navigate({ path: `/sales/orders/${id}` });
   }
 
 }

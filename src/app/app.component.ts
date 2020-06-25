@@ -78,6 +78,7 @@ export class AppComponent implements OnInit {
   public authToken: string;
   public authUsername: string;
   public authRedirect: string;
+  public accountAlert: boolean = false;
   error = false;
   searchTerm: string;
   private _navMap = {};
@@ -219,9 +220,11 @@ export class AppComponent implements OnInit {
         this.alertSubsciption = this.alertService.notification$.subscribe(notification => {
           if (notification.menuItem) {
             const temp: NavigationItem[] = [];
+            this.accountAlert = false;
             this.accountNav.subItems.forEach(item => {
               if (item.name === notification.menuItem) {
                 if (notification.alert) {
+                  this.accountAlert = true;
                   item.alert = true;
                 } else {
                   item.alert = false;

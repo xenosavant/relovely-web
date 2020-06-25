@@ -1,5 +1,4 @@
-<div class="order-wrapper">
-
+<div class="order-wrapper" (click)="onClick()">
     <div class="product-image">
         <div [class.clickable]="detail" (click)="onImageClick()" class="image-wrapper mat-elevation-z2">
             <img class="product" [src]="order.product.images[0].cropped">
@@ -10,6 +9,9 @@
             <div *ngIf="!detail" class="mobile-title mat-body">
                 <div class="info-wrapper">
                     <app-order-status [order]="order"></app-order-status>
+                    <div [class.alert]="!order.labelPrinted && !hideAlert"
+                        *ngIf="seller && order.status === 'purchased'" class="print"><a (click)="onPrint()" appClick
+                            target="_blank"> Print Shipping Label</a></div>
                 </div>
             </div>
             <div class="info">
@@ -22,8 +24,11 @@
                         Seller: {{order.seller.username}}
                     </div>
                     <div *ngIf="seller" class="seller">
-                        Buyer: {{order.buyer.username}}
+                        Bought by {{order.buyer.username}}
                     </div>
+                    <div [class.alert]="!order.labelPrinted && !hideAlert"
+                        *ngIf="!detail && seller && order.status === 'purchased'" class="print"><a (click)="onPrint()"
+                            appClick target="_blank"> Print Shipping Label</a></div>
                 </div>
             </div>
         </div>

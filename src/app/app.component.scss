@@ -295,6 +295,17 @@ mat-toolbar-row {
       margin: 0px;
       padding: 0px;
       width: 40px !important;
+      &.alert::after {
+        content:"\A";
+        width:10px;
+        height:10px;
+        border-radius:50%;
+        background: $alert;
+        display:inline-block;
+        position: relative;
+        left: 0px;
+        top: -12px;
+      }
     }
   }
   &.header {

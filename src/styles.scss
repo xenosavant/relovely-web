@@ -463,6 +463,17 @@ div.left {
         margin-top:2px;
         border-radius: 11px;
       }
+      &.alert::after {
+        content:"\A";
+        width:10px;
+        height:10px;
+        border-radius:50%;
+        background: $alert;
+        display:inline-block;
+        position: relative;
+        left: 2px;
+        top: -12px;
+      }
     }
     font-size:18px;
     svg {
@@ -493,6 +504,17 @@ div.left {
     justify-content: center !important;
     align-items: center;
     font-size: 20px;
+    &.alert::after {
+      content:"\A";
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background: $alert;
+      display:inline-block;
+      position: relative;
+      left: 25px;
+      top: 0px;
+    }
   }
 
   .nested {
