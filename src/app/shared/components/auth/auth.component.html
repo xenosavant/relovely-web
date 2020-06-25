@@ -1,5 +1,6 @@
 <app-center-modal>
-  <div class="outer-wrapper" [class.signin]="state === 'signin'" [class.signup]="state === 'signup'">
+  <div class="outer-wrapper" [class.signin]="state === 'signin'" [class.signup]="state === 'signup'"
+    [class.reset]="state === 'reset'">
     <div *ngIf="!loading" class="modal-header">
       <div class="title">
         <div>{{title}}</div>
@@ -114,6 +115,9 @@
           </div>
         </ng-container>
         <ng-container *ngSwitchCase="'reset'">
+          <div class="errors">
+            <div *ngIf="error !== null" class="form-error">{{error}}</div>
+          </div>
           <div class="form-wrapper reset">
             <div class="reset-text"> {{resetText}}</div>
             <form novalidate [formGroup]="resetForm">

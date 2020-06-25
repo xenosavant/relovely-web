@@ -1058,18 +1058,11 @@ html {
     }
   }
 
-  app-verify {
+  app-verify,  app-facebook-auth, app-reset-password  {
     @media(max-width: $mobile-breakpoint) {
       min-height: calc(100vh - 56px);
     }
   }
-
-  app-facebook-auth {
-    @media(max-width: $mobile-breakpoint) {
-      min-height: calc(100vh - 56px);
-    }
-  }
-
 
 
 button.mat-stroked-button {
