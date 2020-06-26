@@ -89,12 +89,6 @@
     }
 }
 
-form button {
-    margin-top: 16px;
-    width: 100%;
-    height:40px;
-}
-
 .image-error {
     color: red;
     margin-bottom:8px;
@@ -158,4 +152,14 @@ form button {
     .error {
     }
 
+}
+
+.button-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: 16px;
+    width: 100%;
+    margin-top: 16px;
+    margin-bottom: 16px;
 }

@@ -1,4 +1,4 @@
-<app-modal [title]="title" (close)="onClose($event)">
+<app-modal [title]="title" (close)="onClose()">
     <ng-container *ngIf="!loading">
         <div class="info hint">
             *We recommend at least one photo wearing the product
@@ -151,9 +151,14 @@
                 </div>
             </div>
         </div>
-        <button mat-stroked-button [disabled]="!form.valid" (click)="onSave()" [class.primary]="true">
-            List
-        </button>
+        <div class="button-wrapper">
+            <app-button (click)="onClose()">
+                <strong>Cancel</strong>
+            </app-button>
+            <button mat-stroked-button class="primary" [disabled]="!form.valid" (click)="onSave()">
+                List
+            </button>
+        </div>
     </form>
 </app-modal>
 <div class="loading-wrapper" *ngIf="loading">
