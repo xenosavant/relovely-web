@@ -5,6 +5,9 @@ import { ProductService } from '@app/shared/services/product/product.service';
 import { Product } from '@app/shared/models/product.model';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { Subscription } from 'rxjs';
+import { Overlay } from '@angular/cdk/overlay';
+import { OverlayService } from '@app/shared/services/overlay.service';
 
 @Component({
   selector: 'app-listings',
@@ -18,11 +21,13 @@ export class ListingsComponent implements OnInit {
     private userService: UserService,
     private productService: ProductService,
     private ref: ChangeDetectorRef,
-    private breakpointObserver: BreakpointObserver) { }
+    private breakpointObserver: BreakpointObserver,
+    private overlayService: OverlayService) { }
 
   mobile: boolean;
   public products: Product[];
   public user: UserAuth;
+  productModalSubscription: Subscription;
 
 
   ngOnInit() {
@@ -31,6 +36,20 @@ export class ListingsComponent implements OnInit {
     })
     this.navigationService.showNavBar(true, 'LISTINGS');
     this.user = this.userService.user$.getValue();
+    this.getListings();
+    if (!this.productModalSubscription) {
+      this.productModalSubscription = this.productService.productModalClosed$.subscribe(success => {
+        if (success) {
+          this.overlayService.close();
+          this.getListings();
+        } else {
+          this.overlayService.close();
+        }
+      })
+    }
+  }
+
+  getListings() {
     this.productService.getListings().subscribe(response => {
       this.products = response.items;
       this.ref.markForCheck();
@@ -42,5 +61,9 @@ export class ListingsComponent implements OnInit {
       this.products.splice(this.products.findIndex(p => p.id === id), 1);
       Object.assign(this.products, { ...this.products });
     })
+  }
+
+  onEdit(event: Product) {
+    this.productService.showProductCreate(event, this.user.id);
   }
 }
