@@ -354,7 +354,6 @@ export class ProductCreateComponent implements OnInit {
     if (control.value) {
       const currencyChars = new RegExp('[\.,$]', 'g');
       const number = parseInt(control.value.replace(currencyChars, ''), 10);
-      console.log(number);
       if (number < 50) {
         return { "price": "price must be greater than $0.50" }
       }
@@ -382,16 +381,15 @@ export class ProductCreateComponent implements OnInit {
     if (this.currentUser && this.price) {
       if (this.currentUser.seller && this.currentUser.seller.freeSales > 0) {
         this.sellerEarnings = this.price;
-        this.earningsBreakdown = `*this sale is free! you have ${this.currentUser.seller.freeSales} left`
+        this.earningsBreakdown = `* this sale is commission free! you have ${this.currentUser.seller.freeSales} commission free sales left`
       }
       else if (this.price >= 500) {
         this.sellerEarnings = this.price - ((Math.round(.1 * this.price) + (Math.round(.029 * this.price))));
-        this.earningsBreakdown = '*after 10% commission fee + 2.9% secure payment fee'
+        this.earningsBreakdown = '* after 10% commission fee + 2.9% secure payment fee'
       } else {
         this.sellerEarnings = this.price - 50;
-        this.earningsBreakdown = '*after a flat $0.50 commission fee'
+        this.earningsBreakdown = '* after a flat $0.50 commission fee'
       }
-
     }
   }
 }
