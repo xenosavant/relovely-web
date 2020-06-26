@@ -264,3 +264,8 @@
   <app-product-create [product]="editProduct" [sellerId]="currentUserId" (close)="closeProductModal($event)">
   </app-product-create>
 </ng-template>
+
+<ng-template cdkPortal #productImage="cdkPortal">
+  <app-image-viewer [imageUrl]="productImageUrl" (close)="closeImage()">
+  </app-image-viewer>
+</ng-template>

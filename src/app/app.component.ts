@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
   public desktopLinkItems: NavigationItem[] = [];
   public selectedDesktopNavSubItems: NavigationItem[];
   public accountNav: NavigationItem;
-  public showMobileHeader = true;;
+  public showMobileHeader = true;
 
 
   public showFilterBar: boolean;
@@ -83,6 +83,7 @@ export class AppComponent implements OnInit {
   public accountAlert: boolean = false;
   public editProduct: Product = null;
   public currentUserId: string;
+  public productImageUrl: string;
 
   error = false;
   searchTerm: string;
@@ -95,6 +96,7 @@ export class AppComponent implements OnInit {
   @ViewChild('signUpModal', { static: true }) signUpModal: TemplatePortal<any>;
   @ViewChild('applyToSell', { static: true }) applymodal: TemplatePortal<any>;
   @ViewChild('productModal', { static: true }) productModal: TemplatePortal<any>;
+  @ViewChild('productImage', { static: true }) productImage: TemplatePortal<any>;
   @ViewChild('offsetContent', { static: false }) content: ElementRef;
   @ViewChild(MatSidenavContainer, { static: true }) container: MatSidenavContainer;
   @ViewChild('menuTrigger', { read: MatMenuTrigger, static: false }) trigger: MatMenuTrigger;
@@ -151,6 +153,11 @@ export class AppComponent implements OnInit {
       this.currentUserId = values.id;
       this.editProduct = values.product;
       this.overlayService.open(this.productModal);
+    })
+
+    this.productService.showImage$.subscribe(url => {
+      this.productImageUrl = url;
+      this.overlayService.open(this.productImage);
     })
 
     const jwt = this.localStorageService.getItem('jwt');
@@ -223,6 +230,10 @@ export class AppComponent implements OnInit {
 
   closeProductModal(event: boolean) {
     this.productService.productModalClosed(event);
+  }
+
+  closeImage() {
+    this.overlayService.close();
   }
 
   resetLoginSubscription() {

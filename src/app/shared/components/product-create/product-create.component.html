@@ -139,7 +139,7 @@
         </div>
         <div class="price-wrapper">
             <div *ngIf="!form.get('price').valid && form.get('price').dirty && !priceInput.focused" class="error">
-                Price must be great than $0.50
+                Price must be greater than $0.50
             </div>
             <div *ngIf="!(!form.get('price').valid && form.get('price').dirty)" class="fees">
                 <div class="earnings" [class.hide]="!(price && price >= 50)">

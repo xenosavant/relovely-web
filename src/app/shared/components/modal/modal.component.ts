@@ -15,6 +15,7 @@ export class ModalComponent implements OnInit {
   @Input() title: string;
   @Output() close: EventEmitter<any> = new EventEmitter;
 
+
   constructor(private breakpointObserver: BreakpointObserver, private overlayService: OverlayService) { }
 
   ngOnInit() {

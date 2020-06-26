@@ -191,11 +191,7 @@ export class ProductComponent implements OnInit {
     if (image) {
       this.currentImage = image.original;
     }
-    this.overlayService.open(this.viewImageElement);
-  }
-
-  closeImage() {
-    this.overlayService.close();
+    this.productService.showImage(this.currentImage)
   }
 
   purchase() {

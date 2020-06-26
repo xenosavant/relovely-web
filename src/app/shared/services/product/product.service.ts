@@ -9,6 +9,7 @@ export class ProductService extends BaseService {
 
 
     public showCreateProduct$: Subject<{ product: Product, id: string }> = new Subject();
+    public showImage$: Subject<string> = new Subject();
     public productModalClosed$: Subject<boolean> = new Subject();
 
 
@@ -102,6 +103,11 @@ export class ProductService extends BaseService {
 
     public showProductCreate(product: Product, userId: string) {
         this.showCreateProduct$.next({ product: product, id: userId });
+    }
+
+    public showImage(url: string) {
+        console.log(url);
+        this.showImage$.next(url);
     }
 
     public productModalClosed(success: boolean) {
