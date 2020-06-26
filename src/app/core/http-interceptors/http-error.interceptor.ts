@@ -37,6 +37,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         headerSettings['Authorization'] = 'Bearer ' + token;
       }
       headerSettings['Content-Type'] = 'application/json';
+      headerSettings['Cache-Control'] = 'no-cache';
       const newHeader = new HttpHeaders(headerSettings);
       changedRequest = request.clone({
         headers: newHeader

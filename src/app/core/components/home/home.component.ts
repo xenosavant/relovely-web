@@ -34,10 +34,10 @@ export class HomeComponent {
         this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
             this.mobile = result.matches;
         });
-        this.userService.getFeatured().subscribe(sellers => {
-            this.featuredSellers = sellers;
-            this.ref.markForCheck();
-        })
+        // this.userService.getFeatured().subscribe(sellers => {
+        //     this.featuredSellers = sellers;
+        //     this.ref.markForCheck();
+        // })
     }
 
     onSell() {
