@@ -308,7 +308,7 @@ export class ProductCreateComponent implements OnInit {
         product.colorId = this.form.get('color').value;
       }
       if (this.form.get('retailPrice').value) {
-        product.retailPrice = parseInt(this.form.get('retailPrice').value.replace(self.currencyChars, ''), 10);
+        product.retailPrice = parseInt(this.form.get('retailPrice').value.replace(this.currencyChars, ''), 10);
       }
       if (this.form.get('brand').value) {
         product.brand = this.form.get('brand').value;
@@ -351,7 +351,6 @@ export class ProductCreateComponent implements OnInit {
   }
 
   validatePrice(control: AbstractControl): { [key: string]: any } | null {
-    console.log(control);
     if (control.value) {
       const currencyChars = new RegExp('[\.,$]', 'g');
       const number = parseInt(control.value.replace(currencyChars, ''), 10);
