@@ -48,8 +48,3 @@
 <div *ngIf="loading" class="empty-state">
     <mat-spinner [diameter]="30"></mat-spinner>
 </div>
-<ng-template cdkPortal #productCreateModal="cdkPortal">
-    <app-product-create [product]="product" [sellerId]="currentUserId" (close)="onClose($event)"
-        (saved)="onProductSaved($event)">
-    </app-product-create>
-</ng-template>

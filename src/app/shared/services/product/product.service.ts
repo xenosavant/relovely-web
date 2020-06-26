@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core"; import { BaseService } from "../base.service"; import { Observable } from "rxjs"; import { UserDetail } from "@app/shared/models/user-detail.model"; import { map } from "rxjs/operators";
+import { Injectable } from "@angular/core"; import { BaseService } from "../base.service"; import { Observable, Subject } from "rxjs"; import { UserDetail } from "@app/shared/models/user-detail.model"; import { map } from "rxjs/operators";
 import { Product } from "@app/shared/models/product.model";
 import { ListResponse } from "../list-response";
 import { PriceRange } from "../filter/filter-state";
@@ -6,6 +6,10 @@ import { ProductDetailResponse } from "./product-detail.response";
 
 @Injectable({ providedIn: 'root' })
 export class ProductService extends BaseService {
+
+
+    public showCreateProduct$: Subject<{ product: Product, id: string }> = new Subject();
+    public productModalClosed$: Subject<boolean> = new Subject();
 
 
     getProduct(productId: string): Observable<ProductDetailResponse> {
@@ -94,6 +98,14 @@ export class ProductService extends BaseService {
 
     deleteProduct(productId: string): Observable<void> {
         return this.httpClient.delete<void>(`${this.apiBaseUrl}/products/${productId}/`, {})
+    }
+
+    public showProductCreate(product: Product, userId: string) {
+        this.showCreateProduct$.next({ product: product, id: userId });
+    }
+
+    public productModalClosed(success: boolean) {
+        this.productModalClosed$.next(success);
     }
 
 }

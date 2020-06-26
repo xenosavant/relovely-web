@@ -37,7 +37,6 @@ export class
     public setCurrentUser(user: UserAuth): void {
         this._currentUser = user;
         if (user) {
-            console.log(user.sales)
             if (user.sales && user.sales.length) {
                 this.alertService.setAlert({ menuItem: 'Sales', alert: true });
             } else {

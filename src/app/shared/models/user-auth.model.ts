@@ -30,5 +30,6 @@ export class UserAuth {
         errors: [],
         bankAccountLinked?: boolean;
         verificationStatus?: 'unverified' | 'review' | 'rejected' | 'verified';
+        freeSales: number;
     }
 }

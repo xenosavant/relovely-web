@@ -30,6 +30,8 @@ import { HeaderService } from './shared/services/header.service';
 import { LookupState } from './shared/services/lookup/lookup-state';
 import { ParseSpan } from '@angular/compiler';
 import { AlertService } from './shared/services/alert/alert.service';
+import { Product } from './shared/models/product.model';
+import { ProductService } from './shared/services/product/product.service';
 
 @Component({
   selector: 'app-root',
@@ -79,6 +81,9 @@ export class AppComponent implements OnInit {
   public authUsername: string;
   public authRedirect: string;
   public accountAlert: boolean = false;
+  public editProduct: Product = null;
+  public currentUserId: string;
+
   error = false;
   searchTerm: string;
   private _navMap = {};
@@ -89,6 +94,7 @@ export class AppComponent implements OnInit {
 
   @ViewChild('signUpModal', { static: true }) signUpModal: TemplatePortal<any>;
   @ViewChild('applyToSell', { static: true }) applymodal: TemplatePortal<any>;
+  @ViewChild('productModal', { static: true }) productModal: TemplatePortal<any>;
   @ViewChild('offsetContent', { static: false }) content: ElementRef;
   @ViewChild(MatSidenavContainer, { static: true }) container: MatSidenavContainer;
   @ViewChild('menuTrigger', { read: MatMenuTrigger, static: false }) trigger: MatMenuTrigger;
@@ -107,6 +113,7 @@ export class AppComponent implements OnInit {
     private localStorageService: LocalStorageService,
     private route: ActivatedRoute,
     private router: Router,
+    private productService: ProductService,
     private alertService: AlertService,
     @Inject(DOCUMENT) private document: any
   ) {
@@ -139,6 +146,13 @@ export class AppComponent implements OnInit {
         this.ref.detectChanges();
       });
     });
+
+    this.productService.showCreateProduct$.subscribe(values => {
+      this.currentUserId = values.id;
+      this.editProduct = values.product;
+      this.overlayService.open(this.productModal);
+    })
+
     const jwt = this.localStorageService.getItem('jwt');
     if (jwt) {
       this.userService.jwt = jwt;
@@ -205,6 +219,10 @@ export class AppComponent implements OnInit {
         this.closeModal();
       }
     });
+  }
+
+  closeProductModal(event: boolean) {
+    this.productService.productModalClosed(event);
   }
 
   resetLoginSubscription() {
@@ -578,13 +596,11 @@ export class AppComponent implements OnInit {
 
   setTerm(term: string) {
     this.searchTerm = term;
-    console.log(this.searchTerm)
   }
 
   search() {
     const path = this.route.snapshot.children[0].routeConfig.path;
     this.showSearch = false;
-    console.log(this.searchTerm)
     if (path === 'products') {
       this.router.navigate([], { queryParams: { search: this.searchTerm }, queryParamsHandling: 'merge', relativeTo: this.route });
     } else {

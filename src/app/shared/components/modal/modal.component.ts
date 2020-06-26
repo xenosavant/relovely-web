@@ -14,18 +14,11 @@ export class ModalComponent implements OnInit {
 
   @Input() title: string;
   @Output() close: EventEmitter<any> = new EventEmitter;
-  private viewportInitialized = false;
 
   constructor(private breakpointObserver: BreakpointObserver, private overlayService: OverlayService) { }
 
   ngOnInit() {
-    this.breakpointObserver.observe(['(orientation: portrait)',
-      '(orientation: landscape)']).subscribe(result => {
-        if (this.viewportInitialized) {
-          this.overlayService.close();
-        };
-        this.viewportInitialized = true;
-      })
+
   }
 
 

@@ -259,3 +259,8 @@
 <ng-template cdkPortal #applyToSell="cdkPortal">
   <app-seller-apply (close)="closeModal()"></app-seller-apply>
 </ng-template>
+
+<ng-template cdkPortal #productModal="cdkPortal">
+  <app-product-create [product]="editProduct" [sellerId]="currentUserId" (close)="closeProductModal($event)">
+  </app-product-create>
+</ng-template>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, NgZone, ChangeDetectorRef, Input } from '@angular/core';
-import { FormControl, Validators, FormGroup, FormArray, FormBuilder, AbstractControl, ValidationErrors, FormArrayName } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormArray, FormBuilder, AbstractControl, ValidationErrors, FormArrayName, ValidatorFn } from '@angular/forms';
 import { Category } from '@app/shared/models/category.model';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { guid } from '../../utils/rand';
@@ -18,6 +18,9 @@ import { FileUploadService } from '@app/shared/services/file-upload.service';
 import { weights } from '../../../data/weights.ts';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { environment } from '@env/environment';
+import { UserAuth } from '@app/shared/models/user-auth.model';
+import { AuthService } from '@app/shared/services/auth/auth.service';
+import { UserService } from '@app/shared/services/user/user.service';
 const loadImage = require('blueimp-load-image');
 
 
@@ -28,7 +31,6 @@ const loadImage = require('blueimp-load-image');
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductCreateComponent implements OnInit {
-
 
   @Input() sellerId: string;
   @Input() product: Product;
@@ -58,12 +60,16 @@ export class ProductCreateComponent implements OnInit {
   public saveError = false;
   edit = false;
   title: string;
-  cuurencyChars = new RegExp('[\.,$]', 'g');
+  currencyChars = new RegExp('[\.,$]', 'g');
   weights = weights;
   mobile: boolean;
+  sellerEarnings: number;
+  earningsBreakdown: string;
+  currentUser: UserAuth;
 
 
   constructor(private formBuilder: FormBuilder,
+    private userService: UserService,
     private uploadService: FileUploadService,
     private readonly zone: NgZone,
     private lookupService: LookupService,
@@ -74,6 +80,7 @@ export class ProductCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentUser = this.userService.user$.getValue();
     this.breakpointObserver.observe(['(max-width: 500px)']).subscribe(result => {
       this.mobile = result.matches;
     });
@@ -103,7 +110,7 @@ export class ProductCreateComponent implements OnInit {
           ]
         ),
         size: new FormControl(this.product.sizeId),
-        price: new FormControl(this.product.price.toString(), [Validators.required]),
+        price: new FormControl(this.product.price.toString(), [Validators.required, this.validatePrice]),
         retailPrice: new FormControl(this.product.retailPrice ? this.product.retailPrice.toString() : ''),
         color: new FormControl(this.product.colorId),
         tag: new FormControl(''),
@@ -112,6 +119,7 @@ export class ProductCreateComponent implements OnInit {
       this.tags = [...this.product.tags];
       this.images = this.product.images;
       this.video = this.product.videos.length ? this.product.videos[0] : null;
+      this.calculateFees();
     } else {
       this.title = 'List A Product';
       this.form = new FormGroup({
@@ -124,7 +132,7 @@ export class ProductCreateComponent implements OnInit {
         brand: new FormControl(''),
         size: new FormControl('', [Validators.required]),
         tag: new FormControl(''),
-        price: new FormControl(null, [Validators.required]),
+        price: new FormControl(null, [Validators.required, , this.validatePrice]),
         retailPrice: new FormControl(null),
         color: new FormControl(null),
         weight: new FormControl(null, [Validators.required])
@@ -133,6 +141,11 @@ export class ProductCreateComponent implements OnInit {
     }
     this.form.get('categories').valueChanges.subscribe((val: any) => {
       this.setSizes(val);
+    })
+    this.form.get('price').valueChanges.subscribe(value => {
+      if (value) {
+        this.calculateFees();
+      }
     })
     this.lookupService.getLookupData().subscribe(state => {
       this.sizes = state.sizes;
@@ -221,7 +234,6 @@ export class ProductCreateComponent implements OnInit {
   }
 
   videoUploaded($event: any) {
-    console.log($event);
     this.video = $event;
     this.videoThumbnail = this.video.url.replace(this.video.format, 'jpg');
   }
@@ -286,7 +298,7 @@ export class ProductCreateComponent implements OnInit {
         videos: this.video ? [this.video] : [],
         brand: this.form.get('brand').value,
         tags: this.tags,
-        price: parseInt(this.form.get('price').value.replace(this.cuurencyChars, '')),
+        price: parseInt(this.form.get('price').value.replace(this.currencyChars, ''), 10),
         weight: this.form.get('weight').value
       };
       if (this.form.get('size').value) {
@@ -296,7 +308,7 @@ export class ProductCreateComponent implements OnInit {
         product.colorId = this.form.get('color').value;
       }
       if (this.form.get('retailPrice').value) {
-        product.retailPrice = parseInt(this.form.get('retailPrice').value.replace(this.cuurencyChars, ''));
+        product.retailPrice = parseInt(this.form.get('retailPrice').value.replace(self.currencyChars, ''), 10);
       }
       if (this.form.get('brand').value) {
         product.brand = this.form.get('brand').value;
@@ -304,20 +316,19 @@ export class ProductCreateComponent implements OnInit {
       if (this.edit) {
         this.productService.patchProduct(product, this.product.id).subscribe(response => {
           this.loading = false;
-          this.saved.emit(true);
+          this.close.emit(true);
         }, error => {
           this.saveError = true;
         })
       } else {
         this.productService.postProduct(product, this.sellerId).subscribe(response => {
           this.loading = false;
-          this.saved.emit(true);
+          this.close.emit(true);
         }, error => {
           this.saveError = true;
         })
       }
     }
-
   }
 
   validateCategories(control: FormGroup): ValidationErrors {
@@ -337,5 +348,51 @@ export class ProductCreateComponent implements OnInit {
       return response;
     }
     return { categories: 'Please select a category' }
+  }
+
+  validatePrice(control: AbstractControl): { [key: string]: any } | null {
+    console.log(control);
+    if (control.value) {
+      const currencyChars = new RegExp('[\.,$]', 'g');
+      const number = parseInt(control.value.replace(currencyChars, ''), 10);
+      console.log(number);
+      if (number < 50) {
+        return { "price": "price must be greater than $0.50" }
+      }
+    }
+    return null
+  }
+
+  get priceError(): boolean {
+    if (this.form && this.form.get('price').value && !this.form.get('price').valid) {
+      return true
+    } else {
+      return false;
+    }
+  }
+
+  get price(): number {
+    if (this.form && this.form.get('price').value) {
+      return parseInt(this.form.get('price').value.replace(this.currencyChars, ''), 10);
+    } else {
+      return 0;
+    }
+  }
+
+  calculateFees() {
+    if (this.currentUser && this.price) {
+      if (this.currentUser.seller && this.currentUser.seller.freeSales > 0) {
+        this.sellerEarnings = this.price;
+        this.earningsBreakdown = `*this sale is free! you have ${this.currentUser.seller.freeSales} left`
+      }
+      else if (this.price >= 500) {
+        this.sellerEarnings = this.price - ((Math.round(.1 * this.price) + (Math.round(.029 * this.price))));
+        this.earningsBreakdown = '*after 10% commission fee + 2.9% secure payment fee'
+      } else {
+        this.sellerEarnings = this.price - 50;
+        this.earningsBreakdown = '*after a flat $0.50 commission fee'
+      }
+
+    }
   }
 }

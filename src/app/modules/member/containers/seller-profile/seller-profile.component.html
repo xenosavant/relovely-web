@@ -1,8 +1,3 @@
-<ng-template cdkPortal #productCreateModal="cdkPortal">
-    <app-product-create [product]="editProduct" [sellerId]="user.id" (saved)="onProductSaved($event)"
-        (close)="close($event)">
-    </app-product-create>
-</ng-template>
 <div *ngIf="!mobile" class="header-bar">
     <app-header-details (update)="onUpdate()" (action)="onAction($event)" *ngIf="!loading" [owner]="owner"
         [editing]="edit" [disableSave]="disableSave" [following]="following" [user]="user">

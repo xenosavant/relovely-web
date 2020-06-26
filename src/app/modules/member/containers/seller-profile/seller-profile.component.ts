@@ -22,8 +22,6 @@ import { ProductService } from '@app/shared/services/product/product.service';
 })
 export class SellerProfileComponent implements OnChanges {
 
-  @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
-
   @Input() user: UserDetail;
   @Input() currentUser: UserAuth;
   @Input() owner = false;
@@ -45,6 +43,7 @@ export class SellerProfileComponent implements OnChanges {
   error: string = null;
   saving = false;
   productsLoading = false;
+  productModalSubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
     private overlayService: OverlayService,
@@ -66,40 +65,39 @@ export class SellerProfileComponent implements OnChanges {
     this.followingUsers = this.user.following;
     this.followerUsers = this.user.followers;
     this.loading = false;
+    if (!this.productModalSubscription) {
+      this.productModalSubscription = this.productService.productModalClosed$.subscribe(success => {
+        this.overlayService.close();
+        if (success) {
+          this.productsLoading = true;
+          this.ref.markForCheck();
+          this.userService.getUser(this.user.id).subscribe(user => {
+            this.user = user;
+            this.productsLoading = false;
+            this.ref.markForCheck();
+          }, err => {
+            this.productsLoading = false;
+            this.ref.markForCheck();
+          })
+        }
+      })
+    }
+  }
+
+  ngOnDestroy() {
+    this.productModalSubscription.unsubscribe();
   }
 
   showCreateModal($event: any) {
     if (this.currentUser && this.currentUser.seller.missingInfo.includes('external_account') || this.currentUser.seller.verificationStatus !== 'verified' || !this.currentUser.returnAddress) {
       this.navigationService.navigate({ path: '/account/settings', queryStrings: [{ key: 'error', value: 'required' }] })
     } else {
-      this.editProduct = null;
-      this.overlayService.open(this.productCreateModal);
+      this.productService.showProductCreate(null, this.currentUser.id);
     }
   }
 
   showEditModal(product: any) {
-    this.editProduct = product;
-    this.overlayService.open(this.productCreateModal);
-  }
-
-  close(success: boolean) {
-    this.overlayService.close();
-    if (success) {
-      this.userService.me().subscribe(me => {
-        this.currentUser = me;
-        this.ref.markForCheck();
-      })
-    }
-  }
-
-  onProductSaved(close: boolean) {
-    this.overlayService.close();
-    this.productsLoading = true;
-    this.userService.getUser(this.user.id).subscribe(user => {
-      this.user = user;
-      this.productsLoading = false;
-      this.ref.markForCheck();
-    })
+    this.productService.showProductCreate(product, this.currentUser.id);
   }
 
   onUpdate() {

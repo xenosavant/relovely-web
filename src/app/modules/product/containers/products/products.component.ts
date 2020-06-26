@@ -44,6 +44,7 @@ export class ProductsComponent implements OnInit {
   searchTerm: string;
   total: number;
   currentPage: number = 0;
+  productModalSubscription: Subscription;
 
   @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
 
@@ -104,7 +105,22 @@ export class ProductsComponent implements OnInit {
       }
     })
 
+    if (!this.productModalSubscription) {
+      this.productModalSubscription = this.productService.productModalClosed$.subscribe(success => {
+        if (success) {
+          this.overlayService.close();
+          this.getProducts(this.filterService.filterStateSubject$.value);
+        } else {
+          this.overlayService.close();
+        }
+      })
+    }
+
     this.currentUser = this.userService.user$.getValue();
+  }
+
+  ngOnDestroy() {
+    this.productModalSubscription.unsubscribe();
   }
 
   selectProduct(id: string) {
@@ -113,8 +129,7 @@ export class ProductsComponent implements OnInit {
   }
 
   editProduct(product: Product) {
-    this.product = product;
-    this.overlayService.open(this.productCreateModal);
+    this.productService.showProductCreate(product, this.currentUser.id)
   }
 
   getProducts(state: IUserPreferences) {
@@ -163,12 +178,6 @@ export class ProductsComponent implements OnInit {
         })
     })
   }
-
-  onProductSaved(save: boolean) {
-    this.overlayService.close();
-    this.getProducts(this.filterService.filterStateSubject$.value);
-  }
-
 
   paginate(event: any) {
     this.currentPage = event.pageIndex;
