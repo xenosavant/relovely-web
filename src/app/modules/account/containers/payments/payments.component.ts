@@ -69,7 +69,8 @@ export class PaymentsComponent implements OnInit {
       this.ref.markForCheck();
     }, err => {
       this.overlayService.close();
-      this.error = `Something went wrong...let's try that again`;
+      this.error = err.error.error.message;
+      this.ref.markForCheck();
     })
   }
 

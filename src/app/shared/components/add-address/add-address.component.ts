@@ -160,7 +160,6 @@ export class AddAddressComponent implements OnInit {
   }
 
   saveOrEmit(addresses: Address[]): Observable<UserAuth> {
-    console.log(addresses)
     if (this.user) {
       return this.userService.updateUser(this.user.id, { addresses: addresses });
     } else {

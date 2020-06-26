@@ -17,6 +17,7 @@ import { UserAuth } from '@app/shared/models/user-auth.model';
 import { NavigationItem } from '@app/shared/models/navigation-item.model';
 import { Category } from '@app/shared/models/category.model';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product',
@@ -51,6 +52,7 @@ export class ProductComponent implements OnInit {
   };
   navItems: NavigationItem[];
   more: Product[];
+  productModalSubscription: Subscription;
 
   public thumbnailsCarouselOptions: Partial<OwlCarouselOConfig> = {
     dots: false,
@@ -82,7 +84,22 @@ export class ProductComponent implements OnInit {
       this.id = params.get('id');
       this.refreshProduct();
     });
+    if (!this.productModalSubscription) {
+      this.productModalSubscription = this.productService.productModalClosed$.subscribe(success => {
+        if (success) {
+          this.overlayService.close();
+          this.refreshProduct();
+        } else {
+          this.overlayService.close();
+        }
+      })
+    }
   }
+
+  ngOnDestroy() {
+    this.productModalSubscription.unsubscribe();
+  }
+
 
   goToProduct(id) {
     this.navigationService.navigate({ path: '/products/detail/' + id });
@@ -93,8 +110,7 @@ export class ProductComponent implements OnInit {
   }
 
   edit() {
-    this.editProduct = this.product;
-    this.overlayService.open(this.productCreateModal);
+    this.productService.showProductCreate(this.product, this.currentUser.id)
   }
 
   close() {
@@ -175,16 +191,7 @@ export class ProductComponent implements OnInit {
     if (image) {
       this.currentImage = image.original;
     }
-    this.overlayService.open(this.viewImageElement);
-  }
-
-  closeImage() {
-    this.overlayService.close();
-  }
-
-  onProductSaved(save: boolean) {
-    this.overlayService.close();
-    this.refreshProduct();
+    this.productService.showImage(this.currentImage)
   }
 
   purchase() {
@@ -193,5 +200,9 @@ export class ProductComponent implements OnInit {
     } else {
       this.navigationService.openAuthWindow({ page: 'signin', redirect: `/sales/checkout/${this.product.id}` });
     }
+  }
+
+  onClose() {
+    this.overlayService.close();
   }
 }

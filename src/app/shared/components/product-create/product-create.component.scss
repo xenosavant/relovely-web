@@ -85,7 +85,7 @@
     @media (min-width: $desktop-breakpoint) {
         display:grid;
         grid-gap: 8px;
-        grid-template-columns: 195px 195px 195px;
+        grid-template-columns: repeat(3, 189px);
     }
 }
 
@@ -128,4 +128,34 @@ form button {
             box-shadow: 0px 0px 0px 1px black;
         }
     }
+}
+
+.price-wrapper {
+    min-height: 42px;
+    .fees {
+        color: #2a5373;
+        min-height: 42px;
+        .earnings {
+            width: 100%;
+            display: grid;
+            font-weight: 600;
+            @media (min-width: 600px) {
+                width: 50%;
+            }
+            grid-template-columns: 1fr auto;
+            margin-bottom: 8px;
+            &.hide {
+                visibility: hidden;
+            }
+        }
+        .breakdown {
+            &.hide {
+                visibility: hidden;
+            }
+        }
+    }
+
+    .error {
+    }
+
 }

@@ -14,8 +14,7 @@
 .title-bar {
     height:150px;
     width:100%;
-    background: url("assets/images/title-background.jpg");
-    background-repeat: no-repeat;
+    background-color: $dark-blue;
     margin: 0 auto;
     .title-inner {
         height: 100%;

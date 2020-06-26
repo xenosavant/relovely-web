@@ -112,7 +112,7 @@
                 </div>
                 <ng-container *ngIf="!product.sold">
                     <div class="button-wrapper">
-                        <app-button *ngIf="!seller" type="accent" (click)="purchase($event)">Buy Now!</app-button>
+                        <app-button *ngIf="!seller" type="accent" (click)="purchase($event)">Buy Now</app-button>
                         <app-button *ngIf="seller" type="accent" (click)="edit($event)">Edit</app-button>
                     </div>
                 </ng-container>
@@ -129,12 +129,3 @@
         </div>
     </div>
 </div>
-<ng-template cdkPortal #viewImage="cdkPortal">
-    <app-image-viewer [imageUrl]="currentImage" (close)="closeImage($event)">
-    </app-image-viewer>
-</ng-template>
-<ng-template cdkPortal #productCreateModal="cdkPortal">
-    <app-product-create [product]="editProduct" [sellerId]="currentUser.id" (saved)="onProductSaved($event)"
-        (close)="close($event)">
-    </app-product-create>
-</ng-template>

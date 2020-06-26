@@ -295,6 +295,17 @@ mat-toolbar-row {
       margin: 0px;
       padding: 0px;
       width: 40px !important;
+      &.alert::after {
+        content:"\A";
+        width:10px;
+        height:10px;
+        border-radius:50%;
+        background: $alert;
+        display:inline-block;
+        position: relative;
+        left: 0px;
+        top: -12px;
+      }
     }
   }
   &.header {
@@ -383,6 +394,7 @@ mat-nav-list {
 .footer {
   width: 100%;
   border-top: solid 1px $dark-gray;
+  margin-top: 32px;
   background-color: $background-gray;
   flex: none;
   display: flex;
@@ -398,7 +410,7 @@ mat-nav-list {
     max-width: 1000px;
     margin:0 auto;
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     grid-template-rows: auto;
     list-style: none;
     width: 100%;
@@ -410,15 +422,15 @@ mat-nav-list {
 
 .mobile-footer {
   background-color: $dark-blue !important;
+  padding: 16px 0px;
+  margin-top: 16px;
   .list-wrapper {
-    padding: 8px 0px;
     ul {
       padding: 0;
       list-style: none;
       display: grid;
-      margin: 8px 0px;
       &.top {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
       }
       &.bottom {
         margin:0 auto;

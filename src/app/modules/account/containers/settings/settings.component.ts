@@ -172,8 +172,6 @@ export class SettingsComponent implements OnInit {
       this.returnAddress = address;
       this.setErrors();
       this.setView();
-      console.log(this.message);
-      console.log(this.completed)
       this.ref.markForCheck();
     })
   }
