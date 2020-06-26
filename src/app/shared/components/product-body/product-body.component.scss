@@ -34,6 +34,7 @@
     .product-name {
         font-size: .8em;
         max-height: 2em;
+        font-weight: 600;
         @media (min-width:$desktop-breakpoint) {
             font-size: .9em;
             max-height: 2.4em;

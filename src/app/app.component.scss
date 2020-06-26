@@ -409,7 +409,7 @@ mat-nav-list {
     max-width: 1000px;
     margin:0 auto;
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     grid-template-rows: auto;
     list-style: none;
     width: 100%;
@@ -421,15 +421,14 @@ mat-nav-list {
 
 .mobile-footer {
   background-color: $dark-blue !important;
+  padding: 16px 0px;
   .list-wrapper {
-    padding: 8px 0px;
     ul {
       padding: 0;
       list-style: none;
       display: grid;
-      margin: 8px 0px;
       &.top {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
       }
       &.bottom {
         margin:0 auto;
