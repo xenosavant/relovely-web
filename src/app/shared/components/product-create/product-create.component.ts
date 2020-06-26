@@ -225,7 +225,7 @@ export class ProductCreateComponent implements OnInit {
     })
   }
 
-  onClose($event: any) {
+  onClose() {
     this.close.emit(true);
   }
 
