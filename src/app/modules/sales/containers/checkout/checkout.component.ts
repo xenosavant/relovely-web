@@ -84,6 +84,9 @@ export class CheckoutComponent implements OnInit {
         this.product = product.product;
         this.selectedAddress = this.user.addresses.find(a => a.primary);
         this.recalcCosts();
+      }, err => {
+        this.error = 'Hmmm...something went wrong. Please referesh the page and try again.'
+        this.ref.markForCheck();
       });
     })
   }
@@ -197,6 +200,7 @@ export class CheckoutComponent implements OnInit {
 
   checkout() {
     this.checkingOut = true;
+    this.error = null;
     this.orderService.postOrder(
       {
         address: this.selectedAddress,
@@ -209,6 +213,8 @@ export class CheckoutComponent implements OnInit {
         this.navigationService.navigate({ path: `/sales/orders/${order.id}` })
       }, err => {
         this.error = err.error.error.message;
+        this.checkingOut = false;
+        this.ref.markForCheck();
       })
   }
 
