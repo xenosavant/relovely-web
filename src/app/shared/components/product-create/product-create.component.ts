@@ -379,16 +379,15 @@ export class ProductCreateComponent implements OnInit {
 
   calculateFees() {
     if (this.currentUser && this.price) {
-      if (this.currentUser.seller && this.currentUser.seller.freeSales > 0) {
-        this.sellerEarnings = this.price;
-        this.earningsBreakdown = `* this sale is commission free! you have ${this.currentUser.seller.freeSales} commission free sales left`
-      }
-      else if (this.price >= 500) {
+      if (this.price >= 500) {
         this.sellerEarnings = this.price - ((Math.round(.1 * this.price) + (Math.round(.029 * this.price))));
         this.earningsBreakdown = '* after 10% commission fee + 2.9% secure payment fee'
       } else {
         this.sellerEarnings = this.price - 50;
         this.earningsBreakdown = '* after a flat $0.50 commission fee'
+      }
+      if (this.currentUser.seller && this.currentUser.seller.freeSales > 0) {
+        this.earningsBreakdown += ' but no commission or fees for the first three sales';
       }
     }
   }
