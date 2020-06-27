@@ -394,7 +394,6 @@ mat-nav-list {
 .footer {
   width: 100%;
   border-top: solid 1px $dark-gray;
-  margin-top: 32px;
   background-color: $background-gray;
   flex: none;
   display: flex;
@@ -407,6 +406,7 @@ mat-nav-list {
     bottom:0;
   }
   ul {
+    padding-left: 0 !important;
     max-width: 1000px;
     margin:0 auto;
     display: grid;
@@ -414,6 +414,9 @@ mat-nav-list {
     grid-template-rows: auto;
     list-style: none;
     width: 100%;
+    li {
+      text-align: center;
+    }
     a {
       color: $dark-blue !important;
     }

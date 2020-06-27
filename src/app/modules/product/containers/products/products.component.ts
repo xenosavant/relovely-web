@@ -87,7 +87,7 @@ export class ProductsComponent implements OnInit {
         const root = this.navigationService.rootNavigationItems;
         this.currentNavItem = new NavigationItem([], '/products', 'All Products', "-1", root, [], null);
         this.categoryId = '0';
-        this.getProducts(this.filterService.filterStateSubject$.value);
+        this.getProducts(this.filterService.filterStateSubject$.getValue());
       }
       this.filterSub = this.filterService.filterStateSubject$.subscribe(state => {
         this.loading = true;
@@ -101,7 +101,7 @@ export class ProductsComponent implements OnInit {
       const newTerm = params['search'];
       if (this.searchTerm !== newTerm) {
         this.searchTerm = params['search'];
-        this.getProducts(this.filterService.filterStateSubject$.value);
+        this.getProducts(this.filterService.filterStateSubject$.getValue());
       }
     })
 
@@ -109,7 +109,7 @@ export class ProductsComponent implements OnInit {
       this.productModalSubscription = this.productService.productModalClosed$.subscribe(success => {
         if (success) {
           this.overlayService.close();
-          this.getProducts(this.filterService.filterStateSubject$.value);
+          this.getProducts(this.filterService.filterStateSubject$.getValue());
         } else {
           this.overlayService.close();
         }
@@ -181,7 +181,7 @@ export class ProductsComponent implements OnInit {
 
   paginate(event: any) {
     this.currentPage = event.pageIndex;
-    this.getProducts(this.filterService.filterStateSubject$.value);
+    this.getProducts(this.filterService.filterStateSubject$.getValue());
   }
 
   goToParent() {
@@ -191,6 +191,10 @@ export class ProductsComponent implements OnInit {
 
   onClose() {
     this.overlayService.close();
+  }
+
+  onDelete(id: string) {
+    this.getProducts(this.filterService.filterStateSubject$.getValue());
   }
 
 }

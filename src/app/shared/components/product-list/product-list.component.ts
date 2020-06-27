@@ -30,6 +30,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
   favoriting: boolean = false;
+  deleting: boolean = false;
 
   grid: boolean;
 
@@ -108,7 +109,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
-    this.delete.emit(this.product);
+    this.deleting = true;
+    this.productService.deleteProduct(this.product.id).subscribe(() => {
+      this.delete.emit(this.product);
+      this.deleting = false;
+    }, err => {
+      this.deleting = false;
+    })
   }
 
   purchase() {

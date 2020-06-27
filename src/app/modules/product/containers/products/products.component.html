@@ -23,7 +23,7 @@
     </div>
     <div class="products-content">
         <app-products-list (edit)="editProduct($event)" [user]="currentUser" [products]="products" [showGrid]="grid"
-            [showHeader]="true" (close)="onClose()">
+            [showHeader]="true" (close)="onClose()" (delete)="onDelete($event)">
         </app-products-list>
     </div>
     <div *ngIf="total > 40" class="paginator-wrapper">

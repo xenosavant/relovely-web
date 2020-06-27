@@ -49,6 +49,10 @@ export class ListingsComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    this.productModalSubscription.unsubscribe();
+  }
+
   getListings() {
     this.productService.getListings().subscribe(response => {
       this.products = response.items;

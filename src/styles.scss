@@ -1314,4 +1314,12 @@ image-cropper {
   div.overlay {
     outline: none !important;
   }
+  div.cropper {
+    outline: none !important;
+  }
 }
+
+image-cropper:first-child {
+  width: fit-content !important;
+  margin: 0 auto;
+} 

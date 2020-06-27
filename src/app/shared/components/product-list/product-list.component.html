@@ -21,7 +21,12 @@
       <mat-spinner *ngIf="favoriting" diameter="25"></mat-spinner>
     </div>
     <div *ngIf="seller" class="right">
-      <button mat-stroked-button class="primary destroy" (click)="onDelete()">Delete</button>
+      <button mat-stroked-button class="primary destroy" (click)="onDelete()">
+        <ng-container *ngIf="!deleting"> Delete</ng-container>
+        <ng-container *ngIf="deleting">
+          <mat-spinner class="white" [diameter]="15"></mat-spinner>
+        </ng-container>
+      </button>
     </div>
   </div>
 </div>

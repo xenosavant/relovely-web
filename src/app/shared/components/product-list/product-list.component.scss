@@ -47,6 +47,13 @@
                 }
             }
         }
+        button {
+            min-width: 65px !important;
+            @media( min-width:$desktop-breakpoint) { 
+                min-width: 75px !important;
+            }
+        }
+       
     } 
     div.left {
         display: flex;
@@ -63,7 +70,7 @@ button {
     }
     @media( max-width:$mobile-breakpoint) {
         height:20px;
-        font-size:12px;
+        font-size:14px;
     }
     min-height:20px !important;
 }
