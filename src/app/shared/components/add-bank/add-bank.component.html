@@ -9,6 +9,10 @@
                     <img (click)="onClose($event)" src="./assets/images/close.svg" />
                 </div>
             </div>
+            <div class="info">
+                We never store your bank account information. It is encrypred an sent directly and sent directly to our
+                secure payment processor, <a href="https://stripe.com/docs/security/stripe">Stripe</a>
+            </div>
             <form novalidate [formGroup]="form">
                 <div class="error">{{error}}</div>
                 <div>

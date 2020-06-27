@@ -13,11 +13,16 @@ form {
     display: flex;
     align-items: center;
     justify-content: center;
-    height:425px;
+    min-height:450px;
     .form-wrapper {
         width: 100%;
     }
     .close {
         margin-right: 8px;
     }
+}
+
+.info {
+    margin: 16px;
+    font-weight: 600;
 }
