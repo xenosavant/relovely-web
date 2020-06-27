@@ -10,7 +10,7 @@
                 <ul>
                     <li class="link" (click)="goToInstagram()" *ngIf="user.instagramUsername">
                         <img src="./assets/images/instagram.png">
-                        <div class="link-text">{{user.instagramUsername}}</div>
+                        <div class="link-text">@{{user.instagramUsername}}</div>
                     </li>
                     <li *ngIf="user.city && user.state"><img src="./assets/images/location.png"> {{user.city}},
                         {{user.state}}</li>
