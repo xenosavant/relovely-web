@@ -51,4 +51,7 @@ export class HomeComponent {
     onClose(success: boolean) {
         this.overlayService.close();
     }
+    onShop() {
+        this.navigationService.navigate({ path: '/products' })
+    }
 }
