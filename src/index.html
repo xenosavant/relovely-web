@@ -93,6 +93,12 @@
 
     ga('create', 'UA-53234284-5', 'auto');
   </script> -->
+  <script>navigator.serviceWorker.getRegistrations().then(function (registrations) {
+      console.log(registrations);
+      for (let registration of registrations) {
+        registration.unregister()
+      }
+    })</script>
 </body>
 
 </html>
