@@ -38,6 +38,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       }
       headerSettings['Content-Type'] = 'application/json';
       headerSettings['Cache-Control'] = 'no-cache';
+      headerSettings['ngsw-bypass'] = 'true';
       const newHeader = new HttpHeaders(headerSettings);
       changedRequest = request.clone({
         headers: newHeader
