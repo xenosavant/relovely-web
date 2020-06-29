@@ -2,7 +2,7 @@
     <div *ngIf="!mobile" class="page-title">
         <h1>Listings</h1>
     </div>
-    <app-products-list (edit)="onEdit($event)" (delete)="onDelete($event)" [user]="user" [showGrid]="true"
-        [showHeader]="true" [products]="products">
+    <app-products-list (goto)="goToProduct($event)" (edit)="onEdit($event)" (delete)="onDelete($event)" [user]="user"
+        [showGrid]="true" [showHeader]="true" [products]="products">
     </app-products-list>
 </div>

@@ -70,4 +70,8 @@ export class ListingsComponent implements OnInit {
   onEdit(event: Product) {
     this.productService.showProductCreate(event, this.user.id);
   }
+
+  goToProduct(id: string) {
+    this.navigationService.navigate({ path: '/products/detail/' + id })
+  }
 }

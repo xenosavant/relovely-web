@@ -32,11 +32,12 @@
                 </div>
                 <app-products-list *ngIf="!productsLoading" (delete)="onDelete($event)" [user]="currentUser"
                     (edit)="showEditModal($event)" (create)="showCreateModal($event)" [showCreate]="showCreate"
-                    [showGrid]="true" [showHeader]="false" [products]="user.listings">
+                    [showGrid]="true" (goto)="goToProduct($event)" [showHeader]="false" [products]="user.listings">
                 </app-products-list>
             </mat-tab>
             <mat-tab label="Sales">
-                <app-products-list [user]="currentUser" [showGrid]="true" [showHeader]="false" [products]="user.sales">
+                <app-products-list (goto)="goToProduct($event)" [user]="currentUser" [showGrid]="true"
+                    [showHeader]="false" [products]="user.sales">
                 </app-products-list>
             </mat-tab>
             <mat-tab label="Followers">

@@ -198,4 +198,8 @@ export class SellerProfileComponent implements OnChanges {
       this.navigationService.openAuthWindow({ page: 'signin' });
     }
   }
+
+  goToProduct(id: string) {
+    this.navigationService.navigate({ path: '/products/detail/' + id })
+  }
 }

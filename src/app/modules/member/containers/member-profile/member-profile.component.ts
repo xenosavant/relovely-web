@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { UserService } from '@app/shared/services/user/user.service';
 import { UserList } from '@app/shared/models/user-list.model';
 import { UserAuth } from '@app/shared/models/user-auth.model';
+import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 
 @Component({
   selector: 'app-member-profile',
@@ -38,6 +39,7 @@ export class MemberProfileComponent implements OnChanges {
   saving = false;
 
   constructor(private userService: UserService,
+    private navigationService: NavigationService,
     private ref: ChangeDetectorRef) { }
 
   ngOnChanges() {
@@ -102,6 +104,10 @@ export class MemberProfileComponent implements OnChanges {
 
   goToInstagram() {
     window.open(`https://instagram.com/${this.user.instagramUsername}`)
+  }
+
+  goToProduct(id: string) {
+    this.navigationService.navigate({ path: '/products/detail/' + id })
   }
 
 }

@@ -23,7 +23,7 @@
     <mat-tab-group *ngIf="!edit" mat-align-tabs="center">
       <mat-tab label="Favorites">
         <app-products-list class="users-wrapper" [user]="currentUser" [showGrid]="true" [showHeader]="true"
-          [products]="user.favorites">
+          [products]="user.favorites" (goto)="goToProduct($event)">
         </app-products-list>
       </mat-tab>
       <mat-tab label="Following">
