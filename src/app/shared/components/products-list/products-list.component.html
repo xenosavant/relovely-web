@@ -8,9 +8,10 @@
   </div>
   <div *ngFor="let product of products; let i = index" class="product-wrapper" (mouseenter)="onEnter(i)"
     (mouseleave)="onLeave()" [class.mat-elevation-z4]="hoverIndex === i">
-    <app-product-list (unfavorite)="onUnfavorite($event)" [showGrid]="showGrid" (edit)="onEdit($event)"
-      (delete)="onDelete($event)" [showHeader]="showHeader" (selectProduct)="gotToProduct($event)" [product]="product"
-      [user]="user" [seller]="user && user.id === product.sellerId">
+    <app-product-list (goto)="onGoToProduct($event)" (unfavorite)="onUnfavorite($event)" [showGrid]="showGrid"
+      (edit)="onEdit($event)" (delete)="onDelete($event)" [showHeader]="showHeader"
+      (selectProduct)="gotToProduct($event)" [product]="product" [user]="user"
+      [seller]="user && user.id === product.sellerId">
     </app-product-list>
   </div>
 </div>

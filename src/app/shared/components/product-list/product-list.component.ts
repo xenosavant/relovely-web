@@ -8,6 +8,7 @@ import { ProductService } from '@app/shared/services/product/product.service';
 import { UserDetail } from '@app/shared/models/user-detail.model';
 import { UserService } from '@app/shared/services/user/user.service';
 import { UserAuth } from '@app/shared/models/user-auth.model';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-product-list',
@@ -27,6 +28,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
   @Output() delete: EventEmitter<Product> = new EventEmitter<Product>();
   @Output() unfavorite: EventEmitter<string> = new EventEmitter<string>();
+  @Output() goto: EventEmitter<string> = new EventEmitter<string>();
 
   subscriptions: Subscription[] = [];
   favoriting: boolean = false;
@@ -39,7 +41,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     private navigationService: NavigationService,
     private ref: ChangeDetectorRef,
     private productService: ProductService,
-    private userService: UserService) {
+    private userService: UserService,
+    private viewportScroller: ViewportScroller) {
   }
 
   ngOnInit() {
@@ -68,7 +71,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   goToProduct(event: any) {
-    this.navigationService.navigate({ path: '/products/detail/' + this.product.id })
+    this.goto.emit(this.product.id);
+    // this.navigationService.navigate({ path: '/products/detail/' + this.product.id })
   }
 
   onEdit() {

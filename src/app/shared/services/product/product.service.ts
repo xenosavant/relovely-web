@@ -106,7 +106,6 @@ export class ProductService extends BaseService {
     }
 
     public showImage(url: string) {
-        console.log(url);
         this.showImage$.next(url);
     }
 

@@ -84,6 +84,7 @@ export class AppComponent implements OnInit {
   public editProduct: Product = null;
   public currentUserId: string;
   public productImageUrl: string;
+  public content: Element;
 
   error = false;
   searchTerm: string;
@@ -97,7 +98,6 @@ export class AppComponent implements OnInit {
   @ViewChild('applyToSell', { static: true }) applymodal: TemplatePortal<any>;
   @ViewChild('productModal', { static: true }) productModal: TemplatePortal<any>;
   @ViewChild('productImage', { static: true }) productImage: TemplatePortal<any>;
-  @ViewChild('offsetContent', { static: false }) content: ElementRef;
   @ViewChild(MatSidenavContainer, { static: true }) container: MatSidenavContainer;
   @ViewChild('menuTrigger', { read: MatMenuTrigger, static: false }) trigger: MatMenuTrigger;
   @ViewChild('.mat-sidenav-content', { static: false }) sideNavContent: ElementRef;
@@ -148,6 +148,10 @@ export class AppComponent implements OnInit {
         this.ref.detectChanges();
       });
     });
+
+    this.navigationService.scrollSubject$.subscribe(value => {
+      this.scrollToPosition(value);
+    })
 
     this.productService.showCreateProduct$.subscribe(values => {
       this.currentUserId = values.id;
@@ -390,25 +394,34 @@ export class AppComponent implements OnInit {
     if (this.scrollSubscription$) {
       this.scrollSubscription$.unsubscribe();
     }
-    const content = document.querySelector('.mat-sidenav-content');
-    if (content) {
-      // const scroll = fromEvent(content, 'scroll').pipe(
-      //   throttleTime(10), // only emit every 10 ms
-      //   map(() => content.scrollTop) // get vertical scroll positio
-      // );
+    this.content = document.querySelector('.mat-sidenav-content');
+    if (this.content) {
+      const scroll = fromEvent(this.content, 'scroll').pipe(
+        throttleTime(100), // only emit every 10 ms
+        map(() => this.content.scrollTop) // get vertical scroll positio
+      );
 
-      // this.scrollSubscription$ = scroll.subscribe(result => {
-      //   if (result <= this.top) {
-      //     if (result === 0) {
-      //       this.scroll0 = true;
-      //     }
-      //     this.scrolledToTop = true;
-      //   } else if (this.scrolledToTop) {
-      //     this.scroll0 = false;
-      //     this.scrolledToTop = false;
-      //   }
-      // });
+      this.scrollSubscription$ = scroll.subscribe(result => {
+        this.navigationService.setScrollPosition(result);
+      });
     }
+    else {
+      this.content = document.querySelector('.theme-wrapper');
+      if (this.content) {
+        const scroll = fromEvent(this.content, 'scroll').pipe(
+          throttleTime(100), // only emit every 10 ms
+          map(() => this.content.scrollTop) // get vertical scroll positio
+        );
+
+        this.scrollSubscription$ = scroll.subscribe(result => {
+          this.navigationService.setScrollPosition(result);
+        });
+      }
+    }
+  }
+
+  scrollToPosition(position: number) {
+    this.content.scrollTo(0, position);
   }
 
   setParents(parent: NavigationItem) {

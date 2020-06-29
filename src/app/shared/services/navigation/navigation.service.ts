@@ -27,6 +27,10 @@ export class NavigationService {
         selectedCategoryId: null,
         selectedCategory: null
     }
+
+    public scrollSubject$ = new Subject<number>();
+
+
     private navConfigSubject$ = new Subject<INavigationState>();
     public navConfig$ = this.navConfigSubject$.asObservable();
 
@@ -40,6 +44,8 @@ export class NavigationService {
     public get navigationStack() {
         return this._navigationStack;
     }
+
+    public back: boolean = false;
 
     constructor(private router: Router, private lookupService: LookupService) {
         this.router.events.pipe(
@@ -59,14 +65,17 @@ export class NavigationService {
             .subscribe(
                 (event: NavigationStart) => {
                     if (event.navigationTrigger === 'popstate' && this._navigationStack.length > 1) {
-                        this._navigationStack.pop();
-                        this._currentNavigationItem = this._navigationStack[this._navigationStack.length - 1]
+                        this.back = true;
+                        const remove = this._navigationStack.pop();
+                        this._currentNavigationItem = this._navigationStack[this._navigationStack.length - 1];
                         this.navigate(this._currentNavigationItem, true);
+                    } else {
+                        this.back = false;
                     }
                 });
     }
 
-    public navigate(item: NavigationItem, back = false): boolean {
+    public navigate(item: NavigationItem, back = false, replace = false): boolean {
         const params = item.queryStrings;
         if (item.id === "-1") {
             this._navConfig.pageHeader = 'All Products';
@@ -74,7 +83,7 @@ export class NavigationService {
             this._navConfig.selectedCategory = { id: '-1', name: 'All Products', parent: null, children: [] };
             this._navConfig.chipItems = [];
             this.navConfigSubject$.next(this._navConfig);
-            this.goto(item, back, params);
+            this.goto(item, back, replace, params);
         }
         else if (item.id) {
             this._navConfig.selectedCategory = this.lookupService.getCategory(item.id);
@@ -96,18 +105,18 @@ export class NavigationService {
                 this._navConfig.chipItems = [];
                 this._navConfig.pageHeader = item.plural + ' ' + 'Clothing';
             }
-            this.goto(item, back, params);
+            this.goto(item, back, replace, params);
 
             this.navConfigSubject$.next(this._navConfig);
             return true;
         } else {
             this._navConfig.showFilterBar = false;
-            this.goto(item, back, params);
+            this.goto(item, back, replace, params);
             return true;
         }
     }
 
-    private goto(navigationItem: NavigationItem, back: boolean, queryParams: KeyValue<string, string>[] = null) {
+    private goto(navigationItem: NavigationItem, back: boolean, replace: boolean, queryParams: KeyValue<string, string>[] = null) {
         this._navConfig.categoryItems = navigationItem.subCategories;
         if (navigationItem.id) {
             this._navConfig.showFilterBar = true;
@@ -117,8 +126,10 @@ export class NavigationService {
             this._navConfig.showNavBar = false;
         }
         if (!back) {
-            if (!this._currentNavigationItem || this._currentNavigationItem.path !== navigationItem.path) {
+            if (!replace) {
                 this._navigationStack.push(navigationItem);
+            }
+            if (!this._currentNavigationItem || this._currentNavigationItem.path !== navigationItem.path) {
                 this._currentNavigationItem = navigationItem;
                 this.currentNavSubject$.next(this._currentNavigationItem);
             }
@@ -173,5 +184,21 @@ export class NavigationService {
 
     public resetNavigation() {
         this._navigationStack = [];
+    }
+
+    public setScrollPosition(number) {
+        this._currentNavigationItem.scrollPosition = number;
+    }
+
+    public setData(data: any) {
+        this._currentNavigationItem.data = data;
+    }
+
+    public getCurrentScrollPosition() {
+        return this._currentNavigationItem.scrollPosition;
+    }
+
+    public scrollToPosition(position: number) {
+        this.scrollSubject$.next(position);
     }
 }

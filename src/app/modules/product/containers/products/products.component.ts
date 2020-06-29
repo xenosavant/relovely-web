@@ -14,10 +14,12 @@ import { UserService } from '@app/shared/services/user/user.service';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from '@app/shared/services/overlay.service';
 import { CATEGORY_MAP } from '@app/shared/services/lookup/category-image-map';
-import { Subscription } from 'rxjs';
+import { Subscription, fromEvent } from 'rxjs';
 import { UserDetail } from '@app/shared/models/user-detail.model';
 import { UserAuth } from '@app/shared/models/user-auth.model';
-import { withLatestFrom } from 'rxjs/operators';
+import { withLatestFrom, map, startWith, distinctUntilChanged, shareReplay } from 'rxjs/operators';
+import { ViewportScroller } from '@angular/common';
+import { ListResponse } from '@app/shared/services/list-response';
 
 @Component({
   selector: 'app-products',
@@ -45,10 +47,14 @@ export class ProductsComponent implements OnInit {
   total: number;
   currentPage: number = 0;
   productModalSubscription: Subscription;
+  scrollTo: number;
+  cache: any;
+
 
   @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
 
   constructor(
+    private viewportScroller: ViewportScroller,
     private router: Router,
     private route: ActivatedRoute,
     private ref: ChangeDetectorRef,
@@ -77,6 +83,7 @@ export class ProductsComponent implements OnInit {
       const routeParams = params[0];
       const queryParams = params[1];
       this.searchTerm = queryParams['search'];
+      this.currentPage = queryParams['page'] ? +queryParams['page'] - 1 : 0;
       if (routeParams['categoryId']) {
         this.categoryId = routeParams['categoryId'];
         this.currentNavItem = this.lookupService.navLookup[routeParams['categoryId']];
@@ -85,15 +92,21 @@ export class ProductsComponent implements OnInit {
         }
       } else {
         const root = this.navigationService.rootNavigationItems;
-        this.currentNavItem = new NavigationItem([], '/products', 'All Products', "-1", root, [], null);
+        this.currentNavItem = new NavigationItem([{ key: 'page', value: (this.currentPage + 1).toString() }], '/products', 'All Products', "-1", root, [], null);
         this.categoryId = '0';
-        this.getProducts(this.filterService.filterStateSubject$.getValue());
+      }
+      if (this.navigationService.back) {
+        this.navigationService.back = false;
+        this.scrollTo = this.navigationService.getNavigationItem().scrollPosition;
+        this.cache = this.navigationService.getNavigationItem().data;
+        this.navigationService.navigate(this.currentNavItem, false, true);
+      } else {
+        this.navigationService.navigate(this.currentNavItem);
       }
       this.filterSub = this.filterService.filterStateSubject$.subscribe(state => {
         this.loading = true;
         this.getProducts(state);
       });
-      this.navigationService.navigate(this.currentNavItem);
       this.ref.markForCheck();
     })
 
@@ -125,7 +138,7 @@ export class ProductsComponent implements OnInit {
 
   selectProduct(id: string) {
     this.navigationService.hideAll();
-    this.router.navigate(['/products/detail/' + id]);
+    this.navigationService.navigate({ path: '/products/detail/' + id });
   }
 
   editProduct(product: Product) {
@@ -133,54 +146,82 @@ export class ProductsComponent implements OnInit {
   }
 
   getProducts(state: IUserPreferences) {
-    const filteredSizes = [];
-    this.loading = true;
-    this.lookupService.getLookupData().subscribe(lookup => {
-      const a = lookup.sizes;
-      const validGroups = lookup.sizes.filter(group => this.categoryId === '0' || group.categoryIds.includes(this.categoryId));
-      state.sizes.forEach(id => {
-        if (validGroups.some(g => g.filters.some(f => f.key === id))) {
-          filteredSizes.push(id);
-        }
+    if (this.cache) {
+      this.loadData({ items: this.cache.products, count: this.cache.total });
+      const navService = this.navigationService;
+      const scrollTo = this.scrollTo;
+      setTimeout(function () {
+        navService.scrollToPosition(scrollTo);
       });
-      this.productService.getProducts(this.currentPage, this.categoryId || '-1', this.searchTerm, filteredSizes.length ? state.sizes : null,
-        state.colors.length ? state.colors : null, state.prices.length ? state.prices : null).subscribe(result => {
-          this.products = result.items;
-          this.total = result.count;
-          const cat: Category = this.lookupService.getCategory(this.categoryId);
-          if (!this.products.length) {
-            if (!cat || this.categoryId === '-1') {
-              this.emptyImage = '../../../../../assets/images/women-clothing.svg';
-            } else {
-              if (cat.parent && cat.parent.parent) {
-                this.checkBack = false;
-                this.parentCategory = cat.parent.parent.plural + ' ' + cat.parent.name;
-                this.emptyImage = '../../../../../assets/images/' + CATEGORY_MAP[cat.parent.id];
-              } else if (cat.parent) {
-                this.emptyImage = '../../../../../assets/images/' + CATEGORY_MAP[cat.id];
-                this.checkBack = true;
-              } else {
-                if (cat.id === '1') {
-                  this.emptyImage = '../../../../../assets/images/women-clothing.svg';
-                }
-                if (cat.id === '2') {
-                  this.emptyImage = '../../../../../assets/images/men-clothing.svg';
-                }
-                this.checkBack = true;
-              }
-            }
-            this.empty = true;
-          } else {
-            this.empty = false;
+      this.scrollTo = null;
+      this.cache = null;
+    } else {
+      const filteredSizes = [];
+      this.loading = true;
+      this.lookupService.getLookupData().subscribe(lookup => {
+        const a = lookup.sizes;
+        const validGroups = lookup.sizes.filter(group => this.categoryId === '0' || group.categoryIds.includes(this.categoryId));
+        state.sizes.forEach(id => {
+          if (validGroups.some(g => g.filters.some(f => f.key === id))) {
+            filteredSizes.push(id);
           }
-          this.loading = false;
-          this.ref.markForCheck();
-        })
-    })
+        });
+        this.productService.getProducts(this.currentPage, this.categoryId || '-1', this.searchTerm, filteredSizes.length ? state.sizes : null,
+          state.colors.length ? state.colors : null, state.prices.length ? state.prices : null).subscribe(result => {
+            this.loadData(result);
+            const navService = this.navigationService;
+            setTimeout(function () {
+              navService.scrollToPosition(0);
+            });
+          })
+      })
+    }
+  }
+
+  loadData(data: ListResponse<Product>) {
+    this.products = data.items;
+    this.total = data.count;
+    this.navigationService.setData({ products: data.items, total: data.count })
+    const cat: Category = this.lookupService.getCategory(this.categoryId);
+    if (!this.products.length) {
+      if (!cat || this.categoryId === '-1') {
+        this.emptyImage = '../../../../../assets/images/women-clothing.svg';
+      } else {
+        if (cat.parent && cat.parent.parent) {
+          this.checkBack = false;
+          this.parentCategory = cat.parent.parent.plural + ' ' + cat.parent.name;
+          this.emptyImage = '../../../../../assets/images/' + CATEGORY_MAP[cat.parent.id];
+        } else if (cat.parent) {
+          this.emptyImage = '../../../../../assets/images/' + CATEGORY_MAP[cat.id];
+          this.checkBack = true;
+        } else {
+          if (cat.id === '1') {
+            this.emptyImage = '../../../../../assets/images/women-clothing.svg';
+          }
+          if (cat.id === '2') {
+            this.emptyImage = '../../../../../assets/images/men-clothing.svg';
+          }
+          this.checkBack = true;
+        }
+      }
+      this.empty = true;
+    } else {
+      this.empty = false;
+    }
+    this.loading = false;
+    this.ref.markForCheck();
+
   }
 
   paginate(event: any) {
     this.currentPage = event.pageIndex;
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: { page: event.pageIndex + 1 },
+        queryParamsHandling: 'merge'
+      });
     this.getProducts(this.filterService.filterStateSubject$.getValue());
   }
 

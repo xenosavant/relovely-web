@@ -11,8 +11,10 @@ export class NavigationItem {
     subCategories?: Category[];
     parent?: NavigationItem;
     alert?: boolean;
+    scrollPosition?: number;
+    data?: any = null;
     constructor(queryStrings: KeyValue<string, string>[], path: string, name: string, id: string,
-        subItems: NavigationItem[], subCategories: Category[], parent: NavigationItem, plural: string = null) {
+        subItems: NavigationItem[], subCategories: Category[], parent: NavigationItem, plural: string = null, data: any = null, scrollPosition: number = null) {
         this.queryStrings = queryStrings;
         this.path = path || `/products/${this.id}`;
         this.subItems = subItems;
@@ -20,7 +22,9 @@ export class NavigationItem {
         this.parent = parent;
         this.name = name;
         this.id = id;
-        this.plural = plural
+        this.plural = plural;
         this.alert = false;
+        this.scrollPosition = scrollPosition;
+        this.data = data;
     }
 }
