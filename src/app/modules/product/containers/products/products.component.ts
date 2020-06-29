@@ -101,7 +101,7 @@ export class ProductsComponent implements OnInit {
         this.cache = this.navigationService.getNavigationItem().data;
         this.navigationService.navigate(this.currentNavItem, false, true);
       } else {
-        this.navigationService.navigate(this.currentNavItem);
+        this.navigationService.navigate(this.currentNavItem, false, true);
       }
       this.filterSub = this.filterService.filterStateSubject$.subscribe(state => {
         this.loading = true;
