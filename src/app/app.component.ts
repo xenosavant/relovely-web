@@ -366,7 +366,6 @@ export class AppComponent implements OnInit {
     };
     accountNav.subItems.push(
       new NavigationItem([], '/member/terms', 'Terms of Service', null, [], [], null),
-      new NavigationItem([], '/account/help', 'Help', null, [], [], null),
       new NavigationItem([], '/account/signout', 'Sign Out', null, [], [], null),
     );
     this.accountNav = accountNav;

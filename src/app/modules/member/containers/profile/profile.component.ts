@@ -43,6 +43,9 @@ export class ProfileComponent implements OnInit {
     this.route.paramMap.subscribe(param => {
       const id = param.get('id');
       this.currentUser = this.userService.user$.getValue();
+      if (id === 'profile' && !this.currentUser) {
+        this.navigationService.navigate({ path: '/' });
+      }
       if (this.currentUser && (id === 'profile' || id === this.currentUser.id || id === this.currentUser.username)) {
         this.userService.getUser(this.userService.user$.getValue().id).subscribe(user => {
           this.owner = true;
