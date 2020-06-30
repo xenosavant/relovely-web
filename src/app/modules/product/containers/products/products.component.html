@@ -1,4 +1,4 @@
-<ng-container *ngIf="!mobile">
+<div *ngIf="!mobile" [class.hidden]="!scrolled">
     <div class="breadcrumb-wrapper">
         <div class="breadcrumbs">
             <app-breadcrumbs [navItem]="currentNavItem"></app-breadcrumbs>
@@ -14,8 +14,8 @@
     <div class="filter-wrapper">
         <app-desktop-filters></app-desktop-filters>
     </div>
-</ng-container>
-<div *ngIf="!empty && !loading" class="products">
+</div>
+<div *ngIf="!empty && !loading" class="products" [class.hidden]="!scrolled">
     <div *ngIf="total > 40" class="paginator-wrapper">
         <mat-paginator #paginator [length]="total" [hidePageSize]="true" [pageIndex]="currentPage" [pageSize]="40"
             (page)="paginate($event)">

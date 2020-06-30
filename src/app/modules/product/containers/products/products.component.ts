@@ -49,6 +49,7 @@ export class ProductsComponent implements OnInit {
   productModalSubscription: Subscription;
   scrollTo: number;
   cache: any;
+  scrolled = false;
 
 
   @ViewChild('productCreateModal', { static: true }) productCreateModal: TemplatePortal<any>;
@@ -101,7 +102,11 @@ export class ProductsComponent implements OnInit {
         this.cache = this.navigationService.getNavigationItem().data;
         this.navigationService.navigate(this.currentNavItem, false, true);
       } else {
-        this.navigationService.navigate(this.currentNavItem, false, true);
+        if (this.navigationService.navigationStack.length) {
+          this.navigationService.navigate(this.currentNavItem, false, true);
+        } else {
+          this.navigationService.navigate(this.currentNavItem);
+        }
       }
       this.filterSub = this.filterService.filterStateSubject$.subscribe(state => {
         this.loading = true;
@@ -148,16 +153,18 @@ export class ProductsComponent implements OnInit {
   getProducts(state: IUserPreferences) {
     if (this.cache) {
       this.loadData({ items: this.cache.products, count: this.cache.total });
-      const navService = this.navigationService;
-      const scrollTo = this.scrollTo;
-      setTimeout(function () {
-        navService.scrollToPosition(scrollTo);
-      });
-      this.scrollTo = null;
       this.cache = null;
+      const self = this;
+      setTimeout(function () {
+        self.navigationService.scrollToPosition(self.scrollTo);
+        self.scrolled = true;
+        self.scrollTo = null;
+        self.ref.markForCheck();
+      });
     } else {
       const filteredSizes = [];
       this.loading = true;
+      this.scrolled = true;
       this.lookupService.getLookupData().subscribe(lookup => {
         const a = lookup.sizes;
         const validGroups = lookup.sizes.filter(group => this.categoryId === '0' || group.categoryIds.includes(this.categoryId));
