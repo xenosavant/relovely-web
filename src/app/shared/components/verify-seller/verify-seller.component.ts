@@ -206,7 +206,7 @@ export class VerifySellerComponent implements OnInit {
       if (this.formFields.indexOf('birthday') > -1) {
         const birth = (this.form.get('birthday').value as Date);
         updates.birthDay = birth.getDate();
-        updates.birthMonth = birth.getMonth();
+        updates.birthMonth = birth.getMonth() + 1;
         updates.birthYear = birth.getFullYear();
       }
       if (this.formFields.indexOf('ssn') > -1) {
@@ -247,7 +247,7 @@ export class VerifySellerComponent implements OnInit {
         firstName: this.form.get('first').value,
         lastName: this.form.get('last').value,
         birthDay: birth.getDate(),
-        birthMonth: birth.getMonth(),
+        birthMonth: birth.getMonth() + 1,
         birthYear: birth.getFullYear(),
         phone: this.form.get('phone').value.replace(/-/g, ''),
         email: this.form.get('email').value,

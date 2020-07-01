@@ -31,6 +31,7 @@ export class VerifyComponent implements OnInit {
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.userService.logout();
     this.activatedRoute.queryParams.subscribe(params => {
       this.code = params['code'];
       this.type = params['type'];
