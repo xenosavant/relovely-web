@@ -319,6 +319,7 @@ export class ProductCreateComponent implements OnInit {
           this.close.emit(true);
         }, error => {
           this.saveError = true;
+          this.loading = false;
         })
       } else {
         this.productService.postProduct(product, this.sellerId).subscribe(response => {
@@ -326,6 +327,7 @@ export class ProductCreateComponent implements OnInit {
           this.close.emit(true);
         }, error => {
           this.saveError = true;
+          this.loading = false;
         })
       }
     }

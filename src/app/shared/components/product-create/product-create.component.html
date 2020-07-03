@@ -44,128 +44,128 @@
         </div>
         <input #input type="file" style="visibility:hidden; height:0px;" (change)="imageChanged($event)" />
         <input #inputMobile type="file" style="visibility:hidden; height:0px;" (change)="imageChanged($event)" />
-    </ng-container>
-    <form novalidate [formGroup]="form">
-        <div>
-            <mat-form-field appearance="outline">
-                <input matInput placeholder="Product Title" formControlName="title" />
-            </mat-form-field>
-        </div>
-        <div class="description">
-            <mat-form-field appearance="outline">
-                <textarea matInput placeholder="Product Description" formControlName="description"></textarea>
-            </mat-form-field>
-        </div>
-        <div class="categories">
-            <ng-container formArrayName="categories" *ngFor="let item of categoryArray['controls']; let i = index;">
-                <div [formGroupName]="i">
+        <form novalidate [formGroup]="form">
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Product Title" formControlName="title" />
+                </mat-form-field>
+            </div>
+            <div class="description">
+                <mat-form-field appearance="outline">
+                    <textarea matInput placeholder="Product Description" formControlName="description"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="categories">
+                <ng-container formArrayName="categories" *ngFor="let item of categoryArray['controls']; let i = index;">
+                    <div [formGroupName]="i">
+                        <mat-form-field appearance="outline">
+                            <mat-select placeholder="Category" class="form-control"
+                                (selectionChange)="selectCategory($event, i)" formControlName="id">
+                                <mat-option *ngFor="let cat of categories[i]" [value]="cat.id">{{cat.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="double-field">
+                <div class="size">
                     <mat-form-field appearance="outline">
-                        <mat-select placeholder="Category" class="form-control"
-                            (selectionChange)="selectCategory($event, i)" formControlName="id">
-                            <mat-option *ngFor="let cat of categories[i]" [value]="cat.id">{{cat.name}}
+                        <mat-select placeholder="Size" class="form-control" formControlName="size">
+                            <mat-option *ngFor="let size of currentSizes" [value]="size.key">{{size.value}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
-            </ng-container>
-        </div>
-        <div class="double-field">
-            <div class="size">
+                <div class="color">
+                    <mat-form-field appearance="outline">
+                        <mat-select placeholder="Color" class="form-control" formControlName="color">
+                            <mat-option *ngFor="let color of colors" [value]="color.key">
+                                <div class="dot-wrapper">
+                                    <div class="dot" [style.background-color]="color.color"></div>
+                                    <div>{{color.value}}</div>
+                                </div>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="info hint bottom">* 1-2 pounds is most common for clothing, small items such as Jewelry are
+                typically less
+                than 1 pound, and heavier items such as boots are typically 2-4 pounds</div>
+            <div class="weight">
                 <mat-form-field appearance="outline">
-                    <mat-select placeholder="Size" class="form-control" formControlName="size">
-                        <mat-option *ngFor="let size of currentSizes" [value]="size.key">{{size.value}}
+                    <mat-select placeholder="Shipping Weight" class="form-control" formControlName="weight">
+                        <mat-option *ngFor="let weight of weights" [value]="weight.key">{{weight.value}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="color">
+            <div class="brand">
                 <mat-form-field appearance="outline">
-                    <mat-select placeholder="Color" class="form-control" formControlName="color">
-                        <mat-option *ngFor="let color of colors" [value]="color.key">
-                            <div class="dot-wrapper">
-                                <div class="dot" [style.background-color]="color.color"></div>
-                                <div>{{color.value}}</div>
-                            </div>
-                        </mat-option>
-                    </mat-select>
+                    <input matInput placeholder="Brand" formControlName="brand" />
                 </mat-form-field>
             </div>
-        </div>
-        <div class="info hint bottom">* 1-2 pounds is most common for clothing, small items such as Jewelry are
-            typically less
-            than 1 pound, and heavier items such as boots are typically 2-4 pounds</div>
-        <div class="weight">
-            <mat-form-field appearance="outline">
-                <mat-select placeholder="Shipping Weight" class="form-control" formControlName="weight">
-                    <mat-option *ngFor="let weight of weights" [value]="weight.key">{{weight.value}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="brand">
-            <mat-form-field appearance="outline">
-                <input matInput placeholder="Brand" formControlName="brand" />
-            </mat-form-field>
-        </div>
-        <div class="info hint tag-hint">
-            Press enter after every tag
-        </div>
-        <div class="tags">
-            <mat-form-field appearance="outline">
-                <mat-chip-list #chipList>
-                    <mat-chip [selectable]="false" (removed)="onRemoveTag(tag)" [removable]="true"
-                        *ngFor="let tag of tags">
-                        {{tag}}
-                        <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                    <input matInput [matChipInputFor]="chipList" type="text" class="form-control" formControlName="tag"
-                        (keyup)="onKeyup($event)" placeholder="Tags (up to 16)" />
-                </mat-chip-list>
-            </mat-form-field>
-        </div>
-        <div class="double-field">
-            <div class="price">
+            <div class="info hint tag-hint">
+                Press enter after every tag
+            </div>
+            <div class="tags">
                 <mat-form-field appearance="outline">
-                    <input #priceInput="matInput" type="text" currency matInput placeholder="Price"
-                        formControlName="price" />
+                    <mat-chip-list #chipList>
+                        <mat-chip [selectable]="false" (removed)="onRemoveTag(tag)" [removable]="true"
+                            *ngFor="let tag of tags">
+                            {{tag}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                        <input matInput [matChipInputFor]="chipList" type="text" class="form-control"
+                            formControlName="tag" (keyup)="onKeyup($event)" placeholder="Tags (up to 16)" />
+                    </mat-chip-list>
                 </mat-form-field>
             </div>
-            <div class="retail-price">
-                <mat-form-field appearance="outline">
-                    <input type="text" currency matInput placeholder="Original Retail Price"
-                        formControlName="retailPrice" />
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="price-wrapper">
-            <div *ngIf="!form.get('price').valid && form.get('price').dirty && !priceInput.focused" class="error">
-                Price must be greater than $0.50
-            </div>
-            <div *ngIf="!(!form.get('price').valid && form.get('price').dirty)" class="fees">
-                <div class="earnings" [class.hide]="!(price && price >= 50)">
-                    <div>Seller Earnings:</div>
-                    <div>{{sellerEarnings | appCurrency}}</div>
+            <div class="double-field">
+                <div class="price">
+                    <mat-form-field appearance="outline">
+                        <input #priceInput="matInput" type="text" currency matInput placeholder="Price"
+                            formControlName="price" />
+                    </mat-form-field>
                 </div>
-                <div class="breakdown" [class.hide]="!(price && price >= 50)">
-                    {{earningsBreakdown}}
+                <div class="retail-price">
+                    <mat-form-field appearance="outline">
+                        <input type="text" currency matInput placeholder="Original Retail Price"
+                            formControlName="retailPrice" />
+                    </mat-form-field>
                 </div>
             </div>
+            <div class="price-wrapper">
+                <div *ngIf="!form.get('price').valid && form.get('price').dirty && !priceInput.focused" class="error">
+                    Price must be greater than $0.50
+                </div>
+                <div *ngIf="!(!form.get('price').valid && form.get('price').dirty)" class="fees">
+                    <div class="earnings" [class.hide]="!(price && price >= 50)">
+                        <div>Seller Earnings:</div>
+                        <div>{{sellerEarnings | appCurrency}}</div>
+                    </div>
+                    <div class="breakdown" [class.hide]="!(price && price >= 50)">
+                        {{earningsBreakdown}}
+                    </div>
+                </div>
+            </div>
+            <div class="button-wrapper">
+                <app-button (click)="onClose()">
+                    <strong>Cancel</strong>
+                </app-button>
+                <button mat-stroked-button class="primary" [disabled]="!form.valid" (click)="onSave()">
+                    List
+                </button>
+            </div>
+        </form>
+    </ng-container>
+    <div class="loading-wrapper" *ngIf="loading">
+        <div class="loading">
+            <mat-spinner diameter="30"></mat-spinner>
         </div>
-        <div class="button-wrapper">
-            <app-button (click)="onClose()">
-                <strong>Cancel</strong>
-            </app-button>
-            <button mat-stroked-button class="primary" [disabled]="!form.valid" (click)="onSave()">
-                List
-            </button>
-        </div>
-    </form>
-</app-modal>
-<div class="loading-wrapper" *ngIf="loading">
-    <div class="loading">
-        <mat-spinner diameter="30"></mat-spinner>
     </div>
-</div>
+</app-modal>
 
 <ng-container *ngIf="crop">
     <app-image-cropper [showInfo]="true" (cancel)="onCloseCropper($event)" (crop)="onImageCropped($event)"
