@@ -90,7 +90,7 @@
         <div class="title">
           {{product.title}}
         </div>
-        <div class="size">
+        <div *ngIf="product.sizeId" class="size">
           Size: {{product.sizeId | appSize}}
         </div>
         <div class="seller">

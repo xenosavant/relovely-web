@@ -77,4 +77,8 @@ export class OrderComponent implements OnInit {
     });
   }
 
+  onGoToHelp() {
+    this.navigationService.navigate({ path: '/help' })
+  }
+
 }

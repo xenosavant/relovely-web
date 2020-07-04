@@ -96,7 +96,7 @@ export class ProductsComponent implements OnInit {
         this.currentNavItem = new NavigationItem([{ key: 'page', value: (this.currentPage + 1).toString() }], '/products', 'All Products', "-1", root, [], null);
         this.categoryId = '0';
       }
-      if (this.navigationService.back) {
+      if (this.navigationService.back && !this.navigationService.getPreviousNavigationItem().path.startsWith('/products')) {
         this.navigationService.back = false;
         this.scrollTo = this.navigationService.getNavigationItem().scrollPosition;
         this.cache = this.navigationService.getNavigationItem().data;

@@ -93,6 +93,7 @@ export class CheckoutComponent implements OnInit {
 
   recalcCosts() {
     this.shippingCostLoading = true;
+    this.error = null;
     if (this.selectedAddress) {
       this.shipmentService.previewShipment({
         categoryId: this.product.categories.find(c => c.length === 2),
@@ -145,9 +146,23 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSelectAddress() {
-    this.recalcCosts();
-    this.changingAddress = false;
-    this.ref.markForCheck();
+    this.shippingCostLoading = true;
+    this.user.addresses.forEach(address => {
+      if (address.id !== this.selectedAddress.id) {
+        delete address.primary;
+      } else {
+        address.primary = true;
+      }
+    })
+    const update = [...this.user.addresses];
+    this.userService.updateUser(this.user.id, { addresses: update }).subscribe(result => {
+      this.recalcCosts();
+      this.changingAddress = false;
+      this.ref.markForCheck();
+    }, error => {
+      this.changingAddress = false;
+      this.shippingCostLoading = false;
+    })
   }
 
   changeAddress() {

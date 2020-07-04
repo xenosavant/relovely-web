@@ -346,7 +346,6 @@ export class AppComponent implements OnInit {
       this.setParents(item);
     });
 
-    this.desktopLinkItems = [new NavigationItem([], 'about', 'Sell', null, [], [], null), new NavigationItem([], 'about', 'About', null, [], [], null)];
     this.desktopNavigationItems = desktopNavigationItems;
 
     const accountNav = {
@@ -384,6 +383,10 @@ export class AppComponent implements OnInit {
 
   goToAbout() {
     this.navigationService.navigate({ path: '/about' });
+  }
+
+  goToBlog() {
+    window.location.assign('https://www.blog.relovely.com/');
   }
 
   ngAfterViewInit() {

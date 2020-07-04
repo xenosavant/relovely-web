@@ -9,12 +9,14 @@ import { INavigationState } from '../../interfaces/navigation-state.interface';
 import { LookupService } from '../lookup/lookup.service';
 import { IAuthItem } from './auth-item.interface';
 import { KeyValue } from '@angular/common';
+import { OverlayService } from '../overlay.service';
 
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
 
     private _navigationStack: NavigationItem[] = [];
     private _currentNavigationItem: NavigationItem;
+    private _previousNavigationItem: NavigationItem;
 
     private _navConfig: INavigationState = {
         showNavBar: false,
@@ -47,7 +49,9 @@ export class NavigationService {
 
     public back: boolean = false;
 
-    constructor(private router: Router, private lookupService: LookupService) {
+    constructor(private router: Router,
+        private lookupService: LookupService,
+        private overlayService: OverlayService) {
         this.router.events.pipe(
             filter(
                 (event: any) => {
@@ -64,11 +68,15 @@ export class NavigationService {
                 }))
             .subscribe(
                 (event: NavigationStart) => {
-                    if (event.navigationTrigger === 'popstate' && this._navigationStack.length > 1) {
-                        this.back = true;
-                        const remove = this._navigationStack.pop();
-                        this._currentNavigationItem = this._navigationStack[this._navigationStack.length - 1];
-                        this.navigate(this._currentNavigationItem, true);
+                    if (event.navigationTrigger === 'popstate') {
+                        this.overlayService.close();
+                        if (this._navigationStack.length > 1) {
+                            this.back = true;
+                            this.overlayService.close();
+                            this._previousNavigationItem = this._navigationStack.pop();
+                            this._currentNavigationItem = this._navigationStack[this._navigationStack.length - 1];
+                            this.navigate(this._currentNavigationItem, true);
+                        }
                     } else {
                         this.back = false;
                     }
@@ -76,43 +84,47 @@ export class NavigationService {
     }
 
     public navigate(item: NavigationItem, back = false, replace = false): boolean {
-        const params = item.queryStrings;
-        if (item.id === "-1") {
-            this._navConfig.pageHeader = 'All Products';
-            this._navConfig.showFilterBar = true;
-            this._navConfig.selectedCategory = { id: '-1', name: 'All Products', parent: null, children: [] };
-            this._navConfig.chipItems = [];
-            this.navConfigSubject$.next(this._navConfig);
-            this.goto(item, back, replace, params);
-        }
-        else if (item.id) {
-            this._navConfig.selectedCategory = this.lookupService.getCategory(item.id);
-            this._navConfig.selectedCategoryId = item.id;
-            this._navConfig.showFilterBar = true;
-            if (item.parent) {
-                if (item.name.startsWith('All')) {
-                    this._navConfig.chipItems = item.parent.subItems;
-                    this._navConfig.pageHeader = item.name;
-                } else if (item.subItems && item.subItems.length) {
-                    this._navConfig.pageHeader = item.parent ? item.parent.plural + ' ' + item.name : item.name;
-                    this._navConfig.chipItems = item.subItems;
-                }
-                else if (item.parent.parent) {
-                    this._navConfig.chipItems = item.parent.subItems;
-                    this._navConfig.pageHeader = item.parent.parent.plural + ' ' + item.parent.name;
-                }
-            } else {
-                this._navConfig.chipItems = [];
-                this._navConfig.pageHeader = item.plural + ' ' + 'Clothing';
-            }
-            this.goto(item, back, replace, params);
-
-            this.navConfigSubject$.next(this._navConfig);
-            return true;
+        if (item.path.startsWith('https')) {
+            window.location.assign(item.path);
         } else {
-            this._navConfig.showFilterBar = false;
-            this.goto(item, back, replace, params);
-            return true;
+            const params = item.queryStrings;
+            if (item.id === "-1") {
+                this._navConfig.pageHeader = 'All Products';
+                this._navConfig.showFilterBar = true;
+                this._navConfig.selectedCategory = { id: '-1', name: 'All Products', parent: null, children: [] };
+                this._navConfig.chipItems = [];
+                this.navConfigSubject$.next(this._navConfig);
+                this.goto(item, back, replace, params);
+            }
+            else if (item.id) {
+                this._navConfig.selectedCategory = this.lookupService.getCategory(item.id);
+                this._navConfig.selectedCategoryId = item.id;
+                this._navConfig.showFilterBar = true;
+                if (item.parent) {
+                    if (item.name.startsWith('All')) {
+                        this._navConfig.chipItems = item.parent.subItems;
+                        this._navConfig.pageHeader = item.name;
+                    } else if (item.subItems && item.subItems.length) {
+                        this._navConfig.pageHeader = item.parent ? item.parent.plural + ' ' + item.name : item.name;
+                        this._navConfig.chipItems = item.subItems;
+                    }
+                    else if (item.parent.parent) {
+                        this._navConfig.chipItems = item.parent.subItems;
+                        this._navConfig.pageHeader = item.parent.parent.plural + ' ' + item.parent.name;
+                    }
+                } else {
+                    this._navConfig.chipItems = [];
+                    this._navConfig.pageHeader = item.plural + ' ' + 'Clothing';
+                }
+                this.goto(item, back, replace, params);
+
+                this.navConfigSubject$.next(this._navConfig);
+                return true;
+            } else {
+                this._navConfig.showFilterBar = false;
+                this.goto(item, back, replace, params);
+                return true;
+            }
         }
     }
 
@@ -172,6 +184,10 @@ export class NavigationService {
 
     public getNavigationItem() {
         return this._currentNavigationItem;
+    }
+
+    public getPreviousNavigationItem() {
+        return this._previousNavigationItem;
     }
 
     public openAuthWindow(item: IAuthItem) {

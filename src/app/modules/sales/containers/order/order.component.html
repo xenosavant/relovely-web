@@ -77,7 +77,8 @@
                             Package</a>
                     </div>
                     <div class="problem">
-                        <a appClick target="_blank" *ngIf="!['cancelled', 'review'].includes(order.status)">Problem with
+                        <a (click)="onGoToHelp()" appClick target="_blank"
+                            *ngIf="!['cancelled', 'review'].includes(order.status)">Problem with
                             order</a>
                     </div>
                 </ng-container>
