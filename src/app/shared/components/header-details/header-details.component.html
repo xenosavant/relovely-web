@@ -11,7 +11,10 @@
                 <fa-icon *ngIf="!editing" (click)="onAction('edit')" icon="edit"></fa-icon>
                 <fa-icon *ngIf="editing" (click)="onAction('close')" icon="undo"></fa-icon>
             </span>
-            <ng-container *ngIf="user.type === 'seller'">{{user.username || 'Relovely Seller' }}</ng-container>
+            <ng-container *ngIf="user.type === 'seller'"> <img (click)="onGoToInstagram()" class="insta"
+                    *ngIf="!desktop && user.instagramUsername"
+                    src="/assets/images/instagram-black.svg" />{{user.username || 'Relovely Seller' }}
+            </ng-container>
             <ng-container *ngIf="user.type === 'member'">{{user.username || 'Relovely Shopper' }}</ng-container>
         </div>
         <div class="rating-wrapper" (click)="goToRatings()" *ngIf="user.type === 'seller' && rating !== 0">

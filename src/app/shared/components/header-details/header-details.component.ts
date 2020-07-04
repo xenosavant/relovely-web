@@ -54,4 +54,8 @@ export class HeaderDetailsComponent implements OnInit {
     this.navigationService.navigate({ path: `/member/ratings/${this.user.id}` })
   }
 
+  onGoToInstagram() {
+    window.location.assign('https://www.instagram.com/' + this.user.instagramUsername);
+  }
+
 }
