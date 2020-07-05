@@ -1,5 +1,5 @@
 # base image
-FROM node:12.4.0
+FROM node:12.4.0 as build
 
 # set working directory (also creates two folders needed for cypress)
 RUN mkdir /usr/src/app
