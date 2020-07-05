@@ -13,8 +13,7 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 # install app and cache app dependencies
 COPY . /usr/src/app
 
-RUN npm install puppeteer --unsafe-perm=true --allow-root
-RUN npm install
+RUN npm install puppeteer@5.0.0 --unsafe-perm=true --allow-root
 RUN npm install --silent
 
 RUN npm run build --prod
