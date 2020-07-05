@@ -9,6 +9,7 @@ WORKDIR /usr/src/app
 
 # add `/usr/src/app/node_modules/.bin` to $PATH
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
+ENV PUPPETEER_SKIP_DOWNLOAD true
 
 # install app and cache app dependencies
 COPY . /usr/src/app
