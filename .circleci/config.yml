@@ -23,33 +23,33 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-        name: Set IP
-        command: |
-          if [ $CIRCLE_BRANCH = 'develop' ]; then
-            CURRENT_DROPLET_IP=$DEVELOPMENT_DROPLET_IP
-          elif [ $CIRCLE_BRANCH = 'master' ]; then
-            CURRENT_DROPLET_IP=$DROPLET_IP
-          fi
-          echo "export CURRENT_DROPLET_IP=$CURRENT_DROPLET_IP" >> $BASH_ENV
+          name: Set IP
+          command: |
+            if [ $CIRCLE_BRANCH = 'develop' ]; then
+              CURRENT_DROPLET_IP=$DEVELOPMENT_DROPLET_IP
+            elif [ $CIRCLE_BRANCH = 'master' ]; then
+              CURRENT_DROPLET_IP=$DROPLET_IP
+            fi
+            echo "export CURRENT_DROPLET_IP=$CURRENT_DROPLET_IP" >> $BASH_ENV
       - run:
-        name: Build Docker image
-        command: |
+          name: Build Docker image
+          command: |
           docker build -t $IMAGE_NAME:latest .
       - run:
-        name: Push Docker Image
-        command: |
-          echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-          docker push $IMAGE_NAME:latest
+          name: Push Docker Image
+          command: |
+            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push $IMAGE_NAME:latest
       - run:
-        name: Deploy
-        command: |
-          ssh -o StrictHostKeyChecking=no circle@$CURRENT_DROPLET_IP bash -c '
-          sudo cat ~/password.txt | docker login --username relovely --password-stdin;
-          sudo docker stop $(docker ps -a -q);
-          sudo docker rm -f $(docker ps -a -q);
-          sudo docker rmi -f $(docker images -q);
-          sudo docker pull $IMAGE_NAME:latest;
-          sudo docker run -d --network host $IMAGE_NAME'
+          name: Deploy
+          command: |
+            ssh -o StrictHostKeyChecking=no circle@$CURRENT_DROPLET_IP bash -c '
+            sudo docker login --username relovely --password $DOCKERHUB_PASSWORD;
+            sudo docker stop $(docker ps -a -q);
+            sudo docker rm -f $(docker ps -a -q);
+            sudo docker rmi -f $(docker images -q);
+            sudo docker pull $IMAGE_NAME:latest;
+            sudo docker run -d --network host $IMAGE_NAME'
  
       ################ WARNING WARNING #####################
       # doing no strict host key check is a security risk to some extent.
