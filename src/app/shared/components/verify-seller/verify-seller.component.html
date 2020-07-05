@@ -51,7 +51,7 @@
             <ng-container *ngIf="formFields.indexOf('birthday') > -1">
                 <mat-form-field appearance="outline">
                     <input matInput [matDatepicker]="picker" placeholder="Birthday" formControlName="birthday"
-                        id="dateOfBirth" readonly (click)="picker.open()">
+                        id="dateOfBirth">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -210,7 +210,7 @@
             <app-button (click)="onClose($event)">
                 <strong>Cancel</strong>
             </app-button>
-            <button mat-stroked-button class="primary" [disabled]="!isFormValid()" (click)="onSave()">
+            <button type="button" mat-stroked-button class="primary" [disabled]="!isFormValid()" (click)="onSave()">
                 <strong> Submit </strong>
             </button>
         </div>
