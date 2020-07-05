@@ -44,7 +44,7 @@ jobs:
           name: Deploy
           command: |
             ssh -o StrictHostKeyChecking=no root@$CURRENT_DROPLET_IP bash -c '
-            sudo docker login --username relovely --password $DOCKERHUB_PASSWORD;
+            sudo cat ~/password.txt | docker login --username relovely --password-stdin;
             sudo docker stop $(docker ps -a -q);
             sudo docker rm -f $(docker ps -a -q);
             sudo docker rmi -f $(docker images -q);
