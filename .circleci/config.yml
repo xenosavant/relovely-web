@@ -34,7 +34,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-          docker build -t $IMAGE_NAME:latest .
+            docker build -t $IMAGE_NAME:latest .
       - run:
           name: Push Docker Image
           command: |
@@ -43,7 +43,7 @@ jobs:
       - run:
           name: Deploy
           command: |
-            ssh -o StrictHostKeyChecking=no circle@$CURRENT_DROPLET_IP bash -c '
+            ssh -o StrictHostKeyChecking=no root@$CURRENT_DROPLET_IP bash -c '
             sudo docker login --username relovely --password $DOCKERHUB_PASSWORD;
             sudo docker stop $(docker ps -a -q);
             sudo docker rm -f $(docker ps -a -q);
