@@ -14,7 +14,7 @@ ENV PUPPETEER_SKIP_DOWNLOAD true
 # install app and cache app dependencies
 COPY . /usr/src/app
 
-RUN npm run build --prod
+RUN npm run build-prod
 
 FROM nginx:1.16.0-alpine
 
