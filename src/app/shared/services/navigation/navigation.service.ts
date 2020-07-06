@@ -203,7 +203,9 @@ export class NavigationService {
     }
 
     public setScrollPosition(number) {
-        this._currentNavigationItem.scrollPosition = number;
+        if (this._currentNavigationItem) {
+            this._currentNavigationItem.scrollPosition = number;
+        }
     }
 
     public setData(data: any) {

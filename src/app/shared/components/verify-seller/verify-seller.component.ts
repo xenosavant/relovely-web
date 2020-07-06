@@ -8,6 +8,8 @@ import { environment } from '@env/environment';
 import { VerificationError } from '@app/shared/services/user/verification-error';
 import { SellerVerificationRequest } from '@app/shared/services/user/seller-verification.request';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { UserAuth } from '@app/shared/models/user-auth.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-verify-seller',
@@ -20,6 +22,7 @@ export class VerifySellerComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter;
 
   @Input() verification: VerificationError;
+  @Input() user: UserAuth;
 
   uploadUrl = environment.apiUrl + '/users/add-document';
   states: State[];
@@ -59,7 +62,7 @@ export class VerifySellerComponent implements OnInit {
       this.form = new FormGroup({
         first: new FormControl('', [Validators.required]),
         last: new FormControl('', [Validators.required]),
-        birthday: new FormControl(null, [Validators.required]),
+        birthday: new FormControl(moment('1/1/2000').toDate(), [Validators.required]),
         ssn4: new FormControl(null, [Validators.required, Validators.minLength(4)]),
         phone: new FormControl('', [Validators.required, Validators.minLength(10)]),
         line1: new FormControl('', [Validators.required]),
@@ -165,6 +168,11 @@ export class VerifySellerComponent implements OnInit {
     }
     if (/document/.test(item)) {
       if (this.formFields.indexOf('document') === -1) {
+        this.formFields.push('name');
+        this.form.addControl('first', new FormControl(this.user.firstName, [Validators.required]));
+        this.form.addControl('last', new FormControl(this.user.lastName, [Validators.required]));
+        this.formFields.push('birthday');
+        this.form.addControl('birthday', new FormControl(moment(`${this.user.seller.birthMonth}/${this.user.seller.birthDay}/${this.user.seller.birthYear}`).toDate(), [Validators.required]));
         this.formFields.push('document');
       }
     }
@@ -190,9 +198,7 @@ export class VerifySellerComponent implements OnInit {
   }
 
   isFormValid() {
-    return this.form.valid &&
-      (this.formFields.indexOf('document') > -1 ? this.frontImage && this.backImage && !this.frontError
-        && !this.backError && !this.backUploading && !this.frontUploading : true)
+    return this.form.valid;
   }
 
   onSave() {

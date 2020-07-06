@@ -28,8 +28,11 @@ export class UserAuth {
     seller?: {
         missingInfo: string[];
         errors: [],
-        bankAccountLinked?: boolean;
         verificationStatus?: 'unverified' | 'review' | 'rejected' | 'verified';
         freeSales: number;
+        address?: Address,
+        birthDay?: number;
+        birthMonth?: number;
+        birthYear?: number;
     }
 }

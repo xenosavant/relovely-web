@@ -67,7 +67,7 @@
 </div>
 
 <ng-template cdkPortal #verify="cdkPortal">
-    <app-verify-seller [verification]="verification" (close)="close($event)"></app-verify-seller>
+    <app-verify-seller [user]="currentUser" [verification]="verification" (close)="close($event)"></app-verify-seller>
 </ng-template>
 
 <ng-template cdkPortal #bank="cdkPortal">
