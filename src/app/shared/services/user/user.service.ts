@@ -42,8 +42,15 @@ export class
             } else {
                 this.alertService.setAlert({ menuItem: 'Sales', alert: false });
             }
+            if (user.seller) {
+                if (user.seller.missingInfo.length || user.seller.verificationStatus === 'unverified' || !user.returnAddress) {
+                    this.alertService.setAlert({ menuItem: 'Settings', alert: true });
+                } else {
+                    this.alertService.setAlert({ menuItem: 'Settings', alert: false });
+                }
+            }
+            this.user$.next(user);
         }
-        this.user$.next(user);
     }
 
     public get jwt() {
