@@ -20,7 +20,6 @@ RUN npm run build-prod
 
 FROM nginx:1.16.0-alpine
 
-COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /usr/src/app/dist/relovely /usr/share/nginx/html
 
 EXPOSE 3000
