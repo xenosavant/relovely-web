@@ -37,7 +37,7 @@ jobs:
             if [ $CIRCLE_BRANCH = 'develop' ]; then
                npm run build:circle
             elif [ $CIRCLE_BRANCH = 'master' ]; then
-               npm run build-prod
+               npm run build-prod:circle
             fi
       - save_cache:
           paths:
@@ -47,7 +47,7 @@ jobs:
           name: Deploy
           command: |
             if [ $CIRCLE_BRANCH = 'master' ]; then
-              scp -o StrictHostKeyChecking=no -r ./dist/* circle@$DROPLET_IP://var/www/html/
+              scp -o StrictHostKeyChecking=no -r ./dist/* circle@$DROPLET_IP://var/www/
             elif [ $CIRCLE_BRANCH = 'develop' ]; then
               scp -o StrictHostKeyChecking=no -r ./dist/* root@$DEVELOPMENT_DROPLET_IP://var/www/
             fi
