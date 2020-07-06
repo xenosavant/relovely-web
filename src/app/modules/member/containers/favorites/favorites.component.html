@@ -2,7 +2,7 @@
     <div *ngIf="!mobile && !loading" class="page-title">
         <h1>Favorites</h1>
     </div>
-    <app-products-list (unfavorite)="onUnFavorite($event)" [user]="user" [showGrid]="true" [showHeader]="true"
-        [products]="products">
+    <app-products-list (goto)="onGoToProduct($event)" (unfavorite)="onUnFavorite($event)" [user]="user"
+        [showGrid]="true" [showHeader]="true" [products]="products">
     </app-products-list>
 </div>

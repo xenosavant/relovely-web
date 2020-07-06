@@ -44,4 +44,8 @@ export class FavoritesComponent implements OnInit {
     this.products = [...this.products];
     this.ref.markForCheck();
   }
+
+  onGoToProduct(id: string) {
+    this.navigationService.navigate({ path: `/products/detail/${id}` });
+  }
 }
