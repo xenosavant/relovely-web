@@ -61,6 +61,14 @@ export class ProductService extends BaseService {
         );
     }
 
+    viewProduct(id: string): Observable<void> {
+        return this.httpClient.post(`${this.apiBaseUrl}/products/${id}/view`, {}).pipe(
+            map(() => {
+                return;
+            })
+        );
+    }
+
     postProduct(product: Product, userId: string): Observable<Product> {
         return this.httpClient.post<Product>(`${this.apiBaseUrl}/users/${userId}/products/`, product).pipe(
             map((result: Product) => {

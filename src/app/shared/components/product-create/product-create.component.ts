@@ -389,9 +389,9 @@ export class ProductCreateComponent implements OnInit {
         this.earningsBreakdown = '* after a flat $0.50 commission fee'
       }
       if (this.currentUser.seller && this.currentUser.seller.freeSales > 1) {
-        this.earningsBreakdown += ` but no commission or fees for the next ${this.currentUser.seller.freeSales} sales`;
+        this.earningsBreakdown += `, but no commission or fees for the next ${this.currentUser.seller.freeSales} sales`;
       } else if (this.currentUser.seller && this.currentUser.seller.freeSales === 1) {
-        this.earningsBreakdown += ` but no commission or fees for your next sale`;
+        this.earningsBreakdown += `, but no commission or fees for your next sale`;
       }
     }
   }

@@ -1,5 +1,5 @@
 export const weights = [
-    { key: 15, value: '1 lb or less' },
+    { key: 15, value: '1 lb' },
     { key: 32, value: '2 lbs' },
     { key: 48, value: '3 lbs' },
     { key: 64, value: '4 lbs' },

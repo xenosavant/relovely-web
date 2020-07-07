@@ -137,6 +137,11 @@ export class ProductComponent implements OnInit {
       if (this.currentUser && this.currentUser.id === response.product.sellerId) {
         this.seller = true;
       }
+      if (!this.seller) {
+        this.productService.viewProduct(response.product.id).subscribe(() => {
+
+        });
+      }
       this.product = response.product;
       this.more = response.more;
       this.navItems = [];
