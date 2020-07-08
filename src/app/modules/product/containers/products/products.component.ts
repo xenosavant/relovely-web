@@ -165,23 +165,21 @@ export class ProductsComponent implements OnInit {
       const filteredSizes = [];
       this.loading = true;
       this.scrolled = true;
-      this.lookupService.getLookupData().subscribe(lookup => {
-        const a = lookup.sizes;
-        const validGroups = lookup.sizes.filter(group => this.categoryId === '0' || group.categoryIds.includes(this.categoryId));
-        state.sizes.forEach(id => {
-          if (validGroups.some(g => g.filters.some(f => f.key === id))) {
-            filteredSizes.push(id);
-          }
-        });
-        this.productService.getProducts(this.currentPage, this.categoryId || '-1', this.searchTerm, filteredSizes.length ? state.sizes : null,
-          state.colors.length ? state.colors : null, state.prices.length ? state.prices : null).subscribe(result => {
-            this.loadData(result);
-            const navService = this.navigationService;
-            setTimeout(function () {
-              navService.scrollToPosition(0);
-            });
-          })
-      })
+      const a = this.lookupService.state.sizes;
+      const validGroups = this.lookupService.state.sizes.filter(group => this.categoryId === '0' || group.categoryIds.includes(this.categoryId));
+      state.sizes.forEach(id => {
+        if (validGroups.some(g => g.filters.some(f => f.key === id))) {
+          filteredSizes.push(id);
+        }
+      });
+      this.productService.getProducts(this.currentPage, this.categoryId || '-1', this.searchTerm, filteredSizes.length ? state.sizes : null,
+        state.colors.length ? state.colors : null, state.prices.length ? state.prices : null).subscribe(result => {
+          this.loadData(result);
+          const navService = this.navigationService;
+          setTimeout(function () {
+            navService.scrollToPosition(0);
+          });
+        })
     }
   }
 

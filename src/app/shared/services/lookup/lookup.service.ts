@@ -12,6 +12,10 @@ import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { states } from '../../../data/states'
 import { State } from './state';
 import { HttpClient } from '@angular/common/http';
+import { sizes } from '@app/data/sizes.data';
+import { colors } from '@app/data/colors.data';
+import { prices } from '@app/data/prices.data';
+import { categories } from '@app/data/categories.data';
 
 @Injectable()
 export class LookupService extends BaseService {
@@ -23,41 +27,29 @@ export class LookupService extends BaseService {
     private _colorMap = {};
     private _states: State[] = [];
 
-    private _stateSubject$ = new BehaviorSubject<LookupState>(null);
-
     constructor(httpClient: HttpClient) {
         super(httpClient);
         Object.entries(states).forEach(item => {
             this._states.push({ abbreviation: item[0], full: item[1] })
         })
+        this._state = {
+            categories: categories,
+            sizes: sizes,
+            colors: colors,
+            prices: prices,
+        }
+        this._state.categories.forEach(cat => {
+            this.populateParents(cat);
+        });
+        this._state.sizes.forEach(sizes => {
+            this.buildSizeDictionary(sizes);
+        });
+        this.buildColorDictionary(this._state.colors);
     }
     public navLookup = {};
 
-    public getLookupData(): Observable<LookupState> {
-        if (this._stateSubject$.value) {
-            return of(this._stateSubject$.value);
-        } else {
-            return this.httpClient.get(`${this.apiBaseUrl}/lookup`).pipe(
-                map((response: LookupResponse) => {
-                    this._state = {
-                        categories: JSON.parse(response.categories.json),
-                        sizes: JSON.parse(response.sizes.json),
-                        colors: JSON.parse(response.colors.json),
-                        prices: JSON.parse(response.prices.json),
-                    }
-                    this._state.categories.forEach(cat => {
-                        this.populateParents(cat);
-                    });
-                    this._state.sizes.forEach(sizes => {
-                        this.buildSizeDictionary(sizes);
-                    });
-                    this.buildColorDictionary(this._state.colors);
-                    this._stateSubject$.next(this._state);
-                    return this._state;
-                })
-            );
-        }
-
+    public get state() {
+        return this._state;
     }
 
     public getCategory(id: string) {

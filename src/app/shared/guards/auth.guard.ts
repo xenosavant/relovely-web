@@ -7,26 +7,27 @@ import { AuthenticationService, IAuthentication } from '../services/authenticati
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { UserService } from '@app/shared/services/user/user.service';
 import { NavigationService } from '../services/navigation/navigation.service';
+import { UserAuth } from '../models/user-auth.model';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate, CanActivateChild {
     constructor(private userService: UserService, private navigationService: NavigationService) { }
 
     canActivate(): Observable<boolean> {
-        return this.userService.loggedIn$.pipe(
-            map((loggedIn: boolean) => {
-                if (!loggedIn) {
+        return this.userService.user$.pipe(
+            map((user: UserAuth) => {
+                if (!user) {
                     this.navigationService.openAuthWindow({ page: 'signin' });
                 }
-                return loggedIn;
+                return user ? true : false;
             })
         );
     }
 
     canActivateChild(): Observable<boolean> {
-        return this.userService.loggedIn$.pipe(
-            map((loggedIn: boolean) => {
-                return loggedIn;
+        return this.userService.user$.pipe(
+            map((user: UserAuth) => {
+                return user ? true : false;
             })
         );
     }

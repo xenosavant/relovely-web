@@ -151,9 +151,9 @@
                 <fa-icon icon="heart" [styles]="{'color': 'black'}"></fa-icon>
               </button>
               <button [class.alert]="accountAlert" #menuTrigger (mouseenter)="onTriggerAccountMenu($event)"
-                class="mat-icon-button menu" style="z-index:1050" *ngIf="userService.user$.getValue()"
+                class="mat-icon-button menu" style="z-index:1050" *ngIf="(userService.user$ | async)"
                 [matMenuTriggerFor]="accountMenu">
-                <ng-container *ngIf="userService.user$.getValue()">
+                <ng-container *ngIf="(userService.user$ | async)">
                   <img *ngIf="userService.user$.getValue().profileImageUrl" class="profile"
                     [src]="userService.user$.getValue().profileImageUrl">
                   <img *ngIf="!userService.user$.getValue().profileImageUrl" class="profile"
