@@ -167,19 +167,15 @@ export class AppComponent implements OnInit {
     const jwt = this.localStorageService.getItem('jwt');
     if (jwt) {
       this.userService.jwt = jwt;
-      this.userService.me().pipe(tap(me => {
+      this.userService.me().subscribe(me => {
         if (me) {
           this.userService.setLogin(jwt, me);
           if (this.alertSubsciption) {
             this.alertSubsciption.unsubscribe()
           }
-          this.lookupService.getLookupData().subscribe(value => {
-            this.resetLoginSubscription();
-            this.loading = false;
-            this.ref.markForCheck();
-          }, err => {
-            this.handleError();
-          });
+          this.resetLoginSubscription();
+          this.loading = false;
+          this.ref.markForCheck();
         } else {
           if (this.alertSubsciption) {
             this.alertSubsciption.unsubscribe()
@@ -195,24 +191,17 @@ export class AppComponent implements OnInit {
         }
         if (err.status === 401) {
           this.loading = false;
-        } else {
-          this.loading = false;
           this.userService.logout();
+        } else {
+          this.error = true;
+          this.loading = false;
         }
-      }), mergeMap(value => this.getLookup()))
-        .subscribe(final => {
-          this.resetLoginSubscription();
-        });
+      })
     } else {
-      this.lookupService.getLookupData().subscribe(value => {
-        this.navSetup(value.categories);
-        this.loading = false;
-        this.resetLoginSubscription();
-        this.ref.markForCheck();
-      }, err => {
-        this.resetLoginSubscription();
-        this.handleError();
-      });
+      this.navSetup(this.lookupService.state.categories);
+      this.loading = false;
+      this.resetLoginSubscription();
+      this.ref.markForCheck();
     }
     this.navigationService.showAuthWindow$.subscribe(item => {
       if (item.page) {
@@ -245,11 +234,8 @@ export class AppComponent implements OnInit {
       this.loginSubscription.unsubscribe();
     }
     this.loginSubscription = this.userService.loggedIn$.subscribe(loggedIn => {
-      this.lookupService.getLookupData().subscribe(value => {
-        this.navSetup(value.categories);
-        if (this.alertSubsciption) {
-          this.alertSubsciption.unsubscribe();
-        }
+      this.navSetup(this.lookupService.state.categories);
+      if (loggedIn && !this.alertSubsciption) {
         this.alertSubsciption = this.alertService.notification$.subscribe(notification => {
           if (notification.menuItem) {
             const temp: NavigationItem[] = [];
@@ -269,11 +255,9 @@ export class AppComponent implements OnInit {
             this.ref.markForCheck();
           }
         })
-        this.loading = false;
-        this.ref.markForCheck();
-      }, err => {
-        this.handleError();
-      });
+      }
+      this.loading = false;
+      this.ref.markForCheck();
     });
   }
 
@@ -281,10 +265,6 @@ export class AppComponent implements OnInit {
     this.error = true;
     this.loading = false;
     this.ref.markForCheck();
-  }
-
-  getLookup(): Observable<LookupState> {
-    return this.lookupService.getLookupData();
   }
 
   navSetup(cats: Category[]) {

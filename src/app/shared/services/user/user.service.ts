@@ -22,7 +22,6 @@ export class
     UserService extends BaseService {
 
     public user$ = new BehaviorSubject<UserAuth>(null);
-
     public loggedIn$ = new BehaviorSubject<boolean>(false);
 
     constructor(private localStorageService: LocalStorageService, httpClient: HttpClient, private alertService: AlertService) {
@@ -32,7 +31,6 @@ export class
     private _currentUser: UserAuth;
 
     private _jwt: string;
-    private _notLoggedIn = false;
 
     public setCurrentUser(user: UserAuth): void {
         this._currentUser = user;
@@ -49,8 +47,8 @@ export class
                     this.alertService.setAlert({ menuItem: 'Settings', alert: false });
                 }
             }
-            this.user$.next(user);
         }
+        this.user$.next(user);
     }
 
     public get jwt() {
@@ -64,8 +62,6 @@ export class
     public setLogin(jwt: string, user: UserAuth) {
         this._jwt = jwt;
         this.localStorageService.setItem('jwt', jwt);
-        this._notLoggedIn = false;
-
         this.setCurrentUser(user);
         this.loggedIn$.next(true);
     }
@@ -74,9 +70,8 @@ export class
         this.localStorageService.removeItem('jwt');
         this.localStorageService.removeItem('currentUser');
         this._jwt = null;
-        this._notLoggedIn = true;
-        this.loggedIn$.next(false);
         this.setCurrentUser(null);
+        this.loggedIn$.next(false);
     }
 
     getUser(userId: string): Observable<UserDetail> {

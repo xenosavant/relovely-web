@@ -41,46 +41,44 @@ export class FilterBarComponent implements OnInit {
 
   ngOnInit() {
     this.navigationService.navConfig$.subscribe(navigationState => {
-      this.lookupService.getLookupData().subscribe(lookupState => {
-        this.sizeFilters = lookupState.sizes;
-        this.colorFilters = lookupState.colors;
-        this.priceFilters = lookupState.prices;
-        this.selectedCategoryFilterId = navigationState.selectedCategoryId;
-        if (navigationState.selectedCategory) {
-          this.currentSizeFilters = lookupState.sizes.filter(size => {
-            return navigationState.selectedCategory && navigationState.selectedCategory.id === '-1' || size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
-          });
-        }
-        if (this.userService.user$.getValue()) {
-          const cache = this.userService.user$.getValue().preferences;
-          if (cache) {
-            if (cache.sizes) {
-              cache.sizes.forEach(sizeId => {
-                this.sizeFilters.forEach(filter => {
-                  if (filter.filters.some(f =>
-                    f.key === sizeId
-                  )) {
-                    if (!filter.selectedKeys.includes(sizeId)) {
-                      filter.selectedKeys.push(sizeId);
-                    }
+      this.sizeFilters = this.lookupService.state.sizes;
+      this.colorFilters = this.lookupService.state.colors;
+      this.priceFilters = this.lookupService.state.prices;
+      this.selectedCategoryFilterId = navigationState.selectedCategoryId;
+      if (navigationState.selectedCategory) {
+        this.currentSizeFilters = this.lookupService.state.sizes.filter(size => {
+          return navigationState.selectedCategory && navigationState.selectedCategory.id === '-1' || size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
+        });
+      }
+      if (this.userService.user$.getValue()) {
+        const cache = this.userService.user$.getValue().preferences;
+        if (cache) {
+          if (cache.sizes) {
+            cache.sizes.forEach(sizeId => {
+              this.sizeFilters.forEach(filter => {
+                if (filter.filters.some(f =>
+                  f.key === sizeId
+                )) {
+                  if (!filter.selectedKeys.includes(sizeId)) {
+                    filter.selectedKeys.push(sizeId);
                   }
-                })
-              });
-            }
-            if (cache.colors) {
-              this.selectedColors = cache.colors;
-            }
-            if (cache.prices) {
-              cache.prices.forEach(pref => {
-                this.selectedPriceFilters.push(
-                  this.priceFilters.find(price => price.id === pref.id)
-                )
+                }
               })
-            }
+            });
+          }
+          if (cache.colors) {
+            this.selectedColors = cache.colors;
+          }
+          if (cache.prices) {
+            cache.prices.forEach(pref => {
+              this.selectedPriceFilters.push(
+                this.priceFilters.find(price => price.id === pref.id)
+              )
+            })
           }
         }
-        this.ref.markForCheck();
-      });
+      }
+      this.ref.markForCheck();
     });
   }
 

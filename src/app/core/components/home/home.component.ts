@@ -19,6 +19,7 @@ export class HomeComponent {
     mobile: boolean;
     featuredSellers: UserList[];
     user: UserAuth;
+    submitted = false;
 
     @ViewChild('applyToSell', { static: true }) sellerModal: TemplatePortal<any>;
 
@@ -38,6 +39,8 @@ export class HomeComponent {
         //     this.featuredSellers = sellers;
         //     this.ref.markForCheck();
         // })
+        const theWindow = (window as any);
+        theWindow.fnames = new Array(); theWindow.ftypes = new Array(); theWindow.fnames[0] = 'EMAIL'; theWindow.ftypes[0] = 'email';
     }
 
     onSell() {
@@ -53,5 +56,9 @@ export class HomeComponent {
     }
     onShop() {
         this.navigationService.navigate({ path: '/products' })
+    }
+
+    onSubmit() {
+        this.submitted = true;
     }
 }

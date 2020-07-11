@@ -42,53 +42,51 @@ export class DesktopFiltersComponent implements OnInit {
 
   ngOnInit() {
     this.navigationService.navConfig$.subscribe(navigationState => {
-      this.lookupService.getLookupData().subscribe(state => {
-        this.sizeFilters = state.sizes;
-        this.colors = state.colors;
-        this.priceFilters = state.prices;
-        this.currentSizeFilters = this.sizeFilters.filter(size => {
-          return navigationState.selectedCategory && navigationState.selectedCategory.id === '-1' || size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
-        });
-        if (!this.currentSizeFilters.length) {
-          this.hideSizeMenu = true;
-        } else {
-          this.hideSizeMenu = false;
-        }
-        if (this.userService.user$.getValue()) {
-          const cache = this.userService.user$.getValue().preferences;
-          if (cache) {
-            if (cache.sizes) {
-              cache.sizes.forEach(sizeId => {
-                this.sizeFilters.forEach(filter => {
-                  if (filter.filters.some(f =>
-                    f.key === sizeId
-                  )) {
-                    if (!filter.selectedKeys.includes(sizeId)) {
-                      filter.selectedKeys.push(sizeId);
-                    }
+      this.sizeFilters = this.lookupService.state.sizes;
+      this.colors = this.lookupService.state.colors;
+      this.priceFilters = this.lookupService.state.prices;
+      this.currentSizeFilters = this.sizeFilters.filter(size => {
+        return navigationState.selectedCategory && navigationState.selectedCategory.id === '-1' || size.categoryIds.indexOf(navigationState.selectedCategory.id) > -1
+      });
+      if (!this.currentSizeFilters.length) {
+        this.hideSizeMenu = true;
+      } else {
+        this.hideSizeMenu = false;
+      }
+      if (this.userService.user$.getValue()) {
+        const cache = this.userService.user$.getValue().preferences;
+        if (cache) {
+          if (cache.sizes) {
+            cache.sizes.forEach(sizeId => {
+              this.sizeFilters.forEach(filter => {
+                if (filter.filters.some(f =>
+                  f.key === sizeId
+                )) {
+                  if (!filter.selectedKeys.includes(sizeId)) {
+                    filter.selectedKeys.push(sizeId);
                   }
-                })
-              });
-            }
-            if (cache.colors) {
-              cache.colors.forEach(color => {
-                this.selectedColors.push(color)
+                }
               })
-            }
-            if (cache.prices) {
-              const temp = [];
-              cache.prices.forEach(pref => {
-                temp.push(
-                  this.priceFilters.find(price => price.id === pref.id)
-                )
-              })
-              this.selectedPriceFilters = temp;
-            }
+            });
           }
-          this.ref.markForCheck();
+          if (cache.colors) {
+            cache.colors.forEach(color => {
+              this.selectedColors.push(color)
+            })
+          }
+          if (cache.prices) {
+            const temp = [];
+            cache.prices.forEach(pref => {
+              temp.push(
+                this.priceFilters.find(price => price.id === pref.id)
+              )
+            })
+            this.selectedPriceFilters = temp;
+          }
         }
-      })
-    });
+        this.ref.markForCheck();
+      }
+    })
   }
 
 

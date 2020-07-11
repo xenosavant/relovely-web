@@ -147,19 +147,17 @@ export class ProductCreateComponent implements OnInit {
         this.calculateFees();
       }
     })
-    this.lookupService.getLookupData().subscribe(state => {
-      this.sizes = state.sizes;
-      this.colors = state.colors;
-      this.rootCategories = state.categories;
-      this.categories.push(this.rootCategories);
-      if (this.edit) {
-        const second = this.categories[0].find(cat => cat.id === this.product.categories[0]);
-        this.categories.push(second.children);
-        const third = this.categories[1].find(cat => cat.id === this.product.categories[1]);
-        this.categories.push(third.children);
-        this.setSizes(this.form.get('categories').value);
-      }
-    })
+    this.sizes = this.lookupService.state.sizes;
+    this.colors = this.lookupService.state.colors;
+    this.rootCategories = this.lookupService.state.categories;
+    this.categories.push(this.rootCategories);
+    if (this.edit) {
+      const second = this.categories[0].find(cat => cat.id === this.product.categories[0]);
+      this.categories.push(second.children);
+      const third = this.categories[1].find(cat => cat.id === this.product.categories[1]);
+      this.categories.push(third.children);
+      this.setSizes(this.form.get('categories').value);
+    }
   }
 
   setSizes(categories) {
