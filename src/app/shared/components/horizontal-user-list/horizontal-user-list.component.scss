@@ -2,6 +2,39 @@
 
 .list-wrapper {
     overflow: hidden;
+    position: relative;
+    .left {
+        height: 30px;
+        width: 30px;
+        position: absolute;
+        top: calc((23vw - 4px) / 2);
+        visibility: hidden;
+        @media (min-width: $desktop-breakpoint) {
+            visibility: visible;
+        }
+        @media (min-width: $header-width) {
+            top: 150px;
+        }
+        cursor: pointer;
+        z-index: 101;
+    }
+
+    .right {
+        height: 30px;
+        width: 30px;
+        position: absolute;
+        right: 0px;
+        top: calc((23vw - 4px) / 2);
+        visibility: hidden;
+        @media (min-width: $desktop-breakpoint) {
+            visibility: visible;
+        }
+        @media (min-width: $header-width) {
+            top: 150px;
+        }
+        cursor: pointer;
+        z-index: 101;
+    }
     .list-inner {
         overflow-x: auto;
         display: flex;
@@ -17,15 +50,21 @@
                 padding: 4vw;
             }
             @media (min-width: $header-width) {
-                flex: 0 0 323px;
+                flex: 0 0 328px;
+                padding: 50px;
             }
             .name {
                 color: $light-gray;
-                font-size: .5em;
+                font-size: .6em;
+                margin-top:8px;
+                margin-bottom:2px;
             }
             .shop {
                 font-size: .8em;
                 font-weight: 600;
+            }
+            app-avatar {
+                cursor: pointer;
             }
             @media (min-width: $desktop-breakpoint) {
                 .name {

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef, OnInit } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserList } from '@app/shared/models/user-list.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { UserService } from '@app/shared/services/user/user.service';
     templateUrl: 'home.component.html',
     styleUrls: ['home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
     mobile: boolean;
     featuredSellers: UserList[];
@@ -35,10 +35,10 @@ export class HomeComponent {
         this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
             this.mobile = result.matches;
         });
-        // this.userService.getFeatured().subscribe(sellers => {
-        //     this.featuredSellers = sellers;
-        //     this.ref.markForCheck();
-        // })
+        this.userService.getFeatured().subscribe(sellers => {
+            this.featuredSellers = sellers;
+            this.ref.markForCheck();
+        })
         const theWindow = (window as any);
         theWindow.fnames = new Array(); theWindow.ftypes = new Array(); theWindow.fnames[0] = 'EMAIL'; theWindow.ftypes[0] = 'email';
     }

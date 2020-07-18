@@ -1,9 +1,11 @@
 <div class="list-wrapper">
-    <div class="list-inner">
+    <img src="../../../../assets/images/chevron-left.svg" (click)="scrollLeft()" class="left" />
+    <div #list class="list-inner">
         <div *ngFor="let user of users" class="user-item">
-            <app-avatar [image]="user.profileImageUrl"></app-avatar>
-            <div class="name">{{user.username || user.type === 'member' ? 'Relovely Shopper' : 'Relovely Seller'}}</div>
+            <app-avatar (click)="goToUser(user.id)" [image]="user.profileImageUrl"></app-avatar>
+            <div class="name">{{user.username}}</div>
             <div class="shop">SHOP NOW</div>
         </div>
     </div>
+    <img src="../../../../assets/images/chevron-right.svg" (click)="scrollRight()" class="right" />
 </div>
