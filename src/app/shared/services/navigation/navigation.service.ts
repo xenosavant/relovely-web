@@ -110,7 +110,7 @@ export class NavigationService {
                     }
                     else if (item.parent.parent) {
                         this._navConfig.chipItems = item.parent.subItems;
-                        this._navConfig.pageHeader = item.parent.parent.plural + ' ' + item.parent.name;
+                        this._navConfig.pageHeader = item.parent.parent.plural + ' ' + item.name;
                     }
                 } else {
                     this._navConfig.chipItems = [];

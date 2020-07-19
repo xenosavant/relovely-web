@@ -1,7 +1,7 @@
 <div class="search">
   <form novalidate [formGroup]="form" class="search__form">
-    <input (blur)="onSearch()" class="search__input" formControlName="term" type="text" autocomplete="off"
-      (keyup)="termChanged($event)" placeholder="search">
-    <fa-icon *ngIf="mobile" icon="search" (click)="search"></fa-icon>
+    <input class="search__input" formControlName="term" type="text" autocomplete="off" (keyup)="termChanged($event)"
+      placeholder="search">
+    <fa-icon *ngIf="mobile" icon="search" (click)="onSearch()"></fa-icon>
   </form>
 </div>

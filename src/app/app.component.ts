@@ -353,6 +353,7 @@ export class AppComponent implements OnInit {
     );
     this.accountNav = accountNav;
     navigationItems.push(this.accountNav);
+    navigationItems.push({ name: 'Blog', path: 'https://www.blog.relovely.com/' });
     this.navigationService.rootNavigationItems = navigationItems;
     this.currentNavigationItems = navigationItems
   }
@@ -380,7 +381,7 @@ export class AppComponent implements OnInit {
     this.content = document.querySelector('.mat-sidenav-content');
     if (this.content) {
       const scroll = fromEvent(this.content, 'scroll').pipe(
-        throttleTime(100), // only emit every 10 ms
+        throttleTime(200), // only emit every 10 ms
         map(() => this.content.scrollTop) // get vertical scroll positio
       );
 
@@ -392,7 +393,7 @@ export class AppComponent implements OnInit {
       this.content = document.querySelector('.theme-wrapper');
       if (this.content) {
         const scroll = fromEvent(this.content, 'scroll').pipe(
-          throttleTime(100), // only emit every 10 ms
+          throttleTime(200), // only emit every 10 ms
           map(() => this.content.scrollTop) // get vertical scroll positio
         );
 
@@ -523,7 +524,11 @@ export class AppComponent implements OnInit {
   }
 
   public sideNavigate(item: NavigationItem) {
-    if (!this.userService.user$.getValue() && item.name === 'Account') {
+    if (item.name === 'Blog') {
+      this.sidenavOpen = false;
+      this.showOverlay = false
+      this.navigationService.navigate(item);
+    } else if (!this.userService.user$.getValue() && item.name === 'Account') {
       this.sidenavOpen = false;
       this.showOverlay = false
       this.showSignin();
@@ -605,9 +610,9 @@ export class AppComponent implements OnInit {
   }
 
   search() {
-    const path = this.route.snapshot.children[0].routeConfig.path;
+    const firstChild = this.route.snapshot.children[0];
     this.showSearch = false;
-    if (path === 'products') {
+    if (firstChild.routeConfig.path === 'products' && !firstChild.children[0].routeConfig.path.startsWith('detail')) {
       this.router.navigate([], { queryParams: { search: this.searchTerm }, queryParamsHandling: 'merge', relativeTo: this.route });
     } else {
       this.navigationService.navigate({ path: `/products`, queryStrings: [{ key: 'search', value: this.searchTerm }] });

@@ -48,6 +48,7 @@ export const sizes = [
         categoryIds: ["1", "11", "1101", "1102", "1103", "1104", "1105", "1106", "1107", "1108",
             "1109", "1110", "1111", "1112", "1113", "1114", "1115"],
         "filters": [
+            { key: "290", value: "OS" },
             { key: "27", value: "XXS" },
             { key: "28", value: "XS" },
             { key: "29", value: "S" },
@@ -66,7 +67,7 @@ export const sizes = [
             "1109", "1110", "1111", "1112", "1113", "1114", "1115"],
         "filters": [
             { key: "35", value: "00P" },
-            { key: "364", value: "0P" },
+            { key: "36", value: "0P" },
             { key: "37", value: "2P" },
             { key: "38", value: "4P" },
             { key: "39", value: "6P" },
@@ -113,7 +114,7 @@ export const sizes = [
             { key: "62", value: "0 Maternity" },
             { key: "63", value: "2 Maternity" },
             { key: "64", value: "4 Maternity" },
-            { key: "66", value: "6 Maternity" },
+            { key: "65", value: "6 Maternity" },
             { key: "66", value: "8 Maternity" },
             { key: "67", value: "10 Maternity" },
             { key: "68", value: "12 Maternity" },
@@ -137,18 +138,18 @@ export const sizes = [
         name: "Jeans",
         categoryIds: ["1", "11", "1105"],
         "filters": [
-            { key: "258", value: "23" },
-            { key: "259", value: "24" },
-            { key: "260", value: "25" },
-            { key: "260", value: "26" },
-            { key: "261", value: "27" },
-            { key: "262", value: "28" },
-            { key: "263", value: "29" },
-            { key: "264", value: "30" },
-            { key: "265", value: "31" },
-            { key: "266", value: "32" },
-            { key: "267", value: "33" },
-            { key: "268", value: "34" }
+            { key: "262", value: "23" },
+            { key: "263", value: "24" },
+            { key: "264", value: "25" },
+            { key: "265", value: "26" },
+            { key: "267", value: "27" },
+            { key: "268", value: "28" },
+            { key: "269", value: "29" },
+            { key: "270", value: "30" },
+            { key: "271", value: "31" },
+            { key: "272", value: "32" },
+            { key: "273", value: "33" },
+            { key: "274", value: "34" }
         ],
         selectedKeys: []
     },
@@ -238,8 +239,8 @@ export const sizes = [
             { key: "136", value: "50\" waist" },
             { key: "137", value: "52\" waist" },
             { key: "138", value: "54\" waist" },
-            { key: "137", value: "56\" waist" },
-            { key: "138", value: "58\" waist" }
+            { key: "291", value: "56\" waist" },
+            { key: "292", value: "58\" waist" }
         ],
         selectedKeys: []
     },
@@ -274,21 +275,21 @@ export const sizes = [
         name: "Jeans",
         categoryIds: ["2", "21", "2104"],
         "filters": [
-            { key: "269", value: "26" },
-            { key: "270", value: "27" },
-            { key: "271", value: "28" },
-            { key: "272", value: "29" },
-            { key: "273", value: "30" },
-            { key: "274", value: "31" },
-            { key: "275", value: "32" },
-            { key: "276", value: "33" },
-            { key: "277", value: "34" },
-            { key: "278", value: "36" },
-            { key: "279", value: "38" },
-            { key: "280", value: "39" },
-            { key: "281", value: "40" },
-            { key: "282", value: "41" },
-            { key: "280", value: "42" }
+            { key: "275", value: "26" },
+            { key: "276", value: "27" },
+            { key: "277", value: "28" },
+            { key: "278", value: "29" },
+            { key: "279", value: "30" },
+            { key: "280", value: "31" },
+            { key: "281", value: "32" },
+            { key: "282", value: "33" },
+            { key: "283", value: "34" },
+            { key: "284", value: "36" },
+            { key: "285", value: "38" },
+            { key: "286", value: "39" },
+            { key: "287", value: "40" },
+            { key: "288", value: "41" },
+            { key: "289", value: "42" }
         ],
         selectedKeys: []
     },
@@ -450,9 +451,9 @@ export const sizes = [
             { key: "256", value: "10.5" },
             { key: "257", value: "11" },
             { key: "258", value: "11.5" },
-            { key: "257", value: "12" },
-            { key: "258", value: "12.5" },
-            { key: "257", value: "13" }
+            { key: "259", value: "12" },
+            { key: "260", value: "12.5" },
+            { key: "261", value: "13" }
         ],
         selectedKeys: []
     }

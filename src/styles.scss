@@ -412,6 +412,7 @@ div.left {
 }
 
 .mat-button, .mat-flat-button, .mat-icon-button, .mat-stroked-button {
+  border-radius: 0 !important;
  min-width: 25px !important;
  line-height:unset !important;
  &.primary:hover {
