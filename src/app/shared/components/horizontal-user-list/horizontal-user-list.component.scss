@@ -11,6 +11,7 @@
         visibility: hidden;
         @media (min-width: $desktop-breakpoint) {
             visibility: visible;
+            top: calc((30vw - 12px) / 2);
         }
         @media (min-width: $header-width) {
             top: 150px;
@@ -28,6 +29,7 @@
         visibility: hidden;
         @media (min-width: $desktop-breakpoint) {
             visibility: visible;
+            top: calc((30vw - 12px) / 2);
         }
         @media (min-width: $header-width) {
             top: 150px;
@@ -44,14 +46,20 @@
         .user-item {
             text-align: center;
             flex: 0 0 calc(25vw - 4px);
-            padding:4px;
+            .user-inner {
+                margin:8px;
+            }
             @media (min-width: $desktop-breakpoint) {
-                flex: 0 0 calc(25vw);
-                padding: 4vw;
+                flex: 0 0 33vw;
+                .user-inner {
+                    margin:32px;
+                }
             }
             @media (min-width: $header-width) {
                 flex: 0 0 328px;
-                padding: 50px;
+                .user-inner {
+                    margin:50px;
+                }
             }
             .name {
                 color: $light-gray;
@@ -63,9 +71,7 @@
                 font-size: .8em;
                 font-weight: 600;
             }
-            app-avatar {
-                cursor: pointer;
-            }
+            cursor: pointer;
             @media (min-width: $desktop-breakpoint) {
                 .name {
                     color: $light-gray;
