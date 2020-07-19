@@ -139,7 +139,6 @@ export class ProductComponent implements OnInit {
       }
       if (!this.seller) {
         this.productService.viewProduct(response.product.id).subscribe(() => {
-
         });
       }
       this.product = response.product;
