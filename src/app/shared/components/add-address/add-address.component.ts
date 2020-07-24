@@ -26,10 +26,8 @@ export class AddAddressComponent implements OnInit {
   @Output() loading: EventEmitter<boolean> = new EventEmitter();
   @Output() save: EventEmitter<UserAuth> = new EventEmitter();
   @Output() saveAddress: EventEmitter<Address> = new EventEmitter();
-
-
-
-  public form: FormGroup;
+  @Input() form: FormGroup;
+  @Input() showSaveOptions: boolean;
   edit = false;
   title: string;
   states: State[];
@@ -46,29 +44,30 @@ export class AddAddressComponent implements OnInit {
 
   ngOnInit() {
     this.states = this.lookupService.states;
-
-    if (this.address) {
-      this.form = new FormGroup({
-        name: new FormControl(this.address.name, [Validators.required]),
-        line1: new FormControl(this.address.line1, [Validators.required]),
-        line2: new FormControl(this.address.line2),
-        city: new FormControl(this.address.city, [Validators.required]),
-        state: new FormControl(this.address.state, [Validators.required]),
-        zip: new FormControl(this.address.zip, [Validators.required, Validators.maxLength(5)]),
-      });
-      this.edit = true;
-      if (this.user) {
-        this.index = this.user.addresses.indexOf(this.address);
+    if (!this.form) {
+      if (this.address) {
+        this.form = new FormGroup({
+          name: new FormControl(this.address.name, [Validators.required]),
+          line1: new FormControl(this.address.line1, [Validators.required]),
+          line2: new FormControl(this.address.line2),
+          city: new FormControl(this.address.city, [Validators.required]),
+          state: new FormControl(this.address.state, [Validators.required]),
+          zip: new FormControl(this.address.zip, [Validators.required, Validators.maxLength(5)]),
+        });
+        this.edit = true;
+        if (this.user) {
+          this.index = this.user.addresses.indexOf(this.address);
+        }
+      } else {
+        this.form = new FormGroup({
+          name: new FormControl('', [Validators.required]),
+          line1: new FormControl('', [Validators.required]),
+          line2: new FormControl(''),
+          city: new FormControl('', [Validators.required]),
+          state: new FormControl('', [Validators.required]),
+          zip: new FormControl('', [Validators.required, Validators.maxLength(5)]),
+        });
       }
-    } else {
-      this.form = new FormGroup({
-        name: new FormControl('', [Validators.required]),
-        line1: new FormControl('', [Validators.required]),
-        line2: new FormControl(''),
-        city: new FormControl('', [Validators.required]),
-        state: new FormControl('', [Validators.required]),
-        zip: new FormControl('', [Validators.required, Validators.maxLength(5)]),
-      });
     }
   }
 

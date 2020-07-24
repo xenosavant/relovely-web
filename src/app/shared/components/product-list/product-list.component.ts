@@ -123,11 +123,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   purchase() {
-    if (this.user) {
-      this.navigationService.navigate({ path: `/sales/checkout/${this.product.id}` });
-    } else {
-      this.navigationService.openAuthWindow({ page: 'signin', redirect: `/sales/checkout/${this.product.id}` });
-    }
+    this.navigationService.navigate({ path: `/sales/checkout/${this.product.id}` });
   }
 
 }

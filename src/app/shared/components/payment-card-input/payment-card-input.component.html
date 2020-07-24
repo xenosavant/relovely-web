@@ -1,17 +1,52 @@
 <form novalidate [formGroup]="form">
-    <mat-form-field appearance="outline">
-        <input matInput placeholder="Full Name" formControlName="name" />
-    </mat-form-field>
+    <div [class.invisible]="!verifyAddress || passThroughAddress">
+        <div>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Full Name" formControlName="name" />
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Address" formControlName="line1" />
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Address Line 2" formControlName="line2" />
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="City" formControlName="city" />
+            </mat-form-field>
+        </div>
+        <div class="state-zip">
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-select placeholder="State" class="form-control" formControlName="state">
+                        <mat-option *ngFor="let state of states" [value]="state.abbreviation">
+                            {{state.full}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <input matInput placeholder="Zip" formControlName="zip" maxlength="5" />
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
     <div class="error">
         {{error}}
     </div>
     <ngx-stripe-card (on)="onCardChanged($event)" [options]="cardOptions" [elementsOptions]="elementsOptions">
     </ngx-stripe-card>
     <div class="button-wrapper" [style.margin-top.px]="buttonMargin">
-        <app-button (click)="onClose()">
+        <app-button *ngIf="showCancel" (click)="onClose()">
             <strong>Cancel</strong>
         </app-button>
-        <button mat-stroked-button class="primary" (click)="onSave()" [disabled]="!form.valid">
+        <button mat-stroked-button class="primary" (click)="onSave()" [disabled]="!formValid()">
             <strong> Save </strong>
         </button>
     </div>

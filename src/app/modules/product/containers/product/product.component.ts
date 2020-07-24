@@ -199,11 +199,7 @@ export class ProductComponent implements OnInit {
   }
 
   purchase() {
-    if (this.currentUser) {
-      this.navigationService.navigate({ path: `/sales/checkout/${this.product.id}` });
-    } else {
-      this.navigationService.openAuthWindow({ page: 'signin', redirect: `/sales/checkout/${this.product.id}` });
-    }
+    this.navigationService.navigate({ path: `/sales/checkout/${this.product.id}` });
   }
 
   onClose() {

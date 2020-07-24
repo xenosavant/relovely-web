@@ -1,155 +1,185 @@
-<div class="checkout-wrapper" *ngIf="!loading">
-  <div class="checkout">
-    <div class="header">
-      <h1>Checkout</h1>
-    </div>
-    <div class="divider"></div>
-    <div class="errors">
-      <div class="error" *ngIf="error">{{error}}</div>
-    </div>
-    <div class="shipping-address">
-      <h2> Shipping Address </h2>
-      <ng-container *ngIf="!addingAddress">
-        <ng-container *ngIf=!changingAddress>
-          <div class="selected" *ngIf="selectedAddress">
-            <app-address [address]="selectedAddress"></app-address>
-            <div class="edit"><a appClick target="_blank" (click)="changingAddress = true">Change</a></div>
-          </div>
-        </ng-container>
-        <ng-container *ngIf="changingAddress">
-          <mat-radio-group [(ngModel)]="selectedAddress">
-            <div class="addresses" *ngFor="let address of user.addresses">
-              <div class="options">
-                <mat-radio-button [value]="address"></mat-radio-button>
-              </div>
-              <div class="line-address">
-                <span><strong>{{address.name}}</strong> &nbsp; {{address.line1}} {{address.line2}}, {{address.city}},
-                  {{address.state}},
-                  {{address.zip}}</span>
-              </div>
-            </div>
-            <div class="button-wrapper">
-              <button mat-stroked-button (click)="onSelectAddress()" class="primary">Save</button>
-              <button mat-stroked-button (click)="onAddAddress()">
-                <fa-icon icon="plus"></fa-icon>&nbsp; Add Address
-              </button>
-            </div>
-          </mat-radio-group>
-        </ng-container>
-      </ng-container>
-      <div class="form-wrapper" *ngIf="addingAddress">
-        <div class="address-container" [class.invisible]="savingAddress">
-          <app-add-address (loading)="onSavingAddress($event)" [user]="user" (close)="onCancelAdd()"
-            (save)="onSaveAddress($event)">
-          </app-add-address>
+<div class="checkout-outer">
+  <div class="checkout-wrapper">
+    <ng-container *ngIf="!loading">
+      <div class="checkout">
+        <div class="header">
+          <h1>Checkout</h1>
         </div>
-        <mat-spinner *ngIf="savingAddress" diameter="25"></mat-spinner>
-      </div>
-      <div class="divider"></div>
-      <div class="payment-method">
-        <h2>Payment Method </h2>
-        <ng-container *ngIf="!addingPayment">
-          <div class="selected" *ngIf="!changingPayment">
-            <app-card [card]="selectedPayment"></app-card>
-            <div class="edit"><a appClick target="_blank" (click)="changingPayment = true">Change</a></div>
-          </div>
-          <ng-container *ngIf="changingPayment">
-            <mat-radio-group [(ngModel)]="selectedPayment">
-              <div class="addresses" *ngFor="let payment of user.cards">
-                <div class="options">
-                  <mat-radio-button [value]="payment"></mat-radio-button>
+        <div class="divider"></div>
+        <div class="errors">
+          <div class="error" *ngIf="error">{{error}}</div>
+        </div>
+        <div class="shipping-address">
+          <ng-container *ngIf="user">
+            <h2> Shipping Address </h2>
+            <ng-container *ngIf="!addingAddress">
+              <ng-container *ngIf=!changingAddress>
+                <div class="selected" *ngIf="selectedAddress">
+                  <app-address [address]="selectedAddress"></app-address>
+                  <div class="edit"><a appClick target="_blank" (click)="changingAddress = true">Change</a></div>
                 </div>
-                <app-card [card]="payment"></app-card>
+              </ng-container>
+              <ng-container *ngIf="changingAddress">
+                <mat-radio-group [(ngModel)]="selectedAddress">
+                  <div class="addresses" *ngFor="let address of user.addresses">
+                    <div class="options">
+                      <mat-radio-button [value]="address"></mat-radio-button>
+                    </div>
+                    <div class="line-address">
+                      <span><strong>{{address.name}}</strong> &nbsp; {{address.line1}} {{address.line2}},
+                        {{address.city}},
+                        {{address.state}},
+                        {{address.zip}}</span>
+                    </div>
+                  </div>
+                  <div class="button-wrapper">
+                    <button mat-stroked-button (click)="onSelectAddress()" class="primary">Save</button>
+                    <button mat-stroked-button (click)="onAddAddress()">
+                      <fa-icon icon="plus"></fa-icon>&nbsp; Add Address
+                    </button>
+                  </div>
+                </mat-radio-group>
+              </ng-container>
+            </ng-container>
+            <div class="form-wrapper" *ngIf="addingAddress">
+              <div class="address-container" [class.invisible]="savingAddress">
+                <app-add-address (loading)="onSavingAddress($event)" [user]="user" (close)="onCancelAdd()"
+                  (save)="onSaveAddress($event)">
+                </app-add-address>
               </div>
-              <div class="button-wrapper">
-                <button mat-stroked-button (click)="onSelectPayment()" class="primary">Save</button>
-                <button mat-stroked-button (click)="onAddPayment()">
-                  <fa-icon icon="plus"></fa-icon>&nbsp; Add Payment
-                </button>
+              <mat-spinner *ngIf="savingAddress" diameter="25"></mat-spinner>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!user">
+            <div class="address-container">
+              <h2> Shipping Address </h2>
+              <app-add-address [form]="shippingAddress" [showSaveOptions]="false" (loading)="onSavingAddress($event)"
+                [user]="user" (close)="onCancelAdd()" (save)="onSaveAddress($event)">
+              </app-add-address>
+              <div class="same">
+                <mat-checkbox matCheckbox (change)="billingStateChanged($event)" [checked]="billingSame"></mat-checkbox>
+                <div> Billing address is the same as shipping</div>
               </div>
-            </mat-radio-group>
+            </div>
           </ng-container>
-        </ng-container>
-        <div class="payment-form-wrapper" *ngIf="addingPayment">
-          <app-payment-card-input [class.invisible]="loadingPayment" (isLoading)="onLoadingPaymentForm($event)"
-            [buttonMargin]="36" (save)="onSavePayment($event)" (ready)="onReady($event)" (close)="onCancelAddPayment()">
-          </app-payment-card-input>
-          <mat-spinner *ngIf="loadingPayment" diameter="25"></mat-spinner>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="checkout-product">
-    <div class="product">
-      <div class="product-image">
-        <div (click)="onGoToProduct()" class="image-wrapper mat-elevation-z2">
-          <img [src]="product.images[0].cropped">
-        </div>
-      </div>
-      <div class="product-info">
-        <div class="title">
-          {{product.title}}
-        </div>
-        <div *ngIf="product.sizeId" class="size">
-          Size: {{product.sizeId | appSize}}
-        </div>
-        <div class="seller">
-          Seller: {{product.seller.username}}
-        </div>
-      </div>
-    </div>
-    <div class="divider"></div>
-    <div class="totals">
-      <div class="line-items">
-        <div class="line-item">
-          <span class="label">Price </span>
-          <span class="value">{{product.price | appCurrency}} </span>
-        </div>
-        <div class="line-item">
-          <span class="label">Tax</span>
-          <span class="value">
-            <ng-container *ngIf="shippingCostLoading">
-              <mat-spinner diameter="20"></mat-spinner>
+        <div class="divider"></div>
+        <div class="payment-method">
+          <h2>Payment Method </h2>
+          <ng-container *ngIf="user">
+            <ng-container *ngIf="!addingPayment">
+              <div class="selected" *ngIf="!changingPayment">
+                <app-card [card]="selectedPayment"></app-card>
+                <div class="edit"><a appClick target="_blank" (click)="changingPayment = true">Change</a></div>
+              </div>
+              <ng-container *ngIf="changingPayment">
+                <mat-radio-group [(ngModel)]="selectedPayment">
+                  <div class="addresses" *ngFor="let payment of user.cards">
+                    <div class="options">
+                      <mat-radio-button [value]="payment"></mat-radio-button>
+                    </div>
+                    <app-card [card]="payment"></app-card>
+                  </div>
+                  <div class="button-wrapper">
+                    <button mat-stroked-button (click)="onSelectPayment()" class="primary">Save</button>
+                    <button mat-stroked-button (click)="onAddPayment()">
+                      <fa-icon icon="plus"></fa-icon>&nbsp; Add Payment
+                    </button>
+                  </div>
+                </mat-radio-group>
+              </ng-container>
             </ng-container>
-            <ng-container *ngIf="!shippingCostLoading">
-              <span class="value">{{tax | appCurrency}} </span>
-            </ng-container>
-          </span>
-        </div>
-        <div class="line-item">
-          <span class="label">Shipping</span>
-          <span class="value">
-            <ng-container *ngIf="shippingCostLoading">
-              <mat-spinner diameter="20"></mat-spinner>
-            </ng-container>
-            <ng-container *ngIf="!shippingCostLoading">
-              {{shippingCost | appCurrency}}
-            </ng-container>
-          </span>
+          </ng-container>
+          <div class="payment-form-wrapper" *ngIf="addingPayment || (!user && !selectedPayment)">
+            <app-payment-card-input [class.invisible]="loadingPayment" (isLoading)="onLoadingPaymentForm($event)"
+              [buttonMargin]="36" [verifyAddress]="!user" [passThroughAddress]="billingSame" [showCancel]="!!user"
+              (save)="onSavePayment($event)" [billingForm]="shippingAddress" (ready)="onReady($event)"
+              (close)="onCancelAddPayment()">
+            </app-payment-card-input>
+            <mat-spinner *ngIf="loadingPayment" diameter="25"></mat-spinner>
+          </div>
+          <div class="guest-payment" *ngIf="(!user && selectedPayment && !addingPayment)">
+            <app-card [card]="selectedPayment"></app-card>
+            <div class="edit"><a appClick target="_blank" (click)="addingPayment = true">Change</a></div>
+          </div>
         </div>
       </div>
-      <div class="total">
-        <span class="label">TOTAL</span>
-        <span class="value">
-          <ng-container *ngIf="shippingCostLoading">
-            <mat-spinner diameter="20"></mat-spinner>
-          </ng-container>
-          <ng-container *ngIf="!shippingCostLoading">
-            {{total | appCurrency}}
-          </ng-container>
-        </span>
+      <div class="checkout-product">
+        <div class="product">
+          <div class="product-image">
+            <div (click)="onGoToProduct()" class="image-wrapper mat-elevation-z2">
+              <img [src]="product.images[0].cropped">
+            </div>
+          </div>
+          <div class="product-info">
+            <div class="title">
+              {{product.title}}
+            </div>
+            <div *ngIf="product.sizeId" class="size">
+              Size: {{product.sizeId | appSize}}
+            </div>
+            <div class="seller">
+              Seller: {{product.seller.username}}
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="totals">
+          <div class="line-items">
+            <div class="line-item">
+              <span class="label">Price </span>
+              <span class="value">{{product.price | appCurrency}} </span>
+            </div>
+            <div class="line-item">
+              <span class="label">Tax</span>
+              <span class="value">
+                <ng-container *ngIf="shippingCostLoading">
+                  <mat-spinner diameter="20"></mat-spinner>
+                </ng-container>
+                <ng-container *ngIf="!shippingCostLoading">
+                  <span class="value">{{tax | appCurrency}} </span>
+                </ng-container>
+              </span>
+            </div>
+            <div class="line-item">
+              <span class="label">Shipping</span>
+              <span class="value">
+                <ng-container *ngIf="shippingCostLoading">
+                  <mat-spinner diameter="20"></mat-spinner>
+                </ng-container>
+                <ng-container *ngIf="!shippingCostLoading">
+                  {{shippingCost | appCurrency}}
+                </ng-container>
+              </span>
+            </div>
+          </div>
+          <div class="total">
+            <span class="label">TOTAL</span>
+            <span class="value">
+              <ng-container *ngIf="shippingCostLoading">
+                <mat-spinner diameter="20"></mat-spinner>
+              </ng-container>
+              <ng-container *ngIf="!shippingCostLoading">
+                {{total | appCurrency}}
+              </ng-container>
+            </span>
+          </div>
+          <div class="purchase">
+            <button mat-stroked-button [class.normal]="!checkingOut" color="accent" [disabled]="checkoutDisabled()"
+              (click)="checkout()">
+              <ng-container *ngIf="!checkingOut">
+                Purchase
+              </ng-container>
+              <ng-container *ngIf="checkingOut">
+                <mat-spinner diameter="20" class="white"></mat-spinner>
+              </ng-container>
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="purchase">
-        <button mat-stroked-button [class.normal]="!checkingOut" color="accent" [disabled]="checkoutDisabled()"
-          (click)="checkout()">
-          <ng-container *ngIf="!checkingOut">
-            Purchase
-          </ng-container>
-          <ng-container *ngIf="checkingOut">
-            <mat-spinner diameter="20" class="white"></mat-spinner>
-          </ng-container>
-        </button>
-      </div>
+    </ng-container>
+    <div class="loading" *ngIf="loading">
+      <mat-spinner diameter="25"></mat-spinner>
     </div>
   </div>
 </div>
