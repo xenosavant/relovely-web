@@ -43,7 +43,7 @@ export class PaymentCardInputComponent implements OnInit {
         fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
         fontSize: '18px',
         '::placeholder': {
-          color: '#CFD7E0'
+          color: '#9a9a9a'
         },
       }
     }

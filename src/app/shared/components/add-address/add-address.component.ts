@@ -23,6 +23,7 @@ export class AddAddressComponent implements OnInit {
   @Input() address: Address;
   @Input() user: UserAuth;
   @Output() close: EventEmitter<any> = new EventEmitter();
+  @Output() blur: EventEmitter<any> = new EventEmitter();
   @Output() loading: EventEmitter<boolean> = new EventEmitter();
   @Output() save: EventEmitter<UserAuth> = new EventEmitter();
   @Output() saveAddress: EventEmitter<Address> = new EventEmitter();
@@ -73,6 +74,10 @@ export class AddAddressComponent implements OnInit {
 
   onClose() {
     this.close.emit();
+  }
+
+  onBlur() {
+    this.blur.emit();
   }
 
   onSave() {

@@ -53,8 +53,9 @@
           <ng-container *ngIf="!user">
             <div class="address-container">
               <h2> Shipping Address </h2>
-              <app-add-address [form]="shippingAddress" [showSaveOptions]="false" (loading)="onSavingAddress($event)"
-                [user]="user" (close)="onCancelAdd()" (save)="onSaveAddress($event)">
+              <app-add-address (blur)="onCheckAddress()" [form]="shippingAddress" [showSaveOptions]="false"
+                (loading)="onSavingAddress($event)" [user]="user" (close)="onCancelAdd()"
+                (save)="onSaveAddress($event)">
               </app-add-address>
               <div class="same">
                 <mat-checkbox matCheckbox (change)="billingStateChanged($event)" [checked]="billingSame"></mat-checkbox>

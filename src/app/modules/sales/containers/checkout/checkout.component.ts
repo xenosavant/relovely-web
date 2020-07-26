@@ -178,6 +178,13 @@ export class CheckoutComponent implements OnInit {
     })
   }
 
+  onCheckAddress() {
+    if (this.shippingAddress.valid) {
+      const address = this.shippingAddressValue;
+      console.log(address);
+    }
+  }
+
   changeAddress() {
     this.changingAddress = true;
   }
@@ -264,7 +271,7 @@ export class CheckoutComponent implements OnInit {
     } else {
       this.orderService.guestOrder(
         {
-          address: this.selectedAddress,
+          address: this.shippingAddressValue,
           paymentId: this.selectedPayment.stripeId,
           shipmentId: this.shipmentId,
           tax: this.tax,
@@ -283,6 +290,18 @@ export class CheckoutComponent implements OnInit {
 
   onGoToProduct() {
     this.navigationService.navigate({ path: `/products/detail/${this.product.id}` })
+  }
+
+  get shippingAddressValue(): Address {
+    return {
+      name: this.shippingAddress.get('name').value,
+      line1: this.shippingAddress.get('line1').value,
+      line2: this.shippingAddress.get('line2').value,
+      city: this.shippingAddress.get('city').value,
+      state: this.shippingAddress.get('state').value,
+      zip: this.shippingAddress.get('zip').value,
+      country: 'US'
+    }
   }
 
 }
