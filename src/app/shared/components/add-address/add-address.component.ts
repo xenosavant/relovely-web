@@ -92,27 +92,10 @@ export class AddAddressComponent implements OnInit {
       country: 'US',
       id: guid()
     }
-    let update;
-    if (this.edit) {
-      this.savedAddress.primary = this.address.primary;
-      if (this.user) {
-        this.user.addresses.splice(this.index, 1, this.savedAddress);
-        update = this.user.addresses;
-      }
-    } else {
-      this.savedAddress.primary = true;
-      if (this.user) {
-        this.user.addresses.forEach(address => {
-          if (address.primary) {
-            delete address.primary;
-          }
-        })
-        update = [...this.user.addresses, this.savedAddress];
-      }
-    }
     if (!this.override) {
       this.shipmentService.verifyAddress(this.savedAddress).subscribe(val => {
-        if ((!val.errors || !val.errors.length) && !val.correctedAddress && val.success) {
+        if ((!val.errors || !val.errors.length) && !val.verify && val.success) {
+          const update = this.getUpdate({ ...val.correctedAddress, name: this.form.get('name').value });
           this.saveOrEmit(update).subscribe(user => {
             if (user) {
               this.save.emit(user);
@@ -122,14 +105,14 @@ export class AddAddressComponent implements OnInit {
           });
         } else {
           if (val.success) {
-            this.address = val.correctedAddress ? {
+            this.address = {
               line1: val.correctedAddress.line1,
               line2: val.correctedAddress.line2,
               city: val.correctedAddress.city,
               state: val.correctedAddress.state,
               zip: val.correctedAddress.zip,
               country: 'US'
-            } : update;
+            };
             this.errors = val.errors || [];
             this.message = val.correctedAddress ? 'This address looks like a better match' : null;
             this.updateFormFields();
@@ -144,6 +127,7 @@ export class AddAddressComponent implements OnInit {
         }
       })
     } else {
+      const update = this.getUpdate(this.savedAddress);
       this.saveOrEmit(update)
         .subscribe(user => {
           if (user) {
@@ -153,6 +137,28 @@ export class AddAddressComponent implements OnInit {
           this.loading.emit(false);
         })
     }
+  }
+
+  getUpdate(address: Address): Address[] {
+    let update;
+    if (this.edit) {
+      address.primary = this.address.primary;
+      if (this.user) {
+        this.user.addresses.splice(this.index, 1, this.savedAddress);
+        update = this.user.addresses;
+      }
+    } else {
+      address.primary = true;
+      if (this.user) {
+        this.user.addresses.forEach(address => {
+          if (address.primary) {
+            delete address.primary;
+          }
+        })
+        update = [...this.user.addresses, address];
+      }
+    }
+    return update;
   }
 
   updateFormFields() {
