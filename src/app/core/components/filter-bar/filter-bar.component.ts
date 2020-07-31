@@ -83,16 +83,16 @@ export class FilterBarComponent implements OnInit {
   }
 
   setPriceFilter(filter: PriceFilter, add: boolean) {
-    if (add) {
+    if (add && !this.selectedPriceFilters.some(f => f.id === filter.id)) {
       this.selectedPriceFilters.push(filter);
-    } else {
+    } else if (!add) {
       const temp = [];
       this.selectedPriceFilters.forEach(f => {
         if (f.id !== filter.id) {
           temp.push(f);
         }
       });
-      this.selectedPriceFilters = [];
+      this.selectedPriceFilters = temp;
     }
 
     this.filterService.updatePrices(this.selectedPriceFilters.map(f => {
@@ -105,18 +105,13 @@ export class FilterBarComponent implements OnInit {
   }
 
   sizeFiltersChanged(change: any) {
-    let sizeArray = [];
-    this.sizeFilters.forEach(filter => {
-      if (filter.id !== change.groupId) {
-        sizeArray.concat(filter.selectedKeys);
-      }
-    });
+    let sizeArray: string[] = [];
     sizeArray = sizeArray.concat(change.selectedIds);
-    this.filterService.updateSizes(sizeArray);
+    this.filterService.updateSizes([...new Set(sizeArray)]);
   }
 
   colorFiltersChanged(ids: string[]) {
-    this.filterService.updateColors(ids);
+    this.filterService.updateColors([...new Set(ids)]);
   }
 
   navigate(item: NavigationItem) {
