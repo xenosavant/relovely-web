@@ -8,6 +8,9 @@
         <div class="divider"></div>
         <div class="errors">
           <div class="error" *ngIf="error">{{error}}</div>
+          <div class="error" *ngIf="addressError">That address isn't right. Please correct it.</div>
+          <div class="error" *ngIf="verifyAddress">That address doesn't look quite right. This looks like a better
+            match.</div>
         </div>
         <div class="shipping-address">
           <ng-container *ngIf="user">
@@ -103,6 +106,23 @@
             <app-card [card]="selectedPayment"></app-card>
             <div class="edit"><a appClick target="_blank" (click)="addingPayment = true">Change</a></div>
           </div>
+          <ng-container *ngIf="!user">
+            <div class="email">
+              <form novalidate [formGroup]="email">
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="Email" formControlName="email" />
+                </mat-form-field>
+              </form>
+            </div>
+            <div class="option">
+              <mat-checkbox matCheckbox [checked]="emailList"></mat-checkbox>
+              <div> Keep me in the know about new product adds, exclusive offers, and more</div>
+            </div>
+            <div class="option">
+              <mat-checkbox matCheckbox [checked]="createUser"></mat-checkbox>
+              <div> Create a user account</div>
+            </div>
+          </ng-container>
         </div>
       </div>
       <div class="checkout-product">

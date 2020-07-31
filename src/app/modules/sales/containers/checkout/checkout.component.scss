@@ -93,6 +93,14 @@
                     width: 100%;
                 }
             }
+            .email {
+                margin-top: 32px;
+            }
+            .option {
+                display: flex;
+                flex-direction: row;
+                margin-bottom: 16px;
+            }
         }
         .guest-payment {
             display: flex;
@@ -109,9 +117,6 @@
             display: flex;
             flex-direction: row;
             margin-bottom: 24px;
-            mat-checkbox {
-                margin-right: 8px;
-            }
         }
         .checkout-product {
             height: fit-content;
@@ -175,6 +180,10 @@
             }
         }
     }
+}
+
+mat-checkbox {
+    margin-right: 8px;
 }
 
 

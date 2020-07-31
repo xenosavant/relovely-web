@@ -47,7 +47,13 @@ export class CheckoutComponent implements OnInit {
   savingAddress = false;
   error: string;
   shippingAddress: FormGroup;
+  email: FormGroup;
   billingSame = false;
+  addressError = false;
+  overrideAddress = false;
+  verifyAddress = false;
+  emailList = true;
+  createUser = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -86,6 +92,9 @@ export class CheckoutComponent implements OnInit {
         state: new FormControl('', [Validators.required]),
         zip: new FormControl('', [Validators.required, Validators.maxLength(5)]),
       });
+      this.email = new FormGroup({
+        email: new FormControl('', [Validators.required, Validators.email]),
+      })
     }
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
@@ -106,6 +115,7 @@ export class CheckoutComponent implements OnInit {
 
   recalcCosts() {
     this.shippingCostLoading = true;
+    this.ref.markForCheck();
     this.error = null;
     if (this.selectedAddress) {
       this.shipmentService.previewShipment({
@@ -181,7 +191,37 @@ export class CheckoutComponent implements OnInit {
   onCheckAddress() {
     if (this.shippingAddress.valid) {
       const address = this.shippingAddressValue;
-      console.log(address);
+      if (!this.overrideAddress) {
+        this.shipmentService.verifyAddress(address).subscribe(val => {
+          if (val.success) {
+            this.addressError = false;
+            if (val.verify) {
+              this.overrideAddress = true;
+              this.verifyAddress = true;
+              this.shippingAddress.get('line1').setValue(val.correctedAddress.line1);
+              this.shippingAddress.get('line2').setValue(val.correctedAddress.line2);
+              this.shippingAddress.get('city').setValue(val.correctedAddress.city);
+              this.shippingAddress.get('state').setValue(val.correctedAddress.state);
+              this.shippingAddress.get('zip').setValue(val.correctedAddress.zip);
+              this.selectedAddress = this.shippingAddressValue;
+              this.recalcCosts();
+              this.ref.markForCheck();
+            } else {
+              this.selectedAddress = this.shippingAddressValue;
+              this.recalcCosts();
+            }
+          } else {
+            this.addressError = true;
+            this.overrideAddress = false;
+            this.ref.markForCheck();
+          }
+        });
+      } else {
+        this.addressError = false;
+        this.verifyAddress = false;
+        this.selectedAddress = this.shippingAddressValue;
+        this.recalcCosts();
+      }
     }
   }
 
@@ -246,7 +286,7 @@ export class CheckoutComponent implements OnInit {
     if (this.user) {
       return !this.selectedAddress || !this.selectedPayment || this.changingPayment || this.changingAddress || this.checkingOut;
     } else {
-      return !this.selectedPayment || !this.shippingAddress.valid
+      return !this.selectedPayment || !this.shippingAddress.valid || !this.email.valid || this.addressError;
     }
   }
 
@@ -276,7 +316,10 @@ export class CheckoutComponent implements OnInit {
           shipmentId: this.shipmentId,
           tax: this.tax,
           last4: this.selectedPayment.last4,
-          cardType: this.selectedPayment.type
+          cardType: this.selectedPayment.type,
+          email: this.email.get('email').value,
+          joinMailingList: this.emailList,
+          createAccount: this.createUser
         }, this.product.id)
         .subscribe(order => {
           this.navigationService.navigate({ path: `/sales/orders/${order.id}` })
