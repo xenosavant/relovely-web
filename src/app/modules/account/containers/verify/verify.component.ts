@@ -35,6 +35,8 @@ export class VerifyComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.code = params['code'];
       this.type = params['type'];
+      console.log(this.code)
+      console.log(this.type)
       if (this.type) {
         switch (this.type) {
           case 'facebook':
@@ -48,6 +50,16 @@ export class VerifyComponent implements OnInit {
             this.ref.markForCheck();
             break;
           case 'seller':
+            if (this.code) {
+              this.loading = false;
+              this.ref.markForCheck();
+            } else {
+              this.navigationService.navigate({ path: '/' });
+              this.loading = false;
+              this.ref.markForCheck();
+            }
+            break;
+          case 'guest':
             if (this.code) {
               this.loading = false;
               this.ref.markForCheck();
