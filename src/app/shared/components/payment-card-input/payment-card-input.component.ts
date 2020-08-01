@@ -21,6 +21,7 @@ export class PaymentCardInputComponent implements OnInit {
   @Input() buttonMargin: string;
   @Input() showCancel = true;
   @Input() verifyAddress = false;
+  @Input() verifyName = true;
   @Input() passThroughAddress = false;
   @Input() billingForm: FormGroup;
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
@@ -146,6 +147,7 @@ export class PaymentCardInputComponent implements OnInit {
   }
 
   formValid() {
+    console.log(this.form);
     return this.passThroughAddress ? this.billingForm.valid : this.form.valid;
   }
 

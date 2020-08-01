@@ -3,11 +3,14 @@
 
 :host {
     flex:auto;
+    display:flex;
+    flex-direction: column;
 }
 
 .page-wrapper {
     margin: 0 auto;
     max-width: $desktop-breakpoint;
+    width: 100%;
  }
 
  .order-wrapper {
@@ -110,4 +113,11 @@
     margin: 0 auto;
     margin-top:32px;
     margin-bottom:32px;
+}
+
+.center-wrapper {
+    text-align: center;
+    img {
+        height: 25vh;
+    }
 }

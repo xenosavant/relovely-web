@@ -21,6 +21,7 @@ export class OrderComponent implements OnInit {
   seller: boolean;
   typeMap = CARD_TYPE_MAP;
   navigationItems: NavigationItem[];
+  guestOrder: boolean = false;
   public mobile: boolean;
 
   constructor(
@@ -32,25 +33,30 @@ export class OrderComponent implements OnInit {
     private navigationService: NavigationService) { }
 
   ngOnInit() {
-    if (!this.userService.user$.getValue()) {
-      this.navigationService.navigate({ 'path': '/' })
-    }
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
     })
     this.activatedRoute.params.subscribe(params => {
-      this.orderService.getOrder(params['id']).subscribe(order => {
-        this.order = order;
-        if (this.seller) {
-          this.navigationItems = [{ path: '/sales/sales', name: 'Sales' }, { path: `/sales/orders/${this.order.id}`, name: this.order.orderNumber }];
+      if (!this.userService.user$.getValue()) {
+        if (params['id'] === 'guest') {
+          this.guestOrder = true;
         } else {
-          this.navigationItems = [{ path: '/sales/orders', name: 'Orders' }, { path: `/sales/orders/${this.order.id}`, name: this.order.orderNumber }];
+          this.navigationService.navigate({ 'path': '/' })
         }
+      } else {
+        this.orderService.getOrder(params['id']).subscribe(order => {
+          this.order = order;
+          if (this.seller) {
+            this.navigationItems = [{ path: '/sales/sales', name: 'Sales' }, { path: `/sales/orders/${this.order.id}`, name: this.order.orderNumber }];
+          } else {
+            this.navigationItems = [{ path: '/sales/orders', name: 'Orders' }, { path: `/sales/orders/${this.order.id}`, name: this.order.orderNumber }];
+          }
 
-        this.seller = this.userService.user$.getValue().id === this.order.seller.id;
-        this.loading = false;
-        this.ref.markForCheck();
-      })
+          this.seller = this.userService.user$.getValue().id === this.order.seller.id;
+          this.loading = false;
+          this.ref.markForCheck();
+        })
+      }
     })
   }
 

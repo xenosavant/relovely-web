@@ -322,7 +322,7 @@ export class CheckoutComponent implements OnInit {
           createAccount: this.createUser
         }, this.product.id)
         .subscribe(order => {
-          this.navigationService.navigate({ path: `/sales/orders/${order.id}` })
+          this.navigationService.navigate({ path: `/sales/orders/guest` })
         }, err => {
           this.error = err.error.error.message;
           this.checkingOut = false;

@@ -8,4 +8,6 @@ export interface PostOrderRequest {
     email?: string;
     last4?: string;
     cardType?: string;
+    createAccount?: boolean;
+    joinMailingList?: boolean;
 }
