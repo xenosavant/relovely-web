@@ -23,7 +23,7 @@
                 </div>
               </ng-container>
               <ng-container *ngIf="changingAddress">
-                <mat-radio-group [(ngModel)]="selectedAddress">
+                <mat-radio-group [(ngModel)]="selectedAddress" (change)="primaryAddressChanged()">
                   <div class="addresses" *ngFor="let address of user.addresses">
                     <div class="options">
                       <mat-radio-button [value]="address"></mat-radio-button>
@@ -46,8 +46,8 @@
             </ng-container>
             <div class="form-wrapper" *ngIf="addingAddress">
               <div class="address-container" [class.invisible]="savingAddress">
-                <app-add-address (loading)="onSavingAddress($event)" [user]="user" (close)="onCancelAdd()"
-                  (save)="onSaveAddress($event)">
+                <app-add-address [showSaveOptions]="true" (loading)="onSavingAddress($event)" [user]="user"
+                  (close)="onCancelAdd()" (save)="onSaveAddress($event)">
                 </app-add-address>
               </div>
               <mat-spinner *ngIf="savingAddress" diameter="25"></mat-spinner>
@@ -77,8 +77,8 @@
                 <div class="edit"><a appClick target="_blank" (click)="changingPayment = true">Change</a></div>
               </div>
               <ng-container *ngIf="changingPayment">
-                <mat-radio-group [(ngModel)]="selectedPayment">
-                  <div class="addresses" *ngFor="let payment of user.cards">
+                <mat-radio-group [(ngModel)]="selectedPayment" (change)="primaryPaymentChanged()">
+                  <div class="option" *ngFor="let payment of user.cards">
                     <div class="options">
                       <mat-radio-button [value]="payment"></mat-radio-button>
                     </div>

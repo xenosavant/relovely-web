@@ -28,7 +28,7 @@ export class AddAddressComponent implements OnInit {
   @Output() save: EventEmitter<UserAuth> = new EventEmitter();
   @Output() saveAddress: EventEmitter<Address> = new EventEmitter();
   @Input() form: FormGroup;
-  @Input() showSaveOptions: boolean;
+  @Input() showSaveOptions: boolean = true;
   edit = false;
   title: string;
   states: State[];
@@ -96,6 +96,7 @@ export class AddAddressComponent implements OnInit {
       this.shipmentService.verifyAddress(this.savedAddress).subscribe(val => {
         if ((!val.errors || !val.errors.length) && !val.verify && val.success) {
           const update = this.getUpdate({ ...val.correctedAddress, name: this.form.get('name').value });
+          console.log(update)
           this.saveOrEmit(update).subscribe(user => {
             if (user) {
               this.save.emit(user);
@@ -111,7 +112,8 @@ export class AddAddressComponent implements OnInit {
               city: val.correctedAddress.city,
               state: val.correctedAddress.state,
               zip: val.correctedAddress.zip,
-              country: 'US'
+              country: 'US',
+              id: guid()
             };
             this.errors = val.errors || [];
             this.message = val.correctedAddress ? 'This address looks like a better match' : null;

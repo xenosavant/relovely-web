@@ -66,13 +66,6 @@
                         height: fit-content;
                     }
                 }
-                .button-wrapper {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    grid-template-rows: auto;
-                    grid-gap:16px;
-                    margin-top: 16px;
-                }
                 .form-wrapper {
                     display: flex;
                     justify-content: center;
@@ -180,6 +173,14 @@
             }
         }
     }
+}
+
+.button-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap:16px;
+    margin-top: 16px;
 }
 
 mat-checkbox {

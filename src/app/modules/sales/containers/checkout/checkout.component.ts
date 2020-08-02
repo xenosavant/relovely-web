@@ -259,11 +259,44 @@ export class CheckoutComponent implements OnInit {
   }
 
   onAddPayment() {
+    this.loadingPayment = true;
     this.addingPayment = true;
   }
 
   onLoadingPaymentForm(loading) {
     this.loadingPayment = loading;
+  }
+
+  primaryAddressChanged() {
+    const updates = [];
+    this.user.addresses.forEach(address => {
+      if (address.id === this.selectedAddress.id) {
+        address.primary = true;
+      } else if (address.primary) {
+        delete address.primary;
+      }
+      updates.push(address);
+    });
+    console.log(updates)
+    this.userService.updateUser(this.user.id, { addresses: updates }).subscribe(result => {
+      console.log(result);
+    });
+  }
+
+  primaryPaymentChanged() {
+    console.log('priuar')
+    const updates = [];
+    this.user.cards.forEach(card => {
+      if (card.stripeId === this.selectedPayment.stripeId) {
+        card.primary = true;
+      } else if (card.primary) {
+        delete card.primary;
+      }
+      updates.push(card);
+    });
+    return this.userService.updateUser(this.user.id, { cards: updates }).subscribe(result => {
+
+    });
   }
 
   onCancelAddPayment() {
@@ -273,7 +306,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   onReady(event: any) {
-
+    this.loadingPayment = false;
   }
 
   billingStateChanged(value: MatCheckboxChange) {
