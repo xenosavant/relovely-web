@@ -277,7 +277,6 @@ export class CheckoutComponent implements OnInit {
       }
       updates.push(address);
     });
-    console.log(updates)
     this.userService.updateUser(this.user.id, { addresses: updates }).subscribe(result => {
       console.log(result);
     });
