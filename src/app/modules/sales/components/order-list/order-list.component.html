@@ -23,7 +23,7 @@
                     <div *ngIf="!seller" class="seller">
                         Seller: {{order.seller.username}}
                     </div>
-                    <div *ngIf="seller" class="seller">
+                    <div *ngIf="seller && order.buyer" class="seller">
                         Bought by {{order.buyer.username}}
                     </div>
                     <div [class.alert]="!order.labelPrinted && !hideAlert"
