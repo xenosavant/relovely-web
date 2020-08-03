@@ -35,8 +35,6 @@ export class VerifyComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.code = params['code'];
       this.type = params['type'];
-      console.log(this.code)
-      console.log(this.type)
       if (this.type) {
         switch (this.type) {
           case 'facebook':

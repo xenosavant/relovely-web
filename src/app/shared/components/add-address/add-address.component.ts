@@ -96,7 +96,6 @@ export class AddAddressComponent implements OnInit {
       this.shipmentService.verifyAddress(this.savedAddress).subscribe(val => {
         if ((!val.errors || !val.errors.length) && !val.verify && val.success) {
           const update = this.getUpdate({ ...val.correctedAddress, name: this.form.get('name').value });
-          console.log(update)
           this.saveOrEmit(update).subscribe(user => {
             if (user) {
               this.save.emit(user);

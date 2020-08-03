@@ -278,12 +278,11 @@ export class CheckoutComponent implements OnInit {
       updates.push(address);
     });
     this.userService.updateUser(this.user.id, { addresses: updates }).subscribe(result => {
-      console.log(result);
+
     });
   }
 
   primaryPaymentChanged() {
-    console.log('priuar')
     const updates = [];
     this.user.cards.forEach(card => {
       if (card.stripeId === this.selectedPayment.stripeId) {

@@ -147,7 +147,6 @@ export class PaymentCardInputComponent implements OnInit {
   }
 
   formValid() {
-    console.log(this.form);
     return this.passThroughAddress ? this.billingForm.valid : this.form.valid;
   }
 
