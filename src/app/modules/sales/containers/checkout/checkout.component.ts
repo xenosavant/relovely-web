@@ -245,6 +245,7 @@ export class CheckoutComponent implements OnInit {
       })
     }
     else {
+      this.addingPayment = false;
       this.selectedPayment = card;
       this.loadingPayment = false;
     }

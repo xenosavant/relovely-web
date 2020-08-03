@@ -1,5 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, Output, EventEmitter, ChangeDetectorRef, Input, SimpleChange, SimpleChanges } from '@angular/core';
-import { ElementOptions, ElementsOptions, StripeCardComponent, StripeService } from 'ngx-stripe';
+import { StripeService, StripeCardComponent } from 'ngx-stripe';
+import {
+  StripeCardElementOptions,
+  StripeElementsOptions
+} from '@stripe/stripe-js';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { PaymentCard } from '@app/shared/interfaces/payment-card';
 import { REVERSE_CARD_TYPE_MAP } from '@app/shared/services/lookup/payment-card-map';
@@ -34,13 +38,12 @@ export class PaymentCardInputComponent implements OnInit {
   loading = false;
 
   form: FormGroup;
-  cardOptions: ElementOptions = {
+  cardOptions: StripeCardElementOptions = {
     style: {
       base: {
         iconColor: '#666EE8',
         color: '#31325F',
         lineHeight: '40px',
-        fontWeight: 300,
         fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
         fontSize: '18px',
         '::placeholder': {
@@ -49,7 +52,7 @@ export class PaymentCardInputComponent implements OnInit {
       }
     }
   };
-  elementsOptions: ElementsOptions = {
+  elementsOptions: StripeElementsOptions = {
     locale: 'en'
   };
 
@@ -105,9 +108,11 @@ export class PaymentCardInputComponent implements OnInit {
         name: this.form.get('name').value
       };
     }
+    console.log(this.cardElement.element);
     this.stripeService
-      .createToken(this.cardElement.getCard(), cardParams)
+      .createToken(this.cardElement.element, cardParams)
       .subscribe(result => {
+        console.log(result);
         if (result.token) {
           this.save.emit({
             last4: result.token.card.last4,
