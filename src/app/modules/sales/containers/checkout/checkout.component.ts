@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '@app/shared/services/product/product.service';
 import { Product } from '@app/shared/models/product.model';
@@ -64,6 +64,7 @@ export class CheckoutComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private shipmentService: ShipmentService,
     private navigationService: NavigationService,
+    private zone: NgZone,
     private ref: ChangeDetectorRef) {
   }
 
@@ -146,10 +147,9 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSaveAddress(user: UserAuth) {
-    this.user = user;
-    this.selectedAddress = this.user.addresses.find(a => a.primary);
     this.addingAddress = false;
     this.savingAddress = false;
+    this.setSelections(user);
     this.recalcCosts();
   }
 
@@ -234,9 +234,9 @@ export class CheckoutComponent implements OnInit {
     this.error = null;
     if (this.user) {
       this.userService.addCard(card).subscribe(result => {
-        this.user = this.userService.user$.getValue();
-        this.selectedPayment = this.user.cards.find(a => a.primary);
+        this.setSelections(this.userService.user$.getValue())
         this.addingPayment = false;
+        this.changingPayment = false;
         this.ref.markForCheck();
       }, err => {
         this.error = err.error.error.message;
@@ -259,8 +259,14 @@ export class CheckoutComponent implements OnInit {
     this.changingPayment = true;
   }
 
+  setSelections(user: UserAuth) {
+    this.user = user;
+    this.selectedAddress = this.user.addresses.find(a => a.primary);
+    this.selectedPayment = this.user.cards.find(a => a.primary);
+    this.ref.markForCheck();
+  }
+
   onAddPayment() {
-    this.loadingPayment = true;
     this.addingPayment = true;
   }
 
@@ -302,10 +308,6 @@ export class CheckoutComponent implements OnInit {
     if (this.selectedPayment) {
       this.addingPayment = false;
     }
-  }
-
-  onReady(event: any) {
-    this.loadingPayment = false;
   }
 
   billingStateChanged(value: MatCheckboxChange) {

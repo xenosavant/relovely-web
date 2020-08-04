@@ -97,8 +97,7 @@
           <div class="payment-form-wrapper" *ngIf="addingPayment || (!user && !selectedPayment)">
             <app-payment-card-input [class.invisible]="loadingPayment" (isLoading)="onLoadingPaymentForm($event)"
               [buttonMargin]="36" [verifyAddress]="!user" [passThroughAddress]="billingSame" [showCancel]="!!user"
-              (save)="onSavePayment($event)" [billingForm]="shippingAddress" (ready)="onReady($event)"
-              (close)="onCancelAddPayment()">
+              (save)="onSavePayment($event)" [billingForm]="shippingAddress" (close)="onCancelAddPayment()">
             </app-payment-card-input>
             <mat-spinner *ngIf="loadingPayment" diameter="25"></mat-spinner>
           </div>

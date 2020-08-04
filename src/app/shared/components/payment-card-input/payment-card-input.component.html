@@ -41,14 +41,15 @@
     <div class="error">
         {{error}}
     </div>
-    <ngx-stripe-card (on)="onCardChanged($event)" [options]="cardOptions" [elementsOptions]="elementsOptions">
+    <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions">
     </ngx-stripe-card>
     <div class="button-wrapper" [style.margin-top.px]="buttonMargin">
         <app-button *ngIf="showCancel" (click)="onClose()">
             <strong>Cancel</strong>
         </app-button>
         <button mat-stroked-button class="primary" (click)="onSave()" [disabled]="!formValid()">
-            <strong> Save </strong>
+            <strong *ngIf="showCancel"> Save </strong>
+            <strong *ngIf="!showCancel"> Verify </strong>
         </button>
     </div>
 </form>

@@ -77,6 +77,10 @@ export class PaymentCardInputComponent implements OnInit {
     this.ref.markForCheck();
   }
 
+  ngAfterViewInit() {
+    this.ready.emit();
+  }
+
   onSave() {
     this.loading = true;
     this.isLoading.emit(true);
@@ -108,11 +112,9 @@ export class PaymentCardInputComponent implements OnInit {
         name: this.form.get('name').value
       };
     }
-    console.log(this.cardElement.element);
     this.stripeService
       .createToken(this.cardElement.element, cardParams)
       .subscribe(result => {
-        console.log(result);
         if (result.token) {
           this.save.emit({
             last4: result.token.card.last4,
@@ -137,14 +139,6 @@ export class PaymentCardInputComponent implements OnInit {
         this.loading = false;
         this.ref.markForCheck();
       })
-  }
-
-  onCardChanged(event: any) {
-    if (event.type === 'ready') {
-      this.ready.emit(true);
-      this.loading = false;
-      this.ref.markForCheck()
-    }
   }
 
   onClose() {
