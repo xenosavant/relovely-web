@@ -8,6 +8,7 @@ import { ReviewService } from '@app/shared/services/review/review.service';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { Review } from '@app/shared/models/review.model';
 import { UserReviewsResponse, ReviewResponse } from '@app/shared/services/user/user-reviews.response';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-reviews',
@@ -31,7 +32,8 @@ export class ReviewsComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private reviewService: ReviewService,
     private navigationService: NavigationService,
-    private ref: ChangeDetectorRef) { }
+    private ref: ChangeDetectorRef,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
@@ -41,7 +43,10 @@ export class ReviewsComponent implements OnInit {
       if (this.id = map['id']) {
         this.userService.getReviews(this.id).subscribe(response => {
           this.reviews = response.reviews;
-          this.name = this.userService.user$.getValue().id === this.id ? 'My' : response.name + `'s`;
+          this.reviews.forEach(r => {
+            r.polygon = this.sanitizer.bypassSecurityTrustStyle(`polygon(0% 0%, ${r.percentage}% 0%, ${r.percentage}% 100%, 0% 100%)`);
+          })
+          this.name = this.userService.user$.getValue() ? (this.userService.user$.getValue().id === this.id ? 'My' : response.name + `'s`) : response.name + `'s`;
           this.loading = false;
           this.ref.markForCheck();
         })
