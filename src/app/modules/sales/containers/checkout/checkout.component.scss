@@ -3,158 +3,190 @@
 :host {
      flex: auto;
 }
-
-.checkout-wrapper {
-    .checkout{
-        .header {
-            h1 {
-                font-weight: 300;
-                font-size: 1.9em;
-                font-family: 'Roboto Light', sans-serif !important;
-            }
-        } 
-    }
-    margin: 0 auto;
-    max-width: 920px;
-    flex: auto;
-    @media( min-width:700px) {
-        grid-template-columns: 1fr 300px;
-        grid-gap: 16px;
-        display: grid;
-    }
-    .checkout {
-        background-color: white;
-        border-radius: 4px;
-        padding:16px;
-        @include mat-elevation(1);
-        h2 {
-            font-weight: 500;
-            margin-bottom: 32px;
+.checkout-outer {
+    margin: 16px 0px;
+    .checkout-wrapper {
+        .checkout{
+            .header {
+                h1 {
+                    font-weight: 300;
+                    font-size: 1.9em;
+                    font-family: 'Roboto Light', sans-serif !important;
+                }
+            } 
         }
-        @media( max-width:699px) {
-            margin-bottom: 16px;
-            border-radius: 0px;
-        }
-        .selected {
+        margin: 0 auto;
+        max-width: 920px;
+        flex: auto;
+        @media( min-width:700px) {
+            grid-template-columns: 1fr 300px;
+            grid-gap: 16px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto;
-            .edit {
-                display: flex;
-                align-items: flex-start;
-                @media( min-width:700px) {
-                    justify-content: flex-start;
-                }
-                cursor: pointer;
-            }
         }
-        .shipping-address {
-            margin-bottom: 24px;
-            .addresses {
-                display: flex;
-                flex-direction: row;
-                margin-bottom: 8px;
-                .line-address {
-                    display: flex;
-                    align-items: center;
-                    .name {
-                        margin-bottom: 12px;
-                    }
-                }
-                .options {
-                    height: fit-content;
-                }
+        .checkout {
+            background-color: white;
+            border-radius: 4px;
+            padding:16px;
+            @include mat-elevation(1);
+            h2 {
+                font-weight: 500;
+                margin-bottom: 32px;
             }
-            .button-wrapper {
+            @media( max-width:699px) {
+                margin-bottom: 16px;
+                border-radius: 0px;
+            }
+            .selected {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 grid-template-rows: auto;
-                grid-gap:16px;
-                margin-top: 16px;
-            }
-            .form-wrapper {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                .address-container {
-                    display: inline-block;
-                    width: 100%;
+                .edit {
+                    display: flex;
+                    align-items: flex-start;
+                    @media( min-width:700px) {
+                        justify-content: flex-start;
+                    }
+                    cursor: pointer;
                 }
             }
-        }
-    }
-    .payment-method {
-        .payment-form-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            app-payment-card-input {
-                width: 100%;
-            }
-        }
-    }
-    .checkout-product {
-        height: fit-content;
-        @media( max-width:699px) {
-            border-radius: 0px;
-        }
-        background-color: white;
-        border-radius: 4px;
-        padding:16px;
-        @include mat-elevation(1);
-        .product {
-           display: flex;
-           flex-direction: row;
-            .product-image {
-                .image-wrapper {
-                    cursor: pointer;
-                    height:100px;
-                    width:100px;
-                    padding: 2px;
-                    background-color: #efefef;
-                    border-radius: 2px;
-                    img {
-                        height: 100%;
+            .shipping-address {
+                margin-bottom: 24px;
+                .addresses {
+                    display: flex;
+                    flex-direction: row;
+                    margin-bottom: 8px;
+                    .line-address {
+                        display: flex;
+                        align-items: center;
+                        .name {
+                            margin-bottom: 12px;
+                        }
+                    }
+                    .options {
+                        height: fit-content;
+                    }
+                }
+                .form-wrapper {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .address-container {
+                        display: inline-block;
+                        width: 100%;
                     }
                 }
             }
-            .product-info {
-                margin-left: 8px;
-                .title {
-                    font-weight: 500;
-                    font-size: 1.2em;
-                    line-height: 1.3em;
+        }
+        .payment-method {
+            .payment-form-wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                app-payment-card-input {
+                    width: 100%;
                 }
+            }
+            .email {
+                margin-top: 32px;
+            }
+            .option {
+                display: flex;
+                flex-direction: row;
+                margin-bottom: 16px;
             }
         }
-        .totals {
-            .line-items {
-                .line-item {
-                    height: 24px;
+        .guest-payment {
+            display: flex;
+            flex-direction: row;
+            .edit {
+                margin-left: 16px;
+            }
+        }
+        .billing {
+            display: flex;
+            flex-direction: row;
+        }
+        .same {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 24px;
+        }
+        .checkout-product {
+            height: fit-content;
+            @media( max-width:699px) {
+                border-radius: 0px;
+            }
+            background-color: white;
+            border-radius: 4px;
+            padding:16px;
+            @include mat-elevation(1);
+            .product {
+               display: flex;
+               flex-direction: row;
+                .product-image {
+                    .image-wrapper {
+                        cursor: pointer;
+                        height:100px;
+                        width:100px;
+                        padding: 2px;
+                        background-color: #efefef;
+                        border-radius: 2px;
+                        img {
+                            height: 100%;
+                        }
+                    }
+                }
+                .product-info {
+                    margin-left: 8px;
+                    .title {
+                        font-weight: 500;
+                        font-size: 1.2em;
+                        line-height: 1.3em;
+                    }
                 }
             }
-            .value {
-                float: right;
-            }
-            .total {
-                margin-top: 16px;
-                font-weight: 700;
-                font-size: 1.2em;
-            }
-        
-            .address {
-                margin-top: 4px;
-            }
-
-            .purchase {
-                margin-top: 16px;
-                button {
-                    width: 100%;
+            .totals {
+                .line-items {
+                    .line-item {
+                        height: 24px;
+                    }
+                }
+                .value {
+                    float: right;
+                }
+                .total {
+                    margin-top: 16px;
+                    font-weight: 700;
+                    font-size: 1.2em;
+                }
+            
+                .address {
+                    margin-top: 4px;
+                }
+    
+                .purchase {
+                    margin-top: 16px;
+                    button {
+                        width: 100%;
+                    }
                 }
             }
         }
     }
 }
+
+.button-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap:16px;
+    margin-top: 16px;
+}
+
+mat-checkbox {
+    margin-right: 8px;
+}
+
 
 .divider {
     height:1px;

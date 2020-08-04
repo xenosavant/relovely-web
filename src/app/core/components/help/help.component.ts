@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { UserService } from '@app/shared/services/user/user.service';
@@ -19,7 +19,9 @@ export class HelpComponent implements OnInit {
 
   currentUser: UserAuth;
 
-  constructor(private userService: UserService, private breakpointObserver: BreakpointObserver) {
+  constructor(private userService: UserService,
+    private breakpointObserver: BreakpointObserver,
+    private ref: ChangeDetectorRef) {
 
   }
 
@@ -37,6 +39,7 @@ export class HelpComponent implements OnInit {
   onSubmit() {
     this.userService.support({ email: this.form.get('email').value, body: this.form.get('body').value }).subscribe(() => {
       this.success = true;
+      this.ref.markForCheck();
     })
   }
 

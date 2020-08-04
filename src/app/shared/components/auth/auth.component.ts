@@ -149,7 +149,6 @@ export class AuthComponent implements OnChanges {
     this.authService.signin({ email: this.signInForm.value['email'], password: this.signInForm.value['password'] })
       .subscribe(response => {
         this.userService.setLogin(response.jwt, response.user);
-        this.router.navigate(['/'], { queryParams: { type: 'email' } });
         this.navigationService.closeAuthWindow();
         this.loading = false;
       }, (err) => {

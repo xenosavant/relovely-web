@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { PaymentCard } from '@app/shared/interfaces/payment-card';
 
@@ -10,12 +10,12 @@ import { PaymentCard } from '@app/shared/interfaces/payment-card';
 })
 export class AddPaymentCardComponent implements OnInit {
 
-  loading = true;
+  loading = false;
 
   @Output() save: EventEmitter<PaymentCard> = new EventEmitter();
   @Output() close: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
 
@@ -23,10 +23,6 @@ export class AddPaymentCardComponent implements OnInit {
 
   onCardCreated(card: PaymentCard) {
     this.save.emit(card);
-  }
-
-  onReady() {
-    this.loading = false;
   }
 
   onClose() {

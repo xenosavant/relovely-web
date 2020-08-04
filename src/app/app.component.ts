@@ -192,6 +192,7 @@ export class AppComponent implements OnInit {
         if (err.status === 401) {
           this.loading = false;
           this.userService.logout();
+          this.resetLoginSubscription();
         } else {
           this.error = true;
           this.loading = false;

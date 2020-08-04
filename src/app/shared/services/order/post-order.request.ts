@@ -3,7 +3,11 @@ import { Address } from "@app/shared/interfaces/address.interface";
 export interface PostOrderRequest {
     address: Address;
     paymentId: string;
-    rateId: string;
     shipmentId: string;
     tax: number;
+    email?: string;
+    last4?: string;
+    cardType?: string;
+    createAccount?: boolean;
+    joinMailingList?: boolean;
 }

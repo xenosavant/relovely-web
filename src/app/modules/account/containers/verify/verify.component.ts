@@ -57,6 +57,16 @@ export class VerifyComponent implements OnInit {
               this.ref.markForCheck();
             }
             break;
+          case 'guest':
+            if (this.code) {
+              this.loading = false;
+              this.ref.markForCheck();
+            } else {
+              this.navigationService.navigate({ path: '/' });
+              this.loading = false;
+              this.ref.markForCheck();
+            }
+            break;
           case 'member':
             if (this.code) {
               this.authService.verifyEmail({ code: this.code }).subscribe(response => {

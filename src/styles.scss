@@ -1081,7 +1081,7 @@ html {
     }
   }
 
-  app-verify,  app-facebook-auth, app-reset-password  {
+  app-verify,  app-facebook-auth, app-reset-password, app-order  {
     @media(max-width: $mobile-breakpoint) {
       min-height: calc(100vh - 56px);
     }

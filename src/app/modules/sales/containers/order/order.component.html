@@ -1,4 +1,4 @@
-<div class="page-wrapper">
+<div class="page-wrapper" *ngIf="!guestOrder">
     <div *ngIf="!mobile && !loading" class="breadcrumb-wrapper">
         <div class="breadcrumbs">
             <app-breadcrumbs [items]="navigationItems"></app-breadcrumbs>
@@ -84,5 +84,12 @@
                 </ng-container>
             </div>
         </div>
+    </div>
+</div>
+<div class="full-content empty" *ngIf="guestOrder">
+    <div class="center-wrapper">
+        <img src="../../../../../assets/images/check.svg">
+        <h2> Your Order Is Complete</h2>
+        <p>Check your email for receipt and tracking information</p>
     </div>
 </div>

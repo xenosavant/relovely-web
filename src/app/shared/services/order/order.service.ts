@@ -36,6 +36,14 @@ export class OrderService extends BaseService {
         );
     }
 
+    guestOrder(order: PostOrderRequest, productId: string): Observable<Order> {
+        return this.httpClient.post<Order>(`${this.apiBaseUrl}/products/${productId}/orders/guest`, order).pipe(
+            map((result: Order) => {
+                return result;
+            })
+        );
+    }
+
     shipOrder(id: string): Observable<void> {
         return this.httpClient.post<void>(`${this.apiBaseUrl}/orders/${id}/ship/`, {}).pipe(
             map(() => {

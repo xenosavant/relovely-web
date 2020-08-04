@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '@app/shared/services/product/product.service';
 import { Product } from '@app/shared/models/product.model';
@@ -14,6 +14,7 @@ import { OrderService } from '@app/shared/services/order/order.service';
 import { ShipmentService } from '@app/shared/services/shipment/shipment.service';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { guid } from '../../../../shared/utils/rand';
+import { MatCheckboxChange } from '@angular/material';
 
 @Component({
   selector: 'app-checkout',
@@ -26,16 +27,17 @@ export class CheckoutComponent implements OnInit {
   product: Product;
   total: number;
   tax: number = 0;
-  shippingCost: number = 711;
+  shippingCost: number;
   mobile = false;
   user: UserAuth;
   selectedAddress: Address;
+  billingAddress: Address;
   selectedPayment: PaymentCard;
   loading = true;
   addingAddress = false;
-  changingAddress = false;
   addingPayment = false;
   changingPayment = false;
+  changingAddress = false;
   states;
   loadingPayment: boolean;
   checkingOut = false;
@@ -44,6 +46,14 @@ export class CheckoutComponent implements OnInit {
   shipmentId: string;
   savingAddress = false;
   error: string;
+  shippingAddress: FormGroup;
+  email: FormGroup;
+  billingSame = false;
+  addressError = false;
+  overrideAddress = false;
+  verifyAddress = false;
+  emailList = true;
+  createUser = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -54,35 +64,48 @@ export class CheckoutComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private shipmentService: ShipmentService,
     private navigationService: NavigationService,
+    private zone: NgZone,
     private ref: ChangeDetectorRef) {
   }
 
   ngOnInit() {
     this.navigationService.showNavBar(false);
     this.user = this.userService.user$.getValue();
-    if (!this.user) {
-      this.navigationService.navigate({ 'path': '/' })
-    }
     this.states = this.lookupService.states;
-    if (this.user.addresses.length) {
-      this.selectedAddress = this.user.addresses.find(a => a.primary);
-    } else {
-      this.addingAddress = true;
-    }
+    if (this.user) {
+      if (this.user.addresses.length) {
+        this.selectedAddress = this.user.addresses.find(a => a.primary);
+      } else {
+        this.addingAddress = true;
+      }
 
-    if (this.user.cards.length) {
-      this.selectedPayment = this.user.cards.find(a => a.primary);
+      if (this.user.cards.length) {
+        this.selectedPayment = this.user.cards.find(a => a.primary);
+      } else {
+        this.addingPayment = true;
+      }
     } else {
-      this.addingPayment = true;
+      this.shippingAddress = new FormGroup({
+        name: new FormControl('', [Validators.required]),
+        line1: new FormControl('', [Validators.required]),
+        line2: new FormControl(''),
+        city: new FormControl('', [Validators.required]),
+        state: new FormControl('', [Validators.required]),
+        zip: new FormControl('', [Validators.required, Validators.maxLength(5)]),
+      });
+      this.email = new FormGroup({
+        email: new FormControl('', [Validators.required, Validators.email]),
+      })
     }
-
     this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
       this.mobile = result.matches;
     })
     this.activatedRoute.params.subscribe(params => {
       this.productService.getProduct(params['id']).subscribe(product => {
         this.product = product.product;
-        this.selectedAddress = this.user.addresses.find(a => a.primary);
+        if (this.user) {
+          this.selectedAddress = this.user.addresses.find(a => a.primary);
+        }
         this.recalcCosts();
       }, err => {
         this.error = 'Hmmm...something went wrong. Please referesh the page and try again.'
@@ -93,6 +116,7 @@ export class CheckoutComponent implements OnInit {
 
   recalcCosts() {
     this.shippingCostLoading = true;
+    this.ref.markForCheck();
     this.error = null;
     if (this.selectedAddress) {
       this.shipmentService.previewShipment({
@@ -123,10 +147,9 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSaveAddress(user: UserAuth) {
-    this.user = user;
-    this.selectedAddress = this.user.addresses.find(a => a.primary);
     this.addingAddress = false;
     this.savingAddress = false;
+    this.setSelections(user);
     this.recalcCosts();
   }
 
@@ -165,22 +188,67 @@ export class CheckoutComponent implements OnInit {
     })
   }
 
+  onCheckAddress() {
+    if (this.shippingAddress.valid) {
+      const address = this.shippingAddressValue;
+      if (!this.overrideAddress) {
+        this.shipmentService.verifyAddress(address).subscribe(val => {
+          if (val.success) {
+            this.addressError = false;
+            if (val.verify) {
+              this.overrideAddress = true;
+              this.verifyAddress = true;
+              this.shippingAddress.get('line1').setValue(val.correctedAddress.line1);
+              this.shippingAddress.get('line2').setValue(val.correctedAddress.line2);
+              this.shippingAddress.get('city').setValue(val.correctedAddress.city);
+              this.shippingAddress.get('state').setValue(val.correctedAddress.state);
+              this.shippingAddress.get('zip').setValue(val.correctedAddress.zip);
+              this.selectedAddress = this.shippingAddressValue;
+              this.recalcCosts();
+              this.ref.markForCheck();
+            } else {
+              this.selectedAddress = this.shippingAddressValue;
+              this.recalcCosts();
+            }
+          } else {
+            this.addressError = true;
+            this.overrideAddress = false;
+            this.ref.markForCheck();
+          }
+        });
+      } else {
+        this.addressError = false;
+        this.verifyAddress = false;
+        this.selectedAddress = this.shippingAddressValue;
+        this.recalcCosts();
+      }
+    }
+  }
+
   changeAddress() {
     this.changingAddress = true;
   }
 
+
   onSavePayment(card: PaymentCard) {
     this.error = null;
-    this.userService.addCard(card).subscribe(result => {
-      this.user = this.userService.user$.getValue();
-      this.selectedPayment = this.user.cards.find(a => a.primary);
+    if (this.user) {
+      this.userService.addCard(card).subscribe(result => {
+        this.setSelections(this.userService.user$.getValue())
+        this.addingPayment = false;
+        this.changingPayment = false;
+        this.ref.markForCheck();
+      }, err => {
+        this.error = err.error.error.message;
+        this.loadingPayment = false;
+        this.ref.markForCheck();
+      })
+    }
+    else {
       this.addingPayment = false;
-      this.ref.markForCheck();
-    }, err => {
-      this.error = err.error.error.message;
+      this.selectedPayment = card;
       this.loadingPayment = false;
-      this.ref.markForCheck();
-    })
+    }
   }
 
   onSelectPayment() {
@@ -191,6 +259,13 @@ export class CheckoutComponent implements OnInit {
     this.changingPayment = true;
   }
 
+  setSelections(user: UserAuth) {
+    this.user = user;
+    this.selectedAddress = this.user.addresses.find(a => a.primary);
+    this.selectedPayment = this.user.cards.find(a => a.primary);
+    this.ref.markForCheck();
+  }
+
   onAddPayment() {
     this.addingPayment = true;
   }
@@ -199,42 +274,111 @@ export class CheckoutComponent implements OnInit {
     this.loadingPayment = loading;
   }
 
+  primaryAddressChanged() {
+    const updates = [];
+    this.user.addresses.forEach(address => {
+      if (address.id === this.selectedAddress.id) {
+        address.primary = true;
+      } else if (address.primary) {
+        delete address.primary;
+      }
+      updates.push(address);
+    });
+    this.userService.updateUser(this.user.id, { addresses: updates }).subscribe(result => {
+
+    });
+  }
+
+  primaryPaymentChanged() {
+    const updates = [];
+    this.user.cards.forEach(card => {
+      if (card.stripeId === this.selectedPayment.stripeId) {
+        card.primary = true;
+      } else if (card.primary) {
+        delete card.primary;
+      }
+      updates.push(card);
+    });
+    return this.userService.updateUser(this.user.id, { cards: updates }).subscribe(result => {
+
+    });
+  }
+
   onCancelAddPayment() {
     if (this.selectedPayment) {
       this.addingPayment = false;
     }
   }
 
-  onReady(event: any) {
-
+  billingStateChanged(value: MatCheckboxChange) {
+    if (value) {
+      this.billingSame = value.checked;
+    }
   }
 
   checkoutDisabled() {
-    return !this.selectedAddress || !this.selectedPayment || this.changingPayment || this.changingAddress || this.checkingOut;
+    if (this.user) {
+      return !this.selectedAddress || !this.selectedPayment || this.changingPayment || this.changingAddress || this.checkingOut;
+    } else {
+      return !this.selectedPayment || !this.shippingAddress.valid || !this.email.valid || this.addressError;
+    }
   }
 
   checkout() {
     this.checkingOut = true;
     this.error = null;
-    this.orderService.postOrder(
-      {
-        address: this.selectedAddress,
-        paymentId: this.selectedPayment.stripeId,
-        rateId: this.shippingRateId,
-        shipmentId: this.shipmentId,
-        tax: this.tax
-      }, this.product.id)
-      .subscribe(order => {
-        this.navigationService.navigate({ path: `/sales/orders/${order.id}` })
-      }, err => {
-        this.error = err.error.error.message;
-        this.checkingOut = false;
-        this.ref.markForCheck();
-      })
+    if (this.user) {
+      this.orderService.postOrder(
+        {
+          address: this.selectedAddress,
+          paymentId: this.selectedPayment.stripeId,
+          shipmentId: this.shipmentId,
+          tax: this.tax
+        }, this.product.id)
+        .subscribe(order => {
+          this.navigationService.navigate({ path: `/sales/orders/${order.id}` })
+        }, err => {
+          this.error = err.error.error.message;
+          this.checkingOut = false;
+          this.ref.markForCheck();
+        })
+    } else {
+      this.orderService.guestOrder(
+        {
+          address: this.shippingAddressValue,
+          paymentId: this.selectedPayment.stripeId,
+          shipmentId: this.shipmentId,
+          tax: this.tax,
+          last4: this.selectedPayment.last4,
+          cardType: this.selectedPayment.type,
+          email: this.email.get('email').value,
+          joinMailingList: this.emailList,
+          createAccount: this.createUser
+        }, this.product.id)
+        .subscribe(order => {
+          this.navigationService.navigate({ path: `/sales/orders/guest` })
+        }, err => {
+          this.error = err.error.error.message;
+          this.checkingOut = false;
+          this.ref.markForCheck();
+        })
+    }
   }
 
   onGoToProduct() {
     this.navigationService.navigate({ path: `/products/detail/${this.product.id}` })
+  }
+
+  get shippingAddressValue(): Address {
+    return {
+      name: this.shippingAddress.get('name').value,
+      line1: this.shippingAddress.get('line1').value,
+      line2: this.shippingAddress.get('line2').value,
+      city: this.shippingAddress.get('city').value,
+      state: this.shippingAddress.get('state').value,
+      zip: this.shippingAddress.get('zip').value,
+      country: 'US'
+    }
   }
 
 }
