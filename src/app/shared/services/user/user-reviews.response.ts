@@ -14,4 +14,5 @@ export class ReviewResponse {
     date: Date;
     reviewer: UserList;
     product: Product;
+    polygon?: any;
 }

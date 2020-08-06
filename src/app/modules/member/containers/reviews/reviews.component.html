@@ -24,12 +24,22 @@
                 <img src="./assets/images/rating-heart.svg" />
                 <img src="./assets/images/rating-heart.svg" />
                 <img src="./assets/images/rating-heart.svg" />
-                <div class="overlay" [style.width.%]="review.percentage">
-                    <img src="./assets/images/pink-heart.svg" />
-                    <img src="./assets/images/pink-heart.svg" />
-                    <img src="./assets/images/pink-heart.svg" />
-                    <img src="./assets/images/pink-heart.svg" />
-                    <img src="./assets/images/pink-heart.svg" />
+                <div class="overlay" [style.clip-path]="review.polygon">
+                    <div class="wrapper">
+                        <img src="./assets/images/pink-heart.svg" />
+                    </div>
+                    <div class="wrapper">
+                        <img src="./assets/images/pink-heart.svg" />
+                    </div>
+                    <div class="wrapper">
+                        <img src="./assets/images/pink-heart.svg" />
+                    </div>
+                    <div class="wrapper">
+                        <img src="./assets/images/pink-heart.svg" />
+                    </div>
+                    <div class="wrapper">
+                        <img src="./assets/images/pink-heart.svg" />
+                    </div>
                 </div>
             </div>
         </div>

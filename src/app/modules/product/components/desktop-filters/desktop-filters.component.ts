@@ -100,7 +100,7 @@ export class DesktopFiltersComponent implements OnInit {
     });
 
     if (group.selectedKeys.some(selectedKey => key === selectedKey)) {
-      group.selectedKeys.splice(group.selectedKeys.indexOf(key), 1);
+      group.selectedKeys = group.selectedKeys.filter(k => k !== key);
     } else {
       group.selectedKeys.push(key);
     }
@@ -114,12 +114,12 @@ export class DesktopFiltersComponent implements OnInit {
     } else {
       this.selectedColors.push(color.key);
     }
-    this.filterService.updateColors(this.selectedColors);
+    this.filterService.updateColors([...new Set(this.selectedColors)]);
   }
 
   setPriceFilter(filter: PriceFilter) {
     if (this.selectedPriceFilters.indexOf(filter) > -1) {
-      this.selectedPriceFilters.splice(this.selectedPriceFilters.indexOf(filter), 1);
+      this.selectedPriceFilters = this.selectedPriceFilters.filter(f => filter.id !== f.id);
     } else {
       this.selectedPriceFilters.push(filter);
     }

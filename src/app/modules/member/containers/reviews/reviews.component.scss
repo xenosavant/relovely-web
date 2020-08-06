@@ -46,8 +46,6 @@
             }
             .rating {
                 width: fit-content;
-                display: grid;
-                grid-gap: 6px;
                 font-size: 1em;
                 position: relative;
                 display: flex;
@@ -71,9 +69,23 @@
                     align-items: center;
                     flex-wrap: nowrap;
                     overflow: hidden;
-                    img {width: 18px; margin-left: 1px; margin-right: 1px; }
+                    .wrapper {
+                        width: 20px;
+                        flex: 1;
+                        display: grid;
+                        align-items: center;
+                        justify-content: center;
+                        img {width: 18px; }
+                    }
                     @media(min-width: $desktop-breakpoint) {
-                        img { width: 22px; margin-left: 1px; margin-right: 1px;}
+                        .wrapper {
+                            width: 24px;
+                            flex: 1;
+                            display: grid;
+                            align-items: center;
+                            justify-content: center;
+                            img {width: 22px;}
+                        }
                     }
                     &.first {
                         z-index: 4;
