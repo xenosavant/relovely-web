@@ -71,6 +71,7 @@ export class CheckoutComponent implements OnInit {
   ngOnInit() {
     this.navigationService.showNavBar(false);
     this.user = this.userService.user$.getValue();
+    console.log(this.user);
     this.states = this.lookupService.states;
     if (this.user) {
       if (this.user.addresses.length) {
@@ -333,6 +334,7 @@ export class CheckoutComponent implements OnInit {
           address: this.selectedAddress,
           paymentId: this.selectedPayment.stripeId,
           shipmentId: this.shipmentId,
+          joinMailingList: this.emailList,
           tax: this.tax
         }, this.product.id)
         .subscribe(order => {

@@ -4,13 +4,10 @@
             <div class="text-wrapper">
                 Don't miss a thing! Stay in the know + subscribe to the relovely newsletter
             </div>
-            <form #form class="cta-wrapper"
-                action="https://relovely.us19.list-manage.com/subscribe/post?u=62e1e17c6afb3051e97b8b507&amp;id=94cf966c5d"
-                method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank"
-                novalidate>
-                <input class="email-input" type="email" value="" name="EMAIL" id="mce-EMAIL">
+            <form novalidate class="cta-wrapper">
+                <input #input class="email-input" type="email" value="" name="EMAIL" id="mce-EMAIL">
                 <button mat-stroked-button type="submit" value="Subscribe" name="subscribe"
-                    (click)="form.submit(); onSubmit();" id="mc-embedded-subscribe">
+                    (click)="onJoinMailingList(input.value)">
                     Submit
                 </button>
             </form>

@@ -101,10 +101,11 @@
                 </strong></div>
             </button>
             <div class="policies">
-              By applying you are agreeing to the
+              By signing up you are agreeing to the
               <a (click)="goToPrivacy()" appClick target="_blank">privacy policy</a>
               and the
               <a appClick (click)="goToTerms()" target="_blank">terms of service</a>
+              and will be added to the Relovely mailing list.
             </div>
             <div class="link-text">
               Already have an account?
@@ -145,43 +146,6 @@
                   Sign Up
                 </a>
               </div>
-            </div>
-          </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="'sell'">
-          <div *ngIf="error !== null" class="form-error">{{error}}</div>
-          <div *ngIf="!authenticated" class="form-wrapper sell">
-            <div class="sell-info">
-              To apply as a seller, please click the button below to verify your Instagram account.
-            </div>
-            <button class="instagram primary" mat-stroked-button (click)="sellerAuthenticateInstagram()">
-              <img src="./assets/images/instagram-white.png" /> <strong>Apply with Instagram </strong> </button>
-            <div class="policies">
-              By applying you are agreeing to the
-              <a (click)="goToPrivacy()" appClick target="_blank">privacy policy</a>
-              and the
-              <a appClick (click)="goToTerms()" target="_blank">terms of service</a>
-            </div>
-          </div>
-          <div *ngIf="authenticated" class="form-wrapper sell__auth">
-            <div class="sell-info">
-              You are applying as {{authUsername}}. Enter your email and click apply to continue the application.
-            </div>
-            <form novalidate [formGroup]="sellerForm">
-              <mat-form-field appearance="outline">
-                <input matInput type="text" placeholder="Email Address" formControlName="email" />
-              </mat-form-field>
-              <button mat-stroked-button class="primary" (click)="applyToSell()" [disabled]="!sellerForm.valid">
-                <strong>
-                  APPLY
-                </strong>
-              </button>
-            </form>
-            <div class="policies">
-              By applying you are agreeing to the
-              <a (click)="goToPrivacy()" appClick target="_blank">privacy policy</a>
-              and the
-              <a appClick (click)="goToTerms()" target="_blank">terms of service</a>
             </div>
           </div>
         </ng-container>

@@ -113,15 +113,15 @@
                 </mat-form-field>
               </form>
             </div>
-            <!-- <div class="option">
-              <mat-checkbox matCheckbox [checked]="emailList"></mat-checkbox>
-              <div> Keep me in the know about new product adds, exclusive offers, and more</div>
-            </div> -->
             <div class="option">
               <mat-checkbox matCheckbox [(ngModel)]="createUser"></mat-checkbox>
               <div> Create a user account for me</div>
             </div>
           </ng-container>
+          <div [class.padded]="!!user" *ngIf="!user || !user.ui || !user.ui.joinedMailingList" class="option">
+            <mat-checkbox matCheckbox [checked]="emailList"></mat-checkbox>
+            <div> Keep me in the know about new product adds, exclusive offers, and more</div>
+          </div>
         </div>
       </div>
       <div class="checkout-product">

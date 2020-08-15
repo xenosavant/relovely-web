@@ -172,4 +172,12 @@ export class
         );
     }
 
+    subscribe(email: string) {
+        return this.httpClient.post<{ email: string }>(`${this.apiBaseUrl}/users/subscribe`, { email: email }).pipe(
+            map(() => {
+                return;
+            })
+        );
+    }
+
 }

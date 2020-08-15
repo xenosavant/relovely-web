@@ -93,6 +93,7 @@
                 display: flex;
                 flex-direction: row;
                 margin-bottom: 16px;
+                align-items: center;
             }
         }
         .guest-payment {
@@ -192,6 +193,10 @@ mat-checkbox {
     height:1px;
     background-color: $medium-dark-background;
     margin: 24px 0px;
+}
+
+.padded {
+    margin-top: 16px;
 }
 
 
