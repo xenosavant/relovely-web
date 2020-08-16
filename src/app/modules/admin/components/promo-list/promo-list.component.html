@@ -1,0 +1,22 @@
+<div class="button-wrapper">
+    <button mat-stroked-button class="primary" (click)="createPromo()">Add Promo</button>
+</div>
+<div class="promos">
+    <div class="promo">
+        <strong>Code</strong>
+        <strong>Type</strong>
+        <strong>Discount Percent</strong>
+        <strong>Seller</strong>
+    </div>
+    <div class="promo" *ngFor="let promo of promos">
+        <div>{{promo.code}}</div>
+        <div>{{promo.type}}</div>
+        <div>{{promo.discountPercent ? promo.discountPercent : 'N/A'}}
+        </div>
+        <div>{{promo.seller ? promo.seller.username : 'N/A'}}</div>
+    </div>
+</div>
+<ng-template cdkPortal #promoModal="cdkPortal">
+    <app-create-promo (close)="closeModal()">
+    </app-create-promo>
+</ng-template>

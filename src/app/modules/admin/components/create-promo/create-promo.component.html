@@ -1,0 +1,59 @@
+<app-center-modal>
+    <div class="inner-container">
+        <div class="inner-wrapper" [class.invisible]="saving">
+            <div class="modal-header">
+                <div class="title">
+                    <div>Add A Promo</div>
+                </div>
+                <div class="close">
+                    <img (click)="onClose()" src="./assets/images/close.svg" />
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <form novalidate [formGroup]="form">
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <input matInput placeholder="Code" formControlName="code" />
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-select placeholder="Promo Type" class="form-control" formControlName="type">
+                                <mat-option *ngFor="let option of options" [value]="option">{{option}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-select placeholder="Discount Percentage" class="form-control"
+                                formControlName="discount">
+                                <mat-option *ngFor="let discount of discounts" [value]="discount">
+                                    {{discount}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-select placeholder="Seller" class="form-control" formControlName="seller">
+                                <mat-option *ngFor="let seller of sellers" [value]="seller.id">
+                                    {{seller.instagramUsername}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="button-wrapper">
+                        <app-button (click)="onClose()">
+                            <strong>Cancel</strong>
+                        </app-button>
+                        <button mat-stroked-button class="primary" (click)="onSave()" [disabled]="!form.valid">
+                            <strong> Save </strong>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <mat-spinner *ngIf="saving" diameter="25"></mat-spinner>
+    </div>
+</app-center-modal>

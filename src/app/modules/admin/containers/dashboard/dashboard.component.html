@@ -1,33 +1,17 @@
 <div class="full-content">
-    <div class="create-seller">
-        <div *ngIf="error" class="error">
-            {{error}}
-        </div>
-        <form novalidate [formGroup]="createForm">
-            <mat-form-field appearance="outline">
-                <input matInput placeholder="First Name" formControlName="first" />
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <input matInput placeholder="Last Name" formControlName="last" />
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <input matInput placeholder="Email" formControlName="email" />
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <input matInput placeholder="Instagram Username" formControlName="username" />
-            </mat-form-field>
-            <button class="primary" (click)=create() [disabled]="!createForm.valid" mat-stroked-button>Create</button>
-        </form>
-    </div>
-    <div class="sellers">
-        <div class="seller" *ngFor="let seller of sellers">
-            <div>{{seller.firstName}}</div>
-            <div>{{seller.lastName}}</div>
-            <div>{{seller.email}}</div>
-            <div>{{seller.instagramUsername}}</div>
-            <button class="primary success" (click)=feature(seller) mat-stroked-button>Featured</button>
-            <button class="primary success" (click)=approve(seller) mat-stroked-button>Approve</button>
-            <button class="primary destroy" (click)=reject(seller) mat-stroked-button>Reject</button>
-        </div>
-    </div>
+
+    <mat-tab-group>
+        <mat-tab label="Sellers">
+            <app-seller-list></app-seller-list>
+        </mat-tab>
+        <mat-tab label="Members">
+
+        </mat-tab>
+        <mat-tab label="Promos">
+            <app-promo-list></app-promo-list>
+        </mat-tab>
+        <mat-tab label="Orders">
+
+        </mat-tab>
+    </mat-tab-group>
 </div>

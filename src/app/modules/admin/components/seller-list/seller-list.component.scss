@@ -1,0 +1,29 @@
+@import '../../../../../styles-variables.scss';
+
+.sellers {
+    margin: 0 auto;
+    width: 1000px;
+    padding:16px;
+    .seller {
+        padding:6px;
+        display: grid;
+        column-gap: 8px;
+        align-items: center;
+        grid-template-columns: 150px 150px 250px 150px 75px 75px 75px;
+        &:nth-child(odd) {
+            background-color: $medium-gray-background;
+        }
+    }
+}
+
+.create-seller {
+    form {
+        display: grid;
+        column-gap: 16px;
+        grid-template-columns: 1fr 1fr 1fr 1fr 100px;
+        grid-template-rows: auto;
+        button {
+            height: 40px;
+        }
+    }
+}
