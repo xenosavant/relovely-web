@@ -9,6 +9,7 @@ import { OrderComponent } from './containers/order/order.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { SalesComponent } from './containers/sales/sales.component';
 import { ReviewComponent } from './containers/review/review.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [CheckoutComponent, OrdersComponent, OrderComponent, OrderListComponent, SalesComponent, ReviewComponent],
@@ -18,6 +19,7 @@ import { ReviewComponent } from './containers/review/review.component';
     SalesRoutingModule,
     MatButtonModule,
     MatRadioModule,
+    FormsModule
   ]
 })
 export class SalesModule { }

@@ -20,7 +20,6 @@ export class PromoListComponent implements OnInit {
   ngOnInit() {
     this.adminService.getPromos().subscribe(promos => {
       this.promos = promos;
-      console.log(this.promos)
       this.ref.markForCheck();
     })
   }

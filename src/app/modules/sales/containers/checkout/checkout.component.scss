@@ -150,6 +150,13 @@
                 .line-items {
                     .line-item {
                         height: 24px;
+                        .line-row {
+                            display: flex;
+                            flex-direction: row;
+                            :first-child {
+                                margin-right: 8px;
+                            }
+                        }
                     }
                 }
                 .value {
@@ -199,5 +206,22 @@ mat-checkbox {
     margin-top: 16px;
 }
 
+.promo {
+    margin-top: 16px;
+    display: flex;
+    .current-promo {
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        &--inner {
+          
+        }
+    }
+    button {
+        height: 40px;
+        margin-left: 32px;
+        margin-top: 2px;
+    }
+}
 
 

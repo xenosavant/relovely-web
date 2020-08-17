@@ -16,6 +16,8 @@ import { UserReviewsResponse } from './user-reviews.response';
 import { SellerApplicationRequest } from './seller-application.request';
 import { AlertService } from '../alert/alert.service';
 import { SupportRequest } from './support.request';
+import { Promo } from '@app/shared/models/promo.model';
+import { PromoResponse } from './promo.response';
 
 @Injectable({ providedIn: 'root' })
 export class
@@ -176,6 +178,14 @@ export class
         return this.httpClient.post<{ email: string }>(`${this.apiBaseUrl}/users/subscribe`, { email: email }).pipe(
             map(() => {
                 return;
+            })
+        );
+    }
+
+    checkPromo(promo: string): Observable<PromoResponse> {
+        return this.httpClient.get<PromoResponse>(`${this.apiBaseUrl}/users/promo?code=${promo}`).pipe(
+            map((response: PromoResponse) => {
+                return response;
             })
         );
     }

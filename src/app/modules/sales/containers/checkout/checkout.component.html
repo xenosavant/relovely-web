@@ -92,6 +92,30 @@
                   </div>
                 </mat-radio-group>
               </ng-container>
+              <div class="divider"></div>
+              <div class="promo">
+                <ng-container *ngIf="currentPromo">
+                  <div class="current-promo">
+                    <div class="current-promo--inner"> {{currentPromo.code}}</div>
+                    <button (click)="onChangePromo()" [disabled]="!promo" mat-stroked-button class="primary">
+                      Change
+                    </button>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="!currentPromo">
+                  <ng-container *ngIf="!checkingPromo">
+                    <mat-form-field appearance="outline">
+                      <input matInput placeholder="Promo Code" [(ngModel)]="promo" />
+                    </mat-form-field>
+                    <button (keyup.enter)="checkPromo()" (click)="checkPromo()" [disabled]="!promo" mat-stroked-button
+                      class="primary">
+                      Apply
+                    </button>
+                  </ng-container>
+                </ng-container>
+                <mat-spinner *ngIf="checkingPromo" diameter="25"></mat-spinner>
+              </div>
+              <div class="error" *ngIf="promoError">{{promoError}}</div>
             </ng-container>
           </ng-container>
           <div class="payment-form-wrapper" *ngIf="addingPayment || (!user && !selectedPayment)">
@@ -148,7 +172,13 @@
           <div class="line-items">
             <div class="line-item">
               <span class="label">Price </span>
-              <span class="value">{{product.price | appCurrency}} </span>
+              <span class="value">
+                <div *ngIf="currentPrice === product.price">{{currentPrice | appCurrency}}</div>
+                <div class="line-row" *ngIf="currentPrice !== product.price">
+                  <div class="strike-through">{{product.price | appCurrency}}</div>
+                  <div>{{ currentPrice | appCurrency}}</div>
+                </div>
+              </span>
             </div>
             <div class="line-item">
               <span class="label">Tax</span>
@@ -168,7 +198,11 @@
                   <mat-spinner diameter="20"></mat-spinner>
                 </ng-container>
                 <ng-container *ngIf="!shippingCostLoading">
-                  {{shippingCost | appCurrency}}
+                  <div *ngIf="!freeShipping">{{currentShipping | appCurrency}}</div>
+                  <div class="line-row" *ngIf="freeShipping">
+                    <div class="strike-through">{{shippingCost | appCurrency}}</div>
+                    <div>{{ 0 | appCurrency}}</div>
+                  </div>
                 </ng-container>
               </span>
             </div>
