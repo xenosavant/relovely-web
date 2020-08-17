@@ -384,7 +384,8 @@ export class CheckoutComponent implements OnInit {
           paymentId: this.selectedPayment.stripeId,
           shipmentId: this.shipmentId,
           joinMailingList: this.emailList,
-          tax: this.tax
+          tax: this.tax,
+          promoCode: this.currentPromo ? this.currentPromo.code : undefined
         }, this.product.id)
         .subscribe(order => {
           this.navigationService.navigate({ path: `/sales/orders/${order.id}` })
@@ -404,7 +405,8 @@ export class CheckoutComponent implements OnInit {
           cardType: this.selectedPayment.type,
           email: this.email.get('email').value,
           joinMailingList: this.emailList,
-          createAccount: this.createUser
+          createAccount: this.createUser,
+          promoCode: this.currentPromo ? this.currentPromo.code : undefined
         }, this.product.id)
         .subscribe(order => {
           this.navigationService.navigate({ path: `/sales/orders/guest` })

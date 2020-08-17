@@ -21,7 +21,7 @@
                 <div class="line-items">
                     <div class="line-item">
                         <span class="label">Price </span>
-                        <span class="value">{{order.product.price | appCurrency}} </span>
+                        <span class="value">{{price | appCurrency}} </span>
                     </div>
                     <div class="line-item">
                         <span class="label">Tax</span>
@@ -29,12 +29,15 @@
                     </div>
                     <div class="line-item">
                         <span class="label">Shipping</span>
-                        <span class="value">{{order.shippingCost | appCurrency}} </span>
+                        <span class="value">{{ shipping | appCurrency}}
+                        </span>
                     </div>
                 </div>
                 <div class="total">
                     <span class="label total">TOTAL</span>
-                    <span class="value">{{order.total | appCurrency}} </span>
+                    <span class="value">
+                        {{ total | appCurrency}}
+                    </span>
                 </div>
             </div>
         </div>

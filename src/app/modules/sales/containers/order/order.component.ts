@@ -22,6 +22,9 @@ export class OrderComponent implements OnInit {
   typeMap = CARD_TYPE_MAP;
   navigationItems: NavigationItem[];
   guestOrder: boolean = false;
+  price: number;
+  shipping: number;
+  total: number;
   public mobile: boolean;
 
   constructor(
@@ -46,13 +49,17 @@ export class OrderComponent implements OnInit {
       } else {
         this.orderService.getOrder(params['id']).subscribe(order => {
           this.order = order;
+          this.shipping = this.order.shippingCost - (this.order.shippingDiscount || 0);
+          this.seller = this.userService.user$.getValue().id === this.order.seller.id;
           if (this.seller) {
+            this.price = this.order.product.price;
+            this.total = order.total - (order.shippingDiscount || 0);
             this.navigationItems = [{ path: '/sales/sales', name: 'Sales' }, { path: `/sales/orders/${this.order.id}`, name: this.order.orderNumber }];
           } else {
+            this.price = this.order.product.price - (order.discount || 0);
+            this.total = order.total - (order.shippingDiscount || 0) - (order.discount || 0);
             this.navigationItems = [{ path: '/sales/orders', name: 'Orders' }, { path: `/sales/orders/${this.order.id}`, name: this.order.orderNumber }];
           }
-
-          this.seller = this.userService.user$.getValue().id === this.order.seller.id;
           this.loading = false;
           this.ref.markForCheck();
         })
