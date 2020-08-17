@@ -27,6 +27,14 @@ export class AdminService extends BaseService {
         );
     }
 
+    getMembers(): Observable<UserAuth[]> {
+        return this.httpClient.get<UserAuth[]>(`${this.apiBaseUrl}/admin/members`).pipe(
+            map((result: UserAuth[]) => {
+                return result;
+            }), catchError(this.errorHandler)
+        );
+    }
+
     approveSeller(request: ApproveSellerRequest): Observable<void> {
         return this.httpClient.post(`${this.apiBaseUrl}/admin/approve-seller`, request).pipe(
             map(() => {
