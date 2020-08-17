@@ -14,6 +14,7 @@ export class SellerListComponent implements OnInit {
   createForm: FormGroup;
   sellers: UserAuth[];
   error: string;
+  pending = true;
 
 
   constructor(private adminService: AdminService,
@@ -44,7 +45,7 @@ export class SellerListComponent implements OnInit {
   }
 
   getSellers() {
-    this.adminService.getSellers(true).subscribe(sellers => {
+    this.adminService.getSellers(this.pending).subscribe(sellers => {
       this.sellers = sellers;
       this.ref.markForCheck();
     })

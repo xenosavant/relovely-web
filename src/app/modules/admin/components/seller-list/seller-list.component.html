@@ -18,6 +18,9 @@
         <button class="primary" (click)=create() [disabled]="!createForm.valid" mat-stroked-button>Create</button>
     </form>
 </div>
+<div class="settings">
+    <mat-checkbox matCheckbox [(ngModel)]="pending" (change)="getSellers()">Show only pending</mat-checkbox>
+</div>
 <div class="sellers">
     <div class="seller">
         <strong>First Name</strong>
@@ -30,8 +33,10 @@
         <div>{{seller.lastName}}</div>
         <div>{{seller.email}}</div>
         <div>{{seller.instagramUsername}}</div>
-        <button class="primary success" (click)=feature(seller) mat-stroked-button>Featured</button>
-        <button class="primary success" (click)=approve(seller) mat-stroked-button>Approve</button>
-        <button class="primary destroy" (click)=reject(seller) mat-stroked-button>Reject</button>
+        <ng-container *ngIf="seller.seller.approved !== false && seller.seller.approved !== true">
+            <button class="primary success" (click)=feature(seller) mat-stroked-button>Featured</button>
+            <button class="primary success" (click)=approve(seller) mat-stroked-button>Approve</button>
+            <button class="primary destroy" (click)=reject(seller) mat-stroked-button>Reject</button>
+        </ng-container>
     </div>
 </div>
