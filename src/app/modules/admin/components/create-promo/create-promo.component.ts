@@ -18,7 +18,7 @@ export class CreatePromoComponent implements OnInit {
 
   form: FormGroup;
   sellers: UserAuth[];
-  options: string[] = ['discount', 'freeShipping', 'freeSales'];
+  options: string[] = ['discount', 'freeShipping'];
   discounts: number[] = [5, 10, 15, 20, 25, 30];
   saving: boolean = false;
 
