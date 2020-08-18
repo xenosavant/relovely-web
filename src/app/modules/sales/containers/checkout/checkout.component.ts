@@ -150,6 +150,7 @@ export class CheckoutComponent implements OnInit {
     } else {
       this.shippingCost = 0;
       this.total = this.product.price + this.shippingCost;
+      this.calculateTotals();
       this.shippingCostLoading = false
       this.loading = false;
       this.ref.markForCheck();

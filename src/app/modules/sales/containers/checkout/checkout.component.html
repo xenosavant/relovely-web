@@ -104,11 +104,10 @@
                 </ng-container>
                 <ng-container *ngIf="!currentPromo">
                   <ng-container *ngIf="!checkingPromo">
-                    <mat-form-field appearance="outline">
+                    <mat-form-field (keyup.enter)="checkPromo()" appearance="outline">
                       <input matInput placeholder="Promo Code" [(ngModel)]="promo" />
                     </mat-form-field>
-                    <button (keyup.enter)="checkPromo()" (click)="checkPromo()" [disabled]="!promo" mat-stroked-button
-                      class="primary">
+                    <button (click)="checkPromo()" [disabled]="!promo" mat-stroked-button class="primary">
                       Apply
                     </button>
                   </ng-container>

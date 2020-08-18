@@ -16,6 +16,9 @@ export class CreatePromoComponent implements OnInit {
   @Output()
   close: EventEmitter<any> = new EventEmitter;
 
+  @Output()
+  save: EventEmitter<any> = new EventEmitter;
+
   form: FormGroup;
   sellers: UserAuth[];
   options: string[] = ['discount', 'freeShipping'];
@@ -45,7 +48,7 @@ export class CreatePromoComponent implements OnInit {
       sellerId: this.form.get('seller').value,
       discountPercent: this.form.get('discount').value
     }).subscribe(() => {
-      this.close.emit();
+      this.save.emit();
     })
   }
 

@@ -18,6 +18,10 @@ export class PromoListComponent implements OnInit {
   constructor(private adminService: AdminService, private overlayService: OverlayService, private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.getPromos();
+  }
+
+  getPromos() {
     this.adminService.getPromos().subscribe(promos => {
       this.promos = promos;
       this.ref.markForCheck();
@@ -30,6 +34,10 @@ export class PromoListComponent implements OnInit {
 
   closeModal() {
     this.overlayService.close();
+  }
+  onSave() {
+    this.overlayService.close();
+    this.getPromos();
   }
 
 }
