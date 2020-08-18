@@ -24,6 +24,8 @@ export class Order {
     public address: Address;
     public orderNumber: string;
     public labelPrinted?: boolean;
+    public shippingDiscount?: number;
+    public discount?: number;
 }
 
 export type OrderStatus = 'purchased' | 'shipped' | 'delivered' | 'refunded' | 'cancelled' | 'error' | 'disputed';

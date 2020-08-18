@@ -10,4 +10,5 @@ export interface PostOrderRequest {
     cardType?: string;
     createAccount?: boolean;
     joinMailingList?: boolean;
+    promoCode?: string;
 }

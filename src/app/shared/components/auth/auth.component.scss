@@ -55,7 +55,7 @@
 
 .outer-wrapper {
     &.signup {
-        min-height:515px;
+        min-height:525px;
     }
     &.signin {
         min-height:500px;
@@ -123,4 +123,5 @@
     text-align: center;
     margin-top: 16px;
     font-weight: 600;
+    line-height: 1.2em;
 }

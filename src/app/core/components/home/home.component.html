@@ -1,16 +1,16 @@
 <div class="full-content home">
-    <div *ngIf="!mobile && !submitted" class="home-header-bar">
+    <div *ngIf="!mobile" class="home-header-bar">
         <div class="header-inner">
-            <div class="text-wrapper">
+            <div *ngIf="!submitted" class="text-wrapper">
                 Don't miss a thing! Stay in the know + subscribe to the relovely newsletter
             </div>
-            <form #form class="cta-wrapper"
-                action="https://relovely.us19.list-manage.com/subscribe/post?u=62e1e17c6afb3051e97b8b507&amp;id=94cf966c5d"
-                method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank"
-                novalidate>
-                <input class="email-input" type="email" value="" name="EMAIL" id="mce-EMAIL">
+            <div *ngIf="submitted" class="text-wrapper">
+                Thanks for subscribing! We'll let you know what's new!
+            </div>
+            <form *ngIf="!submitted" novalidate class="cta-wrapper">
+                <input #input class="email-input" type="email" value="" name="EMAIL" id="mce-EMAIL">
                 <button mat-stroked-button type="submit" value="Subscribe" name="subscribe"
-                    (click)="form.submit(); onSubmit();" id="mc-embedded-subscribe">
+                    (click)="onJoinMailingList(input.value)">
                     Submit
                 </button>
             </form>
@@ -58,17 +58,17 @@
         </div>
     </div>
 </div>
-<div *ngIf="mobile && !submitted" class="mobile-banner-wrapper">
-    <h1> Stay in the know!</h1>
-    <form #mobileForm class="cta-wrapper"
-        action="https://relovely.us19.list-manage.com/subscribe/post?u=62e1e17c6afb3051e97b8b507&amp;id=94cf966c5d"
-        method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
-        <input type="email" value="" name="EMAIL" id="mce-EMAIL" class="email-input">
-        <button mat-stroked-button (click)="mobileForm.submit(); onSubmit();">
+<div *ngIf="mobile" class="mobile-banner-wrapper">
+    <h1 *ngIf="!submitted"> Stay in the know!</h1>
+    <h1 *ngIf="submitted"> Thanks for subscribing!</h1>
+    <form *ngIf="!submitted" #mobileForm class="cta-wrapper" target="_blank" novalidate>
+        <input #mobileInput type="email" value="" name="EMAIL" id="mce-EMAIL" class="email-input">
+        <button mat-stroked-button (click)="onJoinMailingList(mobileInput.value)">
             Submit
         </button>
     </form>
-    <p>Sign up for our newsletter to receive exclusive offers, and be the first to know about new product launches.
+    <p *ngIf="!submitted">Sign up for our newsletter to receive exclusive offers, and be the first to know about new
+        product launches.
     </p>
 </div>
 <ng-template cdkPortal #applyToSell="cdkPortal">

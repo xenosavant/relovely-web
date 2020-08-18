@@ -1,0 +1,31 @@
+@import '../../../../../styles-variables.scss';
+
+:host {
+    margin-top: 16px;
+    display: block;
+}
+
+button {
+    margin: 0 auto;
+}
+
+.promos {
+    margin: 0 auto;
+    width: 1000px;
+    padding:16px;
+    .promo {
+        padding:6px;
+        display: grid;
+        column-gap: 8px;
+        align-items: center;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        &:nth-child(odd) {
+            background-color: $medium-gray-background;
+        }
+    }
+}
+
+.button-wrapper {
+    display: flex;
+    margin: 0 auto;
+}

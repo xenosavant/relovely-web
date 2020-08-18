@@ -1,0 +1,14 @@
+<div class="members">
+    <div class="member">
+        <strong>First Name</strong>
+        <strong>Last Name</strong>
+        <strong>Email</strong>
+        <strong>Insta</strong>
+    </div>
+    <div class="member" *ngFor="let member of members">
+        <div>{{member.firstName}}</div>
+        <div>{{member.lastName}}</div>
+        <div>{{member.email}}</div>
+        <div>{{member.username}}</div>
+    </div>
+</div>

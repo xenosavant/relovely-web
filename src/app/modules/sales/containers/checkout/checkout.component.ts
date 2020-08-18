@@ -15,6 +15,7 @@ import { ShipmentService } from '@app/shared/services/shipment/shipment.service'
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { guid } from '../../../../shared/utils/rand';
 import { MatCheckboxChange } from '@angular/material';
+import { Promo } from '@app/shared/models/promo.model';
 
 @Component({
   selector: 'app-checkout',
@@ -54,6 +55,14 @@ export class CheckoutComponent implements OnInit {
   verifyAddress = false;
   emailList = true;
   createUser = true;
+  promo: string;
+  checkingPromo: boolean;
+  discount: number = 0;
+  promoError: string;
+  freeShipping: boolean = false;
+  currentPrice: number;
+  currentShipping: number;
+  currentPromo: Promo;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -130,6 +139,7 @@ export class CheckoutComponent implements OnInit {
         this.tax = response.taxRate;
         this.shippingCostLoading = false;
         this.loading = false;
+        this.calculateTotals();
         this.ref.markForCheck();
       }, err => {
         this.error = err.error.error.message;
@@ -140,10 +150,17 @@ export class CheckoutComponent implements OnInit {
     } else {
       this.shippingCost = 0;
       this.total = this.product.price + this.shippingCost;
+      this.calculateTotals();
       this.shippingCostLoading = false
       this.loading = false;
       this.ref.markForCheck();
     }
+  }
+
+  calculateTotals() {
+    this.currentPrice = this.product.price - this.discount;
+    this.currentShipping = this.freeShipping ? 0 : this.shippingCost;
+    this.total = this.currentPrice + this.currentShipping + this.tax;
   }
 
   onSaveAddress(user: UserAuth) {
@@ -151,6 +168,14 @@ export class CheckoutComponent implements OnInit {
     this.savingAddress = false;
     this.setSelections(user);
     this.recalcCosts();
+  }
+
+  onChangePromo() {
+    this.currentPromo = null;
+    this.discount = 0;
+    this.freeShipping = false;
+    this.calculateTotals();
+    this.ref.markForCheck();
   }
 
   onSavingAddress(saving: boolean) {
@@ -324,6 +349,35 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
+  checkPromo() {
+    this.checkingPromo = true;
+    this.promoError = null;
+    this.userService.checkPromo(this.promo).subscribe(response => {
+      this.freeShipping = false;
+      this.discount = 0;
+      this.promoError = null;
+      if (response.rejectionReason) {
+        this.promoError = response.rejectionReason;
+      } else {
+        this.currentPromo = response.promo;
+        switch (response.promo.type) {
+          case 'discount':
+            this.discount = this.product.price * (response.promo.discountPercent / 100);
+            break;
+          case 'freeShipping':
+            this.freeShipping = true;
+            break;
+        }
+        this.calculateTotals();
+      }
+      this.checkingPromo = false;
+      this.ref.markForCheck();
+    }, (error) => {
+      this.checkingPromo = false;
+      this.ref.markForCheck();
+    })
+  }
+
   checkout() {
     this.checkingOut = true;
     this.error = null;
@@ -333,7 +387,9 @@ export class CheckoutComponent implements OnInit {
           address: this.selectedAddress,
           paymentId: this.selectedPayment.stripeId,
           shipmentId: this.shipmentId,
-          tax: this.tax
+          joinMailingList: this.emailList,
+          tax: this.tax,
+          promoCode: this.currentPromo ? this.currentPromo.code : undefined
         }, this.product.id)
         .subscribe(order => {
           this.navigationService.navigate({ path: `/sales/orders/${order.id}` })
@@ -353,7 +409,8 @@ export class CheckoutComponent implements OnInit {
           cardType: this.selectedPayment.type,
           email: this.email.get('email').value,
           joinMailingList: this.emailList,
-          createAccount: this.createUser
+          createAccount: this.createUser,
+          promoCode: this.currentPromo ? this.currentPromo.code : undefined
         }, this.product.id)
         .subscribe(order => {
           this.navigationService.navigate({ path: `/sales/orders/guest` })

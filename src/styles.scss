@@ -618,6 +618,16 @@ mat-chip-list mat-chip {
 
 }
 
+mat-checkbox {
+  margin-bottom: 2px;
+}
+
+.strike-through {
+  color: $pink-text;
+  text-decoration: line-through;
+  font-weight: 600;
+}
+
 
 // Filter Bar Tabs
 
