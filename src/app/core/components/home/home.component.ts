@@ -64,7 +64,8 @@ export class HomeComponent implements OnInit {
 
     onJoinMailingList(email: string) {
         this.userService.subscribe(email).subscribe(() => {
-
+            this.submitted = true;
+            this.ref.markForCheck();
         });
     }
 }

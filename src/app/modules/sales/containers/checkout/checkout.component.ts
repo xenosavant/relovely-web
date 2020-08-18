@@ -372,6 +372,9 @@ export class CheckoutComponent implements OnInit {
       }
       this.checkingPromo = false;
       this.ref.markForCheck();
+    }, (error) => {
+      this.checkingPromo = false;
+      this.ref.markForCheck();
     })
   }
 
