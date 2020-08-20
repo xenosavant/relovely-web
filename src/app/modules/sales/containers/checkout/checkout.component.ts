@@ -56,13 +56,14 @@ export class CheckoutComponent implements OnInit {
   emailList = true;
   createUser = true;
   promo: string;
-  checkingPromo: boolean;
+  checkingPromo: boolean = false;
   discount: number = 0;
   promoError: string;
   freeShipping: boolean = false;
   currentPrice: number;
   currentShipping: number;
-  currentPromo: Promo;
+  currentPromo: Promo = null;
+
 
   constructor(
     private activatedRoute: ActivatedRoute,
