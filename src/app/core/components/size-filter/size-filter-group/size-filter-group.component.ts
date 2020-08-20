@@ -13,7 +13,7 @@ export class SizeFilterGroupComponent implements OnChanges {
   @Input() group: SizeFilterGroup;
 
   @Output()
-  select: EventEmitter<{ groupId: string, selectedIds: string[] }> = new EventEmitter();
+  select: EventEmitter<SizeFilterGroup> = new EventEmitter();
 
   constructor(private ref: ChangeDetectorRef) { }
 
@@ -29,7 +29,7 @@ export class SizeFilterGroupComponent implements OnChanges {
     } else {
       this.group.selectedKeys.push(filter.key);
     }
-    this.select.emit({ groupId: this.group.id, selectedIds: this.group.selectedKeys });
+    this.select.emit(this.group);
   }
 
 }
