@@ -93,27 +93,6 @@
                 </mat-radio-group>
               </ng-container>
             </ng-container>
-            <div class="divider"></div>
-            <div class="promo">
-              <ng-container *ngIf="currentPromo">
-                <div class="current-promo">
-                  <div class="current-promo--inner"> {{currentPromo.code}}</div>
-                  <button (click)="onChangePromo()" [disabled]="!promo" mat-stroked-button class="primary">
-                    Change
-                  </button>
-                </div>
-              </ng-container>
-              <ng-container *ngIf="!currentPromo">
-                <mat-form-field *ngIf="!checkingPromo" (keyup.enter)="checkPromo()" appearance="outline">
-                  <input matInput placeholder="Promo Code" [(ngModel)]="promo" />
-                </mat-form-field>
-                <button (click)="checkPromo()" [disabled]="!promo" mat-stroked-button class="primary">
-                  Apply
-                </button>
-              </ng-container>
-              <mat-spinner *ngIf="checkingPromo" diameter="25"></mat-spinner>
-            </div>
-            <div class="error" *ngIf="promoError">{{promoError}}</div>
           </ng-container>
           <div class="payment-form-wrapper" *ngIf="addingPayment || (!user && !selectedPayment)">
             <app-payment-card-input [class.invisible]="loadingPayment" (isLoading)="onLoadingPaymentForm($event)"
@@ -143,6 +122,30 @@
             <mat-checkbox matCheckbox [checked]="emailList"></mat-checkbox>
             <div> Keep me in the know about new product adds, exclusive offers, and more</div>
           </div>
+          <ng-container *ngIf="user">
+            <div class="divider"></div>
+            <div class="promo">
+              <ng-container *ngIf="currentPromo">
+                <div class="current-promo">
+                  <div class="current-promo--inner"> {{currentPromo.code}}</div>
+                  <button (click)="onChangePromo()" [disabled]="!promo" mat-stroked-button class="primary">
+                    Change
+                  </button>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!currentPromo">
+                <mat-form-field *ngIf="!checkingPromo" (keyup.enter)="checkPromo()" appearance="outline">
+                  <input matInput placeholder="Promo Code" [(ngModel)]="promo" />
+                </mat-form-field>
+                <button *ngIf="!checkingPromo" (click)="checkPromo()" [disabled]="!promo" mat-stroked-button
+                  class="primary">
+                  Apply
+                </button>
+              </ng-container>
+              <mat-spinner *ngIf="checkingPromo" diameter="25"></mat-spinner>
+            </div>
+            <div class="error" *ngIf="promoError">{{promoError}}</div>
+          </ng-container>
         </div>
       </div>
       <div class="checkout-product">
