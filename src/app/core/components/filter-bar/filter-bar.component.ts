@@ -104,10 +104,13 @@ export class FilterBarComponent implements OnInit {
     }))
   }
 
-  sizeFiltersChanged(change: any) {
-    let sizeArray: string[] = [];
-    sizeArray = sizeArray.concat(change.selectedIds);
-    this.filterService.updateSizes([...new Set(sizeArray)]);
+  sizeFiltersChanged(change: SizeFilterGroup) {
+    this.sizeFilters.forEach(filterGroup => {
+      if (filterGroup.id === change.id) {
+        this.sizeFilters[this.sizeFilters.findIndex(group => group.id === change.id)] = change;
+      }
+    })
+    this.filterService.updateSizes([...new Set([...this.sizeFilters.map(s => s.selectedKeys).reduce((prev, current) => prev.concat(current))])]);
   }
 
   colorFiltersChanged(ids: string[]) {

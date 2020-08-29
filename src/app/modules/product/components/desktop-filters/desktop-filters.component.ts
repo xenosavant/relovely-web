@@ -92,20 +92,12 @@ export class DesktopFiltersComponent implements OnInit {
 
 
   selectSize(group: SizeFilterGroup, key: string) {
-    let sizeArray = [];
-    this.sizeFilters.forEach(filter => {
-      if (filter.id !== group.id) {
-        sizeArray.concat(filter.selectedKeys);
-      }
-    });
-
     if (group.selectedKeys.some(selectedKey => key === selectedKey)) {
       group.selectedKeys = group.selectedKeys.filter(k => k !== key);
     } else {
       group.selectedKeys.push(key);
     }
-    sizeArray = sizeArray.concat(group.selectedKeys);
-    this.filterService.updateSizes(sizeArray);
+    this.filterService.updateSizes([...new Set(this.sizeFilters.map(s => s.selectedKeys).reduce((prev, current) => prev.concat(current)))]);
   }
 
   selectColor(color: ColorFilter) {

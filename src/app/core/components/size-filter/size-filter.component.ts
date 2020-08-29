@@ -14,7 +14,7 @@ export class SizeFilterComponent implements OnInit {
   filters: SizeFilterGroup[];
 
   @Output()
-  filtersChanged: EventEmitter<string[]> = new EventEmitter();
+  filtersChanged: EventEmitter<SizeFilterGroup> = new EventEmitter();
 
   constructor() { }
 
@@ -22,7 +22,7 @@ export class SizeFilterComponent implements OnInit {
 
   }
 
-  selectSize(sizes: any) {
+  selectSize(sizes: SizeFilterGroup) {
     this.filtersChanged.emit(sizes);
   }
 }
