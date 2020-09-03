@@ -62,7 +62,6 @@ export class AppComponent implements OnInit {
   public accountNav: NavigationItem;
   public showMobileHeader = true;
 
-
   public showFilterBar: boolean;
   public showNavBar: boolean;
   public showTopLevel: boolean;
@@ -183,7 +182,6 @@ export class AppComponent implements OnInit {
           this.userService.logout();
           this.loading = false;
         }
-        this.resetLoginSubscription();
         this.ref.markForCheck();
       }, err => {
         if (this.alertSubsciption) {
@@ -236,7 +234,7 @@ export class AppComponent implements OnInit {
     }
     this.loginSubscription = this.userService.loggedIn$.subscribe(loggedIn => {
       this.navSetup(this.lookupService.state.categories);
-      if (loggedIn && !this.alertSubsciption) {
+      if (!this.alertSubsciption) {
         this.alertSubsciption = this.alertService.notification$.subscribe(notification => {
           if (notification.menuItem) {
             const temp: NavigationItem[] = [];
@@ -252,6 +250,9 @@ export class AppComponent implements OnInit {
               }
               temp.push(item);
             });
+            this.accountNav = { ...this.accountNav };
+            console.log(this.accountNav);
+            this.ref.markForCheck();
             this.currentNavigationItems = [this.currentNavigationItems[0], this.currentNavigationItems[1], this.currentNavigationItems[2], this.accountNav];
             this.ref.markForCheck();
           }
