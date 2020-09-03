@@ -224,7 +224,7 @@ export class ProductCreateComponent implements OnInit {
   }
 
   onClose() {
-    this.close.emit(true);
+    this.close.emit(false);
   }
 
   onCloseCropper($event: any) {
