@@ -153,7 +153,6 @@ export class AppComponent implements OnInit {
     })
 
     this.productService.showCreateProduct$.subscribe(values => {
-      this.currentUserId = values.id;
       this.editProduct = values.product;
       this.overlayService.open(this.productModal);
     })
@@ -174,6 +173,7 @@ export class AppComponent implements OnInit {
       this.userService.me().subscribe(me => {
         if (me) {
           this.userService.setLogin(jwt, me);
+          this.currentUserId = me.id;
           if (this.alertSubsciption) {
             this.alertSubsciption.unsubscribe()
           }
@@ -536,6 +536,8 @@ export class AppComponent implements OnInit {
       this.showOverlay = false
       this.navigationService.navigate(item);
     } else if (item.name === 'List A Product') {
+      this.sidenavOpen = false;
+      this.showOverlay = false
       this.overlayService.open(this.productModal);
     } else if (!this.userService.user$.getValue() && item.name === 'Account') {
       this.sidenavOpen = false;
