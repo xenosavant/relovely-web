@@ -122,4 +122,8 @@ export class FilterBarComponent implements OnInit {
     this.navigationService.navigate(item);
   }
 
+  get sizesActive(): boolean {
+    return this.currentSizeFilters.some(f => f.selectedKeys.length > 0);
+  }
+
 }

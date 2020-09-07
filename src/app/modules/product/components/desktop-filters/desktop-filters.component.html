@@ -1,17 +1,17 @@
 <div class="list-wrapper">
     <ul>
-        <li #sizeTrigger="matMenuTrigger" [class.hidden]="hideSizeMenu" (mouseenter)="onEnterTrigger($event, 'size')"
-            [matMenuTriggerFor]="sizeMenu">
+        <li class="alert-after" [class.active]="sizesActive" #sizeTrigger="matMenuTrigger" [class.hidden]="hideSizeMenu"
+            (mouseenter)="onEnterTrigger($event, 'size')" [matMenuTriggerFor]="sizeMenu">
             Size
             <img src="./assets/images/chevron-down.svg">
         </li>
-        <li #colorTrigger="matMenuTrigger" (mouseenter)="onEnterTrigger($event, 'color')"
-            [matMenuTriggerFor]="colorMenu">
+        <li class="alert-after" [class.active]="colorsActive" #colorTrigger="matMenuTrigger"
+            (mouseenter)="onEnterTrigger($event, 'color')" [matMenuTriggerFor]="colorMenu">
             Color
             <img src="./assets/images/chevron-down.svg">
         </li>
-        <li #priceTrigger="matMenuTrigger" (mouseenter)="onEnterTrigger($event, 'price')"
-            [matMenuTriggerFor]="priceMenu">
+        <li class="alert-after" [class.active]="pricesActive" #priceTrigger="matMenuTrigger"
+            (mouseenter)="onEnterTrigger($event, 'price')" [matMenuTriggerFor]="priceMenu">
             Price
             <img src="./assets/images/chevron-down.svg">
         </li>

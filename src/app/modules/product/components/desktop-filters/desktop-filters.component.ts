@@ -184,4 +184,16 @@ export class DesktopFiltersComponent implements OnInit {
       this.priceTrigger.closeMenu();
     }
   }
+
+  get sizesActive() {
+    return this.currentSizeFilters.some(f => f.selectedKeys.length > 0);
+  }
+
+  get colorsActive() {
+    return this.selectedColors.length > 0;
+  }
+
+  get pricesActive() {
+    return this.selectedPriceFilters.length > 0;
+  }
 }

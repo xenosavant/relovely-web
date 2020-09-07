@@ -196,3 +196,24 @@
         position: absolute;
     }
 }
+
+.alert-after {
+    &::after {
+        content:"\A";
+        width:8px;
+        height:8px;
+        border-radius:50%;
+        background: $alert;
+        display:inline-block;
+        position: relative;
+        left: 5px;
+        top: -12px;
+        visibility: hidden;
+    }
+}
+
+.alert-after.active {
+    &::after {
+        visibility: visible;
+    }
+}
