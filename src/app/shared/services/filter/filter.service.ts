@@ -70,6 +70,12 @@ export class FilterService extends BaseService {
             colors: [],
             prices: []
         }
+        const user = this.userService.user$.getValue();
+        if (user) {
+            this.userService.updateUser(user.id, { preferences: this._state }).subscribe(u => {
+                this.userService.setCurrentUser(u);
+            });
+        }
         this.filterStateSubject$.next(this._state);
     }
 }

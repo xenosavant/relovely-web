@@ -122,6 +122,15 @@ export class FilterBarComponent implements OnInit {
     this.navigationService.navigate(item);
   }
 
+  onClearFilters() {
+    this.filterService.clear();
+    this.selectedColors = [];
+    this.selectedPriceFilters = [];
+    this.sizeFilters.forEach(filter => {
+      filter.selectedKeys = [];
+    })
+  }
+
   get sizesActive(): boolean {
     return this.currentSizeFilters.some(f => f.selectedKeys.length > 0);
   }

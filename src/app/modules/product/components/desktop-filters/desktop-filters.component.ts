@@ -188,7 +188,9 @@ export class DesktopFiltersComponent implements OnInit {
   onClearFilters() {
     this.selectedColors = [];
     this.selectedPriceFilters = [];
-    this.sizeFilters = [];
+    this.sizeFilters.forEach(filter => {
+      filter.selectedKeys = [];
+    })
     this.filterService.clear();
   }
 
