@@ -86,7 +86,7 @@ export class DesktopFiltersComponent implements OnInit {
         }
         this.ref.markForCheck();
       }
-    })
+    });
   }
 
 
@@ -183,6 +183,13 @@ export class DesktopFiltersComponent implements OnInit {
     if (this.priceTrigger.menuOpen) {
       this.priceTrigger.closeMenu();
     }
+  }
+
+  onClearFilters() {
+    this.selectedColors = [];
+    this.selectedPriceFilters = [];
+    this.sizeFilters = [];
+    this.filterService.clear();
   }
 
   get sizesActive() {

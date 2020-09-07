@@ -63,4 +63,13 @@ export class FilterService extends BaseService {
         }
         this.filterStateSubject$.next(this._state);
     }
+
+    public clear() {
+        this._state = {
+            sizes: [],
+            colors: [],
+            prices: []
+        }
+        this.filterStateSubject$.next(this._state);
+    }
 }

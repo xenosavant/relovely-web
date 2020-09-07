@@ -24,7 +24,7 @@ export class FilterBarComponent implements OnInit {
   selectedCategoryFilterId: string;
   selectedPriceFilters: PriceFilter[] = [];
   sizeFilters: SizeFilterGroup[];
-  currentSizeFilters: SizeFilterGroup[];
+  currentSizeFilters: SizeFilterGroup[] = [];
   colorFilters: ColorFilter[];
   selectedColors: string[] = [];
   priceFilters: PriceFilter[];

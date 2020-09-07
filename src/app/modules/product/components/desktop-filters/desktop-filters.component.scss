@@ -92,12 +92,13 @@
     max-width: $products-width;
     margin:0 auto;
     padding: 0px 16px;
+    position: relative;
     ul {
         margin-top:24px;
         margin-bottom:0px;
         padding-inline-start:0px !important;
         height:30px;
-        display: flex;
+        display: inline-block;
         li {
             height:30px !important;
             display:inline-block;
@@ -113,6 +114,13 @@
                 height:15px;
             }
         }
+    }
+    div.clear {
+        display: inline-block;
+        position: absolute;
+        right: 100px;
+        top: 18px;
+        cursor: pointer;
     }
 }
 
