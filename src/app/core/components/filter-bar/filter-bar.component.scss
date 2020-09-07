@@ -20,15 +20,3 @@
       }
     }
   }
-
-  .alert::after {
-    content:"\A";
-    width:5px;
-    height:5px;
-    border-radius:50%;
-    background: $alert;
-    display:inline-block;
-    position: relative;
-    left: 0px;
-    top: -12px;
-  }

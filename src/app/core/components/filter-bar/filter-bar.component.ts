@@ -125,5 +125,11 @@ export class FilterBarComponent implements OnInit {
   get sizesActive(): boolean {
     return this.currentSizeFilters.some(f => f.selectedKeys.length > 0);
   }
+  get colorsActive(): boolean {
+    return this.selectedColors.length > 0;
+  }
+  get pricesActive(): boolean {
+    return this.selectedPriceFilters.length > 0;
+  }
 
 }
