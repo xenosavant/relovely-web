@@ -105,12 +105,13 @@ export class FilterBarComponent implements OnInit {
   }
 
   sizeFiltersChanged(change: SizeFilterGroup) {
-    this.sizeFilters.forEach(filterGroup => {
+    this.currentSizeFilters.forEach(filterGroup => {
       if (filterGroup.id === change.id) {
-        this.sizeFilters[this.sizeFilters.findIndex(group => group.id === change.id)] = change;
+        this.currentSizeFilters[this.currentSizeFilters.findIndex(group => group.id === change.id)] = change;
       }
     })
-    this.filterService.updateSizes([...new Set([...this.sizeFilters.map(s => s.selectedKeys).reduce((prev, current) => prev.concat(current))])]);
+    this.filterService.updateSizes([...new Set([...this.currentSizeFilters.map(s => s.selectedKeys).reduce((prev, current) => prev.concat(current))])]);
+    this.currentSizeFilters = Object.assign([], this.currentSizeFilters);
   }
 
   colorFiltersChanged(ids: string[]) {
@@ -126,13 +127,15 @@ export class FilterBarComponent implements OnInit {
     this.filterService.clear();
     this.selectedColors = [];
     this.selectedPriceFilters = [];
-    this.sizeFilters.forEach(filter => {
+    this.currentSizeFilters.forEach(filter => {
       filter.selectedKeys = [];
     })
+    this.currentSizeFilters = Object.assign([], this.currentSizeFilters);
+    this.ref.markForCheck();
   }
 
   get sizesActive(): boolean {
-    return this.currentSizeFilters.some(f => f.selectedKeys.length > 0);
+    return this.currentSizeFilters && this.currentSizeFilters.some(f => f.selectedKeys.length > 0);
   }
   get colorsActive(): boolean {
     return this.selectedColors.length > 0;

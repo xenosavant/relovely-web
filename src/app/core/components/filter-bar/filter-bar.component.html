@@ -1,5 +1,4 @@
-<div class="filter-bar" [class.sizes-active]="sizesActive" [class.colors-active]="colorsActive"
-  [class.prices-active]="pricesActive">
+<div class="filter-bar">
   <mat-tab-group [@.disabled]="true">
     <mat-tab label="Category" *ngIf="categoryFilters && categoryFilters.length">
       <div>
@@ -34,6 +33,7 @@
     </mat-tab> -->
   </mat-tab-group>
   <div class="clear" (click)="onClearFilters()">
-    Clear Filters
+    <div *ngIf="sizesActive || colorsActive || pricesActive" class="filters-active"></div>
+    <fa-icon icon="sync"></fa-icon>
   </div>
 </div>

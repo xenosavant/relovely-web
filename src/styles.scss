@@ -631,72 +631,7 @@ mat-checkbox {
 
 // Filter Bar Tabs
 
-@mixin filter-alert {
-  content:"\A";
-  width:5px;
-  height:5px;
-  border-radius:50%;
-  background: $alert;
-  display:inline-flex;
-  position: relative;
-  visibility: hidden;
-}
-
- 
-  // .colors-active::after {
-  //   @include alert;
-  //   left: 120px;
-  //   top: -75px;
-  // }
-  // .sizes-active::after {
-  //   @include alert;
-  //   left: 65px;
-  //   top: -75px;
-  // }
-
 .filter-bar {
-    mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels {
-      .mat-tab-label:nth-child(2)::after {
-        @include filter-alert;
-        left: -35px;
-        top: -13px;
-      }
-    } 
-    &.sizes-active {
-      mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels {
-        .mat-tab-label:nth-child(2)::after {
-          visibility: visible;
-        }
-      }
-    }
-    mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels {
-      .mat-tab-label:nth-child(3)::after {
-        @include filter-alert;
-        left: -42px;
-        top: -13px;
-      }
-    } 
-    &.colors-active {
-      mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels {
-        .mat-tab-label:nth-child(3)::after {
-          visibility: visible;
-        }
-      }
-    }
-    mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels {
-      .mat-tab-label:nth-child(4)::after {
-        @include filter-alert;
-        left: -42px;
-        top: -13px;
-      }
-    } 
-    &.prices-active {
-      mat-tab-group mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels {
-        .mat-tab-label:nth-child(4)::after {
-          visibility: visible;
-        }
-      }
-    }
   mat-tab-group {
     height:70px;
     overflow: hidden;

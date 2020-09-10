@@ -24,10 +24,20 @@
   .filter-bar {
     position: relative;
     .clear {
+      display: flex;
+      align-items: center;
       position: absolute;
-      right: 5px;
+      right: 12px;
       top: 0;
       font-size: small;
       z-index: 100;
+      .filters-active {
+        content:"\A";
+        width:5px;
+        height: 5px;
+        border-radius:50%;
+        background: $alert;
+        margin-right: 6px;
+      } 
     }
   }
