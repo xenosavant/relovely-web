@@ -19,10 +19,6 @@ export class SizeFilterComponent implements OnChanges {
   constructor(private ref: ChangeDetectorRef) { }
 
   ngOnChanges(changes) {
-    console.log(changes)
-    // this.filters = [];
-    // this.filters = [...changes.filters.currentValue];
-    // this.ref.detectChanges();
   }
 
 

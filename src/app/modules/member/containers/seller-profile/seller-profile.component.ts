@@ -67,7 +67,6 @@ export class SellerProfileComponent implements OnChanges {
     this.loading = false;
     if (!this.productModalSubscription) {
       this.productModalSubscription = this.productService.productModalClosed$.subscribe(success => {
-        console.log(success);
         this.overlayService.close();
         if (success) {
           this.productsLoading = true;

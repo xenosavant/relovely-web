@@ -18,7 +18,6 @@ export class SizeFilterGroupComponent implements OnChanges {
   constructor(private ref: ChangeDetectorRef) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes)
     if (changes.group) {
       this.ref.markForCheck();
     }
