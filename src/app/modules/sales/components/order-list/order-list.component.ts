@@ -28,7 +28,12 @@ export class OrderListComponent implements OnInit {
 
   onImageClick() {
     if (this.detail) {
-      this.navigationService.navigate({ path: `/products/detail/${this.order.product.id}` })
+      this.navigationService.navigate({ path: `/products/detail/${this.order.product.id}` });
+      this.orderService.shipOrder(this.order.id).subscribe(() => {
+        const user = this.userService.user$.getValue();
+        console.log('success')
+        this.ref.markForCheck();
+      });
     }
   }
 
