@@ -1,5 +1,5 @@
 @import '../../../../../styles-variables.scss';
-
+@import '~@angular/material/theming';
 
 .border {
     height:1px;
@@ -92,12 +92,13 @@
     max-width: $products-width;
     margin:0 auto;
     padding: 0px 16px;
+    position: relative;
     ul {
         margin-top:24px;
         margin-bottom:0px;
         padding-inline-start:0px !important;
         height:30px;
-        display: flex;
+        display: inline-block;
         li {
             height:30px !important;
             display:inline-block;
@@ -113,6 +114,17 @@
                 height:15px;
             }
         }
+    }
+    div.clear {
+        display: inline-block;
+        position: absolute;
+        right: 100px;
+        top: 22px;
+        font-weight: 400;
+        &:hover {
+            font-weight: 600;
+        }
+        cursor: pointer;
     }
 }
 
@@ -194,5 +206,26 @@
         width:80px;
         top:0px;
         position: absolute;
+    }
+}
+
+.alert-after {
+    &::after {
+        content:"\A";
+        width:8px;
+        height:8px;
+        border-radius:50%;
+        background: $alert;
+        display:inline-block;
+        position: relative;
+        left: 5px;
+        top: -12px;
+        visibility: hidden;
+    }
+}
+
+.alert-after.active {
+    &::after {
+        visibility: visible;
     }
 }

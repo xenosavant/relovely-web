@@ -62,7 +62,6 @@ export class AppComponent implements OnInit {
   public accountNav: NavigationItem;
   public showMobileHeader = true;
 
-
   public showFilterBar: boolean;
   public showNavBar: boolean;
   public showTopLevel: boolean;
@@ -154,10 +153,14 @@ export class AppComponent implements OnInit {
     })
 
     this.productService.showCreateProduct$.subscribe(values => {
-      this.currentUserId = values.id;
       this.editProduct = values.product;
       this.overlayService.open(this.productModal);
     })
+
+    this.productService.productModalClosed$.subscribe(success => {
+      this.editProduct = null;
+      this.overlayService.close();
+    });
 
     this.productService.showImage$.subscribe(url => {
       this.productImageUrl = url;
@@ -170,6 +173,7 @@ export class AppComponent implements OnInit {
       this.userService.me().subscribe(me => {
         if (me) {
           this.userService.setLogin(jwt, me);
+          this.currentUserId = me.id;
           if (this.alertSubsciption) {
             this.alertSubsciption.unsubscribe()
           }
@@ -183,7 +187,6 @@ export class AppComponent implements OnInit {
           this.userService.logout();
           this.loading = false;
         }
-        this.resetLoginSubscription();
         this.ref.markForCheck();
       }, err => {
         if (this.alertSubsciption) {
@@ -236,7 +239,7 @@ export class AppComponent implements OnInit {
     }
     this.loginSubscription = this.userService.loggedIn$.subscribe(loggedIn => {
       this.navSetup(this.lookupService.state.categories);
-      if (loggedIn && !this.alertSubsciption) {
+      if (!this.alertSubsciption) {
         this.alertSubsciption = this.alertService.notification$.subscribe(notification => {
           if (notification.menuItem) {
             const temp: NavigationItem[] = [];
@@ -252,6 +255,8 @@ export class AppComponent implements OnInit {
               }
               temp.push(item);
             });
+            this.accountNav = { ...this.accountNav };
+            this.ref.markForCheck();
             this.currentNavigationItems = [this.currentNavigationItems[0], this.currentNavigationItems[1], this.currentNavigationItems[2], this.accountNav];
             this.ref.markForCheck();
           }
@@ -342,12 +347,10 @@ export class AppComponent implements OnInit {
       accountNav.subItems.push(
         new NavigationItem([], '/account/settings', 'Settings', null, [], [], null),
         new NavigationItem([], '/sales/sales', 'Sales', null, [], [], null),
-        new NavigationItem([], '/member/listings', 'Listings', null, [], [], null)
+        new NavigationItem([], '/member/listings', 'Listings', null, [], [], null),
+        new NavigationItem([], '', 'List A Product', null, [], [], null)
       );
     }
-    if (this.userService.user$.getValue() && this.userService.user$.getValue().admin) {
-      accountNav.subItems.push(new NavigationItem([], '/admin/dashboard', 'Admin', null, [], [], null));
-    };
     accountNav.subItems.push(
       new NavigationItem([], '/member/terms', 'Terms of Service', null, [], [], null),
       new NavigationItem([], '/account/signout', 'Sign Out', null, [], [], null),
@@ -355,12 +358,11 @@ export class AppComponent implements OnInit {
     this.accountNav = accountNav;
     navigationItems.push(this.accountNav);
     navigationItems.push({ name: 'Blog', path: 'https://www.blog.relovely.com/' });
+    if (this.userService.user$.getValue() && this.userService.user$.getValue().type === 'seller') {
+      navigationItems.push({ name: 'List A Product', path: '' });
+    }
     this.navigationService.rootNavigationItems = navigationItems;
     this.currentNavigationItems = navigationItems
-  }
-
-  goToSell() {
-    this.onApply()
   }
 
   goToAbout() {
@@ -458,7 +460,11 @@ export class AppComponent implements OnInit {
   public onAccountMenuAction(item: NavigationItem) {
     this.showMegaMenu = false;
     this.selectedMenuItem = -1;
-    this.navigationService.navigate({ path: item.path, name: item.name })
+    if (item.name === 'List A Product') {
+      this.overlayService.open(this.productModal);
+    } else {
+      this.navigationService.navigate({ path: item.path, name: item.name });
+    }
   }
 
   public onOpenMegaMenu(item: NavigationItem) {
@@ -529,6 +535,10 @@ export class AppComponent implements OnInit {
       this.sidenavOpen = false;
       this.showOverlay = false
       this.navigationService.navigate(item);
+    } else if (item.name === 'List A Product') {
+      this.sidenavOpen = false;
+      this.showOverlay = false
+      this.overlayService.open(this.productModal);
     } else if (!this.userService.user$.getValue() && item.name === 'Account') {
       this.sidenavOpen = false;
       this.showOverlay = false

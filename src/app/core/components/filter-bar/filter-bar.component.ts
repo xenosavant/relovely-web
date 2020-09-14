@@ -24,7 +24,7 @@ export class FilterBarComponent implements OnInit {
   selectedCategoryFilterId: string;
   selectedPriceFilters: PriceFilter[] = [];
   sizeFilters: SizeFilterGroup[];
-  currentSizeFilters: SizeFilterGroup[];
+  currentSizeFilters: SizeFilterGroup[] = [];
   colorFilters: ColorFilter[];
   selectedColors: string[] = [];
   priceFilters: PriceFilter[];
@@ -105,12 +105,13 @@ export class FilterBarComponent implements OnInit {
   }
 
   sizeFiltersChanged(change: SizeFilterGroup) {
-    this.sizeFilters.forEach(filterGroup => {
+    this.currentSizeFilters.forEach(filterGroup => {
       if (filterGroup.id === change.id) {
-        this.sizeFilters[this.sizeFilters.findIndex(group => group.id === change.id)] = change;
+        this.currentSizeFilters[this.currentSizeFilters.findIndex(group => group.id === change.id)] = change;
       }
     })
-    this.filterService.updateSizes([...new Set([...this.sizeFilters.map(s => s.selectedKeys).reduce((prev, current) => prev.concat(current))])]);
+    this.filterService.updateSizes([...new Set([...this.currentSizeFilters.map(s => s.selectedKeys).reduce((prev, current) => prev.concat(current))])]);
+    this.currentSizeFilters = Object.assign([], this.currentSizeFilters);
   }
 
   colorFiltersChanged(ids: string[]) {
@@ -120,6 +121,27 @@ export class FilterBarComponent implements OnInit {
   navigate(item: NavigationItem) {
     this.selectedCategoryFilterId = item.id;
     this.navigationService.navigate(item);
+  }
+
+  onClearFilters() {
+    this.filterService.clear();
+    this.selectedColors = [];
+    this.selectedPriceFilters = [];
+    this.currentSizeFilters.forEach(filter => {
+      filter.selectedKeys = [];
+    })
+    this.currentSizeFilters = Object.assign([], this.currentSizeFilters);
+    this.ref.markForCheck();
+  }
+
+  get sizesActive(): boolean {
+    return this.currentSizeFilters && this.currentSizeFilters.some(f => f.selectedKeys.length > 0);
+  }
+  get colorsActive(): boolean {
+    return this.selectedColors.length > 0;
+  }
+  get pricesActive(): boolean {
+    return this.selectedPriceFilters.length > 0;
   }
 
 }

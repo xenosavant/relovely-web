@@ -35,7 +35,6 @@ export class CreatePromoComponent implements OnInit {
       discount: new FormControl(null)
     });
     this.adminService.getSellers(false).subscribe(sellers => {
-      console.log(sellers)
       this.sellers = sellers.filter(s => s.seller.verificationStatus === 'verified');
     })
   }

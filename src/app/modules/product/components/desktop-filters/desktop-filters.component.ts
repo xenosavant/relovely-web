@@ -27,7 +27,7 @@ export class DesktopFiltersComponent implements OnInit {
   selectedPriceFilters: PriceFilter[] = [];
   priceFilters: PriceFilter[];
 
-  @ViewChild('sizeTrigger', { static: true }) sizeTrigger: MatMenuTrigger;
+  @ViewChild('sizeTrigger', { static: false }) sizeTrigger: MatMenuTrigger;
   @ViewChild('colorTrigger', { static: true }) colorTrigger: MatMenuTrigger;
   @ViewChild('priceTrigger', { static: true }) priceTrigger: MatMenuTrigger;
   @ViewChild('listingsTrigger', { static: true }) listingsTrigger: MatMenuTrigger;
@@ -86,7 +86,7 @@ export class DesktopFiltersComponent implements OnInit {
         }
         this.ref.markForCheck();
       }
-    })
+    });
   }
 
 
@@ -174,7 +174,7 @@ export class DesktopFiltersComponent implements OnInit {
   }
 
   closeActiveMenu() {
-    if (this.sizeTrigger.menuOpen) {
+    if (this.sizeTrigger && this.sizeTrigger.menuOpen) {
       this.sizeTrigger.closeMenu();
     }
     if (this.colorTrigger.menuOpen) {
@@ -183,5 +183,26 @@ export class DesktopFiltersComponent implements OnInit {
     if (this.priceTrigger.menuOpen) {
       this.priceTrigger.closeMenu();
     }
+  }
+
+  onClearFilters() {
+    this.selectedColors = [];
+    this.selectedPriceFilters = [];
+    this.sizeFilters.forEach(filter => {
+      filter.selectedKeys = [];
+    });
+    this.filterService.clear();
+  }
+
+  get sizesActive() {
+    return this.currentSizeFilters && this.currentSizeFilters.some(f => f.selectedKeys.length > 0);
+  }
+
+  get colorsActive() {
+    return this.selectedColors.length > 0;
+  }
+
+  get pricesActive() {
+    return this.selectedPriceFilters.length > 0;
   }
 }

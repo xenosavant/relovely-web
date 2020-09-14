@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
 import { SizeFilterSelection } from '../../../shared/interfaces/size-filter-selection';
 
@@ -8,7 +8,7 @@ import { SizeFilterSelection } from '../../../shared/interfaces/size-filter-sele
   styleUrls: ['./size-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SizeFilterComponent implements OnInit {
+export class SizeFilterComponent implements OnChanges {
 
   @Input()
   filters: SizeFilterGroup[];
@@ -16,13 +16,18 @@ export class SizeFilterComponent implements OnInit {
   @Output()
   filtersChanged: EventEmitter<SizeFilterGroup> = new EventEmitter();
 
-  constructor() { }
+  constructor(private ref: ChangeDetectorRef) { }
 
-  ngOnInit() {
-
+  ngOnChanges(changes) {
   }
+
+
 
   selectSize(sizes: SizeFilterGroup) {
     this.filtersChanged.emit(sizes);
+  }
+
+  track(index, group: SizeFilterGroup) {
+    return `${index}-${group.id}-${group.selectedKeys.length}`;
   }
 }

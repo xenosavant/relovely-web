@@ -52,6 +52,8 @@ export class OrderComponent implements OnInit {
           this.shipping = this.order.shippingCost - (this.order.shippingDiscount || 0);
           this.seller = this.userService.user$.getValue().id === this.order.seller.id;
           if (this.seller) {
+            this.orderService.shipOrder(this.order.id).subscribe(() => {
+            });
             this.price = this.order.product.price;
             this.total = order.total - (order.shippingDiscount || 0);
             this.navigationItems = [{ path: '/sales/sales', name: 'Sales' }, { path: `/sales/orders/${this.order.id}`, name: this.order.orderNumber }];

@@ -63,4 +63,19 @@ export class FilterService extends BaseService {
         }
         this.filterStateSubject$.next(this._state);
     }
+
+    public clear() {
+        this._state = {
+            sizes: [],
+            colors: [],
+            prices: []
+        }
+        const user = this.userService.user$.getValue();
+        if (user) {
+            this.userService.updateUser(user.id, { preferences: this._state }).subscribe(u => {
+                this.userService.setCurrentUser(u);
+            });
+        }
+        this.filterStateSubject$.next(this._state);
+    }
 }
