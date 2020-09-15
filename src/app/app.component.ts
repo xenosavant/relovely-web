@@ -351,6 +351,9 @@ export class AppComponent implements OnInit {
         new NavigationItem([], '', 'List A Product', null, [], [], null)
       );
     }
+    if (this.userService.user$.getValue() && this.userService.user$.getValue().admin) {
+      accountNav.subItems.push(new NavigationItem([], '/admin/dashboard', 'Admin', null, [], [], null));
+    }
     accountNav.subItems.push(
       new NavigationItem([], '/member/terms', 'Terms of Service', null, [], [], null),
       new NavigationItem([], '/account/signout', 'Sign Out', null, [], [], null),
