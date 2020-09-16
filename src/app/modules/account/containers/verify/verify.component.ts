@@ -116,8 +116,10 @@ export class VerifyComponent implements OnInit {
       this.welcome = true;
       this.loading = false;
       this.ref.markForCheck();
-    }, error => {
+    }, err => {
+      this.error = err.error.error.message;
       this.loading = false;
+      this.ref.markForCheck();
     });
   }
 

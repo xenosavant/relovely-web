@@ -6,10 +6,10 @@ import { Alert } from "./alert.interface";
 @Injectable({ providedIn: 'root' })
 export class AlertService extends BaseService {
 
-    public notification$: BehaviorSubject<Alert> = new BehaviorSubject({});
+    public notification$: BehaviorSubject<Alert[]> = new BehaviorSubject([]);
 
-    public setAlert(notification: Alert) {
-        this.notification$.next(notification);
+    public setAlert(notifications: Alert[]) {
+        this.notification$.next(notifications);
     }
 
 }

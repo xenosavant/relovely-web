@@ -53,6 +53,11 @@ export class OrderComponent implements OnInit {
           this.seller = this.userService.user$.getValue().id === this.order.seller.id;
           if (this.seller) {
             this.orderService.shipOrder(this.order.id).subscribe(() => {
+              const user = this.userService.user$.getValue();
+              if (user.sales) {
+                user.sales.splice(user.sales.findIndex(s => s.id === this.order.id), 1);
+                this.userService.setCurrentUser(user);
+              }
             });
             this.price = this.order.product.price;
             this.total = order.total - (order.shippingDiscount || 0);
