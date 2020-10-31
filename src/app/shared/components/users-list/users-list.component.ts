@@ -8,13 +8,14 @@ import { UserList } from '@app/shared/models/user-list.model';
   styleUrls: ['./users-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UsersListComponent implements OnInit {
+export class UsersListComponent {
 
   @Input() users: UserList[];
 
   constructor(private userService: UserService, private ref: ChangeDetectorRef) { }
 
-  ngOnInit() {
+  ngOnChanges(changes) {
+    console.log(changes)
   }
 
 }

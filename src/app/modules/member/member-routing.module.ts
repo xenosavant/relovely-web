@@ -9,6 +9,7 @@ import { ReviewsComponent } from './containers/reviews/reviews.component';
 import { AuthenticationGuard } from '@app/shared/guards/auth.guard';
 import { SellerGuard } from '@app/shared/guards/seller.guard';
 import { PrivacyComponent } from './containers/privacy/privacy.component';
+import { SellersComponent } from './containers/sellers/sellers.component';
 
 const routes: Routes = [
     {
@@ -26,6 +27,10 @@ const routes: Routes = [
     {
         path: 'privacy',
         component: PrivacyComponent
+    },
+    {
+        path: 'sellers',
+        component: SellersComponent,
     },
     {
         path: ':id',

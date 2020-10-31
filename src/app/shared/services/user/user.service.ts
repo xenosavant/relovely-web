@@ -18,6 +18,7 @@ import { AlertService } from '../alert/alert.service';
 import { SupportRequest } from './support.request';
 import { Promo } from '@app/shared/models/promo.model';
 import { PromoResponse } from './promo.response';
+import { UserList } from '@app/shared/models/user-list.model';
 
 @Injectable({ providedIn: 'root' })
 export class
@@ -80,6 +81,14 @@ export class
         return this.httpClient.get<UserDetail>(`${this.apiBaseUrl}/users/${userId}`).pipe(
             map((user: UserDetail) => {
                 return user;
+            })
+        );
+    }
+
+    getSellers(): Observable<UserList[]> {
+        return this.httpClient.get<UserList[]>(`${this.apiBaseUrl}/users/sellers`).pipe(
+            map((sellers: UserList[]) => {
+                return sellers;
             })
         );
     }
