@@ -31,25 +31,24 @@ export class
         super(httpClient);
     }
 
-    private _currentUser: UserAuth;
-
     private _jwt: string;
 
     public setCurrentUser(user: UserAuth): void {
-        this._currentUser = user;
         if (user) {
+            const alerts = [];
             if (user.sales && user.sales.length) {
-                this.alertService.setAlert({ menuItem: 'Sales', alert: true });
+                alerts.push({ menuItem: 'Sales', alert: true })
             } else {
-                this.alertService.setAlert({ menuItem: 'Sales', alert: false });
+                alerts.push({ menuItem: 'Sales', alert: false })
             }
             if (user.seller) {
                 if (user.seller.missingInfo.length || user.seller.verificationStatus === 'unverified' || !user.returnAddress) {
-                    this.alertService.setAlert({ menuItem: 'Settings', alert: true });
+                    alerts.push({ menuItem: 'Settings', alert: true });
                 } else {
-                    this.alertService.setAlert({ menuItem: 'Settings', alert: false });
+                    alerts.push({ menuItem: 'Settings', alert: false });
                 }
             }
+            this.alertService.setAlert(alerts);
         }
         this.user$.next(user);
     }

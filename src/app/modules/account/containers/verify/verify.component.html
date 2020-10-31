@@ -29,6 +29,9 @@
                     class="form-error">
                     Password must be a least 8 characters long
                 </div>
+                <div *ngIf="error" class="error">
+                    This is an error
+                </div>
                 <form [formGroup]="form">
                     <div>
                         <mat-form-field appearance="outline">

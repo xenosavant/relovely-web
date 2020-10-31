@@ -240,27 +240,28 @@ export class AppComponent implements OnInit {
     this.loginSubscription = this.userService.loggedIn$.subscribe(loggedIn => {
       this.navSetup(this.lookupService.state.categories);
       if (!this.alertSubsciption) {
-        this.alertSubsciption = this.alertService.notification$.subscribe(notification => {
-          if (notification.menuItem) {
-            const temp: NavigationItem[] = [];
-            this.accountAlert = false;
-            this.accountNav.subItems.forEach(item => {
-              if (item.name === notification.menuItem) {
-                if (notification.alert) {
-                  this.accountAlert = true;
-                  item.alert = true;
-                } else {
-                  item.alert = false;
+        this.alertSubsciption = this.alertService.notification$.subscribe(notifications => {
+          console.log(notifications);
+          this.accountAlert = false;
+          notifications.forEach(notification => {
+            if (notification.menuItem) {
+              this.accountNav.subItems.forEach(item => {
+                if (item.name === notification.menuItem) {
+                  if (notification.alert) {
+                    this.accountAlert = true;
+                    item.alert = true;
+                  } else {
+                    item.alert = false;
+                  }
                 }
-              }
-              temp.push(item);
-            });
-            this.accountNav = { ...this.accountNav };
-            this.ref.markForCheck();
-            this.currentNavigationItems = [this.currentNavigationItems[0], this.currentNavigationItems[1], this.currentNavigationItems[2], this.accountNav];
-            this.ref.markForCheck();
-          }
-        })
+              })
+            }
+          })
+          this.accountNav = { ...this.accountNav };
+          this.ref.markForCheck();
+          this.currentNavigationItems = [this.currentNavigationItems[0], this.currentNavigationItems[1], this.currentNavigationItems[2], this.accountNav];
+          this.ref.markForCheck();
+        });
       }
       this.loading = false;
       this.ref.markForCheck();
