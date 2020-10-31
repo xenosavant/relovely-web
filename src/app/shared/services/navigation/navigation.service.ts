@@ -208,6 +208,12 @@ export class NavigationService {
         }
     }
 
+    public setHeader(header: string) {
+        this._navConfig.pageHeader = header;
+        this._navConfig.showNavBar = true;
+        this.navConfigSubject$.next(this._navConfig);
+    }
+
     public setData(data: any) {
         this._currentNavigationItem.data = data;
     }

@@ -1,0 +1,12 @@
+@import '../../../../../styles-variables';
+
+
+:host {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.full-content {
+    max-width: 650px;
+}
