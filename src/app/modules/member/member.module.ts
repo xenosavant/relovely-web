@@ -14,9 +14,20 @@ import { TermsComponent } from './containers/terms/terms.component';
 import { PrivacyComponent } from './containers/privacy/privacy.component';
 import { ReviewsComponent } from './containers/reviews/reviews.component';
 import { ListingsComponent } from './containers/listings/listings.component';
+import { SellersComponent } from './containers/sellers/sellers.component';
 
 @NgModule({
-  declarations: [SellerProfileComponent, MemberProfileComponent, FavoritesComponent, PurchasesComponent, MemberProfileComponent, ProfileComponent, TermsComponent, PrivacyComponent, ReviewsComponent, ListingsComponent],
+  declarations: [SellerProfileComponent,
+    SellersComponent,
+    MemberProfileComponent,
+    FavoritesComponent,
+    PurchasesComponent,
+    MemberProfileComponent,
+    ProfileComponent,
+    TermsComponent,
+    PrivacyComponent,
+    ReviewsComponent,
+    ListingsComponent],
   imports: [
     CommonModule,
     MemberRoutingModule,
