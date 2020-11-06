@@ -15,7 +15,11 @@ export class UsersListComponent {
   constructor(private userService: UserService, private ref: ChangeDetectorRef) { }
 
   ngOnChanges(changes) {
-    console.log(changes)
+
+  }
+
+  track(index, user: UserList) {
+    return `${index}-${user.id}`;
   }
 
 }
