@@ -11,7 +11,7 @@ export const environment = {
   production: false,
   test: false,
   i18nPrefix: '',
-  apiUrl: 'https://apidev.relovely.com',
+  apiUrl: '/api',
   facebookAuthUrl: 'https://www.facebook.com/v6.0/dialog/oauth',
   facebookClientId: '498359121110237',
   facebookRedirectUrl: 'https://dev.relovely.com/account/facebook',

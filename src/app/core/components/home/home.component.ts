@@ -58,6 +58,10 @@ export class HomeComponent implements OnInit {
         this.navigationService.navigate({ path: '/products' })
     }
 
+    onShopByInfluencer() {
+        this.navigationService.navigate({ path: '/member/sellers' })
+    }
+
     onSubmit() {
         this.submitted = true;
     }

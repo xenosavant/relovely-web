@@ -19,7 +19,12 @@
     <div class="banner-wrapper">
         <h1>PRELOVED FASHION SOLD BY INFLUENCERS</h1>
         <p>Giving great products new life</p>
-        <button (click)="onShop()" mat-stroked-button>Shop Now</button>
+        <div class="button-wrapper">
+            <div class="buttons-inner">
+                <button (click)="onShop()" mat-stroked-button>Shop All Products</button>
+                <button (click)="onShopByInfluencer()" mat-stroked-button>Shop By Influencer</button>
+            </div>
+        </div>
     </div>
     <div class="featured-sellers">
         <div class="header">

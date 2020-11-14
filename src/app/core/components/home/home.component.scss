@@ -76,6 +76,29 @@
         margin-top: 32px;
         min-height: 400px;
     }
+    .button-wrapper {
+        display: flex;
+        justify-content: center;
+        z-index:100;
+        .buttons-inner {
+            width: min-content;
+            @media (min-width: $desktop-breakpoint) {
+                width: max-content;
+            }
+
+            button {
+                margin: 6px;
+                border-color: white;
+                z-index:100;
+                font-weight: 600;
+                width:150px;
+                &:hover {
+                    background-color: white;
+                    color: $dark-blue;
+                }
+            }
+        }
+    }
         display:grid;
         align-content: center;
         align-items: center;
@@ -111,17 +134,6 @@
             letter-spacing: .1em;
             text-align: center;
             z-index: 99;
-        }
-        button {
-            border-color: white;
-            width: 100px;
-            z-index:100;
-            margin: 0 auto;
-            font-weight: 600;
-            &:hover {
-                background-color: white;
-                color: $dark-blue;
-            }
         }
     &::after {
         content: "";
