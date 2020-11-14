@@ -241,7 +241,6 @@ export class AppComponent implements OnInit {
       this.navSetup(this.lookupService.state.categories);
       if (!this.alertSubsciption) {
         this.alertSubsciption = this.alertService.notification$.subscribe(notifications => {
-          console.log(notifications);
           this.accountAlert = false;
           notifications.forEach(notification => {
             if (notification.menuItem) {
