@@ -63,6 +63,8 @@ export class CheckoutComponent implements OnInit {
   currentPrice: number;
   currentShipping: number;
   currentPromo: Promo = null;
+  initialized = false;
+
 
 
   constructor(
@@ -80,8 +82,35 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit() {
     this.navigationService.showNavBar(false);
-    this.user = this.userService.user$.getValue();
+    this.userService.user$.subscribe(user => {
+      const existed = !!this.user;
+      this.user = user;
+      if (!this.initialized || (!!user !== existed)) {
+        this.init();
+        this.ref.markForCheck();
+      }
+    });
     this.states = this.lookupService.states;
+    this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
+      this.mobile = result.matches;
+    })
+    this.activatedRoute.params.subscribe(params => {
+      this.productService.getProduct(params['id']).subscribe(product => {
+        this.product = product.product;
+        if (this.user) {
+          this.selectedAddress = this.user.addresses.find(a => a.primary);
+        }
+        this.recalcCosts();
+      }, err => {
+        this.error = 'Hmmm...something went wrong. Please referesh the page and try again.'
+        this.ref.markForCheck();
+      });
+    })
+  }
+
+  init() {
+    this.initialized = true;
+    console.log('init')
     if (this.user) {
       if (this.user.addresses.length) {
         this.selectedAddress = this.user.addresses.find(a => a.primary);
@@ -107,21 +136,6 @@ export class CheckoutComponent implements OnInit {
         email: new FormControl('', [Validators.required, Validators.email]),
       })
     }
-    this.breakpointObserver.observe(['(max-width: 899px)']).subscribe(result => {
-      this.mobile = result.matches;
-    })
-    this.activatedRoute.params.subscribe(params => {
-      this.productService.getProduct(params['id']).subscribe(product => {
-        this.product = product.product;
-        if (this.user) {
-          this.selectedAddress = this.user.addresses.find(a => a.primary);
-        }
-        this.recalcCosts();
-      }, err => {
-        this.error = 'Hmmm...something went wrong. Please referesh the page and try again.'
-        this.ref.markForCheck();
-      });
-    })
   }
 
   recalcCosts() {

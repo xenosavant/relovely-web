@@ -12,7 +12,7 @@ if (environment.production) {
     dsn: "https://7dc3c4b511db4c71b80a1dda2e761d86@o476731.ingest.sentry.io/5516789",
     integrations: [
       new Integrations.BrowserTracing({
-        tracingOrigins: ["localhost", "https://relovely.com"],
+        tracingOrigins: ["localhost", "https://www.relovely.com"],
         routingInstrumentation: Sentry.routingInstrumentation,
       }),
     ],
