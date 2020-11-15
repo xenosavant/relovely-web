@@ -26,6 +26,9 @@ import { NgxStripeModule } from 'ngx-stripe';
 export const cloudinaryLib = {
   Cloudinary: Cloudinary
 };
+import { APP_INITIALIZER, ErrorHandler } from "@angular/core";
+import * as Sentry from "@sentry/angular";
+import { Router } from "@angular/router";
 
 export const config: CloudinaryConfiguration = { cloud_name: environment.cloudinaryCloudName };
 
@@ -51,7 +54,23 @@ export const config: CloudinaryConfiguration = { cloud_name: environment.cloudin
   ],
   exports: [RouterModule],
   declarations: [AppComponent],
-  providers: [LookupService, NavigationService, FilterService],
+  providers: [LookupService, NavigationService, FilterService, {
+    provide: ErrorHandler,
+    useValue: Sentry.createErrorHandler({
+      showDialog: true,
+    }),
+  },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => { },
+      deps: [Sentry.TraceService],
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

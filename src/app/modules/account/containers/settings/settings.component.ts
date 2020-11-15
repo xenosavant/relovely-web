@@ -71,7 +71,7 @@ export class SettingsComponent implements OnInit {
         verify = true;
       }
       else if (this.currentUser.seller.verificationStatus === 'review') {
-        this.message = this.message + ' identity is verified';
+        this.message = this.message + ' verify your identity';
         verify = true;
       }
       if (this.currentUser.seller.missingInfo.includes('external_account')) {

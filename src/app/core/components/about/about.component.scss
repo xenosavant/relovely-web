@@ -18,86 +18,86 @@
         margin-top: 32px;
         // min-height: 800px;
     }
-        display:grid;
-        grid-template-rows: 1fr [middle-start] auto [middle-end] 1fr;
-        grid-template-columns: auto;
-        color: white;
-        padding: 16px;
-        @media (max-width: $mobile-breakpoint) {
-            h1 {
-                font-size: 1.5em;
-            }
-            p {
-                font-size: 1em;
-            }
+    display:grid;
+    grid-template-rows: 1fr [middle-start] auto [middle-end] 1fr;
+    grid-template-columns: auto;
+    color: white;
+    padding: 16px;
+    @media (max-width: $mobile-breakpoint) {
+        h1 {
+            font-size: 1.5em;
+        }
+        p {
+            font-size: 1em;
+        }
 
+    }
+    @media (min-width: $desktop-breakpoint) {
+        h1 {
+            font-size: 2.2em;
         }
-        @media (min-width: $desktop-breakpoint) {
-            h1 {
-                font-size: 2.2em;
-            }
-            p {
-                font-size: 1.5em;
+        p {
+            font-size: 1.5em;
+        }
+    }
+    .white-logo {
+        grid-row: middle-start;
+        z-index: 100;
+        margin: 0 auto;
+            img {
+                height: 100px;
+                @media (min-width: $desktop-breakpoint) {
+                height: 200px;
             }
         }
-        .white-logo {
-            grid-row: middle-start;
-            z-index: 100;
+    }
+    .bottom-info {
+        grid-row: middle-end;
+        z-index: 100;
+        .sub-header {
+            color: white;
+            font-size: 1.2em;
+            @media (min-width: $desktop-breakpoint) {
+                font-size: 2.5em;
+            }
+            width: fit-content;
             margin: 0 auto;
-                img {
-                    height: 100px;
-                    @media (min-width: $desktop-breakpoint) {
-                    height: 200px;
-                }
+        }
+        .sub-info {
+            margin: 0 auto;
+            margin-top: 12px;
+            background-color: rgba(100, 99, 99, 0.75);
+            padding: 6px;
+            color: white;
+            text-align: center;
+            @media (min-width: $desktop-breakpoint) {
+                max-width: 800px;
+                font-size: 1.1em;
+                line-height: 1.3em;
+                padding: 12px;
             }
         }
-        .bottom-info {
-            grid-row: middle-end;
-            z-index: 100;
-            .sub-header {
-                color: white;
-                font-size: 1.2em;
-                @media (min-width: $desktop-breakpoint) {
-                    font-size: 2.5em;
-                }
+        .how {
+            .how-inner {
+                display: flex;
+                flex-direction: row;
+                margin: 0 auto;
                 width: fit-content;
-                margin: 0 auto;
-            }
-            .sub-info {
-                margin: 0 auto;
-                margin-top: 12px;
-                background-color: rgba(100, 99, 99, 0.75);
-                padding: 6px;
-                color: white;
-                text-align: center;
-                @media (min-width: $desktop-breakpoint) {
-                    max-width: 800px;
-                    font-size: 1.1em;
-                    line-height: 1.3em;
-                    padding: 12px;
+                align-items: center;
+                .text {
+                    background-color: black;
+                    color: white;
+                    padding: 16px;
+                    margin-top: 12px;
+                }
+                img {
+                    margin-top: 24px;
+                    height: 40px;
                 }
             }
-            .how {
-                .how-inner {
-                    display: flex;
-                    flex-direction: row;
-                    margin: 0 auto;
-                    width: fit-content;
-                    align-items: center;
-                    .text {
-                        background-color: black;
-                        color: white;
-                        padding: 16px;
-                        margin-top: 12px;
-                    }
-                    img {
-                        margin-top: 24px;
-                        height: 40px;
-                    }
-                }
-               
-            }
+            
         }
+    }
     &::after {
         content: "";
         display: block;

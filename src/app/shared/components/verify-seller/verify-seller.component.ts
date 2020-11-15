@@ -287,9 +287,6 @@ export class VerifySellerComponent implements OnInit {
 
   verifyFile(event: any): string {
     const file: File = event.file;
-    if (!RegExp('([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg|HEIC)', 'g').test(file.name)) {
-      return 'file is not an image';
-    }
     if (file.size > 10000000) {
       return 'File is too large, must be less than 10MB.'
     }
