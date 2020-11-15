@@ -30,7 +30,7 @@
                     Password must be a least 8 characters long
                 </div>
                 <div *ngIf="error" class="error">
-                    This is an error
+                    {{error}}
                 </div>
                 <form [formGroup]="form">
                     <div>
