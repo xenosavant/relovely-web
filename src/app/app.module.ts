@@ -57,7 +57,7 @@ export const config: CloudinaryConfiguration = { cloud_name: environment.cloudin
   providers: [LookupService, NavigationService, FilterService, {
     provide: ErrorHandler,
     useValue: Sentry.createErrorHandler({
-      showDialog: true,
+      showDialog: false,
     }),
   },
     {
