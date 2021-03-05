@@ -32,11 +32,9 @@ const loadImage = require('blueimp-load-image');
 })
 export class ProductCreateComponent implements OnInit {
 
-  @Input() sellerId: string;
   @Input() product: Product;
   @Output() close: EventEmitter<boolean> = new EventEmitter;
   @Output() saved: EventEmitter<boolean> = new EventEmitter;
-
   public imageChangedEvent: any = null;
   public crop = false;
   public form: FormGroup;
@@ -320,12 +318,14 @@ export class ProductCreateComponent implements OnInit {
           this.loading = false;
         })
       } else {
-        this.productService.postProduct(product, this.sellerId).subscribe(response => {
+        this.productService.postProduct(product, this.currentUser.id).subscribe(response => {
           this.loading = false;
           this.close.emit(true);
+          this.ref.markForCheck();
         }, error => {
           this.saveError = true;
           this.loading = false;
+          this.ref.markForCheck();
         })
       }
     }

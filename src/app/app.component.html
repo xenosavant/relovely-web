@@ -263,7 +263,7 @@
 </ng-template>
 
 <ng-template cdkPortal #productModal="cdkPortal">
-  <app-product-create [product]="editProduct" [sellerId]="currentUserId" (close)="closeProductModal($event)">
+  <app-product-create [product]="editProduct" (close)="closeProductModal($event)">
   </app-product-create>
 </ng-template>
 
