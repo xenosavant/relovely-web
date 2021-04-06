@@ -32,6 +32,10 @@ $custom-typography: mat-typography-config(
 }
 
 a {
+  &.head {
+    color: inherit !important;
+    font-weight: inherit !important;
+  }
   color: $link-blue !important;
   font-weight: 400;
   cursor: pointer;
