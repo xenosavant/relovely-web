@@ -18,8 +18,7 @@
 $custom-typography: mat-typography-config(
   $font-family: 'Roboto, sans-serif',
   $headline: mat-typography-level(32px, 48px, 700),
-  $body-1: mat-typography-level(16px, 20px, 500),
-  $button: mat-typography-level(16px, 20px, 300)
+  $body-1: mat-typography-level(16px, 20px, 500)
 );
 
 // Override the typography in the core CSS.
@@ -33,6 +32,10 @@ $custom-typography: mat-typography-config(
 }
 
 a {
+  &.head {
+    color: inherit !important;
+    font-weight: inherit !important;
+  }
   color: $link-blue !important;
   font-weight: 400;
   cursor: pointer;

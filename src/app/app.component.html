@@ -187,8 +187,8 @@
             style="z-index:1050" (mouseleave)="onLeaveMenuBar($event)">
             <span class="menu">
               <span *ngFor="let item of desktopNavigationItems; let i = index" class="menu-item">
-                <h1 [class.current]="selectedMenuItem === i" (click)="onAccountMenuAction(item)"
-                  (mouseenter)="onOpenMegaMenu(item)">{{item.name}}</h1>
+                <h1 [class.current]="selectedMenuItem === i" (mouseenter)="onOpenMegaMenu(item)"><a class="head"
+                    [routerLink]="item.path">{{item.name}}</a></h1>
               </span>
             </span>
           </div>
@@ -224,13 +224,13 @@
 <ng-template #footer>
   <div class="footer">
     <ul>
-      <li (click)="onAbout()"><a appClick target="_blank">About</a></li>
+      <li><a [routerLink]="['/about']">About</a></li>
       <li (click)="onApply()"><a appClick target="_blank">Sell</a></li>
       <li (click)="onHelp()"><a appClick target=" _blank">Help</a></li>
       <li (click)="onTerms()"><a appClick target="_blank">Terms</a></li>
       <li (click)="onPrivacy()"><a appClick target="_blank">Privacy</a></li>
-      <li (click)="onFacebook()"><a appClick target="_blank">Facebook</a></li>
-      <li (click)="onInstagram()"><a appClick target="_blank">Instagram</a></li>
+      <li><a href="https://www.facebook.com/relovely.us">Facebook</a></li>
+      <li><a href="https://www.instagram.com/relovely.us">Instagram</a></li>
     </ul>
   </div>
 </ng-template>
@@ -239,15 +239,15 @@
   <div class="mobile-footer">
     <div class="list-wrapper">
       <ul class="top">
-        <li (click)="onHelp()"><a appClick target="_blank">Help</a></li>
-        <li (click)="onAbout()"><a appClick target="_blank">About</a></li>
+        <li (click)="onHelp()"><a [routerLink]="['/about']">Help</a></li>
+        <li><a [routerLink]="['/about']">About</a></li>
         <li (click)="onApply()"><a appClick target="_blank">Sell</a></li>
         <li (click)="onTerms()"><a appClick target="_blank">Terms</a></li>
       </ul>
       <ul class="bottom">
         <li (click)="onPrivacy()"><a appClick target="_blank">Privacy</a></li>
-        <li (click)="onFacebook()"><a appClick target="_blank">Facebook</a></li>
-        <li (click)="onInstagram()"><a appClick target="_blank">Instagram</a></li>
+        <li><a href="https://www.facebook.com/relovely.us">Facebook</a></li>
+        <li><a href="https://www.instagram.com/relovely.us">Instagram</a></li>
       </ul>
     </div>
   </div>
