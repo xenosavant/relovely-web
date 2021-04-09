@@ -386,7 +386,7 @@ export class AppComponent implements OnInit {
     }
     this.content = document.querySelector('.mat-sidenav-content');
     if (this.content) {
-      const scroll = fromEvent(this.content, 'scroll').pipe(
+      const scroll = fromEvent(this.content, 'scroll', { passive: true }).pipe(
         throttleTime(200), // only emit every 10 ms
         map(() => this.content.scrollTop) // get vertical scroll positio
       );
@@ -398,7 +398,7 @@ export class AppComponent implements OnInit {
     else {
       this.content = document.querySelector('.theme-wrapper');
       if (this.content) {
-        const scroll = fromEvent(this.content, 'scroll').pipe(
+        const scroll = fromEvent(this.content, 'scroll', { passive: true }).pipe(
           throttleTime(200), // only emit every 10 ms
           map(() => this.content.scrollTop) // get vertical scroll positio
         );
