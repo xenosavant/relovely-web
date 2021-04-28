@@ -252,6 +252,7 @@ export class ProductCreateComponent implements OnInit {
         }, err => {
           this.imageUploadError = true;
           this.crop = false;
+          this.ref.detectChanges();
         });
   }
 
