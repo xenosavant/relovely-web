@@ -1,17 +1,9 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Observable, Subject, of, BehaviorSubject } from 'rxjs';
-import { Category } from '../../models/category.model';
-import { SizeFilterGroup } from '../../models/size-filter-group.model';
+import { BehaviorSubject } from 'rxjs';
 import { BaseService } from '../base.service';
-import { LookupResponse } from './lookup.response';
-import { map, catchError } from 'rxjs/operators';
-import { SignupResponse } from '../auth/signup.response';
-import { INavigationState } from '@app/shared/interfaces/navigation-state.interface';
-import { LookupState } from './lookup-state';
-import { IFilterState, IUserPreferences, PriceRange } from './filter-state';
+import { IUserPreferences, PriceRange } from './filter-state';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { HttpClient } from '@angular/common/http';
-import { UserDetail } from '@app/shared/models/user-detail.model';
 import { UserService } from '../user/user.service';
 
 @Injectable()

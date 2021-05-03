@@ -1,34 +1,21 @@
-import browser from 'browser-detect';
 import { Component, OnInit, ChangeDetectorRef, NgZone, ViewChild, ElementRef, Inject } from '@angular/core';
-import { Observable, BehaviorSubject, fromEvent, Subscription, forkJoin, concat, of, from } from 'rxjs';
+import { fromEvent, Subscription, forkJoin, concat, of, from } from 'rxjs';
 import { environment as env } from '@env/environment';
-
-import {
-  ActionSettingsChangeLanguage,
-  ActionSettingsChangeAnimationsPageDisabled,
-  selectSettingsLanguage,
-  selectSettingsStickyHeader
-} from './settings';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { NavigationItem } from './shared/models/navigation-item.model';
 import { LookupService } from './shared/services/lookup/lookup.service';
-import { KeyValue, DOCUMENT } from '@angular/common';
-import { Router, Navigation, ActivatedRoute } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NavigationService } from './shared/services/navigation/navigation.service';
 import { UserService } from './shared/services/user/user.service';
 import { Category } from './shared/models/category.model';
-import { products } from './data/products.data';
-import { timeInterval, timeout, throttleTime, map, pairwise, tap, switchMap, concatMap, mergeMap, concatAll } from 'rxjs/operators';
-import { Direction } from '@angular/cdk/bidi/typings/directionality';
-import { MatSidenavContainer, MatMenuTrigger } from '@angular/material';
+import { throttleTime, map } from 'rxjs/operators';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { MatSidenavContainer } from '@angular/material/sidenav';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from './shared/services/overlay.service';
 import { LocalStorageService } from './shared/services/local-storage/local-storage.service';
-import { LookupResponse } from './shared/services/lookup/lookup.response';
-import { IUserPreferences } from './shared/services/filter/filter-state';
 import { HeaderService } from './shared/services/header.service';
-import { LookupState } from './shared/services/lookup/lookup-state';
-import { ParseSpan } from '@angular/compiler';
 import { AlertService } from './shared/services/alert/alert.service';
 import { Product } from './shared/models/product.model';
 import { ProductService } from './shared/services/product/product.service';

@@ -196,5 +196,8 @@
       }
     }
   },
-  "defaultProject": "relovely"
+  "defaultProject": "relovely",
+  "cli": {
+    "analytics": false
+  }
 }

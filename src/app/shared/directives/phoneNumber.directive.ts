@@ -1,4 +1,4 @@
-import { OnInit, HostListener, Renderer2, ElementRef, Directive, Renderer } from "@angular/core";
+import { OnInit, HostListener, Renderer2, ElementRef, Directive } from "@angular/core";
 
 @Directive({
     selector: '[phone]'

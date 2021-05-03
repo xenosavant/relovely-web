@@ -14,7 +14,7 @@ import { OrderService } from '@app/shared/services/order/order.service';
 import { ShipmentService } from '@app/shared/services/shipment/shipment.service';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { guid } from '../../../../shared/utils/rand';
-import { MatCheckboxChange } from '@angular/material';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Promo } from '@app/shared/models/promo.model';
 
 @Component({

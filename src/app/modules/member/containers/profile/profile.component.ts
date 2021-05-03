@@ -1,13 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, NgZone, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { UserDetail } from '../../../../shared/models/user-detail.model';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { products } from '@app/data/products.data';
+import { ActivatedRoute } from '@angular/router';
 import { UserService } from '@app/shared/services/user/user.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 import { FileUploadService } from '@app/shared/services/file-upload.service';
 import { concatMap, tap } from 'rxjs/operators';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { HeaderService } from '@app/shared/services/header.service';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';

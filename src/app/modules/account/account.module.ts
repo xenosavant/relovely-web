@@ -12,7 +12,7 @@ import { InstagramAuthComponent } from './containers/instagram-auth/instagram-au
 import { SignoutComponent } from './containers/signout/signout.component';
 import { FacebookAuthComponent } from './containers/facebook-auth/facebook-auth.component';
 import { VerifyComponent } from './containers/verify/verify.component';
-import { MatRadioButton, MatRadioModule } from '@angular/material';
+import { MatRadioButton, MatRadioModule } from '@angular/material/radio';
 import { SettingsComponent } from './containers/settings/settings.component';
 @NgModule({
   declarations: [SigninComponent, ResetPasswordComponent, PaymentsComponent,

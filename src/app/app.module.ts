@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router';
 import { ProductModule } from './modules/product/product.module';
 import { NavigationService } from './shared/services/navigation/navigation.service';
 import { AppRoutingModule } from './app-routing.module';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 import { DragulaModule } from 'ng2-dragula';
 import { PortalModule } from '@angular/cdk/portal';
 import { CloudinaryModule, CloudinaryConfiguration } from './../../node_modules/@cloudinary/angular-5.x';
@@ -61,10 +61,10 @@ export const config: CloudinaryConfiguration = { cloud_name: environment.cloudin
     }),
   },
     {
-    provide: Sentry.TraceService,
-    deps: [Router],
-    useValue: undefined
-},
+      provide: Sentry.TraceService,
+      deps: [Router],
+      useValue: undefined
+    },
     {
       provide: APP_INITIALIZER,
       useFactory: () => () => { },

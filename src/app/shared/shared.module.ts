@@ -19,7 +19,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatSliderModule, MatPaginatorModule } from '@angular/material/';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ImageCropperModule } from 'ngx-image-cropper';
@@ -125,51 +126,51 @@ import { AdminGuard } from './guards/admin.guard';
 import { HorizontalUserListComponent } from './components/horizontal-user-list/horizontal-user-list.component';
 
 
-library.add(
-  faBars,
-  faUserCircle,
-  faPowerOff,
-  faCog,
-  faRocket,
-  faPlayCircle,
-  faGithub,
-  faMediumM,
-  faTwitter,
-  faInstagram,
-  faYoutube,
-  faPlus,
-  faEdit,
-  faTrash,
-  faTimes,
-  faCaretUp,
-  faCaretDown,
-  faExclamationTriangle,
-  faFilter,
-  faTasks,
-  faCheck,
-  faSquare,
-  faLanguage,
-  faPaintBrush,
-  faLightbulb,
-  faWindowMaximize,
-  faStream,
-  faBook,
-  faSearch,
-  faShoppingCart,
-  faArrowLeft,
-  faWindowClose,
-  faThLarge,
-  faEllipsisV,
-  faHeart,
-  faUndo,
-  faLandmark,
-  faStore,
-  faLock,
-  faShieldAlt,
-  faClock,
-  faHome,
-  faSync
-);
+// library.add(
+//   faBars,
+//   faUserCircle,
+//   faPowerOff,
+//   faCog,
+//   faRocket,
+//   faPlayCircle,
+//   faGithub,
+//   faMediumM,
+//   faTwitter,
+//   faInstagram,
+//   faYoutube,
+//   faPlus,
+//   faEdit,
+//   faTrash,
+//   faTimes,
+//   faCaretUp,
+//   faCaretDown,
+//   faExclamationTriangle,
+//   faFilter,
+//   faTasks,
+//   faCheck,
+//   faSquare,
+//   faLanguage,
+//   faPaintBrush,
+//   faLightbulb,
+//   faWindowMaximize,
+//   faStream,
+//   faBook,
+//   faSearch,
+//   faShoppingCart,
+//   faArrowLeft,
+//   faWindowClose,
+//   faThLarge,
+//   faEllipsisV,
+//   faHeart,
+//   faUndo,
+//   faLandmark,
+//   faStore,
+//   faLock,
+//   faShieldAlt,
+//   faClock,
+//   faHome,
+//   faSync
+// );
 
 
 @NgModule({
