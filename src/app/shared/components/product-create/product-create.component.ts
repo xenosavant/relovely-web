@@ -204,23 +204,21 @@ export class ProductCreateComponent implements OnInit {
 
   public imageChanged($event: any): void {
     const context = this;
-    loadImage($event.target.files[0], {
-      maxHeight: 1333,
-      maxwidth: 1333,
-      contain: true,
-      canvas: true,
-      orientation: true
-    }).then(function (data) {
+    var img = new Image();
+    img.onload = (event: any) => {
       const canvas = document.createElement("canvas");
-      canvas.width = data.image.width;
-      canvas.height = data.image.height;
+      const image = event.target;
+      canvas.width = image.width;
+      canvas.height = image.height;
       const ctx = canvas.getContext("2d");
-      ctx.drawImage(data.image, 0, 0, data.image.width, data.image.height);
-      const dataURL = canvas.toDataURL("image/jpg");
+      ctx.drawImage(image, 0, 0, image.width, image.height);
+      const dataURL = canvas.toDataURL('image/jpg');
+      console.log(dataURL);
       context.originalImage = dataURL;
       context.crop = true;
       context.ref.markForCheck();
-    })
+    };
+    img.src = URL.createObjectURL($event.target.files[0]);
   }
 
   onClose() {
