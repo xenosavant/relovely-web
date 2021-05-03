@@ -61,9 +61,10 @@ export const config: CloudinaryConfiguration = { cloud_name: environment.cloudin
     }),
   },
     {
-      provide: Sentry.TraceService,
-      deps: [Router],
-    },
+    provide: Sentry.TraceService,
+    deps: [Router],
+    useValue: undefined
+},
     {
       provide: APP_INITIALIZER,
       useFactory: () => () => { },

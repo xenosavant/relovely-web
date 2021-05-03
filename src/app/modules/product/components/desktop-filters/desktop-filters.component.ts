@@ -27,7 +27,7 @@ export class DesktopFiltersComponent implements OnInit {
   selectedPriceFilters: PriceFilter[] = [];
   priceFilters: PriceFilter[];
 
-  @ViewChild('sizeTrigger', { static: false }) sizeTrigger: MatMenuTrigger;
+  @ViewChild('sizeTrigger') sizeTrigger: MatMenuTrigger;
   @ViewChild('colorTrigger', { static: true }) colorTrigger: MatMenuTrigger;
   @ViewChild('priceTrigger', { static: true }) priceTrigger: MatMenuTrigger;
   @ViewChild('listingsTrigger', { static: true }) listingsTrigger: MatMenuTrigger;

@@ -98,8 +98,8 @@ export class AppComponent implements OnInit {
   @ViewChild('productModal', { static: true }) productModal: TemplatePortal<any>;
   @ViewChild('productImage', { static: true }) productImage: TemplatePortal<any>;
   @ViewChild(MatSidenavContainer, { static: true }) container: MatSidenavContainer;
-  @ViewChild('menuTrigger', { read: MatMenuTrigger, static: false }) trigger: MatMenuTrigger;
-  @ViewChild('.mat-sidenav-content', { static: false }) sideNavContent: ElementRef;
+  @ViewChild('menuTrigger', { read: MatMenuTrigger }) trigger: MatMenuTrigger;
+  @ViewChild('.mat-sidenav-content') sideNavContent: ElementRef;
 
   constructor(
     private storageService: LocalStorageService,

@@ -28,23 +28,23 @@ const routes: Routes = [
   },
   {
     path: 'products',
-    loadChildren: '../app/modules/product/product.module#ProductModule'
+    loadChildren: () => import('../app/modules/product/product.module').then(m => m.ProductModule)
   },
   {
     path: 'member',
-    loadChildren: '../app/modules/member/member.module#MemberModule'
+    loadChildren: () => import('../app/modules/member/member.module').then(m => m.MemberModule)
   },
   {
     path: 'sales',
-    loadChildren: '../app/modules/sales/sales.module#SalesModule'
+    loadChildren: () => import('../app/modules/sales/sales.module').then(m => m.SalesModule)
   },
   {
     path: 'account',
-    loadChildren: '../app/modules/account/account.module#AccountModule'
+    loadChildren: () => import('../app/modules/account/account.module').then(m => m.AccountModule)
   },
   {
     path: 'admin',
-    loadChildren: '../app/modules/admin/admin.module#AdminModule',
+    loadChildren: () => import('../app/modules/admin/admin.module').then(m => m.AdminModule),
   },
   {
     path: ':id',
