@@ -10,7 +10,6 @@ import { FormGroup } from '@angular/forms';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { HeaderService } from '@app/shared/services/header.service';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
-const loadImage = require('blueimp-load-image');
 
 @Component({
   selector: 'app-profile',

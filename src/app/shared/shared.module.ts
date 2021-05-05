@@ -26,57 +26,55 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { FileUploadModule } from 'ng2-file-upload';
-import { CloudinaryModule } from '../../../node_modules/@cloudinary/angular-5.x'
-
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faBars,
-  faUserCircle,
-  faPowerOff,
-  faCog,
-  faPlayCircle,
-  faRocket,
-  faPlus,
-  faEdit,
-  faTrash,
-  faTimes,
-  faCaretUp,
-  faCaretDown,
-  faExclamationTriangle,
-  faFilter,
-  faTasks,
-  faCheck,
-  faSquare,
-  faLanguage,
-  faPaintBrush,
-  faLightbulb,
-  faWindowMaximize,
-  faStream,
-  faBook,
-  faSearch,
-  faShoppingCart,
-  faArrowLeft,
-  faHeart,
-  faUndo,
-  faWindowClose,
-  faThLarge,
-  faEllipsisV,
-  faLandmark,
-  faStore,
-  faLock,
-  faShieldAlt,
-  faClock,
-  faHome,
-  faSync
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  faGithub,
-  faMediumM,
-  faTwitter,
-  faInstagram,
-  faYoutube
-} from '@fortawesome/free-brands-svg-icons';
+// import { library } from '@fortawesome/fontawesome-svg-core';
+// import {
+//   faBars,
+//   faUserCircle,
+//   faPowerOff,
+//   faCog,
+//   faPlayCircle,
+//   faRocket,
+//   faPlus,
+//   faEdit,
+//   faTrash,
+//   faTimes,
+//   faCaretUp,
+//   faCaretDown,
+//   faExclamationTriangle,
+//   faFilter,
+//   faTasks,
+//   faCheck,
+//   faSquare,
+//   faLanguage,
+//   faPaintBrush,
+//   faLightbulb,
+//   faWindowMaximize,
+//   faStream,
+//   faBook,
+//   faSearch,
+//   faShoppingCart,
+//   faArrowLeft,
+//   faHeart,
+//   faUndo,
+//   faWindowClose,
+//   faThLarge,
+//   faEllipsisV,
+//   faLandmark,
+//   faStore,
+//   faLock,
+//   faShieldAlt,
+//   faClock,
+//   faHome,
+//   faSync
+// } from '@fortawesome/free-solid-svg-icons';
+// import {
+//   faGithub,
+//   faMediumM,
+//   faTwitter,
+//   faInstagram,
+//   faYoutube
+// } from '@fortawesome/free-brands-svg-icons';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { HorizontalProductListComponent } from './components/horizontal-product-list/horizontal-product-list.component';
 import { ButtonComponent } from './components/button/button.component';
@@ -106,8 +104,7 @@ import { ImageViewerComponent } from './components/image-viewer/image-viewer.com
 import { AppSizePipe } from './pipes/size.pipe';
 import { AddAddressModalComponent } from './components/add-address-modal/add-address-modal.component';
 import { PaymentCardInputComponent } from './components/payment-card-input/payment-card-input.component';
-import { NgxStripeModule, StripeCardComponent } from 'ngx-stripe';
-import { environment } from '@env/environment';
+import { NgxStripeModule } from 'ngx-stripe';
 import { VerifySellerComponent } from './components/verify-seller/verify-seller.component';
 import { SsnDirective } from './directives/ssn.directive';
 import { PhoneNumberDirective } from './directives/phoneNumber.directive';
@@ -200,7 +197,6 @@ import { HorizontalUserListComponent } from './components/horizontal-user-list/h
     MatProgressSpinnerModule,
     ClickOutsideModule,
     FileUploadModule,
-    CloudinaryModule,
     DragulaModule,
     NgxStripeModule,
     MatDatepickerModule,

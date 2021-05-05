@@ -1,18 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, Output, EventEmitter, ChangeDetectorRef, SimpleChange, SimpleChanges, OnChanges } from '@angular/core';
-import { UserDetail } from '../../../../shared/models/user-detail.model';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { users } from '@app/data/users.data';
-import { products } from '@app/data/products.data';
-import { TemplatePortal } from '@angular/cdk/portal';
-import { OverlayService } from '@app/shared/services/overlay.service';
 import { UserService } from '@app/shared/services/user/user.service';
-import { Product } from '@app/shared/models/product.model';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { UserList } from '@app/shared/models/user-list.model';
-import { UserAuth } from '@app/shared/models/user-auth.model';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
-import { ProductService } from '@app/shared/services/product/product.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({

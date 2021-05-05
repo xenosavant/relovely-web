@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core"; import { BaseService } from "../base.service";
-import { Subject, BehaviorSubject } from "rxjs";
-import { AppNotification } from "./notification.interface";
+import { BehaviorSubject } from "rxjs";
 import { Alert } from "./alert.interface";
 
 @Injectable({ providedIn: 'root' })

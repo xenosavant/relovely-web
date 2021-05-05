@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CartComponent } from './containers/cart/cart.component';
-import { OrdersComponent } from './containers/orders/orders.component';
 import { AddressesComponent } from './containers/addresses/addresses.component';
 import { InstagramAuthComponent } from './containers/instagram-auth/instagram-auth.component';
 import { SignoutComponent } from './containers/signout/signout.component';
@@ -10,7 +8,7 @@ import { VerifyComponent } from './containers/verify/verify.component';
 import { ResetPasswordComponent } from './containers/reset-password/reset-password.component';
 import { PaymentsComponent } from './containers/payments/payments.component';
 import { SettingsComponent } from './containers/settings/settings.component';
-import { AuthenticationGuard } from '@app/shared/guards/auth.guard';
+
 
 
 const routes: Routes = [

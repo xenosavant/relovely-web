@@ -1,8 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { UserDetail } from '@app/shared/models/user-detail.model';
-import { users } from '@app/data/users.data';
 import { Product } from '@app/shared/models/product.model';
-import { products } from '@app/data/products.data';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UserService } from '@app/shared/services/user/user.service';

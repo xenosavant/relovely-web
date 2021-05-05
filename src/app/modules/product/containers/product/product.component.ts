@@ -1,21 +1,17 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, NgZone, ChangeDetectorRef, ViewChild, OnChanges } from '@angular/core';
 import { Product } from '@app/shared/models/product.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { products } from '@app/data/products.data';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { OwlCarouselOConfig } from 'ngx-owl-carousel-o/lib/carousel/owl-carousel-o-config';
 import { ProductService } from '@app/shared/services/product/product.service';
 import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 import { VideoMetaData } from '@app/shared/interfaces/video-meta-data';
-import { OrderService } from '@app/shared/services/order/order.service';
 import { UserService } from '@app/shared/services/user/user.service';
-import { ThrowStmt } from '@angular/compiler';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from '@app/shared/services/overlay.service';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { NavigationItem } from '@app/shared/models/navigation-item.model';
-import { Category } from '@app/shared/models/category.model';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { Subscription } from 'rxjs';
 

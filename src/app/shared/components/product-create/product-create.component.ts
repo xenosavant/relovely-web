@@ -4,24 +4,18 @@ import { Category } from '@app/shared/models/category.model';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { guid } from '../../utils/rand';
 import { ImageSet } from '@app/shared/interfaces/image-set.interface';
-import { forkJoin } from 'rxjs';
-import { ThrowStmt } from '@angular/compiler';
 import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
 import { Product } from '@app/shared/models/product.model';
 import { ProductService } from '@app/shared/services/product/product.service';
 import { VideoMetaData } from '@app/shared/interfaces/video-meta-data';
-import { switchMap, map, tap, concatMap } from 'rxjs/operators';
-import { resolve } from 'dns';
+import { map, concatMap } from 'rxjs/operators';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { KeyValue } from '@app/shared/interfaces/key-value.interface';
 import { FileUploadService } from '@app/shared/services/file-upload.service';
-import { weights } from '../../../data/weights.ts';
+import { weights } from '../../../data/weights';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { environment } from '@env/environment';
 import { UserAuth } from '@app/shared/models/user-auth.model';
-import { AuthService } from '@app/shared/services/auth/auth.service';
 import { UserService } from '@app/shared/services/user/user.service';
-const loadImage = require('blueimp-load-image');
 
 
 @Component({

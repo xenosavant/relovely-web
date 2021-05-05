@@ -44,8 +44,7 @@
               {
                 "input": "src/styles.scss"
               },
-              "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
-              "node_modules/cloudinary-video-player/dist/cld-video-player.min.css"
+              "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css"
             ],
             "scripts": []
           },

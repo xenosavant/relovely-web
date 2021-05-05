@@ -5,9 +5,6 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@app/shared';
 import { CoreModule } from '@app/core';
 
-import { SettingsModule } from './settings';
-import { StaticModule } from './static';
-
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { LookupService } from './shared/services/lookup/lookup.service';
@@ -18,19 +15,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { DragulaModule } from 'ng2-dragula';
 import { PortalModule } from '@angular/cdk/portal';
-import { CloudinaryModule, CloudinaryConfiguration } from './../../node_modules/@cloudinary/angular-5.x';
-import { Cloudinary } from 'cloudinary-core';
 import { environment } from '@env/environment';
 import { FilterService } from './shared/services/filter/filter.service';
 import { NgxStripeModule } from 'ngx-stripe';
-export const cloudinaryLib = {
-  Cloudinary: Cloudinary
-};
 import { APP_INITIALIZER, ErrorHandler } from "@angular/core";
 import * as Sentry from "@sentry/angular";
 import { Router } from "@angular/router";
-
-export const config: CloudinaryConfiguration = { cloud_name: environment.cloudinaryCloudName };
 
 @NgModule({
   imports: [
@@ -49,7 +39,6 @@ export const config: CloudinaryConfiguration = { cloud_name: environment.cloudin
     // feature
     ProductModule,
     DragulaModule.forRoot(),
-    CloudinaryModule.forRoot(cloudinaryLib, config),
     NgxStripeModule.forRoot(environment.stripePublishableKey),
   ],
   exports: [RouterModule],

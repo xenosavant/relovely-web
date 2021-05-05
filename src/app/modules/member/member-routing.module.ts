@@ -3,11 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { FavoritesComponent } from './containers/favorites/favorites.component';
 import { ProfileComponent } from './containers/profile/profile.component';
 import { ListingsComponent } from './containers/listings/listings.component';
-import { InstagramAuthComponent } from './components/instagram-auth/instagram-auth.component';
 import { TermsComponent } from './containers/terms/terms.component';
 import { ReviewsComponent } from './containers/reviews/reviews.component';
-import { AuthenticationGuard } from '@app/shared/guards/auth.guard';
-import { SellerGuard } from '@app/shared/guards/seller.guard';
 import { PrivacyComponent } from './containers/privacy/privacy.component';
 import { SellersComponent } from './containers/sellers/sellers.component';
 

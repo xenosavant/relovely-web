@@ -1,5 +1,4 @@
 import { UserList } from "./user-list.model";
-import { Size } from "./size.model";
 import { ImageSet } from "../interfaces/image-set.interface";
 import { VideoMetaData } from "../interfaces/video-meta-data";
 
