@@ -5,7 +5,6 @@ import { httpInterceptorProviders } from './http-interceptors';
 import { NotificationService } from './notifications/notification.service';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SharedModule } from '@app/shared';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RouterModule } from '@angular/router';
@@ -26,12 +25,12 @@ import { ContactComponent } from './components/contact/contact.component';
     SharedModule,
     PortalModule
   ],
-  declarations: [SearchBarComponent, ToolbarComponent, HomeComponent, NotFoundComponent, FilterBarComponent, SizeFilterComponent, ColorFilterComponent, SizeFilterGroupComponent, AboutComponent, HelpComponent, ContactComponent],
+  declarations: [SearchBarComponent, HomeComponent, NotFoundComponent, FilterBarComponent, SizeFilterComponent, ColorFilterComponent, SizeFilterGroupComponent, AboutComponent, HelpComponent, ContactComponent],
   providers: [
     NotificationService,
     httpInterceptorProviders
   ],
-  exports: [SearchBarComponent, ToolbarComponent, RouterModule, FilterBarComponent]
+  exports: [SearchBarComponent, RouterModule, FilterBarComponent]
 })
 export class CoreModule {
   constructor(

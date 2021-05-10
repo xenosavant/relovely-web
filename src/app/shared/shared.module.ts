@@ -26,55 +26,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { FileUploadModule } from 'ng2-file-upload';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-// import { library } from '@fortawesome/fontawesome-svg-core';
-// import {
-//   faBars,
-//   faUserCircle,
-//   faPowerOff,
-//   faCog,
-//   faPlayCircle,
-//   faRocket,
-//   faPlus,
-//   faEdit,
-//   faTrash,
-//   faTimes,
-//   faCaretUp,
-//   faCaretDown,
-//   faExclamationTriangle,
-//   faFilter,
-//   faTasks,
-//   faCheck,
-//   faSquare,
-//   faLanguage,
-//   faPaintBrush,
-//   faLightbulb,
-//   faWindowMaximize,
-//   faStream,
-//   faBook,
-//   faSearch,
-//   faShoppingCart,
-//   faArrowLeft,
-//   faHeart,
-//   faUndo,
-//   faWindowClose,
-//   faThLarge,
-//   faEllipsisV,
-//   faLandmark,
-//   faStore,
-//   faLock,
-//   faShieldAlt,
-//   faClock,
-//   faHome,
-//   faSync
-// } from '@fortawesome/free-solid-svg-icons';
-// import {
-//   faGithub,
-//   faMediumM,
-//   faTwitter,
-//   faInstagram,
-//   faYoutube
-// } from '@fortawesome/free-brands-svg-icons';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { HorizontalProductListComponent } from './components/horizontal-product-list/horizontal-product-list.component';
 import { ButtonComponent } from './components/button/button.component';
@@ -122,54 +73,6 @@ import { SellerGuard } from './guards/seller.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { HorizontalUserListComponent } from './components/horizontal-user-list/horizontal-user-list.component';
 
-
-// library.add(
-//   faBars,
-//   faUserCircle,
-//   faPowerOff,
-//   faCog,
-//   faRocket,
-//   faPlayCircle,
-//   faGithub,
-//   faMediumM,
-//   faTwitter,
-//   faInstagram,
-//   faYoutube,
-//   faPlus,
-//   faEdit,
-//   faTrash,
-//   faTimes,
-//   faCaretUp,
-//   faCaretDown,
-//   faExclamationTriangle,
-//   faFilter,
-//   faTasks,
-//   faCheck,
-//   faSquare,
-//   faLanguage,
-//   faPaintBrush,
-//   faLightbulb,
-//   faWindowMaximize,
-//   faStream,
-//   faBook,
-//   faSearch,
-//   faShoppingCart,
-//   faArrowLeft,
-//   faWindowClose,
-//   faThLarge,
-//   faEllipsisV,
-//   faHeart,
-//   faUndo,
-//   faLandmark,
-//   faStore,
-//   faLock,
-//   faShieldAlt,
-//   faClock,
-//   faHome,
-//   faSync
-// );
-
-
 @NgModule({
   imports: [
     CommonModule,
@@ -192,7 +95,6 @@ import { HorizontalUserListComponent } from './components/horizontal-user-list/h
     MatSnackBarModule,
     MatSlideToggleModule,
     MatDividerModule,
-    FontAwesomeModule,
     ImageCropperModule,
     MatProgressSpinnerModule,
     ClickOutsideModule,
@@ -268,7 +170,6 @@ import { HorizontalUserListComponent } from './components/horizontal-user-list/h
     MatSliderModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    FontAwesomeModule,
     AvatarComponent,
     HorizontalProductListComponent,
     ButtonComponent,

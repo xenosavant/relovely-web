@@ -8,8 +8,8 @@
     <div class="title-wrapper">
         <div class="name">
             <span *ngIf="owner">
-                <fa-icon *ngIf="!editing" (click)="onAction('edit')" icon="edit"></fa-icon>
-                <fa-icon *ngIf="editing" (click)="onAction('close')" icon="undo"></fa-icon>
+                <!-- <fa-icon *ngIf="!editing" (click)="onAction('edit')" icon="edit"></fa-icon>
+                <fa-icon *ngIf="editing" (click)="onAction('close')" icon="undo"></fa-icon> -->
             </span>
             <ng-container *ngIf="user.type === 'seller'"> <img (click)="onGoToInstagram()" class="insta"
                     *ngIf="!desktop && user.instagramUsername"

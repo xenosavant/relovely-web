@@ -17,7 +17,7 @@
       <button mat-stroked-button class="primary" *ngIf="seller" (click)="onEdit()">Edit</button>
     </div>
     <div *ngIf="!seller" class="right" (click)="onFavorite()">
-      <fa-icon *ngIf="!favoriting" [class.fa-lg]="!grid" [class.favorited]="product.favorited" icon="heart"></fa-icon>
+      <!-- <fa-icon *ngIf="!favoriting" [class.fa-lg]="!grid" [class.favorited]="product.favorited" icon="heart"></fa-icon> -->
       <mat-spinner *ngIf="favoriting" diameter="25"></mat-spinner>
     </div>
     <div *ngIf="seller" class="right">

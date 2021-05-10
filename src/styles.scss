@@ -220,16 +220,10 @@ cl-video {
 }
 
 .icon-wrapper, .search__form {
-  button.mat-icon-button {
+  button {
 
     // width: $search-bar-height !important;
     // height: $search-bar-height !important;
-    img {
-  
-    }
-    fa-icon {
-  
-    }
 
     &.account {
       cursor: pointer;
@@ -367,23 +361,10 @@ mat-paginator {
   }
 }
 
-.mat-icon-button {
+.mat-icon {
   border:none;
-  height: 40px;
-  &.black {
-    font-size: 24px !important;
-    color: black !important;
-  }
-  
-  // &.menu {
-  //   display: grid;
-  //   align-items: center;
-  //   align-content: center;
-  //   width:100%;
-  //   fa-icon {
-  //     height:30px;
-  //   }
-  // }
+  height:24px !important;
+  width: 24px !important;
 }
 
 div.left {
@@ -409,17 +390,6 @@ div.left {
   height: 100%;
   cursor: pointer;
   height: 55px;
-}
-
-.mat-button, .mat-flat-button, .mat-icon-button, .mat-stroked-button {
-  border-radius: 0 !important;
- min-width: 25px !important;
- line-height:unset !important;
- &.primary:hover {
-   &.enabled {
-    background-color: $dark-blue !important;
-   }
- }
 }
 
 .header-bar {
@@ -459,8 +429,8 @@ div.left {
 
       img.profile {
         vertical-align: unset;
-        width:22px !important;
-        height:22px !important;
+        width:24px !important;
+        height:24px !important;
         margin-top:2px;
         border-radius: 11px;
       }
@@ -472,25 +442,18 @@ div.left {
         background: $alert;
         display:inline-block;
         position: relative;
-        left: 2px;
-        top: -12px;
+        left: 25px;
+        top: -25px;
       }
     }
     font-size:18px;
-    svg {
-      vertical-align: unset;
-      margin: unset !important;
-      color: black !important;
-      margin:0 auto;
-  }
  }
 }
 
 .icon-wrapper.mobile {
-  display: flex;
-    // display: grid;
-    // grid-template-columns: 1fr 1fr;
-    // grid-template-rows: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
 }
 
 
@@ -1007,6 +970,7 @@ html {
   // font-size: calc(1em + 1vw) !important;
   overflow:hidden;
   line-height: 1.1 !important;
+  margin: 0 !important;
   }
 }
 
@@ -1103,7 +1067,13 @@ button.mat-stroked-button {
 
 
 button {
+  background-color: transparent;
+  border: none;
   min-height: 30px;
+  cursor: pointer;
+  &.account {
+    display: grid !important;
+  }
   &.primary {
   background-color: $light-gray !important;
   color:white !important;
@@ -1187,9 +1157,6 @@ div.filter-bar {
       width:150px;
       border-bottom: solid 1px  $light-gray !important;
       background: $background-gray;
-    }
-    .search fa-icon {
-      font-size:26px;
   }
 }
   

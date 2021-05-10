@@ -19,6 +19,8 @@ import { HeaderService } from './shared/services/header.service';
 import { AlertService } from './shared/services/alert/alert.service';
 import { Product } from './shared/models/product.model';
 import { ProductService } from './shared/services/product/product.service';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -91,6 +93,7 @@ export class AppComponent implements OnInit {
   constructor(
     private storageService: LocalStorageService,
     private lookupService: LookupService,
+    private matIconRegistry: MatIconRegistry,
     private breakpointObserver: BreakpointObserver,
     private navigationService: NavigationService,
     private ref: ChangeDetectorRef,
@@ -103,11 +106,18 @@ export class AppComponent implements OnInit {
     private router: Router,
     private productService: ProductService,
     private alertService: AlertService,
+    private sanitizer: DomSanitizer,
     @Inject(DOCUMENT) private document: any
   ) {
     this.showFilterBar = false;
     this.showNavBar = false;
     this.showTopLevel = true;
+    this.matIconRegistry.addSvgIcon('menu', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/menu.svg'))
+      .addSvgIcon('heart', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/heart.svg'))
+      .addSvgIcon('search', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/search.svg'))
+      .addSvgIcon('grid', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/grid.svg'))
+      .addSvgIcon('square', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/square.svg'))
+      .addSvgIcon('left-arrow', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/left-arrow.svg'))
   }
 
   ngOnInit(): void {
