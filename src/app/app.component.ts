@@ -118,6 +118,16 @@ export class AppComponent implements OnInit {
       .addSvgIcon('grid', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/grid.svg'))
       .addSvgIcon('square', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/square.svg'))
       .addSvgIcon('left-arrow', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/left-arrow.svg'))
+      .addSvgIcon('store', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/store.svg'))
+      .addSvgIcon('bank', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/bank.svg'))
+      .addSvgIcon('home', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/home.svg'))
+      .addSvgIcon('plus', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/plus.svg'))
+      .addSvgIcon('edit', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/edit.svg'))
+      .addSvgIcon('undo', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/undo.svg'))
+      .addSvgIcon('clock', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/clock.svg'))
+      .addSvgIcon('lock', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/lock.svg'))
+      .addSvgIcon('shield', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/shield.svg'))
+      .addSvgIcon('sync', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/sync.svg'))
   }
 
   ngOnInit(): void {

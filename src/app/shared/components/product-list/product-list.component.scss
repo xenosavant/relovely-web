@@ -32,7 +32,7 @@
         @media( max-width:$mobile-breakpoint) {
             font-size: 18px;
         }
-        fa-icon {
+        mat-icon {
             cursor: pointer;
             color:lightgray;
             &.favorited {

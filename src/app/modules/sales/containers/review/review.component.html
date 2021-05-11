@@ -25,16 +25,16 @@
             <div class="rating">
                 <div class="label">How would you rate this item?</div>
                 <div class="hearts">
-                    <!-- <fa-icon class="heart clickable" [class.selected]="rating >= 1" icon="heart" (click)="rating = 1">
-                    </fa-icon>
-                    <fa-icon class="heart clickable" [class.selected]="rating >= 2" icon="heart" (click)="rating = 2">
-                    </fa-icon>
-                    <fa-icon class="heart clickable" [class.selected]="rating >= 3" icon="heart" (click)="rating = 3">
-                    </fa-icon>
-                    <fa-icon class="heart clickable" [class.selected]="rating >= 4" icon="heart" (click)="rating = 4">
-                    </fa-icon>
-                    <fa-icon class="heart clickable" [class.selected]="rating >= 5" icon="heart" (click)="rating = 5">
-                    </fa-icon> -->
+                    <mat-icon class="heart clickable" (click)="rating = 1" [class.selected]="rating >= 1"
+                        svgIcon="heart"></mat-icon>
+                    <mat-icon class="heart clickable" (click)="rating = 2" [class.selected]="rating >= 2"
+                        svgIcon="heart"></mat-icon>
+                    <mat-icon class="heart clickable" (click)="rating = 3" [class.selected]="rating >= 3"
+                        svgIcon="heart"></mat-icon>
+                    <mat-icon class="heart clickable" (click)="rating = 4" [class.selected]="rating >= 4"
+                        svgIcon="heart"></mat-icon>
+                    <mat-icon class="heart clickable" (click)="rating = 5" [class.selected]="rating >= 5"
+                        svgIcon="heart"></mat-icon>
                 </div>
             </div>
             <div class="form">
@@ -67,11 +67,11 @@
             </div>
             <div class="rating">
                 <div class="hearts">
-                    <fa-icon class="heart" [class.selected]="order.review.rating >= 1" icon="heart"></fa-icon>
-                    <fa-icon class="heart" [class.selected]="order.review.rating >= 2" icon="heart"></fa-icon>
-                    <fa-icon class="heart" [class.selected]="order.review.rating >= 3" icon="heart"></fa-icon>
-                    <fa-icon class="heart" [class.selected]="order.review.rating >= 4" icon="heart"></fa-icon>
-                    <fa-icon class="heart" [class.selected]="order.review.rating >= 5" icon="heart"></fa-icon>
+                    <mat-icon class="heart" [class.selected]="order.review.rating >= 1" svgIcon="heart"></mat-icon>
+                    <mat-icon class="heart" [class.selected]="order.review.rating >= 2" svgIcon="heart"></mat-icon>
+                    <mat-icon class="heart" [class.selected]="order.review.rating >= 3" svgIcon="heart"></mat-icon>
+                    <mat-icon class="heart" [class.selected]="order.review.rating >= 4" svgIcon="heart"></mat-icon>
+                    <mat-icon class="heart" [class.selected]="order.review.rating >= 5" svgIcon="heart"></mat-icon>
                 </div>
             </div>
             <div class="date">

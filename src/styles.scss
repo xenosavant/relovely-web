@@ -1061,10 +1061,9 @@ html {
   }
 
 
-button.mat-stroked-button {
-  // background: $gray-button !important;
+mat-icon svg {
+  fill: currentColor;
 }
-
 
 button {
   background-color: transparent;

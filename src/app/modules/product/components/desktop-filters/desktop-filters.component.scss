@@ -116,15 +116,20 @@
         }
     }
     div.clear {
-        display: inline-block;
+        color: $action-button;
+        display: flex;
+        align-items: center;
         position: absolute;
         right: 16px;
         top: 22px;
         font-weight: 400;
         &:hover {
-            font-weight: 600;
+            color: black;
         }
         cursor: pointer;
+        mat-icon {
+            margin-right: 8px;
+        }
     }
 }
 

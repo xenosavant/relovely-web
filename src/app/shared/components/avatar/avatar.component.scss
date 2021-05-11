@@ -45,16 +45,14 @@
         -ms-flex-align: center;
         align-items: center;
         mat-icon {
+            color: $background-gray;
             height:unset;
             width:unset;
             visibility: visible;
             color: $dark-gray;
             font-size: 20px;
             font-weight: 700;
-            border: solid 2px $dark-gray;
-            border-radius: 15px;
             left: 50px;
-            top: 50px;
         }
     }
 }
