@@ -46,7 +46,7 @@ import { Router } from "@angular/router";
   providers: [LookupService, NavigationService, FilterService, {
     provide: ErrorHandler,
     useValue: Sentry.createErrorHandler({
-      showDialog: true,
+      showDialog: false,
     }),
   },
     {

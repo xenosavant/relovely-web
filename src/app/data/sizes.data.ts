@@ -169,6 +169,7 @@ export const sizes = [
             { key: "89", value: "8" },
             { key: "90", value: "8.5" },
             { key: "91", value: "9" },
+            { key: "293", value: "9.5" },
             { key: "92", value: "10" },
             { key: "93", value: "10.5" },
             { key: "94", value: "11" },

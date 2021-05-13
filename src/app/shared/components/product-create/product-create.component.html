@@ -1,5 +1,8 @@
 <app-modal [title]="title" (close)="onClose()">
     <ng-container *ngIf="!loading">
+        <div *ngIf="saveError" class="image-error">
+            Unable to create listing. Check your internet connection and try again.
+        </div>
         <div class="info hint">
             *We recommend at least one photo wearing the product
         </div>
@@ -11,9 +14,6 @@
         </div>
         <div *ngIf="images.length" class="info">
             Cover Photo
-        </div>
-        <div *ngIf="saveError" class="image-error">
-            Unable to create listing. Check your internet connection and try again.
         </div>
         <div class="thumbnails" dragula="images" [(dragulaModel)]="images">
             <div *ngIf="!mobile" class="add-image" (click)="input.value = null; input.click()"><img

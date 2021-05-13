@@ -67,12 +67,13 @@
     background-size: cover;
     background-position: center;
     margin-top: 16px;
-    background-image: url('../../../../assets/images/home-banner-mobile.jpeg');
     @media (max-width: $mobile-breakpoint) {
+        background-image: url('../../../../assets/images/home-banner-mobile.jpeg');
         min-height: 100vw;
         margin: 16px 0px 0px 0px;
     }
     @media (min-width: $desktop-breakpoint) {
+        background-image: url('../../../../assets/images/home-banner.jpeg');
         margin-top: 32px;
         min-height: 400px;
     }
