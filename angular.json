@@ -39,9 +39,6 @@
             ],
             "styles": [
               {
-                "input": "src/styles-app-loading.scss"
-              },
-              {
                 "input": "src/styles.scss"
               },
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css"

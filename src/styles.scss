@@ -28,6 +28,11 @@ $custom-typography: mat-typography-config(
   }
 }
 
+body,
+html {
+  height: 100%;
+}
+
 a {
   &.head {
     color: inherit !important;

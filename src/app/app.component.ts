@@ -128,6 +128,7 @@ export class AppComponent implements OnInit {
       .addSvgIcon('lock', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/lock.svg'))
       .addSvgIcon('shield', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/shield.svg'))
       .addSvgIcon('sync', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/sync.svg'))
+      .addSvgIcon('close', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/close.svg'))
   }
 
   ngOnInit(): void {

@@ -16,16 +16,16 @@
             Unable to create listing. Check your internet connection and try again.
         </div>
         <div class="thumbnails" dragula="images" [(dragulaModel)]="images">
-            <div class="image-wrapper" *ngFor="let image of images; let i = index">
-                <img [src]="image.cropped">
-                <div class="overlay">
-                    <mat-icon (click)="onRemoveImage(url)">cancel</mat-icon>
-                </div>
-            </div>
             <div *ngIf="!mobile" class="add-image" (click)="input.value = null; input.click()"><img
                     src="./assets/images/plus.png"></div>
             <div *ngIf="mobile" class="add-image" (click)="inputMobile.value = null; inputMobile.click()"><img
                     src="./assets/images/plus.png">
+            </div>
+            <div class="image-wrapper" *ngFor="let image of images; let i = index">
+                <img [src]="image.cropped">
+                <div class="overlay">
+                    <mat-icon svgIcon="close" (click)="onRemoveImage(url)"></mat-icon>
+                </div>
             </div>
         </div>
         <div class="info hint">
@@ -38,7 +38,7 @@
             <div class="image-wrapper">
                 <img [src]="videoThumbnail">
                 <div class="overlay">
-                    <mat-icon (click)="onRemoveVideo()">cancel</mat-icon>
+                    <mat-icon svgIcon="close" (click)="onRemoveVideo()"></mat-icon>
                 </div>
             </div>
         </div>
@@ -166,7 +166,7 @@
 </app-modal>
 
 <ng-container *ngIf="crop">
-    <app-image-cropper [showInfo]="true" (cancel)="onCloseCropper($event)" (crop)="onImageCropped($event)"
+    <app-image-cropper [showInfo]="true" (cancel)="onCloseCropper($event)" (onCrop)="onImageCropped($event)"
         [image]="originalImage">
     </app-image-cropper>
 </ng-container>

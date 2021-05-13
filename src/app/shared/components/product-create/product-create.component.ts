@@ -16,7 +16,9 @@ import { weights } from '../../../data/weights';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { UserService } from '@app/shared/services/user/user.service';
+import heic2any from "heic2any";
 
+const MAX_WIDTH = 800;
 
 @Component({
   selector: 'app-product-create',
@@ -70,7 +72,6 @@ export class ProductCreateComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private productService: ProductService,
     private breakpointObserver: BreakpointObserver) {
-
   }
 
   ngOnInit() {
@@ -198,21 +199,42 @@ export class ProductCreateComponent implements OnInit {
 
   public imageChanged($event: any): void {
     const context = this;
-    var img = new Image();
-    img.onload = (event: any) => {
-      const canvas = document.createElement("canvas");
-      const image = event.target;
-      canvas.width = image.width;
-      canvas.height = image.height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(image, 0, 0, image.width, image.height);
-      const dataURL = canvas.toDataURL('image/jpg');
-      console.log(dataURL);
-      context.originalImage = dataURL;
-      context.crop = true;
-      context.ref.markForCheck();
-    };
-    img.src = URL.createObjectURL($event.target.files[0]);
+    context.originalImage = null;
+    const file = $event.target.files[0];
+    if (/(gif|jpe?g|tiff?|png|webp|bmp|heic|heif)/g.test(file.type)) {
+      this.imageUploadError = false;
+      var img = new Image();
+      this.loading = true;
+      img.onload = (event: any) => {
+        const canvas = document.createElement("canvas");
+        const image = event.target;
+        if (image.width > MAX_WIDTH) {
+          canvas.width = MAX_WIDTH;
+          canvas.height = image.height * (MAX_WIDTH / image.width);
+        } else {
+          canvas.width = image.width;
+          canvas.height = image.height;
+        }
+        const ctx = canvas.getContext("2d");
+        const scaleFactor = canvas.width / image.width;
+        ctx.drawImage(image, 0, 0, image.width * scaleFactor, image.height * scaleFactor);
+        const dataURL = canvas.toDataURL('image/jpg');
+        context.originalImage = dataURL;
+        context.crop = true;
+        context.loading = false;
+        context.ref.markForCheck();
+      };
+      if (/(heic|heif)/g.test(file.type)) {
+        heic2any({ blob: file, toType: 'image/jpeg' }).then(file => {
+          img.src = URL.createObjectURL(file);
+        });
+      } else {
+        img.src = URL.createObjectURL(file);
+      }
+    } else {
+      this.imageUploadError = true;
+      this.ref.markForCheck();
+    }
   }
 
   onClose() {
