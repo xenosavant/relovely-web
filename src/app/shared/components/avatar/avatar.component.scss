@@ -25,8 +25,8 @@
             -ms-flex-align: center;
             align-items: center;
             mat-icon {
-                height:100px;
-                width:100px;
+                height:100px !important;
+                width:100px !important;
                 visibility: visible;
                 color: white;
                 font-size: 100px;

@@ -9,18 +9,19 @@ form {
 .search {
   height: 30px;
   border-radius: 8px;
-  transition: box-shadow 0.15s, background 0.15s;
   display: grid;
   @media( min-width:$desktop-breakpoint) {
     grid-template-columns: 150px 40px;
+    & form input {
+      height: 30px;
+    }
   }
   @media(max-width: $mobile-breakpoint) {
-    border-radius: 8px 8px 8px 8px;
     & form {
-      border-radius: 8px 8px 8px 8px;
-      height: inherit;
+      display: flex;
+       border-radius: 8px 8px 8px 8px;
        & input {
-        height: 28px;
+        height: auto;
         padding-left: 10px;
          width: -webkit-fill-available;
          border-radius: 8px 8px 8px 8px;
@@ -31,7 +32,7 @@ form {
 }
 .search__form {
   position: relative;
-  border-radius: 8px 4px 4px 8px;
+  // border-radius: 8px 4px 4px 8px;
 }
 
 mat-icon {
@@ -41,7 +42,7 @@ mat-icon {
 }
 
 .search__input {
-  height: 36px;
+  // height: 36px;
   border: none;
   flex-grow: 1;
   display: flex;

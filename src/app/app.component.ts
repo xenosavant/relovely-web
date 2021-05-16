@@ -129,6 +129,9 @@ export class AppComponent implements OnInit {
       .addSvgIcon('shield', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/shield.svg'))
       .addSvgIcon('sync', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/sync.svg'))
       .addSvgIcon('close', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/close.svg'))
+      .addSvgIcon('chevron', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/chevron-down.svg'))
+      .addSvgIcon('check', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/check.svg'))
+      .addSvgIcon('times', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/times.svg'))
   }
 
   ngOnInit(): void {

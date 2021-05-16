@@ -2,23 +2,25 @@
     <ul>
         <li class="alert-after" [class.active]="sizesActive" #sizeTrigger="matMenuTrigger" *ngIf="!hideSizeMenu"
             (mouseenter)="onEnterTrigger($event, 'size')" [matMenuTriggerFor]="sizeMenu">
-            Size
-            <img src="./assets/images/chevron-down.svg">
+            <div class="item">
+                <div class="label">Size</div>
+                <mat-icon svgIcon="chevron"></mat-icon>
+            </div>
         </li>
         <li class="alert-after" [class.active]="colorsActive" #colorTrigger="matMenuTrigger"
             (mouseenter)="onEnterTrigger($event, 'color')" [matMenuTriggerFor]="colorMenu">
-            Color
-            <img src="./assets/images/chevron-down.svg">
+            <div class="item">
+                <div class="label">Color</div>
+                <mat-icon svgIcon="chevron"></mat-icon>
+            </div>
         </li>
         <li class="alert-after" [class.active]="pricesActive" #priceTrigger="matMenuTrigger"
             (mouseenter)="onEnterTrigger($event, 'price')" [matMenuTriggerFor]="priceMenu">
-            Price
-            <img src="./assets/images/chevron-down.svg">
+            <div class="item">
+                <div class="label">Price</div>
+                <mat-icon svgIcon="chevron"></mat-icon>
+            </div>
         </li>
-        <!-- <li #listingsTrigger (mouseenter)="listingsTrigger.openMenu()" [matMenuTriggerFor]="listingsMenu">
-            Listings
-            <img src="./assets/images/chevron-down.svg">
-        </li> -->
     </ul>
     <div class="clear" (click)="onClearFilters()">
         <mat-icon svgIcon="sync"></mat-icon>

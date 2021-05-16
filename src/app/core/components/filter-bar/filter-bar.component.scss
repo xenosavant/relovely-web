@@ -31,6 +31,10 @@
       top: 0;
       font-size: small;
       z-index: 100;
+      mat-icon {
+        width: 20px !important;
+        height: 20px !important;
+      }
       div {
         margin-right: 6px;
       }

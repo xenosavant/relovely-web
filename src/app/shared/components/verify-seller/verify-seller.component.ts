@@ -85,6 +85,9 @@ export class VerifySellerComponent implements OnInit {
     this.frontUploader.onBeforeUploadItem = (file) => {
       file.withCredentials = false;
     };
+    this.frontUploader.onBeforeUploadItem = (file) => {
+      file.withCredentials = false;
+    };
     this.frontUploader.onAfterAddingFile = (file) => {
       const validity = this.verifyFile(file);
       if (validity === 'valid') {

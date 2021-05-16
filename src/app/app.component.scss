@@ -100,6 +100,7 @@ mat-toolbar {
 
   .mat-stroked-button {
     margin-right: 10px;
+    border: 0 !important;
   }
 
   .spacer {
@@ -290,16 +291,16 @@ mat-nav-list {
   display: grid;
   grid-template-columns: 40px auto 16px;
   align-content: center;
-  background-color: $background-gray;
-    app-search-bar {
+  ::ng-deep {  app-search-bar {
       .search {
-        // border: solid black 1px;
+        border: solid black 1px;
       }
     }
 
       button  {   
         margin:auto;
     }
+  }
 }
 
 .account-trigger-wrapper {
