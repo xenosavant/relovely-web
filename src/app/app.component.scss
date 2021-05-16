@@ -347,7 +347,7 @@ mat-nav-list {
 }
 
 .mobile-footer {
-  background-color: $dark-blue !important;
+  background-color: $background-gray;
   padding: 16px 0px;
   margin-top: 16px;
   .list-wrapper {
@@ -367,7 +367,7 @@ mat-nav-list {
         text-align: center;
       }
       a {
-        color: $background-gray !important;
+        color: $dark-gray !important;
       }
     }
   }
