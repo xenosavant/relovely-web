@@ -20,7 +20,7 @@
         </mat-toolbar-row>
         <mat-toolbar-row *ngIf="showSearch" class="search-tool-bar">
           <button class="black" (click)="onCloseSearch()">
-            <img src="./assets/images/times.svg" />
+            <mat-icon svgIcon="times"></mat-icon>
           </button>
           <app-search-bar [mobile]="true" (search)="search()" (term)="setTerm($event)"></app-search-bar>
         </mat-toolbar-row>
@@ -53,7 +53,7 @@
       </div>
       <mat-sidenav [opened]="sidenavOpen" mode="side">
         <button *ngIf="sidenavOpen" class="close mat-icon-button black" (click)="closeSidenav()">
-          <img src="./assets/images/times.svg" />
+          <mat-icon svgIcon="times"></mat-icon>
         </button>
         <div class="sidenav-wrapper">
           <div class="sidenav-header-wrap">

@@ -98,10 +98,6 @@ mat-toolbar {
     margin: 0 10px 0 0;
   }
 
-  .mat-stroked-button {
-    margin-right: 10px;
-    border: 0 !important;
-  }
 
   .spacer {
     flex: 1 1 auto;
@@ -289,6 +285,7 @@ mat-nav-list {
 
 .search-tool-bar {
   display: grid;
+  background-color: $background-gray;
   grid-template-columns: 40px auto 16px;
   align-content: center;
   ::ng-deep {  app-search-bar {

@@ -291,6 +291,12 @@ mat-spinner.white.mat-progress-spinner {
   }
 }
 
+button.mat-icon-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .mat-button-wrapper {
   display: flex;
   height: inherit;

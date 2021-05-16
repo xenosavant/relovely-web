@@ -101,6 +101,8 @@
                 </div>
                 <div class="product-price">
                     {{product.price | appCurrency}}
+                    <span *ngIf="product.retailPrice" class="retail">{{product.retailPrice | appCurrency}}
+                    </span>
                 </div>
                 <div class="size-wrapper" *ngIf="product.sizeId">
                     Size: <strong>{{product.sizeId | appSize}}</strong>

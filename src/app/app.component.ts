@@ -445,10 +445,6 @@ export class AppComponent implements OnInit {
   public onCloseSearch() {
     this.showSearch = false;
     this.searchTerm = null;
-    const path = this.route.snapshot.children[0].routeConfig.path;
-    if (path === 'products') {
-      this.search();
-    }
   }
 
   public goToFavorites() {
