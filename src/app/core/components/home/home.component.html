@@ -1,30 +1,15 @@
 <div class="full-content home">
-    <div *ngIf="!mobile" class="home-header-bar">
-        <div class="header-inner">
-            <div *ngIf="!submitted" class="text-wrapper">
-                Don't miss a thing! Stay in the know + subscribe to the relovely newsletter
-            </div>
-            <div *ngIf="submitted" class="text-wrapper">
-                Thanks for subscribing! We'll let you know what's new!
-            </div>
-            <form *ngIf="!submitted" novalidate class="cta-wrapper">
-                <input #input class="email-input" type="email" value="" name="EMAIL" id="mce-EMAIL">
-                <button mat-stroked-button type="submit" value="Subscribe" name="subscribe"
-                    (click)="onJoinMailingList(input.value)">
-                    Submit
-                </button>
-            </form>
-        </div>
-    </div>
     <div class="banner-wrapper">
-        <h1>PRELOVED FASHION SOLD BY INFLUENCERS</h1>
-        <p>Giving great products new life</p>
-        <div class="button-wrapper">
-            <div class="buttons-inner">
-                <button (click)="onShop()" mat-stroked-button>Shop All Products</button>
-                <button (click)="onShopByInfluencer()" mat-stroked-button>Shop By Influencer</button>
+        <span class="bottom">
+            <h1>PRELOVED FASHION SOLD BY INFLUENCERS</h1>
+            <p>Thrift from your favorite influencers closets</p>
+            <div class="button-wrapper">
+                <div class="buttons-inner">
+                    <button (click)="onSell()" mat-stroked-button>Apply To Sell</button>
+                    <button (click)="onShop()" mat-stroked-button>Shop Now</button>
+                </div>
             </div>
-        </div>
+        </span>
     </div>
     <div class="featured-sellers">
         <div class="header">

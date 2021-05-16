@@ -67,75 +67,89 @@
     background-size: cover;
     background-position: center;
     margin-top: 16px;
+    display: grid;
+    grid-template-areas: 'top top' 'bottom bottom';
     @media (max-width: $mobile-breakpoint) {
-        background-image: url('../../../../assets/images/home-banner-mobile.jpeg');
+        background-image: url('../../../../assets/images/home.jpeg');
         min-height: 100vw;
         margin: 16px 0px 0px 0px;
     }
     @media (min-width: $desktop-breakpoint) {
-        background-image: url('../../../../assets/images/home-banner.jpeg');
-        margin-top: 32px;
-        min-height: 400px;
+        background-image: url('../../../../assets/images/home.jpeg');
+        min-height: 800px;
     }
-    .button-wrapper {
-        display: flex;
-        justify-content: center;
-        z-index:100;
-        .buttons-inner {
-            width: min-content;
-            @media (min-width: $desktop-breakpoint) {
-                width: max-content;
-            }
-
-            button {
-                margin: 6px;
-                border-color: white;
-                z-index:100;
-                font-weight: 600;
-                width:150px;
-                &:hover {
-                    background-color: white;
+    .bottom {
+        grid-area: bottom;
+        h1 {
+            width: fit-content;
+            margin: 0 auto;
+            padding: 16px 16px 8px 16px;
+            border-bottom: solid .5px $medium-dark-background;
+        }
+        .button-wrapper {
+            display: flex;
+            justify-content: center;
+            z-index:100;
+            margin-top:36px;
+            .buttons-inner {
+                width: min-content;
+                @media (min-width: $desktop-breakpoint) {
+                    width: max-content;
+                }
+    
+                button {
+                    margin: 6px;
+                    border-radius: 0 !important;
+                    background-color: $medium-gray-background;
                     color: $dark-blue;
+                    border-color: $medium-gray-background;
+                    opacity: .7;
+                    z-index:100;
+                    font-weight: 600;
+                    width:150px;
+                    &:hover {
+                        background-color: white;
+                    }
                 }
             }
         }
+            display:grid;
+            align-content: center;
+            align-items: center;
+            color: white;
+            padding: 16px;
+            @media (max-width: $mobile-breakpoint) {
+                h1 {
+                    font-size: 24px;
+                }
+                p {
+                    font-size: 1em;
+                }
+    
+            }
+            @media (min-width: $desktop-breakpoint) {
+                h1 {
+                    font-size: 42px;
+                }
+                p {
+                    font-size: 1.5em;
+                }
+            }
+            h1 {
+                font-family: "Helvetica Neue", sans-serif;
+                font-weight: 300;
+                letter-spacing: .1em;
+                text-align: center;
+                z-index: 99;
+               }
+            p {
+                font-family: "Helvetica Neue", sans-serif;
+                font-weight: 300;
+                letter-spacing: .1em;
+                text-align: center;
+                z-index: 99;
+            }
     }
-        display:grid;
-        align-content: center;
-        align-items: center;
-        color: white;
-        padding: 16px;
-        @media (max-width: $mobile-breakpoint) {
-            h1 {
-                font-size: 1.5em;
-            }
-            p {
-                font-size: 1em;
-            }
-
-        }
-        @media (min-width: $desktop-breakpoint) {
-            h1 {
-                font-size: 2.2em;
-            }
-            p {
-                font-size: 1.5em;
-            }
-        }
-        h1 {
-            font-family: "Helvetica Neue", sans-serif;
-            font-weight: 500;
-            letter-spacing: .1em;
-            text-align: center;
-            z-index: 99;
-           }
-        p {
-            font-family: "Helvetica Neue", sans-serif;
-            font-weight: 400;
-            letter-spacing: .1em;
-            text-align: center;
-            z-index: 99;
-        }
     &::after {
         content: "";
         display: block;
