@@ -272,6 +272,12 @@ cl-video {
   }
 }
 
+.strike-through {
+  text-decoration: line-through;
+  color: $pink-text;
+  font-weight: 800 !important;
+}
+
 .form-error {
   color: $alert;
 }
@@ -295,6 +301,18 @@ button.mat-icon-button {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+button.accent {
+  width: 100%;
+  color: white;
+  background-color: $pink-button !important;
+  &.normal:disabled {
+    background-color: #997d85 !important;
+  }
+  height:20px !important;
+  font-size: 16px;
+  font-weight: 1000;
 }
 
 .mat-button-wrapper {
@@ -973,7 +991,6 @@ mat-toolbar-row.mega-menu-bar {
     align-items: center;
   }
   &.home {
-    padding: 0px 8px 8px 8px;
     @media(min-width: $desktop-breakpoint) {
       padding: 0px;
     }

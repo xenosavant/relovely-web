@@ -30,7 +30,7 @@
                 </div>
                 <div class="product-price">
                     {{product.price | appCurrency}}
-                    <span *ngIf="product.retailPrice" class="retail">{{product.retailPrice | appCurrency}}
+                    <span *ngIf="product.retailPrice" class="strike-through">{{product.retailPrice | appCurrency}}
                     </span>
                 </div>
                 <div *ngIf="product.sizeId" class="product-size">
@@ -43,8 +43,8 @@
             </div>
             <div class="action">
                 <ng-container *ngIf="!product.sold">
-                    <app-button *ngIf="!seller" type="accent" (click)="purchase($event)">Buy Now</app-button>
-                    <app-button *ngIf="seller" type="accent" (click)="edit($event)">Edit</app-button>
+                    <button mat-button *ngIf="!seller" class="accent" (click)="purchase($event)">Buy Now</button>
+                    <button mat-button *ngIf="seller" class="accent" (click)="edit($event)">Edit</button>
                 </ng-container>
                 <ng-container *ngIf="product.sold">
                     <div class="sold">This product is no longer available</div>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="product-price">
                     {{product.price | appCurrency}}
-                    <span *ngIf="product.retailPrice" class="retail">{{product.retailPrice | appCurrency}}
+                    <span *ngIf="product.retailPrice" class="strike-through">{{product.retailPrice | appCurrency}}
                     </span>
                 </div>
                 <div class="size-wrapper" *ngIf="product.sizeId">
@@ -112,8 +112,8 @@
                 </div>
                 <ng-container *ngIf="!product.sold">
                     <div class="button-wrapper">
-                        <app-button *ngIf="!seller" type="accent" (click)="purchase($event)">Buy Now</app-button>
-                        <app-button *ngIf="seller" type="accent" (click)="edit($event)">Edit</app-button>
+                        <button mat-button *ngIf="!seller" class="accent" (click)="purchase($event)">Buy Now</button>
+                        <button mat-button *ngIf="seller" class="accent" (click)="edit($event)">Edit</button>
                     </div>
                 </ng-container>
                 <ng-container *ngIf="product.sold">
