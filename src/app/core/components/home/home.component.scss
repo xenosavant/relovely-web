@@ -96,15 +96,25 @@
                 }
     
                 button {
-                    margin: 6px;
+                    display: block;
+                    margin: 12px;
+                    @media (min-width: $desktop-breakpoint) {
+                        margin: 16px;
+                    }
                     border-radius: 0 !important;
                     background-color: $medium-gray-background;
                     color: $dark-blue;
                     border-color: $medium-gray-background;
                     opacity: .7;
                     z-index:100;
-                    font-weight: 600;
-                    width:150px;
+                    width:200px;
+                    height: 40px;
+                    ::ng-deep {
+                        span {
+                            font-family: "Helvetica Neue", sans-serif !important;
+                            font-size: 16px;
+                        }
+                    }
                     &:hover {
                         background-color: white;
                     }

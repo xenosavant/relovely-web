@@ -16,7 +16,7 @@
             <h1>SHOP BY INFLUENCER</h1>
         </div>
         <app-horizontal-user-list [users]="featuredSellers"></app-horizontal-user-list>
-        <div class="all">view all</div>
+        <div (click)="onShop()" class="all">view all</div>
     </div>
     <div class="become">
         <h1>Become a Seller!</h1>
