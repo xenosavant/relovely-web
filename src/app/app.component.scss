@@ -317,7 +317,7 @@ mat-nav-list {
 
 .footer {
   width: 100%;
-  border-top: solid 1px $dark-gray;
+  padding: 24px 0px 24px 0px;
   background-color: $background-gray;
   flex: none;
   display: flex;
@@ -325,7 +325,6 @@ mat-nav-list {
   @media (max-width: $mobile-breakpoint) {
   }
   @media (min-width: $desktop-breakpoint) {
-    height: $footer-height;
     position: relative;
   }
   ul {
@@ -349,8 +348,8 @@ mat-nav-list {
 .mobile-footer {
   background-color: $background-gray;
   padding: 16px 0px;
-  margin-top: 16px;
   .list-wrapper {
+    padding-bottom: 16px;
     ul {
       padding: 0;
       list-style: none;

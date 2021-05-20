@@ -1010,10 +1010,10 @@ mat-toolbar-row.mega-menu-bar {
 
 html {
   body {
-  // font-size: calc(1em + 1vw) !important;
+    background-color: $background-gray;
+    margin: 0 0 0 0 !important;
   overflow:hidden;
   line-height: 1.1 !important;
-  margin: 0 !important;
   }
 }
 

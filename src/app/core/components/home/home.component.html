@@ -13,9 +13,10 @@
     </div>
     <div class="featured-sellers">
         <div class="header">
-            <h1>FEATURED SELLERS</h1>
+            <h1>SHOP BY INFLUENCER</h1>
         </div>
         <app-horizontal-user-list [users]="featuredSellers"></app-horizontal-user-list>
+        <div class="all">view all</div>
     </div>
     <div class="become">
         <h1>Become a Seller!</h1>
@@ -30,17 +31,9 @@
             </div>
             <div class="list">
                 <ul>
-                    <li><strong>1. Quality of Content + Photos</strong></li>
-                    <li><strong>2. Followers + Engagement</strong></li>
-                </ul>
-                <p class="info">If you are a growing influencer with a small but mighty following, don't let that
-                    discourage you from
-                    applying!
-                    We completely get it and will not base our decision solely on number of followers. After all, it's
-                    about quality not quantity!
-                </p>
-                <ul>
-                    <li><strong>3. Must have a fashion designated Instagram or blog</strong></li>
+                    <li><strong>1. Must have a fashion Instagram business account and/or Blog</strong></li>
+                    <li><strong>2. Quality of content</strong></li>
+                    <li><strong>3. Engagement + Consistency</strong></li>
                 </ul>
                 <button mat-stroked-button class="primary sell" (click)="onSell()"> Apply to
                     Sell</button>
@@ -48,17 +41,19 @@
         </div>
     </div>
 </div>
-<div *ngIf="mobile" class="mobile-banner-wrapper">
-    <h1 *ngIf="!submitted"> Stay in the know!</h1>
-    <h1 *ngIf="submitted"> Thanks for subscribing!</h1>
+<div class="mobile-banner-wrapper">
+    <h1 *ngIf="!submitted"> Don't miss a thing!</h1>
+    <h2 *ngIf="submitted"> Thanks for subscribing!</h2>
     <form *ngIf="!submitted" #mobileForm class="cta-wrapper" target="_blank" novalidate>
-        <input #mobileInput type="email" value="" name="EMAIL" id="mce-EMAIL" class="email-input">
+        <input #mobileInput type="email" placeholder="email" value="" name="EMAIL" id="mce-EMAIL" class="email-input">
         <button mat-stroked-button (click)="onJoinMailingList(mobileInput.value)">
             Submit
         </button>
     </form>
     <p *ngIf="!submitted">Sign up for our newsletter to receive exclusive offers, and be the first to know about new
-        product launches.
+        product launches. By subscribing, you are also agreeing to Relovely's <a appClick target="_blank"
+            (click)="onPrivacy()">Privacy
+            Policy</a>. You may unsubscribe at any time.
     </p>
 </div>
 <ng-template cdkPortal #applyToSell="cdkPortal">

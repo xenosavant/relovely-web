@@ -48,7 +48,8 @@ export class ImageCropperComponent implements OnInit {
   public onImageCropped(): void {
     const canvas = this.cropper.getCroppedCanvas();
     const currentImage = canvas.toDataURL("image/jpeg");
-    // this.currentImage = event.base64.split(',')[1];
+    this.ready = false;
+    this.visibilty = 'hidden';
     this.onCrop.emit(currentImage);
   }
 
