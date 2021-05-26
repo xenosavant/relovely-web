@@ -70,18 +70,19 @@
     <div *ngIf="!mobile && !loading" class="grid-wrapper">
         <div class="image-wrapper">
             <div class="product">
-                <div *ngIf="currentItem.publicId">
+                <ng-container *ngIf="currentItem.publicId">
                     <div class="video-desktop-wrapper" [style.padding-bottom.%]="videoPadding"
                         [style.padding-top.%]="videoPadding">
                         <app-video-player [url]="product.videos[0].url" type="video/mp4"></app-video-player>
                     </div>
-                </div>
+                </ng-container>
                 <img *ngIf="!currentItem.publicId" [src]="currentItem" (click)="viewCurrentImage()">
             </div>
             <div class="preview">
-                <div *ngIf="product.videos[0]" class="video-desktop-wrapper">
-                    <img (click)="setActiveItem(product.videos[0])" [src]="videoThumbnail">
-                </div>
+                <span *ngIf="product.videos[0]" class="product-gallery__carousel-item">
+                    <img class="product-gallery__carousel-image" (click)="setActiveItem(product.videos[0])"
+                        [src]="videoThumbnail">
+                </span>
                 <ng-container *ngFor="let image of product.images">
                     <span class="product-gallery__carousel-item" appClick (click)="setActiveItem(image)">
                         <img class="product-gallery__carousel-image" [src]="image.cropped" alt="">

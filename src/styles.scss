@@ -34,7 +34,7 @@ $custom-typography: mat-typography-config(
 }
 
 * {
-  font-family: 'Roboto Light', Arial, Helvetica, sans-serif;
+  font-family: 'Roboto Light', "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .med {
@@ -940,6 +940,9 @@ mat-toolbar-row.mega-menu-bar {
             display: inline-block;
             font-size: 1.1em;
             font-weight: inherit;
+            a {
+              color: $header !important;
+            }
             &:hover {
               text-decoration: underline;
             }
@@ -1009,8 +1012,7 @@ html {
   body {
     background-color: $background-gray;
     margin: 0 0 0 0 !important;
-  overflow:hidden;
-  line-height: 1.1 !important;
+    overflow:hidden;
   }
 }
 
@@ -1193,8 +1195,8 @@ div.filter-bar {
       background-color:  $background-gray !important;
       cursor:default;
       .menu-wrapper {
-        margin-top:8px;
-        margin-bottom:8px;
+        margin-top:0;
+        margin-bottom:16px;
         display: grid;
         height:100%;
         width:100%;
