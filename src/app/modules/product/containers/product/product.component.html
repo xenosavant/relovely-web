@@ -71,8 +71,7 @@
         <div class="image-wrapper">
             <div class="product">
                 <ng-container *ngIf="currentItem.publicId">
-                    <div class="video-desktop-wrapper" [style.padding-bottom.%]="videoPadding"
-                        [style.padding-top.%]="videoPadding">
+                    <div class="video-desktop-wrapper">
                         <app-video-player [url]="product.videos[0].url" type="video/mp4"></app-video-player>
                     </div>
                 </ng-container>
