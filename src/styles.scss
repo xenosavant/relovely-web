@@ -1034,12 +1034,10 @@ html {
   background-color: $background-gray;
 }
 
-
-
 .mega-menu-wrapper {
- top:118px;
- height:$mega-menu-height;
- left:0px;
+  top:118px;
+  height:$mega-menu-height;
+  left:0px;
   right:0px;
   display: inline-block;
   position:absolute;
@@ -1200,8 +1198,7 @@ div.filter-bar {
       background-color:  $background-gray !important;
       cursor:default;
       .menu-wrapper {
-        margin-top:0;
-        margin-bottom:16px;
+        margin: 16px 0;
         display: grid;
         height:100%;
         width:100%;

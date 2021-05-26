@@ -97,7 +97,7 @@
   <div class="theme-wrapper light-theme" *ngIf="!mobile">
     <div class="content-wrapper" [class.content-noscroll]="overlayService.isOpen">
       <ng-container *ngTemplateOutlet="desktopToolbar"></ng-container>
-      <div class="mega-menu-wrapper" *ngIf="showMegaMenu">
+      <div class="mega-menu-wrapper" [@inOutAnimation] *ngIf="showMegaMenu">
         <div class="mega-menu">
           <div class="mega-menu-inner-wrapper" (mouseleave)="onLeaveMegaMenu($event)">
             <div class="mega-menu-header">
@@ -164,8 +164,8 @@
             </div>
           </div>
           <mat-menu #accountMenu="matMenu" yPosition="below" xPosition="before" [overlapTrigger]="false">
-            <div class="account-trigger-wrapper"></div>
-            <span class="menu-wrapper">
+            <div class="account-trigger-wrapper" (mouseleave)="onLeaveAccountTrigger($event)"></div>
+            <span class="menu-wrapper" (mouseleave)="onLeaveAccountTrigger($event)">
               <ng-container *ngIf="accountNav">
                 <div class="menu-item-wrapper">
                   <ul>
