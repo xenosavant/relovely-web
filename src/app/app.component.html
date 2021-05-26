@@ -165,7 +165,7 @@
           </div>
           <mat-menu #accountMenu="matMenu" yPosition="below" xPosition="before" [overlapTrigger]="false">
             <div class="account-trigger-wrapper" (mouseleave)="onLeaveAccountTrigger($event)"></div>
-            <span class="menu-wrapper" (mouseleave)="onLeaveAccountTrigger($event)">
+            <span class="menu-wrapper" (mouseleave)="onLeaveAccountMenu($event)">
               <ng-container *ngIf="accountNav">
                 <div class="menu-item-wrapper">
                   <ul>
