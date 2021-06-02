@@ -1,5 +1,3 @@
-import { SizeGroup } from "./size-group";
-
 export class Category {
     public name: string;
     public id: string;

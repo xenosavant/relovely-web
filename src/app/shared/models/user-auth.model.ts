@@ -1,6 +1,5 @@
 import { IUserPreferences } from "../services/filter/filter-state";
 import { Address } from "../interfaces/address.interface";
-import { Card } from "../interfaces/card.interface";
 import { PaymentCard } from "../interfaces/payment-card";
 import { Order } from "./order.model";
 

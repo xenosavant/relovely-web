@@ -11,7 +11,7 @@
         <ng-container *ngIf="currentUser.type === 'seller'">
             <div class="verification line" [class.clickable]="allowClick" (click)="showVerifyModal()">
                 <div class="icon-wrap">
-                    <fa-icon icon="store"></fa-icon>
+                    <mat-icon svgIcon="store"></mat-icon>
                 </div>
                 <span class="title">
                     Seller Verification
@@ -21,7 +21,7 @@
             </div>
             <div class="bank line clickable" (click)="showBankAccountModal()">
                 <div class="icon-wrap">
-                    <fa-icon icon="landmark"></fa-icon>
+                    <mat-icon svgIcon="bank"></mat-icon>
                 </div>
                 <span class="title">
                     Bank Account
@@ -31,7 +31,7 @@
             </div>
             <div class="bank line clickable" (click)="showAddressModal()">
                 <div class="icon-wrap">
-                    <fa-icon icon="home"></fa-icon>
+                    <mat-icon svgIcon="home"></mat-icon>
                 </div>
                 <span class="title">
                     Return Address

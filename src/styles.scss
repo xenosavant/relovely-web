@@ -1,7 +1,4 @@
 @import 'styles-variables';
-
-@import '../node_modules/bootstrap/scss/bootstrap-reboot';
-@import '../node_modules/bootstrap/scss/bootstrap-grid';
 @import 'styles-reset';
 
 @import '../node_modules/@angular/material/theming';
@@ -12,6 +9,11 @@
 @import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
 
 @import '~@angular/material/theming';
+
+@font-face {
+  font-family: "Roboto Light";
+  src: local("Roboto Light"), url(./assets/fonts/Roboto-Light.ttf) format("truetype");
+}
 
 // Define a custom typography config that overrides the font-family as well as the
 // `headlines` and `body-1` levels.
@@ -31,14 +33,33 @@ $custom-typography: mat-typography-config(
   }
 }
 
+* {
+  font-family: 'Roboto Light', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.med {
+  font-weight: 600;
+}
+
+body,
+html {
+  height: 100%;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
 a {
   &.head {
     color: inherit !important;
     font-weight: inherit !important;
   }
   color: $link-blue !important;
-  font-weight: 400;
+  font-weight: 600;
   cursor: pointer;
+  text-decoration: none;
   &:hover {
     text-decoration: underline !important;
   }
@@ -53,7 +74,7 @@ a {
   border-radius: 4px;
   border: 1px solid $medium-blue;
   color: #31708f;
-  font-weight: 500;
+  font-weight: 800;
   &.success {
     background-color: #dff0d8;
     border-color: #d0e9c6;
@@ -144,9 +165,9 @@ a {
 
 .double-field {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-template-rows: auto;
-  @media (min-width: $desktop-breakpoint) {
+  @media (min-width: 500px) {
     grid-gap: 8px;
   }
 }
@@ -223,16 +244,10 @@ cl-video {
 }
 
 .icon-wrapper, .search__form {
-  button.mat-icon-button {
+  button {
 
     // width: $search-bar-height !important;
     // height: $search-bar-height !important;
-    img {
-  
-    }
-    fa-icon {
-  
-    }
 
     &.account {
       cursor: pointer;
@@ -262,6 +277,12 @@ cl-video {
   }
 }
 
+.strike-through {
+  text-decoration: line-through;
+  color: $pink-text;
+  font-weight: 800 !important;
+}
+
 .form-error {
   color: $alert;
 }
@@ -281,8 +302,27 @@ mat-spinner.white.mat-progress-spinner {
   }
 }
 
+button.mat-icon-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button.accent {
+  width: 100%;
+  color: white;
+  background-color: $pink-button !important;
+  &.normal:disabled {
+    background-color: #997d85 !important;
+  }
+  height:20px !important;
+  font-size: 16px;
+  font-weight: 1000;
+}
+
 .mat-button-wrapper {
   display: flex;
+  height: inherit;
   justify-content: center;
   align-items: center;
 }
@@ -370,23 +410,10 @@ mat-paginator {
   }
 }
 
-.mat-icon-button {
+.mat-icon {
   border:none;
-  height: 40px;
-  &.black {
-    font-size: 24px !important;
-    color: black !important;
-  }
-  
-  // &.menu {
-  //   display: grid;
-  //   align-items: center;
-  //   align-content: center;
-  //   width:100%;
-  //   fa-icon {
-  //     height:30px;
-  //   }
-  // }
+  height:24px !important;
+  width: 24px !important;
 }
 
 div.left {
@@ -414,17 +441,6 @@ div.left {
   height: 55px;
 }
 
-.mat-button, .mat-flat-button, .mat-icon-button, .mat-stroked-button {
-  border-radius: 0 !important;
- min-width: 25px !important;
- line-height:unset !important;
- &.primary:hover {
-   &.enabled {
-    background-color: $dark-blue !important;
-   }
- }
-}
-
 .header-bar {
   width:100%;
   background-color: $dark-blue;
@@ -449,9 +465,6 @@ div.left {
     cursor: pointer;
     font: 500 15px Roboto, sans-serif !important;
     color: $dark-gray;
-    div {
-      margin-bottom: 3px;
-    }
     &:hover {
       color:black;
     }
@@ -462,8 +475,8 @@ div.left {
 
       img.profile {
         vertical-align: unset;
-        width:22px !important;
-        height:22px !important;
+        width:24px !important;
+        height:24px !important;
         margin-top:2px;
         border-radius: 11px;
       }
@@ -475,25 +488,18 @@ div.left {
         background: $alert;
         display:inline-block;
         position: relative;
-        left: 2px;
-        top: -12px;
+        left: 25px;
+        top: -25px;
       }
     }
     font-size:18px;
-    svg {
-      vertical-align: unset;
-      margin: unset !important;
-      color: black !important;
-      margin:0 auto;
-  }
  }
 }
 
 .icon-wrapper.mobile {
-  display: flex;
-    // display: grid;
-    // grid-template-columns: 1fr 1fr;
-    // grid-template-rows: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
 }
 
 
@@ -939,6 +945,9 @@ mat-toolbar-row.mega-menu-bar {
             display: inline-block;
             font-size: 1.1em;
             font-weight: inherit;
+            a {
+              color: $header !important;
+            }
             &:hover {
               text-decoration: underline;
             }
@@ -987,7 +996,6 @@ mat-toolbar-row.mega-menu-bar {
     align-items: center;
   }
   &.home {
-    padding: 0px 8px 8px 8px;
     @media(min-width: $desktop-breakpoint) {
       padding: 0px;
     }
@@ -1007,9 +1015,9 @@ mat-toolbar-row.mega-menu-bar {
 
 html {
   body {
-  // font-size: calc(1em + 1vw) !important;
-  overflow:hidden;
-  line-height: 1.1 !important;
+    background-color: $background-gray;
+    margin: 0 0 0 0 !important;
+    overflow:hidden;
   }
 }
 
@@ -1026,12 +1034,10 @@ html {
   background-color: $background-gray;
 }
 
-
-
 .mega-menu-wrapper {
- top:118px;
- height:$mega-menu-height;
- left:0px;
+  top:118px;
+  height:$mega-menu-height;
+  left:0px;
   right:0px;
   display: inline-block;
   position:absolute;
@@ -1100,13 +1106,18 @@ html {
   }
 
 
-button.mat-stroked-button {
-  // background: $gray-button !important;
+mat-icon svg {
+  fill: currentColor;
 }
 
-
 button {
+  background-color: transparent;
+  border: none;
   min-height: 30px;
+  cursor: pointer;
+  &.account {
+    display: grid !important;
+  }
   &.primary {
   background-color: $light-gray !important;
   color:white !important;
@@ -1163,23 +1174,9 @@ div.filter-bar {
   width:100%;
 }
 
-
-// Search Bar
-
-  .search-tool-bar {
-    display: grid;
-    grid-template-columns: 40px auto;
-    align-content: center;
-    background-color: $background-gray;
-      app-search-bar {
-        .search {
-          border: solid black 1px;
-        }
-      }
-        button  {   
-          // display: contents;
-      }
-  }
+.mat-stroked-button {
+  margin-right: 10px;
+}
 
 .search-wrapper {
   display:grid;
@@ -1190,9 +1187,6 @@ div.filter-bar {
       width:150px;
       border-bottom: solid 1px  $light-gray !important;
       background: $background-gray;
-    }
-    .search fa-icon {
-      font-size:26px;
   }
 }
   
@@ -1204,8 +1198,7 @@ div.filter-bar {
       background-color:  $background-gray !important;
       cursor:default;
       .menu-wrapper {
-        margin-top:8px;
-        margin-bottom:8px;
+        margin: 16px 0;
         display: grid;
         height:100%;
         width:100%;
@@ -1305,7 +1298,7 @@ div.filter-bar {
     border-radius: 2px;
     color: #fff;
     font-size: .8em;
-    font-weight: 600;
+    font-weight: 800;
     padding: 4px;
     position: relative;
     text-align: center;

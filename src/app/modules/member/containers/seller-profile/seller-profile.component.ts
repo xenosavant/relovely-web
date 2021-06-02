@@ -1,9 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, Output, EventEmitter, ChangeDetectorRef, SimpleChange, SimpleChanges, OnChanges } from '@angular/core';
 import { UserDetail } from '../../../../shared/models/user-detail.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { users } from '@app/data/users.data';
-import { products } from '@app/data/products.data';
-import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from '@app/shared/services/overlay.service';
 import { UserService } from '@app/shared/services/user/user.service';
 import { Product } from '@app/shared/models/product.model';

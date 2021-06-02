@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, NgZone, ViewChild } from '@angular/core';
 import { Product } from '@app/shared/models/product.model';
-import { products } from '@app/data/products.data';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
@@ -15,7 +14,6 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from '@app/shared/services/overlay.service';
 import { CATEGORY_MAP } from '@app/shared/services/lookup/category-image-map';
 import { Subscription, fromEvent } from 'rxjs';
-import { UserDetail } from '@app/shared/models/user-detail.model';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { withLatestFrom, map, startWith, distinctUntilChanged, shareReplay } from 'rxjs/operators';
 import { ViewportScroller } from '@angular/common';

@@ -35,14 +35,13 @@
     }
 
 .title-wrapper {
-    height:2.5em;
-    line-height:1.25em;
     color: $dark-blue;
     padding-left:24px;
     flex-direction: column;
     justify-content: center;
+    align-items: left;
     display: flex;
-    fa-icon {
+    mat-icon {
         cursor: pointer;
     }
     @media( min-width:$desktop-breakpoint) {
@@ -134,8 +133,21 @@
         }
     }
     .name {
-        fa-icon {
-            padding-right:8px;
+        display: flex;
+        .username {
+            display: flex;
+            align-items: center;
+        }
+        button {
+            color: black;
+            @media(min-width: $desktop-breakpoint) {
+                color: #fff;
+            }
+
+            mat-icon {
+                padding-right:8px;
+    
+            }
         }
     }
 }

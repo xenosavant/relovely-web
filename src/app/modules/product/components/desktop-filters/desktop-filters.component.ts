@@ -2,7 +2,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, ElementRef, ViewChild, ChangeDetectorRef, SimpleChanges } from '@angular/core';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { PriceFilter } from '@app/shared/models/price-filter.model';
-import { MatMenuTrigger } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
@@ -27,7 +27,7 @@ export class DesktopFiltersComponent implements OnInit {
   selectedPriceFilters: PriceFilter[] = [];
   priceFilters: PriceFilter[];
 
-  @ViewChild('sizeTrigger', { static: false }) sizeTrigger: MatMenuTrigger;
+  @ViewChild('sizeTrigger') sizeTrigger: MatMenuTrigger;
   @ViewChild('colorTrigger', { static: true }) colorTrigger: MatMenuTrigger;
   @ViewChild('priceTrigger', { static: true }) priceTrigger: MatMenuTrigger;
   @ViewChild('listingsTrigger', { static: true }) listingsTrigger: MatMenuTrigger;

@@ -43,12 +43,6 @@ export class SearchBarComponent implements OnInit {
     if (event.keyCode === 13) {
       this.search.emit();
     }
-    this.term.emit(this.parseInput(this.form.get('term').value));
-  }
-
-  private parseInput(input: string): string {
-    return input.split(' ').reduce((result: string, value: string) => {
-      return result + (!result ? '' : ',') + value;
-    });
+    this.term.emit(this.form.get('term').value);
   }
 }

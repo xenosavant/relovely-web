@@ -1,17 +1,18 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, NgZone, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { UserDetail } from '../../../../shared/models/user-detail.model';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { products } from '@app/data/products.data';
+import { ActivatedRoute } from '@angular/router';
 import { UserService } from '@app/shared/services/user/user.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 import { FileUploadService } from '@app/shared/services/file-upload.service';
 import { concatMap, tap } from 'rxjs/operators';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { HeaderService } from '@app/shared/services/header.service';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';
-const loadImage = require('blueimp-load-image');
+import heic2any from "heic2any";
+
+const MAX_WIDTH = 800;
 
 @Component({
   selector: 'app-profile',
@@ -95,23 +96,40 @@ export class ProfileComponent implements OnInit {
   public onUpdateImage($event: any): void {
     this.imageChangedEvent = $event;
     this.currentImage = null;
+    this.loading = true;
     const context = this;
-    loadImage($event.target.files[0], {
-      orientation: true,
-      maxHeight: 1333,
-      maxwidth: 1333,
-      contain: true,
-      canvas: true
-    }).then(function (data) {
-      const canvas = document.createElement("canvas");
-      canvas.width = data.image.width;
-      canvas.height = data.image.height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(data.image, 0, 0, data.image.width, data.image.height);
-      const dataURL = canvas.toDataURL("image/jpg");
-      context.currentImage = dataURL;
-      context.crop = true;
-      context.ref.markForCheck();
-    })
+    const file = $event.target.files[0];
+    if (/(gif|jpe?g|tiff?|png|webp|bmp|heic|heif)/g.test(file.type)) {
+      var img = new Image();
+      this.loading = true;
+      img.onload = (event: any) => {
+        const canvas = document.createElement("canvas");
+        const image = event.target;
+        if (image.width > MAX_WIDTH) {
+          canvas.width = MAX_WIDTH;
+          canvas.height = image.height * (MAX_WIDTH / image.width);
+        } else {
+          canvas.width = image.width;
+          canvas.height = image.height;
+        }
+        const ctx = canvas.getContext("2d");
+        const scaleFactor = canvas.width / image.width;
+        ctx.drawImage(image, 0, 0, image.width * scaleFactor, image.height * scaleFactor);
+        const dataURL = canvas.toDataURL('image/jpg');
+        context.currentImage = dataURL;
+        context.crop = true;
+        context.loading = false;
+        context.ref.markForCheck();
+      };
+      if (/(heic|heif)/g.test(file.type)) {
+        heic2any({ blob: file, toType: 'image/jpeg' }).then(file => {
+          img.src = URL.createObjectURL(file);
+        });
+      } else {
+        img.src = URL.createObjectURL(file);
+      }
+    } else {
+      this.ref.markForCheck();
+    }
   }
 }

@@ -1,17 +1,17 @@
-<div class=cropper-container>
+<div class="container">
     <div class="inner-container" [style.visibility]="visibilty">
         <div class="title-wrapper">
             <h1 class="title"> Crop Image</h1>
         </div>
         <div class="cropper-inner">
             <div class="crop-wrap">
-                <image-cropper [imageBase64]="image" [maintainAspectRatio]="true" [aspectRatio]="1"
-                    [resizeToWidth]="600" format="jpeg" (imageCropped)="imageCropped($event)"
-                    (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
-                </image-cropper>
+                <img #imageElement [src]="image">
             </div>
         </div>
-        <div *ngIf="ready" class="button-wrapper">
+        <div class="spacer"></div>
+    </div>
+    <div *ngIf="ready" class="button-wrapper">
+        <div class="buttons-inner">
             <div *ngIf="showInfo" class="info">
                 <div class="text">
                     Cropped image only used for thumbnail. Full-size image will be viewable for shoppers when

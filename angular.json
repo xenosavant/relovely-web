@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -38,13 +39,9 @@
             ],
             "styles": [
               {
-                "input": "src/styles-app-loading.scss"
-              },
-              {
                 "input": "src/styles.scss"
               },
-              "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
-              "node_modules/cloudinary-video-player/dist/cld-video-player.min.css"
+              "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css"
             ],
             "scripts": []
           },
@@ -94,6 +91,10 @@
                   "baseline": "100kb",
                   "maximumWarning": "5mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -191,5 +192,8 @@
       }
     }
   },
-  "defaultProject": "relovely"
+  "defaultProject": "relovely",
+  "cli": {
+    "analytics": false
+  }
 }

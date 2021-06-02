@@ -12,8 +12,7 @@
             #featuredCarousel>
             <ng-template *ngIf="product.videos[0]" carouselSlide>
                 <div class="video-slide-wrapper">
-                    <app-video-player [publicId]="product.videos[0].publicId" [controls]="true">
-                    </app-video-player>
+                    <app-video-player [url]="product.videos[0].url" type="video/mp4"></app-video-player>
                 </div>
             </ng-template>
             <ng-container *ngFor="let image of product.images, let i = index">
@@ -31,7 +30,7 @@
                 </div>
                 <div class="product-price">
                     {{product.price | appCurrency}}
-                    <span *ngIf="product.retailPrice" class="retail">{{product.retailPrice | appCurrency}}
+                    <span *ngIf="product.retailPrice" class="strike-through">{{product.retailPrice | appCurrency}}
                     </span>
                 </div>
                 <div *ngIf="product.sizeId" class="product-size">
@@ -44,8 +43,8 @@
             </div>
             <div class="action">
                 <ng-container *ngIf="!product.sold">
-                    <app-button *ngIf="!seller" type="accent" (click)="purchase($event)">Buy Now</app-button>
-                    <app-button *ngIf="seller" type="accent" (click)="edit($event)">Edit</app-button>
+                    <button mat-button *ngIf="!seller" class="accent" (click)="purchase($event)">Buy Now</button>
+                    <button mat-button *ngIf="seller" class="accent" (click)="edit($event)">Edit</button>
                 </ng-container>
                 <ng-container *ngIf="product.sold">
                     <div class="sold">This product is no longer available</div>
@@ -71,19 +70,18 @@
     <div *ngIf="!mobile && !loading" class="grid-wrapper">
         <div class="image-wrapper">
             <div class="product">
-                <div *ngIf="currentItem.publicId">
-                    <div class="video-desktop-wrapper" [style.padding-bottom.%]="videoPadding"
-                        [style.padding-top.%]="videoPadding">
-                        <app-video-player [publicId]="product.videos[0].publicId" [controls]="true">
-                        </app-video-player>
+                <ng-container *ngIf="currentItem.publicId">
+                    <div class="video-desktop-wrapper">
+                        <app-video-player [url]="product.videos[0].url" type="video/mp4"></app-video-player>
                     </div>
-                </div>
+                </ng-container>
                 <img *ngIf="!currentItem.publicId" [src]="currentItem" (click)="viewCurrentImage()">
             </div>
             <div class="preview">
-                <div *ngIf="product.videos[0]" class="video-desktop-wrapper">
-                    <img (click)="setActiveItem(product.videos[0])" [src]="videoThumbnail">
-                </div>
+                <span *ngIf="product.videos[0]" class="product-gallery__carousel-item">
+                    <img class="product-gallery__carousel-image" (click)="setActiveItem(product.videos[0])"
+                        [src]="videoThumbnail">
+                </span>
                 <ng-container *ngFor="let image of product.images">
                     <span class="product-gallery__carousel-item" appClick (click)="setActiveItem(image)">
                         <img class="product-gallery__carousel-image" [src]="image.cropped" alt="">
@@ -103,6 +101,8 @@
                 </div>
                 <div class="product-price">
                     {{product.price | appCurrency}}
+                    <span *ngIf="product.retailPrice" class="strike-through">{{product.retailPrice | appCurrency}}
+                    </span>
                 </div>
                 <div class="size-wrapper" *ngIf="product.sizeId">
                     Size: <strong>{{product.sizeId | appSize}}</strong>
@@ -112,8 +112,8 @@
                 </div>
                 <ng-container *ngIf="!product.sold">
                     <div class="button-wrapper">
-                        <app-button *ngIf="!seller" type="accent" (click)="purchase($event)">Buy Now</app-button>
-                        <app-button *ngIf="seller" type="accent" (click)="edit($event)">Edit</app-button>
+                        <button mat-button *ngIf="!seller" class="accent" (click)="purchase($event)">Buy Now</button>
+                        <button mat-button *ngIf="seller" class="accent" (click)="edit($event)">Edit</button>
                     </div>
                 </ng-container>
                 <ng-container *ngIf="product.sold">

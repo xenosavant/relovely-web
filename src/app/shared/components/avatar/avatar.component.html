@@ -5,6 +5,6 @@
     <img *ngIf="mobile" src="./assets/images/profile-add.svg">
   </ng-container>
   <div *ngIf="editable" [class.overlay]="!mobile" [class.mobile]="mobile && !image">
-    <mat-icon>add</mat-icon>
+    <mat-icon svgIcon="plus"></mat-icon>
   </div>
 </div>

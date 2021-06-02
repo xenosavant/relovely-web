@@ -1,7 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Input, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
-import { ImageSet } from '@app/shared/interfaces/image-set.interface';
-
+import Cropper from "cropperjs";
 @Component({
   selector: 'app-image-cropper',
   templateUrl: './image-cropper.component.html',
@@ -10,47 +9,52 @@ import { ImageSet } from '@app/shared/interfaces/image-set.interface';
 })
 export class ImageCropperComponent implements OnInit {
 
-  private currentImage: string = null;
   public ready = false;
   public visibilty = 'hidden';
 
-  @Output() public crop: EventEmitter<string> = new EventEmitter<string>();
+  @ViewChild("imageElement", { static: false })
+  public imageElement: ElementRef;
+
+  @Output() public onCrop: EventEmitter<string> = new EventEmitter<string>();
   @Output() public cancel: EventEmitter<boolean> = new EventEmitter();
 
-  @Input() public image: string;
+  @Input() public image: File;
   @Input() public showInfo = false;
 
+  private cropper: Cropper;
 
-  constructor() { }
+  constructor(private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-
+    console.log('init');
   }
 
-  public cropperReady(): void {
-    this.visibilty = 'visible';
-    this.ready = true;
-  }
-
-  public imageLoaded() {
-
-  }
-
-  public loadImageFailed(): void {
-    // show message
+  public ngAfterViewInit() {
+    const context = this;
+    this.cropper = new Cropper(this.imageElement.nativeElement, {
+      zoomable: false,
+      scalable: false,
+      aspectRatio: 1,
+      viewMode: 1,
+      dragMode: 'none',
+      ready: () => {
+        context.visibilty = 'visible';
+        context.ready = true;
+        context.ref.markForCheck();
+      }
+    });
   }
 
   public onImageCropped(): void {
+    const canvas = this.cropper.getCroppedCanvas();
+    const currentImage = canvas.toDataURL("image/jpeg");
     this.ready = false;
-    this.crop.emit(this.currentImage);
+    this.visibilty = 'hidden';
+    this.onCrop.emit(currentImage);
   }
 
-  public onCancel(): void {
-    this.cancel.emit(true);
-  }
-
-  public imageCropped(event: ImageCroppedEvent): void {
-    this.currentImage = event.base64.split(',')[1];
+  public onCancel() {
+    this.cancel.emit();
   }
 
 }

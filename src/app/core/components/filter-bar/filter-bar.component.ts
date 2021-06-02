@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
 import { NavigationItem } from '@app/shared/models/navigation-item.model';
-import { categories } from '@app/data/filter-groups.data';
 import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { NavigationService } from '@app/shared/services/navigation/navigation.service';

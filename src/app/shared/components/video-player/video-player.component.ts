@@ -8,8 +8,8 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 })
 export class VideoPlayerComponent implements OnInit {
 
-  @Input() publicId: string;
-  @Input() controls: boolean;
+  @Input() url: string;
+  @Input() type: string;
 
   constructor() { }
 

@@ -66,6 +66,10 @@ export class HomeComponent implements OnInit {
         this.submitted = true;
     }
 
+    public onPrivacy() {
+        this.navigationService.navigate({ path: '/member/privacy' })
+    }
+
     onJoinMailingList(email: string) {
         this.userService.subscribe(email).subscribe(() => {
             this.submitted = true;

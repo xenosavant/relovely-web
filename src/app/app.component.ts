@@ -1,42 +1,55 @@
-import browser from 'browser-detect';
 import { Component, OnInit, ChangeDetectorRef, NgZone, ViewChild, ElementRef, Inject } from '@angular/core';
-import { Observable, BehaviorSubject, fromEvent, Subscription, forkJoin, concat, of, from } from 'rxjs';
+import { fromEvent, Subscription, forkJoin, concat, of, from } from 'rxjs';
 import { environment as env } from '@env/environment';
-
-import {
-  ActionSettingsChangeLanguage,
-  ActionSettingsChangeAnimationsPageDisabled,
-  selectSettingsLanguage,
-  selectSettingsStickyHeader
-} from './settings';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { NavigationItem } from './shared/models/navigation-item.model';
 import { LookupService } from './shared/services/lookup/lookup.service';
-import { KeyValue, DOCUMENT } from '@angular/common';
-import { Router, Navigation, ActivatedRoute } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NavigationService } from './shared/services/navigation/navigation.service';
 import { UserService } from './shared/services/user/user.service';
 import { Category } from './shared/models/category.model';
-import { products } from './data/products.data';
-import { timeInterval, timeout, throttleTime, map, pairwise, tap, switchMap, concatMap, mergeMap, concatAll } from 'rxjs/operators';
-import { Direction } from '@angular/cdk/bidi/typings/directionality';
-import { MatSidenavContainer, MatMenuTrigger } from '@angular/material';
+import { throttleTime, map } from 'rxjs/operators';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { MatSidenavContainer } from '@angular/material/sidenav';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { OverlayService } from './shared/services/overlay.service';
 import { LocalStorageService } from './shared/services/local-storage/local-storage.service';
-import { LookupResponse } from './shared/services/lookup/lookup.response';
-import { IUserPreferences } from './shared/services/filter/filter-state';
 import { HeaderService } from './shared/services/header.service';
-import { LookupState } from './shared/services/lookup/lookup-state';
-import { ParseSpan } from '@angular/compiler';
 import { AlertService } from './shared/services/alert/alert.service';
 import { Product } from './shared/models/product.model';
 import { ProductService } from './shared/services/product/product.service';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  animations: [
+    trigger(
+      'inOutAnimation',
+      [
+        transition(
+          ':enter',
+          [
+            style({ opacity: 0 }),
+            animate('.4s ease-out',
+              style({ opacity: 1 }))
+          ]
+        ),
+        transition(
+          ':leave',
+          [
+            style({ opacity: 1 }),
+            animate('.4s ease-in',
+              style({ opacity: 0 }))
+          ]
+        )
+      ]
+    )
+  ]
 })
 export class AppComponent implements OnInit {
 
@@ -98,12 +111,13 @@ export class AppComponent implements OnInit {
   @ViewChild('productModal', { static: true }) productModal: TemplatePortal<any>;
   @ViewChild('productImage', { static: true }) productImage: TemplatePortal<any>;
   @ViewChild(MatSidenavContainer, { static: true }) container: MatSidenavContainer;
-  @ViewChild('menuTrigger', { read: MatMenuTrigger, static: false }) trigger: MatMenuTrigger;
-  @ViewChild('.mat-sidenav-content', { static: false }) sideNavContent: ElementRef;
+  @ViewChild('menuTrigger', { read: MatMenuTrigger }) trigger: MatMenuTrigger;
+  @ViewChild('.mat-sidenav-content') sideNavContent: ElementRef;
 
   constructor(
     private storageService: LocalStorageService,
     private lookupService: LookupService,
+    private matIconRegistry: MatIconRegistry,
     private breakpointObserver: BreakpointObserver,
     private navigationService: NavigationService,
     private ref: ChangeDetectorRef,
@@ -116,11 +130,32 @@ export class AppComponent implements OnInit {
     private router: Router,
     private productService: ProductService,
     private alertService: AlertService,
+    private sanitizer: DomSanitizer,
     @Inject(DOCUMENT) private document: any
   ) {
     this.showFilterBar = false;
     this.showNavBar = false;
     this.showTopLevel = true;
+    this.matIconRegistry.addSvgIcon('menu', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/menu.svg'))
+      .addSvgIcon('heart', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/heart.svg'))
+      .addSvgIcon('search', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/search.svg'))
+      .addSvgIcon('grid', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/grid.svg'))
+      .addSvgIcon('square', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/square.svg'))
+      .addSvgIcon('left-arrow', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/left-arrow.svg'))
+      .addSvgIcon('store', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/store.svg'))
+      .addSvgIcon('bank', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/bank.svg'))
+      .addSvgIcon('home', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/home.svg'))
+      .addSvgIcon('plus', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/plus.svg'))
+      .addSvgIcon('edit', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/edit.svg'))
+      .addSvgIcon('undo', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/undo.svg'))
+      .addSvgIcon('clock', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/clock.svg'))
+      .addSvgIcon('lock', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/lock.svg'))
+      .addSvgIcon('shield', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/shield.svg'))
+      .addSvgIcon('sync', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/sync.svg'))
+      .addSvgIcon('close', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/close.svg'))
+      .addSvgIcon('chevron', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/chevron-down.svg'))
+      .addSvgIcon('check', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/check.svg'))
+      .addSvgIcon('times', this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/times.svg'))
   }
 
   ngOnInit(): void {
@@ -434,10 +469,6 @@ export class AppComponent implements OnInit {
   public onCloseSearch() {
     this.showSearch = false;
     this.searchTerm = null;
-    const path = this.route.snapshot.children[0].routeConfig.path;
-    if (path === 'products') {
-      this.search();
-    }
   }
 
   public goToFavorites() {

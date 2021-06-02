@@ -39,8 +39,7 @@ export class SettingsComponent implements OnInit {
   constructor(private userService: UserService,
     private overlayService: OverlayService,
     private navigationService: NavigationService,
-    private ref: ChangeDetectorRef,
-    private activatedRoute: ActivatedRoute) { }
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.currentUser = this.userService.user$.getValue();

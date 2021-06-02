@@ -4,25 +4,21 @@ import { Category } from '@app/shared/models/category.model';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { guid } from '../../utils/rand';
 import { ImageSet } from '@app/shared/interfaces/image-set.interface';
-import { forkJoin } from 'rxjs';
-import { ThrowStmt } from '@angular/compiler';
 import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
 import { Product } from '@app/shared/models/product.model';
 import { ProductService } from '@app/shared/services/product/product.service';
 import { VideoMetaData } from '@app/shared/interfaces/video-meta-data';
-import { switchMap, map, tap, concatMap } from 'rxjs/operators';
-import { resolve } from 'dns';
+import { map, concatMap } from 'rxjs/operators';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { KeyValue } from '@app/shared/interfaces/key-value.interface';
 import { FileUploadService } from '@app/shared/services/file-upload.service';
-import { weights } from '../../../data/weights.ts';
+import { weights } from '../../../data/weights';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { environment } from '@env/environment';
 import { UserAuth } from '@app/shared/models/user-auth.model';
-import { AuthService } from '@app/shared/services/auth/auth.service';
 import { UserService } from '@app/shared/services/user/user.service';
-const loadImage = require('blueimp-load-image');
+import heic2any from "heic2any";
 
+const MAX_WIDTH = 800;
 
 @Component({
   selector: 'app-product-create',
@@ -74,7 +70,6 @@ export class ProductCreateComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private productService: ProductService,
     private breakpointObserver: BreakpointObserver) {
-
   }
 
   ngOnInit() {
@@ -202,23 +197,42 @@ export class ProductCreateComponent implements OnInit {
 
   public imageChanged($event: any): void {
     const context = this;
-    loadImage($event.target.files[0], {
-      maxHeight: 1333,
-      maxwidth: 1333,
-      contain: true,
-      canvas: true,
-      orientation: true
-    }).then(function (data) {
-      const canvas = document.createElement("canvas");
-      canvas.width = data.image.width;
-      canvas.height = data.image.height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(data.image, 0, 0, data.image.width, data.image.height);
-      const dataURL = canvas.toDataURL("image/jpg");
-      context.originalImage = dataURL;
-      context.crop = true;
-      context.ref.markForCheck();
-    })
+    context.originalImage = null;
+    const file = $event.target.files[0];
+    if (/(gif|jpe?g|tiff?|png|webp|bmp|heic|heif)/g.test(file.type)) {
+      this.imageUploadError = false;
+      var img = new Image();
+      this.loading = true;
+      img.onload = (event: any) => {
+        const canvas = document.createElement("canvas");
+        const image = event.target;
+        if (image.width > MAX_WIDTH) {
+          canvas.width = MAX_WIDTH;
+          canvas.height = image.height * (MAX_WIDTH / image.width);
+        } else {
+          canvas.width = image.width;
+          canvas.height = image.height;
+        }
+        const ctx = canvas.getContext("2d");
+        const scaleFactor = canvas.width / image.width;
+        ctx.drawImage(image, 0, 0, image.width * scaleFactor, image.height * scaleFactor);
+        const dataURL = canvas.toDataURL('image/jpg');
+        context.originalImage = dataURL;
+        context.crop = true;
+        context.loading = false;
+        context.ref.markForCheck();
+      };
+      if (/(heic|heif)/g.test(file.type)) {
+        heic2any({ blob: file, toType: 'image/jpeg' }).then(file => {
+          img.src = URL.createObjectURL(file);
+        });
+      } else {
+        img.src = URL.createObjectURL(file);
+      }
+    } else {
+      this.imageUploadError = true;
+      this.ref.markForCheck();
+    }
   }
 
   onClose() {

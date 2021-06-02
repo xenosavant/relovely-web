@@ -19,63 +19,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatSliderModule, MatPaginatorModule } from '@angular/material/';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { FileUploadModule } from 'ng2-file-upload';
-import { CloudinaryModule } from '../../../node_modules/@cloudinary/angular-5.x'
-
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faBars,
-  faUserCircle,
-  faPowerOff,
-  faCog,
-  faPlayCircle,
-  faRocket,
-  faPlus,
-  faEdit,
-  faTrash,
-  faTimes,
-  faCaretUp,
-  faCaretDown,
-  faExclamationTriangle,
-  faFilter,
-  faTasks,
-  faCheck,
-  faSquare,
-  faLanguage,
-  faPaintBrush,
-  faLightbulb,
-  faWindowMaximize,
-  faStream,
-  faBook,
-  faSearch,
-  faShoppingCart,
-  faArrowLeft,
-  faHeart,
-  faUndo,
-  faWindowClose,
-  faThLarge,
-  faEllipsisV,
-  faLandmark,
-  faStore,
-  faLock,
-  faShieldAlt,
-  faClock,
-  faHome,
-  faSync
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  faGithub,
-  faMediumM,
-  faTwitter,
-  faInstagram,
-  faYoutube
-} from '@fortawesome/free-brands-svg-icons';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { HorizontalProductListComponent } from './components/horizontal-product-list/horizontal-product-list.component';
 import { ButtonComponent } from './components/button/button.component';
@@ -105,8 +55,7 @@ import { ImageViewerComponent } from './components/image-viewer/image-viewer.com
 import { AppSizePipe } from './pipes/size.pipe';
 import { AddAddressModalComponent } from './components/add-address-modal/add-address-modal.component';
 import { PaymentCardInputComponent } from './components/payment-card-input/payment-card-input.component';
-import { NgxStripeModule, StripeCardComponent } from 'ngx-stripe';
-import { environment } from '@env/environment';
+import { NgxStripeModule } from 'ngx-stripe';
 import { VerifySellerComponent } from './components/verify-seller/verify-seller.component';
 import { SsnDirective } from './directives/ssn.directive';
 import { PhoneNumberDirective } from './directives/phoneNumber.directive';
@@ -123,54 +72,6 @@ import { AuthenticationGuard } from './guards/auth.guard';
 import { SellerGuard } from './guards/seller.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { HorizontalUserListComponent } from './components/horizontal-user-list/horizontal-user-list.component';
-
-
-library.add(
-  faBars,
-  faUserCircle,
-  faPowerOff,
-  faCog,
-  faRocket,
-  faPlayCircle,
-  faGithub,
-  faMediumM,
-  faTwitter,
-  faInstagram,
-  faYoutube,
-  faPlus,
-  faEdit,
-  faTrash,
-  faTimes,
-  faCaretUp,
-  faCaretDown,
-  faExclamationTriangle,
-  faFilter,
-  faTasks,
-  faCheck,
-  faSquare,
-  faLanguage,
-  faPaintBrush,
-  faLightbulb,
-  faWindowMaximize,
-  faStream,
-  faBook,
-  faSearch,
-  faShoppingCart,
-  faArrowLeft,
-  faWindowClose,
-  faThLarge,
-  faEllipsisV,
-  faHeart,
-  faUndo,
-  faLandmark,
-  faStore,
-  faLock,
-  faShieldAlt,
-  faClock,
-  faHome,
-  faSync
-);
-
 
 @NgModule({
   imports: [
@@ -194,12 +95,10 @@ library.add(
     MatSnackBarModule,
     MatSlideToggleModule,
     MatDividerModule,
-    FontAwesomeModule,
     ImageCropperModule,
     MatProgressSpinnerModule,
     ClickOutsideModule,
     FileUploadModule,
-    CloudinaryModule,
     DragulaModule,
     NgxStripeModule,
     MatDatepickerModule,
@@ -271,7 +170,6 @@ library.add(
     MatSliderModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    FontAwesomeModule,
     AvatarComponent,
     HorizontalProductListComponent,
     ButtonComponent,

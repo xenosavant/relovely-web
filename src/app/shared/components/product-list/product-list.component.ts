@@ -9,6 +9,7 @@ import { UserDetail } from '@app/shared/models/user-detail.model';
 import { UserService } from '@app/shared/services/user/user.service';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { ViewportScroller } from '@angular/common';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-list',
@@ -84,7 +85,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     if (this.user) {
 
       this.favoriting = true;
-      this.productService.favoriteProduct(this.product.id).subscribe(() => {
+
+      this.productService.favoriteProduct(this.product.id).pipe(delay(500)).subscribe(() => {
         if (this.user.favorites.includes(this.product.id)) {
           this.user.favorites.splice(this.user.favorites.indexOf(this.product.id), 1);
           this.product.favorited = false;

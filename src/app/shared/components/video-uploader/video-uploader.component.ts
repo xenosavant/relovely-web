@@ -54,6 +54,10 @@ export class VideoUploaderComponent implements OnInit {
       };
       this.uploader = new FileUploader(uploaderOptions);
 
+      this.uploader.onBeforeUploadItem = (file) => {
+        file.withCredentials = false;
+      };
+
       this.uploader.onBuildItemForm = (fileItem: any, form: FormData): any => {
         // Add Cloudinary's unsigned upload preset to the upload form
 

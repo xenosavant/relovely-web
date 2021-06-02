@@ -8,14 +8,18 @@
     <div class="title-wrapper">
         <div class="name">
             <span *ngIf="owner">
-                <fa-icon *ngIf="!editing" (click)="onAction('edit')" icon="edit"></fa-icon>
-                <fa-icon *ngIf="editing" (click)="onAction('close')" icon="undo"></fa-icon>
+                <button *ngIf="!editing" (click)="onAction('edit')">
+                    <mat-icon svgIcon="edit"></mat-icon>
+                </button>
+                <button *ngIf="editing" (click)="onAction('close')">
+                    <mat-icon svgIcon="undo"></mat-icon>
+                </button>
             </span>
             <ng-container *ngIf="user.type === 'seller'"> <img (click)="onGoToInstagram()" class="insta"
-                    *ngIf="!desktop && user.instagramUsername"
-                    src="/assets/images/instagram-black.svg" />{{user.username || 'Relovely Seller' }}
+                    *ngIf="!desktop && user.instagramUsername && !owner" src="/assets/images/instagram-black.svg" />
+                <div class="username">{{user.username || 'Relovely Seller' }}</div>
             </ng-container>
-            <ng-container *ngIf="user.type === 'member'">{{user.username || 'Relovely Shopper' }}</ng-container>
+            <div class="username" *ngIf="user.type === 'member'">{{user.username || 'Relovely Shopper' }}</div>
         </div>
         <div class="rating-wrapper" (click)="goToRatings()" *ngIf="user.type === 'seller' && rating !== 0">
             <div class="number">({{ratingDisplay}})</div>

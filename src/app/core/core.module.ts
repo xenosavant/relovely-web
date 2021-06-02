@@ -1,28 +1,12 @@
 import { NgModule, Optional, SkipSelf, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import {
-  StoreRouterConnectingModule,
-  RouterStateSerializer
-} from '@ngrx/router-store';
-
-import { environment } from '@env/environment';
-
 import { httpInterceptorProviders } from './http-interceptors';
-import { LocalStorageService } from './local-storage/local-storage.service';
-import { AppErrorHandler } from './error-handler/app-error-handler.service';
-import { CustomSerializer } from './router/custom-serializer';
 import { NotificationService } from './notifications/notification.service';
-import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effects';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SharedModule } from '@app/shared';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { CoreRoutingModule } from './core-routing.module';
 import { RouterModule } from '@angular/router';
 import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
 import { SizeFilterComponent } from './components/size-filter/size-filter.component';
@@ -41,12 +25,12 @@ import { ContactComponent } from './components/contact/contact.component';
     SharedModule,
     PortalModule
   ],
-  declarations: [SearchBarComponent, ToolbarComponent, HomeComponent, NotFoundComponent, FilterBarComponent, SizeFilterComponent, ColorFilterComponent, SizeFilterGroupComponent, AboutComponent, HelpComponent, ContactComponent],
+  declarations: [SearchBarComponent, HomeComponent, NotFoundComponent, FilterBarComponent, SizeFilterComponent, ColorFilterComponent, SizeFilterGroupComponent, AboutComponent, HelpComponent, ContactComponent],
   providers: [
     NotificationService,
     httpInterceptorProviders
   ],
-  exports: [SearchBarComponent, ToolbarComponent, RouterModule, FilterBarComponent]
+  exports: [SearchBarComponent, RouterModule, FilterBarComponent]
 })
 export class CoreModule {
   constructor(

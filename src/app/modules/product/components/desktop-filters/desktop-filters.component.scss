@@ -15,6 +15,8 @@
     div {
         padding-bottom:16px;
         li {
+            display: flex;
+            align-items: center;
             margin-bottom:.1rem;
             list-style-type:none;
             input {
@@ -110,21 +112,33 @@
                 height: 0 !important;
                 visibility: hidden;
             }
-            img {
-                height:15px;
+            .item {
+                display: flex;
+                align-items: center;
+                .label {
+                    margin-right: 8px;
+                }
+                mat-icon {
+                    width:16px !important;
+                }
             }
         }
     }
     div.clear {
-        display: inline-block;
+        color: $action-button;
+        display: flex;
+        align-items: center;
         position: absolute;
         right: 16px;
         top: 22px;
         font-weight: 400;
         &:hover {
-            font-weight: 600;
+            color: black;
         }
         cursor: pointer;
+        mat-icon {
+            margin-right: 8px;
+        }
     }
 }
 
@@ -218,8 +232,8 @@
         background: $alert;
         display:inline-block;
         position: relative;
-        left: 5px;
-        top: -12px;
+        left: -12px;
+        top: -22px;
         visibility: hidden;
     }
 }
