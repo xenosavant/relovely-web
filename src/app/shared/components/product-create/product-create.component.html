@@ -16,17 +16,17 @@
             Cover Photo
         </div>
         <div class="thumbnails" dragula="images" [(dragulaModel)]="images">
-            <div *ngIf="mobile" class="add-image" (click)="inputMobile.value = null; inputMobile.click()"><img
-                    src="./assets/images/plus.png">
-            </div>
-            <div *ngIf="!mobile" class="add-image" (click)="input.value = null; input.click()"><img
-                    src="./assets/images/plus.png"></div>
             <div class="image-wrapper" *ngFor="let image of images; let i = index">
                 <img [src]="image.cropped">
                 <div class="overlay">
                     <mat-icon svgIcon="close" (click)="onRemoveImage(url)"></mat-icon>
                 </div>
             </div>
+            <div *ngIf="mobile" class="add-image" (click)="inputMobile.value = null; inputMobile.click()"><img
+                    src="./assets/images/plus.png">
+            </div>
+            <div *ngIf="!mobile" class="add-image" (click)="input.value = null; input.click()"><img
+                    src="./assets/images/plus.png"></div>
         </div>
         <div class="info hint">
             Upload a video wearing the product
