@@ -378,15 +378,19 @@ export class AppComponent implements OnInit {
       ]
     }
 
-    if (this.userService.user$.getValue() && this.userService.user$.getValue().type === 'seller') {
+    const user = this.userService.user$.getValue();
+    if (user && user.type === 'seller') {
       accountNav.subItems.push(
         new NavigationItem([], '/account/settings', 'Settings', null, [], [], null),
         new NavigationItem([], '/sales/sales', 'Sales', null, [], [], null),
         new NavigationItem([], '/member/listings', 'Listings', null, [], [], null),
-        new NavigationItem([], '', 'List A Product', null, [], [], null)
       );
+      if (!user.seller.missingInfo.includes('external_account') &&
+        user.seller.verificationStatus === 'verified' && !!user.returnAddress) {
+        accountNav.subItems.push(new NavigationItem([], '', 'List A Product', null, [], [], null))
+      }
     }
-    if (this.userService.user$.getValue() && this.userService.user$.getValue().admin) {
+    if (user && user.admin) {
       accountNav.subItems.push(new NavigationItem([], '/admin/dashboard', 'Admin', null, [], [], null));
     }
     accountNav.subItems.push(
@@ -396,7 +400,8 @@ export class AppComponent implements OnInit {
     this.accountNav = accountNav;
     navigationItems.push(this.accountNav);
     navigationItems.push({ name: 'Blog', path: 'https://www.blog.relovely.com/' });
-    if (this.userService.user$.getValue() && this.userService.user$.getValue().type === 'seller') {
+    if (user && user.type === 'seller' && !user.seller.missingInfo.includes('external_account') &&
+      user.seller.verificationStatus === 'verified' && !!user.returnAddress) {
       navigationItems.push({ name: 'List A Product', path: '' });
     }
     this.navigationService.rootNavigationItems = navigationItems;
