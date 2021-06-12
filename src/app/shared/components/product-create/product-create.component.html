@@ -113,7 +113,7 @@
                         <mat-chip [selectable]="false" (removed)="onRemoveTag(tag)" [removable]="true"
                             *ngFor="let tag of tags">
                             {{tag}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
+                            <mat-icon svgIcon="close" matChipRemove></mat-icon>
                         </mat-chip>
                         <input matInput [matChipInputFor]="chipList" type="text" class="form-control"
                             formControlName="tag" (keyup)="onKeyup($event)" placeholder="Tags (up to 16)" />
