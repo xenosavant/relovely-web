@@ -26,7 +26,6 @@ export class ImageCropperComponent implements OnInit {
   constructor(private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-    console.log('init');
   }
 
   public ngAfterViewInit() {
