@@ -222,8 +222,11 @@ export class ProductCreateComponent implements OnInit {
         context.loading = false;
         context.ref.markForCheck();
       };
-      if (/(heic|heif)/g.test(file.type)) {
+      if (/(.heic|.heif)/g.test(file.type)) {
         heic2any({ blob: file, toType: 'image/jpeg' }).then(file => {
+          img.src = URL.createObjectURL(file);
+        }, (error) => {
+          console.log(error);
           img.src = URL.createObjectURL(file);
         });
       } else {

@@ -121,16 +121,16 @@ export class ProfileComponent implements OnInit {
         context.loading = false;
         context.ref.markForCheck();
       };
-      // if (/(heic|heif)/g.test(file.type)) {
-      //   heic2any({ blob: file, toType: 'image/jpeg' }).then(file => {
-      //     img.src = URL.createObjectURL(file);
-      //   }).catch(err => {
-      //     img.src = URL.createObjectURL(file);
-      //     console.log('error');
-      //   });
-      // } else {
-      img.src = URL.createObjectURL(file);
-      // }
+      if (/(.heic|.heif)/g.test(file.type)) {
+        heic2any({ blob: file, toType: 'image/jpeg' }).then(file => {
+          img.src = URL.createObjectURL(file);
+        }, (error) => {
+          console.log(error);
+          img.src = URL.createObjectURL(file);
+        });
+      } else {
+        img.src = URL.createObjectURL(file);
+      }
     } else {
       this.ref.markForCheck();
     }
