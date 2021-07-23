@@ -110,7 +110,6 @@ export class CheckoutComponent implements OnInit {
 
   init() {
     this.initialized = true;
-    console.log('init')
     if (this.user) {
       if (this.user.addresses.length) {
         this.selectedAddress = this.user.addresses.find(a => a.primary);

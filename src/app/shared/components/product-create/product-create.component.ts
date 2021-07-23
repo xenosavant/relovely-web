@@ -29,12 +29,14 @@ const MAX_WIDTH = 800;
 export class ProductCreateComponent implements OnInit {
 
   @Input() product: Product;
+  @Input() type: 'item' | 'bundle';
   @Output() close: EventEmitter<boolean> = new EventEmitter;
   @Output() saved: EventEmitter<boolean> = new EventEmitter;
   public imageChangedEvent: any = null;
   public crop = false;
   public form: FormGroup;
   public categories: Array<Category[]> = [];
+  public bundleCategories: string[] = [];
   public video: VideoMetaData;
   public images: ImageSet[] = [];
   public rootCategories = [];
@@ -73,77 +75,12 @@ export class ProductCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.type = 'bundle';
     this.currentUser = this.userService.user$.getValue();
     this.breakpointObserver.observe(['(max-width: 500px)']).subscribe(result => {
       this.mobile = result.matches;
     });
-    if (this.product) {
-      this.edit = true;
-      this.title = 'Edit Product';
-      if (this.product.videos.length) {
-        this.video = this.product.videos[0];
-        this.videoThumbnail = this.product.videos[0].url.replace(this.video.format, 'jpg');
-      }
-      this.id = this.product.cloudId;
-      this.form = new FormGroup({
-        title: new FormControl(this.product.title, [Validators.required]),
-        description: new FormControl(this.product.description, [Validators.required]),
-        brand: new FormControl(this.product.brand),
-        categories: this.formBuilder.array(
-          [
-            this.formBuilder.group({
-              id: this.product.categories[0]
-            }),
-            this.formBuilder.group({
-              id: this.product.categories[1]
-            }),
-            this.formBuilder.group({
-              id: this.product.categories[2]
-            })
-          ]
-        ),
-        size: new FormControl(this.product.sizeId),
-        price: new FormControl(this.product.price.toString(), [Validators.required, this.validatePrice]),
-        retailPrice: new FormControl(this.product.retailPrice ? this.product.retailPrice.toString() : ''),
-        color: new FormControl(this.product.colorId),
-        tag: new FormControl(''),
-        weight: new FormControl(this.product.weight, [Validators.required])
-      }, this.validateCategories);
-      this.tags = [...this.product.tags];
-      this.images = this.product.images;
-      this.video = this.product.videos.length ? this.product.videos[0] : null;
-      this.calculateFees();
-    } else {
-      this.title = 'List A Product';
-      this.form = new FormGroup({
-        title: new FormControl('', [Validators.required]),
-        description: new FormControl('', [Validators.required]),
-        categories: new FormArray([
-          this.formBuilder.group({
-            id: null
-          })]),
-        brand: new FormControl(''),
-        size: new FormControl('', [Validators.required]),
-        tag: new FormControl(''),
-        price: new FormControl(null, [Validators.required, , this.validatePrice]),
-        retailPrice: new FormControl(null),
-        color: new FormControl(null),
-        weight: new FormControl(null, [Validators.required])
-      }, this.validateCategories);
-      this.id = guid();
-    }
-    this.form.get('categories').valueChanges.subscribe((val: any) => {
-      this.setSizes(val);
-    })
-    this.form.get('price').valueChanges.subscribe(value => {
-      if (value) {
-        this.calculateFees();
-      }
-    })
-    this.sizes = this.lookupService.state.sizes;
-    this.colors = this.lookupService.state.colors;
-    this.rootCategories = this.lookupService.state.categories;
-    this.categories.push(this.rootCategories);
+    this.setForm();
     if (this.edit) {
       const second = this.categories[0].find(cat => cat.id === this.product.categories[0]);
       this.categories.push(second.children);
@@ -151,6 +88,102 @@ export class ProductCreateComponent implements OnInit {
       this.categories.push(third.children);
       this.setSizes(this.form.get('categories').value);
     }
+  }
+
+  setForm() {
+    switch (this.type) {
+      case 'item':
+        if (this.product) {
+          this.edit = true;
+          this.title = 'Edit Product';
+          if (this.product.videos.length) {
+            this.video = this.product.videos[0];
+            this.videoThumbnail = this.product.videos[0].url.replace(this.video.format, 'jpg');
+          }
+          this.id = this.product.cloudId;
+          this.form = new FormGroup({
+            title: new FormControl(this.product.title, [Validators.required]),
+            description: new FormControl(this.product.description, [Validators.required]),
+            brand: new FormControl(this.product.brand),
+            categories: this.formBuilder.array(
+              [
+                this.formBuilder.group({
+                  id: this.product.categories[0]
+                }),
+                this.formBuilder.group({
+                  id: this.product.categories[1]
+                }),
+                this.formBuilder.group({
+                  id: this.product.categories[2]
+                })
+              ]
+            ),
+            size: new FormControl(this.product.sizeId),
+            price: new FormControl(this.product.price.toString(), [Validators.required, this.validatePrice]),
+            retailPrice: new FormControl(this.product.retailPrice ? this.product.retailPrice.toString() : ''),
+            color: new FormControl(this.product.colorId),
+            tag: new FormControl(''),
+            weight: new FormControl(this.product.weight, [Validators.required])
+          }, this.validateCategories);
+          this.tags = [...this.product.tags];
+          this.images = this.product.images;
+          this.video = this.product.videos.length ? this.product.videos[0] : null;
+          this.calculateFees();
+        } else {
+          this.title = 'List A Product';
+          this.form = new FormGroup({
+            title: new FormControl('', [Validators.required]),
+            description: new FormControl('', [Validators.required]),
+            categories: new FormArray([
+              this.formBuilder.group({
+                id: null
+              })]),
+            brand: new FormControl(''),
+            size: new FormControl('', [Validators.required]),
+            tag: new FormControl(''),
+            price: new FormControl(null, [Validators.required, , this.validatePrice]),
+            retailPrice: new FormControl(null),
+            color: new FormControl(null),
+            weight: new FormControl(null, [Validators.required])
+          }, this.validateCategories);
+          this.id = guid();
+        }
+        this.form.get('categories').valueChanges.subscribe((val: any) => {
+          this.setSizes(val);
+        })
+        this.form.get('price').valueChanges.subscribe(value => {
+          if (value) {
+            this.calculateFees();
+          }
+        })
+        this.sizes = this.lookupService.state.sizes;
+        this.colors = this.lookupService.state.colors;
+        this.rootCategories = this.lookupService.state.categories;
+        this.categories.push(this.rootCategories);
+        break;
+      case 'bundle':
+        this.title = 'Create A Bundle';
+        this.form = new FormGroup({
+          title: new FormControl('', [Validators.required]),
+          description: new FormControl('', [Validators.required]),
+          categories: new FormArray([
+            this.formBuilder.group({
+              id: null
+            })]),
+          sizes: new FormControl(''),
+          weight: new FormControl('', [Validators.required])
+        });
+        // this.form.get('categories').valueChanges.subscribe((categories: any) => {
+        //   this.updateCategories(categories);
+        // });
+        this.rootCategories = this.lookupService.state.categories;
+        this.categories.push(this.rootCategories);
+        break;
+    }
+  }
+
+  updateCategories(categories) {
+
   }
 
   setSizes(categories) {
@@ -174,21 +207,34 @@ export class ProductCreateComponent implements OnInit {
     }
   }
 
-  public selectCategory(category: any, index: any) {
-    for (let i = this.categoryArray['controls'].length - 1; i > index; i--) {
-      this.categoryArray.removeAt(i);
-    }
-    this.categories = this.categories.slice(0, index + 1);
-    const valueAtIndex = this.categories[index].find(cat => cat.id === category.value);
-    const targetIndex = this.categories[index].indexOf(valueAtIndex);
-    if (this.categories[index][targetIndex].children.length) {
-      this.categories.push(this.categories[index][targetIndex].children);
-      this.categoryArray.push(this.formBuilder.group({
-        id: null
-      }))
+  public selectCategory(control: any, index: any) {
+    if (this.type === 'bundle' && index === 2) {
+      this.bundleCategories.push(control.value);
+      for (let i = 0; i < this.categories.length; i++) {
+        this.categoryArray.removeAt(i);
+      }
     } else {
-
+      for (let i = this.categoryArray['controls'].length - 1; i > index; i--) {
+        this.categoryArray.removeAt(i);
+      }
+      this.categories = this.categories.slice(0, index + 1);
+      const valueAtIndex = this.categories[index].find(cat => cat.id === control.value);
+      const targetIndex = this.categories[index].indexOf(valueAtIndex);
+      if (this.categories[index][targetIndex].children.length) {
+        this.categories.push(this.categories[index][targetIndex].children);
+        this.categoryArray.push(this.formBuilder.group({
+          id: null
+        }))
+      }
     }
+  }
+
+  getCategory(id) {
+    return this.lookupService.getCategory(id).name;
+  }
+
+  onRemoveCategory(id) {
+    this.bundleCategories.splice(this.bundleCategories.indexOf(id, 1))
   }
 
   get categoryArray() {
