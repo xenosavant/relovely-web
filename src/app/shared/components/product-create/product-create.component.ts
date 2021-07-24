@@ -39,7 +39,7 @@ export class ProductCreateComponent implements OnInit {
   public bundleCategories: string[] = [];
   public video: VideoMetaData;
   public images: ImageSet[] = [];
-  public rootCategories = [];
+  public rootCategories: Category[] = [];
   public tags: string[] = [];
   public selectable = true;
   public removable = true;
@@ -88,6 +88,7 @@ export class ProductCreateComponent implements OnInit {
       this.categories.push(third.children);
       this.setSizes(this.form.get('categories').value);
     }
+    this.sizes = this.lookupService.state.sizes;
   }
 
   setForm() {
@@ -148,16 +149,11 @@ export class ProductCreateComponent implements OnInit {
           }, this.validateCategories);
           this.id = guid();
         }
-        this.form.get('categories').valueChanges.subscribe((val: any) => {
-          this.setSizes(val);
-        })
         this.form.get('price').valueChanges.subscribe(value => {
           if (value) {
             this.calculateFees();
           }
         })
-        this.sizes = this.lookupService.state.sizes;
-        this.colors = this.lookupService.state.colors;
         this.rootCategories = this.lookupService.state.categories;
         this.categories.push(this.rootCategories);
         break;
@@ -166,52 +162,70 @@ export class ProductCreateComponent implements OnInit {
         this.form = new FormGroup({
           title: new FormControl('', [Validators.required]),
           description: new FormControl('', [Validators.required]),
-          categories: new FormArray([
-            this.formBuilder.group({
-              id: null
-            })]),
-          sizes: new FormControl(''),
+          category: new FormControl('', [Validators.required]),
+          categories: new FormArray([]),
+          size: new FormControl(''),
           weight: new FormControl('', [Validators.required])
         });
-        // this.form.get('categories').valueChanges.subscribe((categories: any) => {
-        //   this.updateCategories(categories);
-        // });
         this.rootCategories = this.lookupService.state.categories;
         this.categories.push(this.rootCategories);
         break;
     }
   }
 
-  updateCategories(categories) {
-
+  selectTopLevel(control) {
+    const newIndex = this.rootCategories.findIndex(c => c.id === control.value);
+    this.bundleCategories = [];
+    for (let i = 0; i < this.categories.length; i++) {
+      this.categoryArray.removeAt(i);
+    }
+    this.categories = [this.rootCategories, this.rootCategories[newIndex].children]
+    this.categoryArray.push(this.formBuilder.group({
+      id: null
+    }))
+    this.sizes.forEach(size => {
+      if (size.categoryIds.indexOf(this.rootCategories[newIndex].id) > -1) {
+        size.filters.forEach(filter => {
+          this.currentSizes.push(filter);
+        });
+      }
+    });
   }
 
+  // send just the bottom category here and call from select
   setSizes(categories) {
     this.currentSizes = [];
-    if (categories.length === 3 && categories[2].id) {
-      this.sizes.forEach(size => {
-        if (size.categoryIds.indexOf(categories[2].id) > -1) {
-          size.filters.forEach(filter => {
-            this.currentSizes.push(filter);
-          });
-        }
-      });
-      const formField = this.form.get('size');
-      if (!this.currentSizes.length) {
-        formField.clearValidators();
-        formField.updateValueAndValidity();
-      } else {
-        formField.setValidators([Validators.required]);
-        formField.updateValueAndValidity();
+    this.sizes.forEach(size => {
+      if (size.categoryIds.indexOf(categories[2].value.id) > -1) {
+        size.filters.forEach(filter => {
+          this.currentSizes.push(filter);
+        });
       }
+    });
+    const formField = this.form.get('size');
+    if (!this.currentSizes.length) {
+      formField.clearValidators();
+      formField.updateValueAndValidity();
+    } else {
+      formField.setValidators([Validators.required]);
+      formField.updateValueAndValidity();
     }
   }
 
   public selectCategory(control: any, index: any) {
-    if (this.type === 'bundle' && index === 2) {
-      this.bundleCategories.push(control.value);
-      for (let i = 0; i < this.categories.length; i++) {
-        this.categoryArray.removeAt(i);
+    if (this.type === 'bundle') {
+      if (index === 1) {
+        if (this.bundleCategories.indexOf(control.value) === -1) {
+          this.bundleCategories.push(control.value);
+        }
+        for (let i = 0; i < 2; i++) {
+          this.categoryArray.removeAt(i);
+        }
+      } else {
+        this.categories.push(this.categories[1][index].children);
+        this.categoryArray.push(this.formBuilder.group({
+          id: null
+        }));
       }
     } else {
       for (let i = this.categoryArray['controls'].length - 1; i > index; i--) {
@@ -225,6 +239,11 @@ export class ProductCreateComponent implements OnInit {
         this.categoryArray.push(this.formBuilder.group({
           id: null
         }))
+      }
+      const cats = (this.form.get('categories') as FormArray).controls;
+      console.log(cats)
+      if (cats.length === 3 && cats[2].value.id) {
+        this.setSizes(cats)
       }
     }
   }

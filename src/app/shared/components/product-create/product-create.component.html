@@ -55,7 +55,7 @@
                     <textarea matInput placeholder="Product Description" formControlName="description"></textarea>
                 </mat-form-field>
             </div>
-            <div class="categories">
+            <div class="categories--three">
                 <ng-container formArrayName="categories" *ngFor="let item of categoryArray['controls']; let i = index;">
                     <div [formGroupName]="i">
                         <mat-form-field appearance="outline">
@@ -185,7 +185,7 @@
                     src="./assets/images/plus.png"></div>
         </div>
         <div class="info hint">
-            *Photo can be of yourself, or a general representation of the style items that could be in the box
+            * Add a photo of yourself, or a general representation of the style items that could be in the box
         </div>
         <input #input type="file" style="visibility:hidden; height:0px;" (change)="imageChanged($event)" />
         <input #inputMobile type="file" style="visibility:hidden; height:0px;" (change)="imageChanged($event)" />
@@ -200,13 +200,22 @@
                     <textarea matInput placeholder="Product Description" formControlName="description"></textarea>
                 </mat-form-field>
             </div>
-            <div class="categories">
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-select required placeholder="Select a top level category" class="form-control"
+                        (selectionChange)="selectTopLevel($event, i)" formControlName="category">
+                        <mat-option *ngFor="let cat of categories[0]" [value]="cat.id">{{cat.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="categories--two">
                 <ng-container formArrayName="categories" *ngFor="let item of categoryArray['controls']; let i = index;">
                     <div [formGroupName]="i">
                         <mat-form-field appearance="outline">
-                            <mat-select placeholder="Category" class="form-control"
+                            <mat-select required placeholder="Categories (select all that apply)" class="form-control"
                                 (selectionChange)="selectCategory($event, i)" formControlName="id">
-                                <mat-option *ngFor="let cat of categories[i]" [value]="cat.id">{{cat.name}}
+                                <mat-option *ngFor="let cat of categories[i+1]" [value]="cat.id">{{cat.name}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -222,14 +231,15 @@
                     </mat-chip>
                 </mat-chip-list>
             </div>
-            <!-- <div class="size">
+            <div class="size">
                 <mat-form-field appearance="outline">
-                    <mat-select placeholder="Size" class="form-control" formControlName="size">
+                    <mat-select placeholder="Size" class="form-control" formControlName="size"
+                        (selectionChange)="selectSize($event)">
                         <mat-option *ngFor="let size of currentSizes" [value]="size.key">{{size.value}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-            </div> -->
+            </div>
             <div class="info hint bottom">* If in between pounds, round up to the next pound (lb).</div>
             <div class="weight">
                 <mat-form-field appearance="outline">
