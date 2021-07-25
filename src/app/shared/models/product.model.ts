@@ -13,6 +13,7 @@ export class Product {
     public auctionStart?: Date;
     public currentBid?: number;
     public categories?: string[];
+    public sizes?: string[];
     public brand?: string;
     public sizeId?: string;
     public colorId?: string;
@@ -26,4 +27,6 @@ export class Product {
     public tags?: string[];
     public cloudId?: string;
     public weight: number;
+    public quantity?: number;
+    public type?: 'item' | 'bundle'
 }

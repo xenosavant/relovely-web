@@ -17,6 +17,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { UserService } from '@app/shared/services/user/user.service';
 import heic2any from "heic2any";
+import { get } from 'http';
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 
 const MAX_WIDTH = 800;
 
@@ -37,6 +39,13 @@ export class ProductCreateComponent implements OnInit {
   public form: FormGroup;
   public categories: Array<Category[]> = [];
   public bundleCategories: string[] = [];
+  public bundleSizes: string[] = [];
+  public bundlePrices: { [id: string]: string[] } = {
+    '3': ['3500', '5000', '7500', '10000'],
+    '5': ['3500', '5000', '7500', '10000', '15000'],
+    '10': ['3500', '5000', '7500', '10000', '15000', '20000']
+  };
+  public quantities = ['3', '5', '10'];
   public video: VideoMetaData;
   public images: ImageSet[] = [];
   public rootCategories: Category[] = [];
@@ -49,6 +58,8 @@ export class ProductCreateComponent implements OnInit {
   public colors: ColorFilter[];
   public showSize = true;
   public imageError = false;
+  public categoryError = false;
+  public sizeError = false;
   public currentSizes: KeyValue[] = [];
   public videoThumbnail: string;
   public imageUploadError = false;
@@ -88,6 +99,11 @@ export class ProductCreateComponent implements OnInit {
       this.categories.push(third.children);
       this.setSizes(this.form.get('categories').value);
     }
+    this.form.get('price').valueChanges.subscribe(value => {
+      if (value) {
+        this.calculateFees();
+      }
+    })
     this.sizes = this.lookupService.state.sizes;
   }
 
@@ -149,23 +165,21 @@ export class ProductCreateComponent implements OnInit {
           }, this.validateCategories);
           this.id = guid();
         }
-        this.form.get('price').valueChanges.subscribe(value => {
-          if (value) {
-            this.calculateFees();
-          }
-        })
         this.rootCategories = this.lookupService.state.categories;
         this.categories.push(this.rootCategories);
         break;
       case 'bundle':
         this.title = 'Create A Bundle';
+        this.id = guid();
         this.form = new FormGroup({
-          title: new FormControl('', [Validators.required]),
           description: new FormControl('', [Validators.required]),
           category: new FormControl('', [Validators.required]),
           categories: new FormArray([]),
           size: new FormControl(''),
-          weight: new FormControl('', [Validators.required])
+          weight: new FormControl('', [Validators.required]),
+          price: new FormControl('', [Validators.required]),
+          quantity: new FormControl('', [Validators.required]),
+          tag: new FormControl(''),
         });
         this.rootCategories = this.lookupService.state.categories;
         this.categories.push(this.rootCategories);
@@ -176,7 +190,8 @@ export class ProductCreateComponent implements OnInit {
   selectTopLevel(control) {
     const newIndex = this.rootCategories.findIndex(c => c.id === control.value);
     this.bundleCategories = [];
-    for (let i = 0; i < this.categories.length; i++) {
+    const length = this.categoryArray.length;
+    for (let i = 0; i < length; i++) {
       this.categoryArray.removeAt(i);
     }
     this.categories = [this.rootCategories, this.rootCategories[newIndex].children]
@@ -192,7 +207,6 @@ export class ProductCreateComponent implements OnInit {
     });
   }
 
-  // send just the bottom category here and call from select
   setSizes(categories) {
     this.currentSizes = [];
     this.sizes.forEach(size => {
@@ -212,17 +226,26 @@ export class ProductCreateComponent implements OnInit {
     }
   }
 
-  public selectCategory(control: any, index: any) {
+  selectSize(selection) {
+    if (this.bundleSizes.indexOf(selection.value) === -1) {
+      this.bundleSizes.push(selection.value);
+    }
+  }
+
+  public selectCategory(selection: any, index: any) {
     if (this.type === 'bundle') {
+      const rootIndex = parseInt(this.form.get('category').value) - 1;
       if (index === 1) {
-        if (this.bundleCategories.indexOf(control.value) === -1) {
-          this.bundleCategories.push(control.value);
+        this.categories = [this.rootCategories, this.rootCategories[rootIndex].children];
+        if (this.bundleCategories.indexOf(selection.value) === -1) {
+          this.bundleCategories.push(selection.value);
         }
         for (let i = 0; i < 2; i++) {
           this.categoryArray.removeAt(i);
         }
       } else {
-        this.categories.push(this.categories[1][index].children);
+        const indexOfSelection = this.categories[0][rootIndex].children.findIndex(c => c.id === selection.value);
+        this.categories.push(this.categories[0][rootIndex].children[indexOfSelection].children);
         this.categoryArray.push(this.formBuilder.group({
           id: null
         }));
@@ -232,7 +255,7 @@ export class ProductCreateComponent implements OnInit {
         this.categoryArray.removeAt(i);
       }
       this.categories = this.categories.slice(0, index + 1);
-      const valueAtIndex = this.categories[index].find(cat => cat.id === control.value);
+      const valueAtIndex = this.categories[index].find(cat => cat.id === selection.value);
       const targetIndex = this.categories[index].indexOf(valueAtIndex);
       if (this.categories[index][targetIndex].children.length) {
         this.categories.push(this.categories[index][targetIndex].children);
@@ -241,7 +264,6 @@ export class ProductCreateComponent implements OnInit {
         }))
       }
       const cats = (this.form.get('categories') as FormArray).controls;
-      console.log(cats)
       if (cats.length === 3 && cats[2].value.id) {
         this.setSizes(cats)
       }
@@ -254,6 +276,10 @@ export class ProductCreateComponent implements OnInit {
 
   onRemoveCategory(id) {
     this.bundleCategories.splice(this.bundleCategories.indexOf(id, 1))
+  }
+
+  onRemoveSize(id) {
+    this.bundleSizes.splice(this.sizes.indexOf(id, 1))
   }
 
   get categoryArray() {
@@ -329,6 +355,7 @@ export class ProductCreateComponent implements OnInit {
           this.zone.run(() => {
             this.crop = false;
             this.imageUploadError = false;
+            this.imageError = false;
             this.ref.detectChanges();
           });
         }, err => {
@@ -370,28 +397,43 @@ export class ProductCreateComponent implements OnInit {
       });
       const product: Product = {
         cloudId: this.id,
-        title: this.form.get('title').value,
         description: this.form.get('description').value,
-        categories: this.categoryArray['controls'].map(c => c.value.id),
         images: this.images,
         videos: this.video ? [this.video] : [],
-        brand: this.form.get('brand').value,
         tags: this.tags,
+        type: this.type,
         price: parseInt(this.form.get('price').value.replace(this.currencyChars, ''), 10),
         weight: this.form.get('weight').value
       };
-      if (this.form.get('size').value) {
-        product.sizeId = this.form.get('size').value;
-      }
-      if (this.form.get('color').value) {
-        product.colorId = this.form.get('color').value;
-      }
-      if (this.form.get('retailPrice').value) {
-        product.retailPrice = parseInt(this.form.get('retailPrice').value.replace(this.currencyChars, ''), 10);
-      }
-      if (this.form.get('brand').value) {
+
+      if (this.type === 'bundle') {
+        this.categoryError = !this.bundleCategories.length ? true : false;
+        this.sizeError = !this.bundleSizes.length ? true : false;
+        if (this.sizeError || this.categoryError) {
+          this.loading = false;
+          return;
+        }
+        product.categories = [this.form.get('category').value, ...this.bundleCategories];
+        product.sizes = this.bundleSizes;
+        product.quantity = parseInt(this.form.get('quantity').value);
+      } else {
         product.brand = this.form.get('brand').value;
+        product.title = this.form.get('title').value,
+          product.categories = this.categoryArray['controls'].map(c => c.value.id);
+        if (this.form.get('brand').value) {
+          product.brand = this.form.get('brand').value;
+        }
+        if (this.form.get('size').value) {
+          product.sizeId = this.form.get('size').value;
+        }
+        if (this.form.get('color').value) {
+          product.colorId = this.form.get('color').value;
+        }
+        if (this.form.get('retailPrice').value) {
+          product.retailPrice = parseInt(this.form.get('retailPrice').value.replace(this.currencyChars, ''), 10);
+        }
       }
+
       if (this.edit) {
         this.productService.patchProduct(product, this.product.id).subscribe(response => {
           this.loading = false;
@@ -465,6 +507,7 @@ export class ProductCreateComponent implements OnInit {
       if (this.price >= 500) {
         this.sellerEarnings = this.price - ((Math.round(.1 * this.price) + (Math.round(.029 * this.price))));
         this.earningsBreakdown = '* after 10% commission fee + 2.9% secure payment fee'
+        console.log(this.price, this.sellerEarnings)
       } else {
         this.sellerEarnings = this.price - 50;
         this.earningsBreakdown = '* after a flat $0.50 commission fee'
