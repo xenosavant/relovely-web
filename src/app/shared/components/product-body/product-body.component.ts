@@ -21,4 +21,8 @@ export class ProductBodyComponent implements OnInit {
     this.clicked.emit(this.product.id);
   }
 
+  get title(): string {
+    return this.product.title || ('Mystery Box ' + this.product.quantity.toString() + ' items');
+  }
+
 }

@@ -53,6 +53,7 @@ export class LookupService extends BaseService {
     }
 
     public getCategory(id: string) {
+        console.log(id, this._catMap)
         return this._catMap[id];
     }
 

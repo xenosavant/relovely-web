@@ -201,4 +201,8 @@ export class ProductComponent implements OnInit {
   onClose() {
     this.overlayService.close();
   }
+
+  get title(): string {
+    return this.product.title || ('Mystery Box ' + this.product.quantity.toString() + ' items');
+  }
 }

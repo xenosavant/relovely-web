@@ -219,8 +219,8 @@
             </div>
             <div class="size">
                 <mat-form-field appearance="outline">
-                    <mat-select placeholder="Size" class="form-control" formControlName="size"
-                        (selectionChange)="selectSize($event)">
+                    <mat-select placeholder="Sizes (Select all that may apply)" class="form-control"
+                        formControlName="size" (selectionChange)="selectSize($event)">
                         <mat-option *ngFor="let size of currentSizes" [value]="size.key">{{size.value}}
                         </mat-option>
                     </mat-select>
