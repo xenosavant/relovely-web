@@ -16,6 +16,8 @@ import { NavigationService } from '@app/shared/services/navigation/navigation.se
 import { guid } from '../../../../shared/utils/rand';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Promo } from '@app/shared/models/promo.model';
+import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
+import { KeyValue } from '@app/shared/interfaces/key-value.interface';
 
 @Component({
   selector: 'app-checkout',
@@ -48,6 +50,7 @@ export class CheckoutComponent implements OnInit {
   savingAddress = false;
   error: string;
   shippingAddress: FormGroup;
+  extraInfo: FormGroup;
   email: FormGroup;
   billingSame = false;
   addressError = false;
@@ -64,6 +67,8 @@ export class CheckoutComponent implements OnInit {
   currentShipping: number;
   currentPromo: Promo = null;
   initialized = false;
+  selectedSizes: string[] = [];
+  sizes: KeyValue[] = [];
 
 
 
@@ -100,6 +105,20 @@ export class CheckoutComponent implements OnInit {
         if (this.user) {
           this.selectedAddress = this.user.addresses.find(a => a.primary);
         }
+        if (this.product.type === 'bundle') {
+          this.extraInfo = new FormGroup({
+            size: new FormControl('', [Validators.required]),
+            pinterest: new FormControl(''),
+            instagram: new FormControl(''),
+            other: new FormControl(''),
+          });
+          const sizes = this.lookupService.state.sizes.filter(s => s.categoryIds.includes(this.product.categories[0]));
+          sizes.forEach(size => {
+            size.filters.forEach(f => {
+              this.sizes.push(f);
+            });
+          });
+        }
         this.recalcCosts();
       }, err => {
         this.error = 'Hmmm...something went wrong. Please referesh the page and try again.'
@@ -134,6 +153,16 @@ export class CheckoutComponent implements OnInit {
       this.email = new FormGroup({
         email: new FormControl('', [Validators.required, Validators.email]),
       })
+    }
+  }
+
+  onRemoveSize(id) {
+    this.selectedSizes.splice(this.selectedSizes.indexOf(id), 1);
+  }
+
+  onSelectSize(control) {
+    if (this.selectedSizes.indexOf(control.value) <= -1) {
+      this.selectedSizes.push(control.value);
     }
   }
 

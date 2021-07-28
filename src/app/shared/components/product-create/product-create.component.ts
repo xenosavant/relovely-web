@@ -235,6 +235,7 @@ export class ProductCreateComponent implements OnInit {
   public selectCategory(selection: any, index: any) {
     if (this.type === 'bundle') {
       const rootIndex = parseInt(this.form.get('category').value) - 1;
+      console.log(index);
       if (index === 1) {
         this.categories = [this.rootCategories, this.rootCategories[rootIndex].children];
         if (this.bundleCategories.indexOf(selection.value) === -1) {
@@ -245,7 +246,9 @@ export class ProductCreateComponent implements OnInit {
         }
       } else {
         const indexOfSelection = this.categories[0][rootIndex].children.findIndex(c => c.id === selection.value);
-        this.categories.push(this.categories[0][rootIndex].children[indexOfSelection].children);
+        this.categories = [this.rootCategories, this.rootCategories[rootIndex].children, this.rootCategories[rootIndex].children[indexOfSelection].children];
+        console.log()
+        this.categoryArray.removeAt(1);
         this.categoryArray.push(this.formBuilder.group({
           id: null
         }));
