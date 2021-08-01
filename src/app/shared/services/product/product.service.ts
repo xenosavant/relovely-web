@@ -8,7 +8,7 @@ import { ProductDetailResponse } from "./product-detail.response";
 export class ProductService extends BaseService {
 
 
-    public showCreateProduct$: Subject<{ product: Product, id: string }> = new Subject();
+    public showCreateProduct$: Subject<{ product: Product, id: string, type: 'item' | 'bundle' }> = new Subject();
     public showImage$: Subject<string> = new Subject();
     public productModalClosed$: Subject<boolean> = new Subject();
 
@@ -109,8 +109,8 @@ export class ProductService extends BaseService {
         return this.httpClient.delete<void>(`${this.apiBaseUrl}/products/${productId}/`, {})
     }
 
-    public showProductCreate(product: Product, userId: string) {
-        this.showCreateProduct$.next({ product: product, id: userId });
+    public showProductCreate(product: Product, userId: string, type: 'bundle' | 'item') {
+        this.showCreateProduct$.next({ product: product, id: userId, type: type });
     }
 
     public showImage(url: string) {

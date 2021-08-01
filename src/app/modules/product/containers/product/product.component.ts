@@ -106,7 +106,7 @@ export class ProductComponent implements OnInit {
   }
 
   edit() {
-    this.productService.showProductCreate(this.product, this.currentUser.id)
+    this.productService.showProductCreate(this.product, this.currentUser.id, this.product.type)
   }
 
   close() {

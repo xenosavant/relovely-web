@@ -57,7 +57,7 @@ export class ProductCreateComponent implements OnInit {
   public sizes: SizeFilterGroup[];
   public colors: ColorFilter[];
   public showSize = true;
-  public imageError = false;
+  public imageError = false; x
   public categoryError = false;
   public sizeError = false;
   public currentSizes: KeyValue[] = [];
@@ -86,13 +86,13 @@ export class ProductCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.type = 'bundle';
     this.currentUser = this.userService.user$.getValue();
     this.breakpointObserver.observe(['(max-width: 500px)']).subscribe(result => {
       this.mobile = result.matches;
     });
+    this.sizes = this.lookupService.state.sizes;
     this.setForm();
-    if (this.edit) {
+    if (this.edit && this.type === 'item') {
       const second = this.categories[0].find(cat => cat.id === this.product.categories[0]);
       this.categories.push(second.children);
       const third = this.categories[1].find(cat => cat.id === this.product.categories[1]);
@@ -103,13 +103,13 @@ export class ProductCreateComponent implements OnInit {
       if (value) {
         this.calculateFees();
       }
-    })
-    this.sizes = this.lookupService.state.sizes;
+    });
   }
 
   setForm() {
     switch (this.type) {
       case 'item':
+        this.colors = this.lookupService.state.colors;
         if (this.product) {
           this.edit = true;
           this.title = 'Edit Product';
@@ -143,7 +143,7 @@ export class ProductCreateComponent implements OnInit {
             weight: new FormControl(this.product.weight, [Validators.required])
           }, this.validateCategories);
           this.tags = [...this.product.tags];
-          this.images = this.product.images;
+          this.images = [...this.product.images];
           this.video = this.product.videos.length ? this.product.videos[0] : null;
           this.calculateFees();
         } else {
@@ -169,27 +169,55 @@ export class ProductCreateComponent implements OnInit {
         this.categories.push(this.rootCategories);
         break;
       case 'bundle':
-        this.title = 'Create A Bundle';
-        this.id = guid();
-        this.form = new FormGroup({
-          description: new FormControl('', [Validators.required]),
-          category: new FormControl('', [Validators.required]),
-          categories: new FormArray([]),
-          size: new FormControl(''),
-          weight: new FormControl('', [Validators.required]),
-          price: new FormControl('', [Validators.required]),
-          quantity: new FormControl('', [Validators.required]),
-          tag: new FormControl(''),
-        });
         this.rootCategories = this.lookupService.state.categories;
         this.categories.push(this.rootCategories);
+        if (this.product) {
+          console.log(this.product);
+          this.title = 'Edit Bundle';
+          this.edit = true;
+          this.id = this.product.cloudId;
+          this.form = new FormGroup({
+            description: new FormControl(this.product.description, [Validators.required]),
+            category: new FormControl(this.product.categories[0], [Validators.required]),
+            categories: new FormArray([
+              this.formBuilder.group({
+                id: ''
+              })]),
+            size: new FormControl(''),
+            weight: new FormControl(this.product.weight, [Validators.required]),
+            price: new FormControl(this.product.price.toString(), [Validators.required]),
+            quantity: new FormControl(this.product.quantity.toString(), [Validators.required]),
+            tag: new FormControl(''),
+          });
+          this.bundleSizes = [...this.product.sizes];
+          this.bundleCategories = this.product.categories.slice(1);
+          this.tags = [...this.product.tags];
+          this.images = [...this.product.images];
+          this.selectTopLevel({ value: this.product.categories[0] }, true);
+          this.calculateFees();
+        } else {
+          this.title = 'Create A Bundle';
+          this.id = guid();
+          this.form = new FormGroup({
+            description: new FormControl('', [Validators.required]),
+            category: new FormControl('', [Validators.required]),
+            categories: new FormArray([]),
+            size: new FormControl(''),
+            weight: new FormControl('', [Validators.required]),
+            price: new FormControl('', [Validators.required]),
+            quantity: new FormControl('', [Validators.required]),
+            tag: new FormControl(''),
+          });
+        }
         break;
     }
   }
 
-  selectTopLevel(control) {
+  selectTopLevel(control, init = false) {
     const newIndex = this.rootCategories.findIndex(c => c.id === control.value);
-    this.bundleCategories = [];
+    if (!init) {
+      this.bundleCategories = [];
+    }
     const length = this.categoryArray.length;
     for (let i = 0; i < length; i++) {
       this.categoryArray.removeAt(i);
@@ -198,6 +226,7 @@ export class ProductCreateComponent implements OnInit {
     this.categoryArray.push(this.formBuilder.group({
       id: null
     }))
+    this.currentSizes = [];
     this.sizes.forEach(size => {
       if (size.categoryIds.indexOf(this.rootCategories[newIndex].id) > -1) {
         size.filters.forEach(filter => {
@@ -209,13 +238,24 @@ export class ProductCreateComponent implements OnInit {
 
   setSizes(categories) {
     this.currentSizes = [];
-    this.sizes.forEach(size => {
-      if (size.categoryIds.indexOf(categories[2].value.id) > -1) {
-        size.filters.forEach(filter => {
-          this.currentSizes.push(filter);
-        });
-      }
-    });
+    if (this.type === 'item') {
+      console.log(categories);
+      this.sizes.forEach(size => {
+        if (size.categoryIds.indexOf(categories[2].id) > -1) {
+          size.filters.forEach(filter => {
+            this.currentSizes.push(filter);
+          });
+        }
+      });
+    } else {
+      this.sizes.forEach(size => {
+        if (size.categoryIds.indexOf(categories[2].value.id) > -1) {
+          size.filters.forEach(filter => {
+            this.currentSizes.push(filter);
+          });
+        }
+      });
+    }
     const formField = this.form.get('size');
     if (!this.currentSizes.length) {
       formField.clearValidators();
@@ -232,10 +272,9 @@ export class ProductCreateComponent implements OnInit {
     }
   }
 
-  public selectCategory(selection: any, index: any) {
+  selectCategory(selection: any, index: any) {
     if (this.type === 'bundle') {
       const rootIndex = parseInt(this.form.get('category').value) - 1;
-      console.log(index);
       if (index === 1) {
         this.categories = [this.rootCategories, this.rootCategories[rootIndex].children];
         if (this.bundleCategories.indexOf(selection.value) === -1) {
@@ -247,7 +286,6 @@ export class ProductCreateComponent implements OnInit {
       } else {
         const indexOfSelection = this.categories[0][rootIndex].children.findIndex(c => c.id === selection.value);
         this.categories = [this.rootCategories, this.rootCategories[rootIndex].children, this.rootCategories[rootIndex].children[indexOfSelection].children];
-        console.log()
         this.categoryArray.removeAt(1);
         this.categoryArray.push(this.formBuilder.group({
           id: null
@@ -268,7 +306,7 @@ export class ProductCreateComponent implements OnInit {
       }
       const cats = (this.form.get('categories') as FormArray).controls;
       if (cats.length === 3 && cats[2].value.id) {
-        this.setSizes(cats)
+        this.setSizes(cats.map(cat => cat.value))
       }
     }
   }
@@ -278,11 +316,12 @@ export class ProductCreateComponent implements OnInit {
   }
 
   onRemoveCategory(id) {
-    this.bundleCategories.splice(this.bundleCategories.indexOf(id, 1))
+    this.bundleCategories.splice(this.bundleCategories.indexOf(id, 1));
   }
 
   onRemoveSize(id) {
-    this.bundleSizes.splice(this.sizes.indexOf(id, 1))
+    this.bundleSizes.splice(this.sizes.indexOf(id, 1));
+    console.log(this.product);
   }
 
   get categoryArray() {
@@ -410,13 +449,13 @@ export class ProductCreateComponent implements OnInit {
       };
 
       if (this.type === 'bundle') {
-        this.categoryError = !this.bundleCategories.length ? true : false;
+        this.categoryError = this.bundleCategories.length <= 1 ? true : false;
         this.sizeError = !this.bundleSizes.length ? true : false;
         if (this.sizeError || this.categoryError) {
           this.loading = false;
           return;
         }
-        product.categories = [this.form.get('category').value, ...this.bundleCategories];
+        product.categories = [this.form.get('category').value, ...this.bundleCategories.slice(1)];
         product.sizes = this.bundleSizes;
         product.quantity = parseInt(this.form.get('quantity').value);
       } else {
@@ -510,7 +549,6 @@ export class ProductCreateComponent implements OnInit {
       if (this.price >= 500) {
         this.sellerEarnings = this.price - ((Math.round(.1 * this.price) + (Math.round(.029 * this.price))));
         this.earningsBreakdown = '* after 10% commission fee + 2.9% secure payment fee'
-        console.log(this.price, this.sellerEarnings)
       } else {
         this.sellerEarnings = this.price - 50;
         this.earningsBreakdown = '* after a flat $0.50 commission fee'

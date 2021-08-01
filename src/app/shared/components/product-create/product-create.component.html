@@ -131,28 +131,6 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="price-wrapper">
-                <div *ngIf="!form.get('price').valid && form.get('price').dirty && !priceInput.focused" class="error">
-                    Price must be greater than $0.50
-                </div>
-                <div *ngIf="!(!form.get('price').valid && form.get('price').dirty)" class="fees">
-                    <div class="earnings" [class.hide]="!(price && price >= 50)">
-                        <div>Seller Earnings:</div>
-                        <div>{{sellerEarnings | appCurrency}}</div>
-                    </div>
-                    <div class="breakdown" [class.hide]="!(price && price >= 50)">
-                        {{earningsBreakdown}}
-                    </div>
-                </div>
-            </div>
-            <div class="button-wrapper">
-                <app-button (click)="onClose()">
-                    <strong>Cancel</strong>
-                </app-button>
-                <button mat-stroked-button class="primary" [disabled]="!form.valid" (click)="onSave()">
-                    List
-                </button>
-            </div>
         </form>
     </ng-container>
     <ng-container *ngIf="!loading && type === 'bundle'">
@@ -309,7 +287,8 @@
             <strong>Cancel</strong>
         </app-button>
         <button mat-stroked-button class="primary" [disabled]="!form.valid" (click)="onSave()">
-            List
+            <ng-container *ngIf="!edit">List</ng-container>
+            <ng-container *ngIf="edit">Update</ng-container>
         </button>
     </div>
     <div class="loading-wrapper" *ngIf="loading">

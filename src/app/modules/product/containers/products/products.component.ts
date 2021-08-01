@@ -145,7 +145,7 @@ export class ProductsComponent implements OnInit {
   }
 
   editProduct(product: Product) {
-    this.productService.showProductCreate(product, this.currentUser.id)
+    this.productService.showProductCreate(product, this.currentUser.id, product.type)
   }
 
   getProducts(state: IUserPreferences) {
