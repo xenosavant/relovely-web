@@ -110,7 +110,7 @@ export class CheckoutComponent implements OnInit {
             size: new FormControl('', [Validators.required]),
             pinterest: new FormControl(''),
             instagram: new FormControl(''),
-            other: new FormControl(''),
+            buyerInfo: new FormControl(''),
           });
           const sizes = this.lookupService.state.sizes.filter(s => s.categoryIds.includes(this.product.categories[0]));
           sizes.forEach(size => {
@@ -424,16 +424,26 @@ export class CheckoutComponent implements OnInit {
   checkout() {
     this.checkingOut = true;
     this.error = null;
+    let order = {
+      tax: this.tax,
+      shipmentId: this.shipmentId,
+      joinMailingList: this.emailList,
+      paymentId: this.selectedPayment.stripeId,
+      promoCode: this.currentPromo ? this.currentPromo.code : undefined
+    } as any;
+    if (this.product.type === 'bundle') {
+      order = {
+        ...order,
+        size: this.extraInfo.get('size').value,
+        pinterest: this.extraInfo.get('pinterest').value,
+        instagram: this.extraInfo.get('instagram').value,
+        buyerInfo: this.extraInfo.get('buyerInfo').value,
+      };
+    }
     if (this.user) {
+      order.address = this.selectedAddress;
       this.orderService.postOrder(
-        {
-          address: this.selectedAddress,
-          paymentId: this.selectedPayment.stripeId,
-          shipmentId: this.shipmentId,
-          joinMailingList: this.emailList,
-          tax: this.tax,
-          promoCode: this.currentPromo ? this.currentPromo.code : undefined
-        }, this.product.id)
+        order, this.product.id)
         .subscribe(order => {
           this.navigationService.navigate({ path: `/sales/orders/${order.id}` })
         }, err => {
@@ -442,19 +452,13 @@ export class CheckoutComponent implements OnInit {
           this.ref.markForCheck();
         })
     } else {
+      order.address = this.shippingAddressValue;
+      order.last4 = this.selectedPayment.last4;
+      order.cardType = this.selectedPayment.type;
+      order.email = this.email.get('email').value;
+      order.createAccount = this.createUser;
       this.orderService.guestOrder(
-        {
-          address: this.shippingAddressValue,
-          paymentId: this.selectedPayment.stripeId,
-          shipmentId: this.shipmentId,
-          tax: this.tax,
-          last4: this.selectedPayment.last4,
-          cardType: this.selectedPayment.type,
-          email: this.email.get('email').value,
-          joinMailingList: this.emailList,
-          createAccount: this.createUser,
-          promoCode: this.currentPromo ? this.currentPromo.code : undefined
-        }, this.product.id)
+        order, this.product.id)
         .subscribe(order => {
           this.navigationService.navigate({ path: `/sales/orders/guest` })
         }, err => {
