@@ -50,6 +50,10 @@
     }
 }
 
+.bundle-categories {
+    margin-bottom: 16px;
+}
+
 .info {
     font-style: italic;
 
@@ -82,10 +86,19 @@
 }
 
 .categories {
-    @media (min-width: $desktop-breakpoint) {
-        display:grid;
-        grid-gap: 8px;
-        grid-template-columns: repeat(3, 189px);
+    &--three { 
+            @media (min-width: $desktop-breakpoint) {
+            display:grid;
+            grid-gap: 8px;
+            grid-template-columns: repeat(3, 189px);
+        }
+    }
+    &--two { 
+            @media (min-width: $desktop-breakpoint) {
+            display:grid;
+            grid-gap: 8px;
+            grid-template-columns: repeat(2, 284px);
+        }
     }
 }
 

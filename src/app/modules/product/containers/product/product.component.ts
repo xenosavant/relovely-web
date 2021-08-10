@@ -106,7 +106,7 @@ export class ProductComponent implements OnInit {
   }
 
   edit() {
-    this.productService.showProductCreate(this.product, this.currentUser.id)
+    this.productService.showProductCreate(this.product, this.currentUser.id, this.product.type)
   }
 
   close() {
@@ -200,5 +200,9 @@ export class ProductComponent implements OnInit {
 
   onClose() {
     this.overlayService.close();
+  }
+
+  get title(): string {
+    return this.product.title || ('Mystery Box ' + this.product.quantity.toString() + ' items');
   }
 }

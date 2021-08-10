@@ -26,16 +26,21 @@
         <div class="info-container">
             <div class="info">
                 <div class="product-name">
-                    {{product.title}}
+                    {{title}}
                 </div>
                 <div class="product-price">
                     {{product.price | appCurrency}}
                     <span *ngIf="product.retailPrice" class="strike-through">{{product.retailPrice | appCurrency}}
                     </span>
                 </div>
-                <div *ngIf="product.sizeId" class="product-size">
-                    <span class="title">Size:</span>
-                    <strong>{{product.sizeId | appSize}}</strong>
+                <div class="size-wrapper" *ngIf="product.type === 'item' && product.sizeId">
+                    Size: <span class="size">{{product.sizeId | appSize}}</span>
+                </div>
+                <div *ngIf="product.type === 'bundle'" class="size-wrapper">
+                    Size: <span class="size">{{product.sizes | appSizes}}</span>
+                </div>
+                <div *ngIf="product.type === 'bundle'" class="size-wrapper">
+                    Category: <span class="size">{{product.categories | appCategories}}</span>
                 </div>
                 <div class="product-size">
                     {{product.brand}}
@@ -91,7 +96,7 @@
         </div>
         <div class="desktop-wrapper" *ngIf="!mobile">
             <div class="desktop-info-wrapper">
-                <h1>{{product.title}}</h1>
+                <h1>{{title}}</h1>
                 <div class="user-wrapper">
                     <app-avatar [image]="product.seller.profileImageUrl" (click)="goToProfile()">
                     </app-avatar>
@@ -104,15 +109,22 @@
                     <span *ngIf="product.retailPrice" class="strike-through">{{product.retailPrice | appCurrency}}
                     </span>
                 </div>
-                <div class="size-wrapper" *ngIf="product.sizeId">
-                    Size: <strong>{{product.sizeId | appSize}}</strong>
+                <div class="size-wrapper" *ngIf="product.type === 'item' && product.sizeId">
+                    Size: <span class="size">{{product.sizeId | appSize}}</span>
+                </div>
+                <div *ngIf="product.type === 'bundle'" class="size-wrapper">
+                    Size: <span class="size">{{product.sizes | appSizes}}</span>
+                </div>
+                <div *ngIf="product.type === 'bundle'" class="size-wrapper">
+                    Category: <span class="size">{{product.categories | appCategories}}</span>
                 </div>
                 <div class="size-wrapper" *ngIf="product.brand">
-                    <strong>{{product.brand}}</strong>
+                    <div class="size">{{product.brand}}</div>
                 </div>
-                <ng-container *ngIf="!product.sold">
+                <ng-container *ngIf=" !product.sold">
                     <div class="button-wrapper">
-                        <button mat-button *ngIf="!seller" class="accent" (click)="purchase($event)">Buy Now</button>
+                        <button mat-button *ngIf="!seller" class="accent" (click)="purchase($event)">Buy
+                            Now</button>
                         <button mat-button *ngIf="seller" class="accent" (click)="edit($event)">Edit</button>
                     </div>
                 </ng-container>

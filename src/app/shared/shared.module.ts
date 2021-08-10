@@ -72,6 +72,8 @@ import { AuthenticationGuard } from './guards/auth.guard';
 import { SellerGuard } from './guards/seller.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { HorizontalUserListComponent } from './components/horizontal-user-list/horizontal-user-list.component';
+import { AppSizesPipe } from './pipes/sizes.pipe';
+import { CategoriesPipe } from './pipes/categories.pipe';
 
 @NgModule({
   imports: [
@@ -130,6 +132,8 @@ import { HorizontalUserListComponent } from './components/horizontal-user-list/h
     AddressComponent,
     AppCurrencyPipe,
     AppSizePipe,
+    AppSizesPipe,
+    CategoriesPipe,
     ProductCreateComponent,
     ImageViewerComponent,
     AddAddressModalComponent,
@@ -195,6 +199,8 @@ import { HorizontalUserListComponent } from './components/horizontal-user-list/h
     AddressComponent,
     AppCurrencyPipe,
     AppSizePipe,
+    AppSizesPipe,
+    CategoriesPipe,
     ProductCreateComponent,
     ImageViewerComponent,
     AddAddressModalComponent,

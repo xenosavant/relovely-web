@@ -17,6 +17,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { UserService } from '@app/shared/services/user/user.service';
 import heic2any from "heic2any";
+import { get } from 'http';
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 
 const MAX_WIDTH = 800;
 
@@ -29,15 +31,24 @@ const MAX_WIDTH = 800;
 export class ProductCreateComponent implements OnInit {
 
   @Input() product: Product;
+  @Input() type: 'item' | 'bundle';
   @Output() close: EventEmitter<boolean> = new EventEmitter;
   @Output() saved: EventEmitter<boolean> = new EventEmitter;
   public imageChangedEvent: any = null;
   public crop = false;
   public form: FormGroup;
   public categories: Array<Category[]> = [];
+  public bundleCategories: string[] = [];
+  public bundleSizes: string[] = [];
+  public bundlePrices: { [id: string]: string[] } = {
+    '3': ['3500', '5000', '7500', '10000'],
+    '5': ['3500', '5000', '7500', '10000', '15000'],
+    '10': ['3500', '5000', '7500', '10000', '15000', '20000']
+  };
+  public quantities = ['3', '5', '10'];
   public video: VideoMetaData;
   public images: ImageSet[] = [];
-  public rootCategories = [];
+  public rootCategories: Category[] = [];
   public tags: string[] = [];
   public selectable = true;
   public removable = true;
@@ -46,7 +57,9 @@ export class ProductCreateComponent implements OnInit {
   public sizes: SizeFilterGroup[];
   public colors: ColorFilter[];
   public showSize = true;
-  public imageError = false;
+  public imageError = false; x
+  public categoryError = false;
+  public sizeError = false;
   public currentSizes: KeyValue[] = [];
   public videoThumbnail: string;
   public imageUploadError = false;
@@ -77,85 +90,154 @@ export class ProductCreateComponent implements OnInit {
     this.breakpointObserver.observe(['(max-width: 500px)']).subscribe(result => {
       this.mobile = result.matches;
     });
-    if (this.product) {
-      this.edit = true;
-      this.title = 'Edit Product';
-      if (this.product.videos.length) {
-        this.video = this.product.videos[0];
-        this.videoThumbnail = this.product.videos[0].url.replace(this.video.format, 'jpg');
-      }
-      this.id = this.product.cloudId;
-      this.form = new FormGroup({
-        title: new FormControl(this.product.title, [Validators.required]),
-        description: new FormControl(this.product.description, [Validators.required]),
-        brand: new FormControl(this.product.brand),
-        categories: this.formBuilder.array(
-          [
-            this.formBuilder.group({
-              id: this.product.categories[0]
-            }),
-            this.formBuilder.group({
-              id: this.product.categories[1]
-            }),
-            this.formBuilder.group({
-              id: this.product.categories[2]
-            })
-          ]
-        ),
-        size: new FormControl(this.product.sizeId),
-        price: new FormControl(this.product.price.toString(), [Validators.required, this.validatePrice]),
-        retailPrice: new FormControl(this.product.retailPrice ? this.product.retailPrice.toString() : ''),
-        color: new FormControl(this.product.colorId),
-        tag: new FormControl(''),
-        weight: new FormControl(this.product.weight, [Validators.required])
-      }, this.validateCategories);
-      this.tags = [...this.product.tags];
-      this.images = this.product.images;
-      this.video = this.product.videos.length ? this.product.videos[0] : null;
-      this.calculateFees();
-    } else {
-      this.title = 'List A Product';
-      this.form = new FormGroup({
-        title: new FormControl('', [Validators.required]),
-        description: new FormControl('', [Validators.required]),
-        categories: new FormArray([
-          this.formBuilder.group({
-            id: null
-          })]),
-        brand: new FormControl(''),
-        size: new FormControl('', [Validators.required]),
-        tag: new FormControl(''),
-        price: new FormControl(null, [Validators.required, , this.validatePrice]),
-        retailPrice: new FormControl(null),
-        color: new FormControl(null),
-        weight: new FormControl(null, [Validators.required])
-      }, this.validateCategories);
-      this.id = guid();
-    }
-    this.form.get('categories').valueChanges.subscribe((val: any) => {
-      this.setSizes(val);
-    })
-    this.form.get('price').valueChanges.subscribe(value => {
-      if (value) {
-        this.calculateFees();
-      }
-    })
     this.sizes = this.lookupService.state.sizes;
-    this.colors = this.lookupService.state.colors;
-    this.rootCategories = this.lookupService.state.categories;
-    this.categories.push(this.rootCategories);
-    if (this.edit) {
+    this.setForm();
+    if (this.edit && this.type === 'item') {
       const second = this.categories[0].find(cat => cat.id === this.product.categories[0]);
       this.categories.push(second.children);
       const third = this.categories[1].find(cat => cat.id === this.product.categories[1]);
       this.categories.push(third.children);
       this.setSizes(this.form.get('categories').value);
     }
+    this.form.get('price').valueChanges.subscribe(value => {
+      if (value) {
+        this.calculateFees();
+      }
+    });
+  }
+
+  setForm() {
+    switch (this.type) {
+      case 'item':
+        this.colors = this.lookupService.state.colors;
+        if (this.product) {
+          this.edit = true;
+          this.title = 'Edit Product';
+          if (this.product.videos.length) {
+            this.video = this.product.videos[0];
+            this.videoThumbnail = this.product.videos[0].url.replace(this.video.format, 'jpg');
+          }
+          this.id = this.product.cloudId;
+          this.form = new FormGroup({
+            title: new FormControl(this.product.title, [Validators.required]),
+            description: new FormControl(this.product.description, [Validators.required]),
+            brand: new FormControl(this.product.brand),
+            categories: this.formBuilder.array(
+              [
+                this.formBuilder.group({
+                  id: this.product.categories[0]
+                }),
+                this.formBuilder.group({
+                  id: this.product.categories[1]
+                }),
+                this.formBuilder.group({
+                  id: this.product.categories[2]
+                })
+              ]
+            ),
+            size: new FormControl(this.product.sizeId),
+            price: new FormControl(this.product.price.toString(), [Validators.required, this.validatePrice]),
+            retailPrice: new FormControl(this.product.retailPrice ? this.product.retailPrice.toString() : ''),
+            color: new FormControl(this.product.colorId),
+            tag: new FormControl(''),
+            weight: new FormControl(this.product.weight, [Validators.required])
+          }, this.validateCategories);
+          this.tags = [...this.product.tags];
+          this.images = [...this.product.images];
+          this.video = this.product.videos.length ? this.product.videos[0] : null;
+          this.calculateFees();
+        } else {
+          this.title = 'List A Product';
+          this.form = new FormGroup({
+            title: new FormControl('', [Validators.required]),
+            description: new FormControl('', [Validators.required]),
+            categories: new FormArray([
+              this.formBuilder.group({
+                id: null
+              })]),
+            brand: new FormControl(''),
+            size: new FormControl('', [Validators.required]),
+            tag: new FormControl(''),
+            price: new FormControl(null, [Validators.required, , this.validatePrice]),
+            retailPrice: new FormControl(null),
+            color: new FormControl(null),
+            weight: new FormControl(null, [Validators.required])
+          }, this.validateCategories);
+          this.id = guid();
+        }
+        this.rootCategories = this.lookupService.state.categories;
+        this.categories.push(this.rootCategories);
+        break;
+      case 'bundle':
+        this.rootCategories = this.lookupService.state.categories;
+        this.categories.push(this.rootCategories);
+        if (this.product) {
+          this.title = 'Edit Bundle';
+          this.edit = true;
+          this.id = this.product.cloudId;
+          this.form = new FormGroup({
+            description: new FormControl(this.product.description, [Validators.required]),
+            category: new FormControl(this.product.categories[0], [Validators.required]),
+            categories: new FormArray([
+              this.formBuilder.group({
+                id: ''
+              })]),
+            size: new FormControl(''),
+            weight: new FormControl(this.product.weight, [Validators.required]),
+            price: new FormControl(this.product.price.toString(), [Validators.required]),
+            quantity: new FormControl(this.product.quantity.toString(), [Validators.required]),
+            tag: new FormControl(''),
+          });
+          this.bundleSizes = [...this.product.sizes];
+          this.bundleCategories = this.product.categories.slice(1);
+          this.tags = [...this.product.tags];
+          this.images = [...this.product.images];
+          this.selectTopLevel({ value: this.product.categories[0] }, true);
+          this.calculateFees();
+        } else {
+          this.title = 'Create A Bundle';
+          this.id = guid();
+          this.form = new FormGroup({
+            description: new FormControl('', [Validators.required]),
+            category: new FormControl('', [Validators.required]),
+            categories: new FormArray([]),
+            size: new FormControl(''),
+            weight: new FormControl('', [Validators.required]),
+            price: new FormControl('', [Validators.required]),
+            quantity: new FormControl('', [Validators.required]),
+            tag: new FormControl(''),
+          });
+        }
+        break;
+    }
+  }
+
+  selectTopLevel(control, init = false) {
+    const newIndex = this.rootCategories.findIndex(c => c.id === control.value);
+    if (!init) {
+      this.bundleCategories = [];
+    }
+    const length = this.categoryArray.length;
+    for (let i = 0; i < length; i++) {
+      this.categoryArray.removeAt(i);
+    }
+    this.categories = [this.rootCategories, this.rootCategories[newIndex].children]
+    this.categoryArray.push(this.formBuilder.group({
+      id: null
+    }))
+    this.currentSizes = [];
+    this.sizes.forEach(size => {
+      if (size.categoryIds.indexOf(this.rootCategories[newIndex].id) > -1) {
+        size.filters.forEach(filter => {
+          this.currentSizes.push(filter);
+        });
+      }
+    });
   }
 
   setSizes(categories) {
     this.currentSizes = [];
-    if (categories.length === 3 && categories[2].id) {
+    if (this.type === 'item') {
       this.sizes.forEach(size => {
         if (size.categoryIds.indexOf(categories[2].id) > -1) {
           size.filters.forEach(filter => {
@@ -163,32 +245,80 @@ export class ProductCreateComponent implements OnInit {
           });
         }
       });
-      const formField = this.form.get('size');
-      if (!this.currentSizes.length) {
-        formField.clearValidators();
-        formField.updateValueAndValidity();
+    } else {
+      this.sizes.forEach(size => {
+        if (size.categoryIds.indexOf(categories[2].value.id) > -1) {
+          size.filters.forEach(filter => {
+            this.currentSizes.push(filter);
+          });
+        }
+      });
+    }
+    const formField = this.form.get('size');
+    if (!this.currentSizes.length) {
+      formField.clearValidators();
+      formField.updateValueAndValidity();
+    } else {
+      formField.setValidators([Validators.required]);
+      formField.updateValueAndValidity();
+    }
+  }
+
+  selectSize(selection) {
+    if (this.bundleSizes.indexOf(selection.value) === -1) {
+      this.bundleSizes.push(selection.value);
+    }
+  }
+
+  selectCategory(selection: any, index: any) {
+    if (this.type === 'bundle') {
+      const rootIndex = parseInt(this.form.get('category').value) - 1;
+      if (index === 1) {
+        this.categories = [this.rootCategories, this.rootCategories[rootIndex].children];
+        if (this.bundleCategories.indexOf(selection.value) === -1) {
+          this.bundleCategories.push(selection.value);
+        }
+        for (let i = 0; i < 2; i++) {
+          this.categoryArray.removeAt(i);
+        }
       } else {
-        formField.setValidators([Validators.required]);
-        formField.updateValueAndValidity();
+        const indexOfSelection = this.categories[0][rootIndex].children.findIndex(c => c.id === selection.value);
+        this.categories = [this.rootCategories, this.rootCategories[rootIndex].children, this.rootCategories[rootIndex].children[indexOfSelection].children];
+        this.categoryArray.removeAt(1);
+        this.categoryArray.push(this.formBuilder.group({
+          id: null
+        }));
+      }
+    } else {
+      for (let i = this.categoryArray['controls'].length - 1; i > index; i--) {
+        this.categoryArray.removeAt(i);
+      }
+      this.categories = this.categories.slice(0, index + 1);
+      const valueAtIndex = this.categories[index].find(cat => cat.id === selection.value);
+      const targetIndex = this.categories[index].indexOf(valueAtIndex);
+      if (this.categories[index][targetIndex].children.length) {
+        this.categories.push(this.categories[index][targetIndex].children);
+        this.categoryArray.push(this.formBuilder.group({
+          id: null
+        }))
+      }
+      const cats = (this.form.get('categories') as FormArray).controls;
+      if (cats.length === 3 && cats[2].value.id) {
+        this.setSizes(cats.map(cat => cat.value))
       }
     }
   }
 
-  public selectCategory(category: any, index: any) {
-    for (let i = this.categoryArray['controls'].length - 1; i > index; i--) {
-      this.categoryArray.removeAt(i);
-    }
-    this.categories = this.categories.slice(0, index + 1);
-    const valueAtIndex = this.categories[index].find(cat => cat.id === category.value);
-    const targetIndex = this.categories[index].indexOf(valueAtIndex);
-    if (this.categories[index][targetIndex].children.length) {
-      this.categories.push(this.categories[index][targetIndex].children);
-      this.categoryArray.push(this.formBuilder.group({
-        id: null
-      }))
-    } else {
+  getCategory(id) {
+    return this.lookupService.getCategory(id).name;
+  }
 
-    }
+  onRemoveCategory(id) {
+    this.bundleCategories.splice(this.bundleCategories.indexOf(id, 1));
+  }
+
+  onRemoveSize(id) {
+    this.bundleSizes.splice(this.sizes.indexOf(id, 1));
   }
 
   get categoryArray() {
@@ -226,7 +356,6 @@ export class ProductCreateComponent implements OnInit {
         heic2any({ blob: file, toType: 'image/jpeg' }).then(file => {
           img.src = URL.createObjectURL(file);
         }, (error) => {
-          console.log(error);
           img.src = URL.createObjectURL(file);
         });
       } else {
@@ -264,6 +393,7 @@ export class ProductCreateComponent implements OnInit {
           this.zone.run(() => {
             this.crop = false;
             this.imageUploadError = false;
+            this.imageError = false;
             this.ref.detectChanges();
           });
         }, err => {
@@ -305,28 +435,43 @@ export class ProductCreateComponent implements OnInit {
       });
       const product: Product = {
         cloudId: this.id,
-        title: this.form.get('title').value,
         description: this.form.get('description').value,
-        categories: this.categoryArray['controls'].map(c => c.value.id),
         images: this.images,
         videos: this.video ? [this.video] : [],
-        brand: this.form.get('brand').value,
         tags: this.tags,
+        type: this.type,
         price: parseInt(this.form.get('price').value.replace(this.currencyChars, ''), 10),
         weight: this.form.get('weight').value
       };
-      if (this.form.get('size').value) {
-        product.sizeId = this.form.get('size').value;
-      }
-      if (this.form.get('color').value) {
-        product.colorId = this.form.get('color').value;
-      }
-      if (this.form.get('retailPrice').value) {
-        product.retailPrice = parseInt(this.form.get('retailPrice').value.replace(this.currencyChars, ''), 10);
-      }
-      if (this.form.get('brand').value) {
+
+      if (this.type === 'bundle') {
+        this.categoryError = this.bundleCategories.length <= 1 ? true : false;
+        this.sizeError = !this.bundleSizes.length ? true : false;
+        if (this.sizeError || this.categoryError) {
+          this.loading = false;
+          return;
+        }
+        product.categories = [this.form.get('category').value, ...this.bundleCategories.slice(1)];
+        product.sizes = this.bundleSizes;
+        product.quantity = parseInt(this.form.get('quantity').value);
+      } else {
         product.brand = this.form.get('brand').value;
+        product.title = this.form.get('title').value,
+          product.categories = this.categoryArray['controls'].map(c => c.value.id);
+        if (this.form.get('brand').value) {
+          product.brand = this.form.get('brand').value;
+        }
+        if (this.form.get('size').value) {
+          product.sizeId = this.form.get('size').value;
+        }
+        if (this.form.get('color').value) {
+          product.colorId = this.form.get('color').value;
+        }
+        if (this.form.get('retailPrice').value) {
+          product.retailPrice = parseInt(this.form.get('retailPrice').value.replace(this.currencyChars, ''), 10);
+        }
       }
+
       if (this.edit) {
         this.productService.patchProduct(product, this.product.id).subscribe(response => {
           this.loading = false;

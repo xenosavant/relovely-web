@@ -94,6 +94,7 @@ export class AppComponent implements OnInit {
   public authRedirect: string;
   public accountAlert: boolean = false;
   public editProduct: Product = null;
+  public productType: 'bundle' | 'item' = 'item';
   public currentUserId: string;
   public productImageUrl: string;
   public content: Element;
@@ -115,7 +116,6 @@ export class AppComponent implements OnInit {
   @ViewChild('.mat-sidenav-content') sideNavContent: ElementRef;
 
   constructor(
-    private storageService: LocalStorageService,
     private lookupService: LookupService,
     private matIconRegistry: MatIconRegistry,
     private breakpointObserver: BreakpointObserver,
@@ -188,7 +188,8 @@ export class AppComponent implements OnInit {
     })
 
     this.productService.showCreateProduct$.subscribe(values => {
-      this.editProduct = values.product;
+      this.editProduct = { ...values.product };
+      this.productType = values.type;
       this.overlayService.open(this.productModal);
     })
 
@@ -388,6 +389,7 @@ export class AppComponent implements OnInit {
       if (!user.seller.missingInfo.includes('external_account') &&
         user.seller.verificationStatus === 'verified' && !!user.returnAddress) {
         accountNav.subItems.push(new NavigationItem([], '', 'List A Product', null, [], [], null))
+        accountNav.subItems.push(new NavigationItem([], '', 'List A Bundle', null, [], [], null))
       }
     }
     if (user && user.admin) {
@@ -403,6 +405,7 @@ export class AppComponent implements OnInit {
     if (user && user.type === 'seller' && !user.seller.missingInfo.includes('external_account') &&
       user.seller.verificationStatus === 'verified' && !!user.returnAddress) {
       navigationItems.push({ name: 'List A Product', path: '' });
+      navigationItems.push({ name: 'List A Bundle', path: '' });
     }
     this.navigationService.rootNavigationItems = navigationItems;
     this.currentNavigationItems = navigationItems
@@ -500,6 +503,10 @@ export class AppComponent implements OnInit {
     this.showMegaMenu = false;
     this.selectedMenuItem = -1;
     if (item.name === 'List A Product') {
+      this.productType = 'item';
+      this.overlayService.open(this.productModal);
+    } else if (item.name === 'List A Bundle') {
+      this.productType = 'bundle';
       this.overlayService.open(this.productModal);
     } else {
       this.navigationService.navigate({ path: item.path, name: item.name });
