@@ -172,7 +172,6 @@ export class ProductCreateComponent implements OnInit {
         this.rootCategories = this.lookupService.state.categories;
         this.categories.push(this.rootCategories);
         if (this.product) {
-          console.log(this.product);
           this.title = 'Edit Bundle';
           this.edit = true;
           this.id = this.product.cloudId;
@@ -239,7 +238,6 @@ export class ProductCreateComponent implements OnInit {
   setSizes(categories) {
     this.currentSizes = [];
     if (this.type === 'item') {
-      console.log(categories);
       this.sizes.forEach(size => {
         if (size.categoryIds.indexOf(categories[2].id) > -1) {
           size.filters.forEach(filter => {
@@ -321,7 +319,6 @@ export class ProductCreateComponent implements OnInit {
 
   onRemoveSize(id) {
     this.bundleSizes.splice(this.sizes.indexOf(id, 1));
-    console.log(this.product);
   }
 
   get categoryArray() {
@@ -359,7 +356,6 @@ export class ProductCreateComponent implements OnInit {
         heic2any({ blob: file, toType: 'image/jpeg' }).then(file => {
           img.src = URL.createObjectURL(file);
         }, (error) => {
-          console.log(error);
           img.src = URL.createObjectURL(file);
         });
       } else {
