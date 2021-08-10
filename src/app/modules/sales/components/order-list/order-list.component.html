@@ -17,7 +17,8 @@
             <div class="info">
                 <div class="info-inner">
                     <div class="title">
-                        <ng-container *ngIf="order.product.type === 'bundle'">Mystery Box - {{ order.product.categories
+                        <ng-container *ngIf="order.product.type === 'bundle'">Mystery Bundle - {{
+                            order.product.categories
                             | appCategories }}
                         </ng-container>
                         <ng-container *ngIf="order.product.type === 'item'">{{order.product.title}}</ng-container>

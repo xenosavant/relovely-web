@@ -22,7 +22,7 @@ export class ProductBodyComponent implements OnInit {
   }
 
   get title(): string {
-    return this.product.title || ('Mystery Box ' + this.product.quantity.toString() + ' items');
+    return this.product.title || ('Mystery Bundle ' + this.product.quantity.toString() + ' items');
   }
 
 }

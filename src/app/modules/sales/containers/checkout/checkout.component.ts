@@ -107,7 +107,7 @@ export class CheckoutComponent implements OnInit {
         }
         if (this.product.type === 'bundle') {
           this.extraInfo = new FormGroup({
-            size: new FormControl('', [Validators.required]),
+            size: new FormControl(''),
             pinterest: new FormControl(''),
             instagram: new FormControl(''),
             buyerInfo: new FormControl(''),
@@ -385,9 +385,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   checkoutDisabled() {
-    if (this.product.type === 'bundle' && this.selectedSizes.length < 1) {
-      return true;
-    }
     if (this.user) {
       return !this.selectedAddress || !this.selectedPayment || this.changingPayment || this.changingAddress || this.checkingOut;
     } else {
@@ -443,7 +440,6 @@ export class CheckoutComponent implements OnInit {
         buyerInfo: this.extraInfo.get('buyerInfo').value,
       };
     }
-    console.log(order);
     if (this.user) {
       order.address = this.selectedAddress;
       this.orderService.postOrder(
