@@ -49,6 +49,7 @@ export class OrderComponent implements OnInit {
       } else {
         this.orderService.getOrder(params['id']).subscribe(order => {
           this.order = order;
+          console.log(this.order);
           this.shipping = this.order.shippingCost - (this.order.shippingDiscount || 0);
           this.seller = this.userService.user$.getValue().id === this.order.seller.id;
           if (this.seller) {

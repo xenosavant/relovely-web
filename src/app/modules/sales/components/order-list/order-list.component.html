@@ -17,7 +17,10 @@
             <div class="info">
                 <div class="info-inner">
                     <div class="title">
-                        {{order.product.title}}
+                        <ng-container *ngIf="order.product.type === 'bundle'">Mystery Box - {{ order.product.categories
+                            | appCategories }}
+                        </ng-container>
+                        <ng-container *ngIf="order.product.type === 'item'">{{order.product.title}}</ng-container>
                     </div>
                     <app-order-status [order]="order"></app-order-status>
                     <div *ngIf="!seller" class="seller">

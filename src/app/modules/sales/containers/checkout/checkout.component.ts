@@ -385,6 +385,9 @@ export class CheckoutComponent implements OnInit {
   }
 
   checkoutDisabled() {
+    if (this.product.type === 'bundle' && this.selectedSizes.length < 1) {
+      return true;
+    }
     if (this.user) {
       return !this.selectedAddress || !this.selectedPayment || this.changingPayment || this.changingAddress || this.checkingOut;
     } else {
@@ -434,12 +437,13 @@ export class CheckoutComponent implements OnInit {
     if (this.product.type === 'bundle') {
       order = {
         ...order,
-        size: this.extraInfo.get('size').value,
+        sizes: this.selectedSizes,
         pinterest: this.extraInfo.get('pinterest').value,
         instagram: this.extraInfo.get('instagram').value,
         buyerInfo: this.extraInfo.get('buyerInfo').value,
       };
     }
+    console.log(order);
     if (this.user) {
       order.address = this.selectedAddress;
       this.orderService.postOrder(

@@ -24,6 +24,7 @@ export class OrderListComponent implements OnInit {
   constructor(private navigationService: NavigationService, private orderService: OrderService, private userService: UserService, private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    console.log(this.order)
   }
 
   onImageClick() {

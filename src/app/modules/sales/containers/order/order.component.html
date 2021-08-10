@@ -60,6 +60,28 @@
                 </div>
             </div>
         </div>
+        <ng-container *ngIf="order.sizes">
+            <div class="divider light"></div>
+            <div class="grid-wrapper">
+                <div>
+                    <div *ngIf="order.instagram" class="">
+                        <strong>Instagram: </strong> <a
+                            href="https://www.instagram.com/{{order.instagram}}">@{{order.instagram}}</a>
+                    </div>
+                    <div *ngIf="order.pinterest" class="">
+                        <strong>Pinterest: </strong> <a
+                            href="https://www.pinterest.com/{{order.pinterest}}">{{order.instagram}}</a>
+                    </div>
+                    <div *ngIf="order.buyerInfo" class="">
+                        <p><strong>Additional Info:</strong></p>
+                        {{order.buyerInfo}}
+                    </div>
+                </div>
+                <div class="sizes">
+                    <strong>Sizes:</strong> {{order.sizes | appSizes}}
+                </div>
+            </div>
+        </ng-container>
         <div class="links">
             <div class="inner">
                 <ng-container *ngIf="seller">

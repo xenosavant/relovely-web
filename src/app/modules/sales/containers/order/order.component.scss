@@ -11,6 +11,7 @@
     margin: 0 auto;
     max-width: $desktop-breakpoint;
     width: 100%;
+    padding-bottom: 16px;
  }
 
  .order-wrapper {
@@ -119,5 +120,11 @@
     text-align: center;
     img {
         height: 25vh;
+    }
+}
+
+.sizes {
+    @media(max-width: 500px) {
+        margin-top: 8px;
     }
 }
