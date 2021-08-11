@@ -451,7 +451,7 @@ export class ProductCreateComponent implements OnInit {
           this.loading = false;
           return;
         }
-        product.categories = [this.form.get('category').value, ...this.bundleCategories.slice(1)];
+        product.categories = [this.form.get('category').value, ...this.bundleCategories];
         product.sizes = this.bundleSizes;
         product.quantity = parseInt(this.form.get('quantity').value);
       } else {

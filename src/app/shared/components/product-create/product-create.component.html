@@ -166,7 +166,7 @@
             </div>
             <div>
                 <mat-form-field appearance="outline">
-                    <mat-select required placeholder="Men or Women?" class="form-control"
+                    <mat-select placeholder="Men or Women?" class="form-control"
                         (selectionChange)="selectTopLevel($event, i)" formControlName="category">
                         <mat-option *ngFor="let cat of categories[0]" [value]="cat.id">{{cat.name}}
                         </mat-option>
@@ -177,7 +177,7 @@
                 <ng-container formArrayName="categories" *ngFor="let item of categoryArray['controls']; let i = index;">
                     <div [formGroupName]="i">
                         <mat-form-field appearance="outline">
-                            <mat-select required placeholder="Categories (select all that apply)" class="form-control"
+                            <mat-select placeholder="Categories (select all that apply)" class="form-control"
                                 (selectionChange)="selectCategory($event, i)" formControlName="id">
                                 <mat-option *ngFor="let cat of categories[i+1]" [value]="cat.id">{{cat.name}}
                                 </mat-option>
