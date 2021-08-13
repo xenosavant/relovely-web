@@ -389,7 +389,7 @@ export class AppComponent implements OnInit {
       if (!user.seller.missingInfo.includes('external_account') &&
         user.seller.verificationStatus === 'verified' && !!user.returnAddress) {
         accountNav.subItems.push(new NavigationItem([], '', 'List A Product', null, [], [], null))
-        accountNav.subItems.push(new NavigationItem([], '', 'List A Bundle', null, [], [], null))
+        accountNav.subItems.push(new NavigationItem([], '', 'Create A Bundle', null, [], [], null))
       }
     }
     if (user && user.admin) {
@@ -405,7 +405,7 @@ export class AppComponent implements OnInit {
     if (user && user.type === 'seller' && !user.seller.missingInfo.includes('external_account') &&
       user.seller.verificationStatus === 'verified' && !!user.returnAddress) {
       navigationItems.push({ name: 'List A Product', path: '' });
-      navigationItems.push({ name: 'List A Bundle', path: '' });
+      navigationItems.push({ name: 'Create A Bundle', path: '' });
     }
     this.navigationService.rootNavigationItems = navigationItems;
     this.currentNavigationItems = navigationItems
@@ -505,7 +505,7 @@ export class AppComponent implements OnInit {
     if (item.name === 'List A Product') {
       this.productType = 'item';
       this.overlayService.open(this.productModal);
-    } else if (item.name === 'List A Bundle') {
+    } else if (item.name === 'Create A Bundle') {
       this.productType = 'bundle';
       this.overlayService.open(this.productModal);
     } else {
@@ -584,6 +584,13 @@ export class AppComponent implements OnInit {
     } else if (item.name === 'List A Product') {
       this.sidenavOpen = false;
       this.showOverlay = false
+      this.productType = 'item';
+      this.overlayService.open(this.productModal);
+    }
+    else if (item.name === 'Create A Bundle') {
+      this.sidenavOpen = false;
+      this.showOverlay = false
+      this.productType = 'bundle';
       this.overlayService.open(this.productModal);
     } else if (!this.userService.user$.getValue() && item.name === 'Account') {
       this.sidenavOpen = false;
