@@ -226,34 +226,19 @@ export class ProductCreateComponent implements OnInit {
       id: null
     }))
     this.currentSizes = [];
+  }
+
+  setSizes(category: Category) {
+    this.currentSizes = [];
     this.sizes.forEach(size => {
-      if (size.categoryIds.indexOf(this.rootCategories[newIndex].id) > -1) {
+      if (size.categoryIds.indexOf(category.id) > -1) {
         size.filters.forEach(filter => {
-          this.currentSizes.push(filter);
+          if (!this.currentSizes.some(size => filter.key === size.key)) {
+            this.currentSizes.push(filter);
+          }
         });
       }
     });
-  }
-
-  setSizes(categories) {
-    this.currentSizes = [];
-    if (this.type === 'item') {
-      this.sizes.forEach(size => {
-        if (size.categoryIds.indexOf(categories[2].id) > -1) {
-          size.filters.forEach(filter => {
-            this.currentSizes.push(filter);
-          });
-        }
-      });
-    } else {
-      this.sizes.forEach(size => {
-        if (size.categoryIds.indexOf(categories[2].value.id) > -1) {
-          size.filters.forEach(filter => {
-            this.currentSizes.push(filter);
-          });
-        }
-      });
-    }
     const formField = this.form.get('size');
     if (!this.currentSizes.length) {
       formField.clearValidators();
@@ -288,6 +273,7 @@ export class ProductCreateComponent implements OnInit {
         this.categoryArray.push(this.formBuilder.group({
           id: null
         }));
+        this.setSizes(this.rootCategories[rootIndex].children[indexOfSelection]);
       }
     } else {
       for (let i = this.categoryArray['controls'].length - 1; i > index; i--) {
@@ -304,7 +290,7 @@ export class ProductCreateComponent implements OnInit {
       }
       const cats = (this.form.get('categories') as FormArray).controls;
       if (cats.length === 3 && cats[2].value.id) {
-        this.setSizes(cats.map(cat => cat.value))
+        this.setSizes(cats[2].value.id);
       }
     }
   }

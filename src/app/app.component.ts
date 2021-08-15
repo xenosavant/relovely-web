@@ -401,12 +401,12 @@ export class AppComponent implements OnInit {
     );
     this.accountNav = accountNav;
     navigationItems.push(this.accountNav);
-    navigationItems.push({ name: 'Blog', path: 'https://www.blog.relovely.com/' });
     if (user && user.type === 'seller' && !user.seller.missingInfo.includes('external_account') &&
       user.seller.verificationStatus === 'verified' && !!user.returnAddress) {
       navigationItems.push({ name: 'List A Product', path: '' });
       navigationItems.push({ name: 'Create A Bundle', path: '' });
     }
+    navigationItems.push({ name: 'Blog', path: 'https://www.blog.relovely.com/' });
     this.navigationService.rootNavigationItems = navigationItems;
     this.currentNavigationItems = navigationItems
   }
