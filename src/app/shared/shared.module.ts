@@ -74,6 +74,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { HorizontalUserListComponent } from './components/horizontal-user-list/horizontal-user-list.component';
 import { AppSizesPipe } from './pipes/sizes.pipe';
 import { CategoriesPipe } from './pipes/categories.pipe';
+import { ProductTitlePipe } from './pipes/product-title-pipe';
 
 @NgModule({
   imports: [
@@ -133,6 +134,7 @@ import { CategoriesPipe } from './pipes/categories.pipe';
     AppCurrencyPipe,
     AppSizePipe,
     AppSizesPipe,
+    ProductTitlePipe,
     CategoriesPipe,
     ProductCreateComponent,
     ImageViewerComponent,
@@ -182,6 +184,7 @@ import { CategoriesPipe } from './pipes/categories.pipe';
     ProfileStatsComponent,
     ProductsListComponent,
     ProductListComponent,
+    ProductTitlePipe,
     UserListComponent,
     UsersListComponent,
     FakeSlidesDirective,
@@ -217,6 +220,6 @@ import { CategoriesPipe } from './pipes/categories.pipe';
     SellerApplyComponent,
     HorizontalUserListComponent
   ],
-  providers: [DecimalPipe, AuthenticationGuard, SellerGuard, AdminGuard],
+  providers: [DecimalPipe, CategoriesPipe, AuthenticationGuard, SellerGuard, AdminGuard],
 })
 export class SharedModule { }

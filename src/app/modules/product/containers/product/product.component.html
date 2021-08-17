@@ -26,7 +26,7 @@
         <div class="info-container">
             <div class="info">
                 <div class="product-name">
-                    {{title}}
+                    {{product | productTitle}}
                 </div>
                 <div class="product-price">
                     {{product.price | appCurrency}}
@@ -40,7 +40,10 @@
                     Size: <span class="size">{{product.sizes | appSizes}}</span>
                 </div>
                 <div *ngIf="product.type === 'bundle'" class="size-wrapper">
-                    Category: <span class="size">{{product.categories | appCategories}}</span>
+                    <span class="label">
+                        Category:
+                    </span>
+                    <span class="size">{{product.categories | appCategories}}</span>
                 </div>
                 <div class="product-size">
                     {{product.brand}}
@@ -96,7 +99,7 @@
         </div>
         <div class="desktop-wrapper" *ngIf="!mobile">
             <div class="desktop-info-wrapper">
-                <h1>{{title}}</h1>
+                <h1 class="product-title"> {{product | productTitle}}</h1>
                 <div class="user-wrapper">
                     <app-avatar [image]="product.seller.profileImageUrl" (click)="goToProfile()">
                     </app-avatar>

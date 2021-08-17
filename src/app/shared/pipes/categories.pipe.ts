@@ -9,11 +9,14 @@ export class CategoriesPipe implements PipeTransform {
     transform(categories: string[]): string {
         let returnString = ''
         categories.forEach((cat, index) => {
-            if (index !== 0) {
-                returnString += this.lookupService.getCategory(cat).name;
-            }
-            if (index !== 0 && index !== categories.length - 1) {
-                returnString += ', ';
+            const category = this.lookupService.getCategory(cat);
+            if (!category.children.length) {
+                if (index !== 0) {
+                    returnString += this.lookupService.getCategory(cat).name;
+                }
+                if (index !== 0 && index !== categories.length - 1) {
+                    returnString += ', ';
+                }
             }
         })
         return returnString;

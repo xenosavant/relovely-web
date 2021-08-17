@@ -48,8 +48,7 @@
             <strong>Cancel</strong>
         </app-button>
         <button mat-stroked-button class="primary" (click)="onSave()" [disabled]="!formValid()">
-            <strong *ngIf="showCancel"> Save </strong>
-            <strong *ngIf="!showCancel"> Verify </strong>
+            <strong> Save </strong>
         </button>
     </div>
 </form>

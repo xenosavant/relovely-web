@@ -484,5 +484,4 @@ export class CheckoutComponent implements OnInit {
       country: 'US'
     }
   }
-
 }

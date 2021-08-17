@@ -16,12 +16,13 @@ import { sizes } from '@app/data/sizes.data';
 import { colors } from '@app/data/colors.data';
 import { prices } from '@app/data/prices.data';
 import { categories } from '@app/data/categories.data';
+import { KeyValue } from '@angular/common';
 
 @Injectable()
 export class LookupService extends BaseService {
 
     private _state: LookupState;
-    private _catMap = {};
+    private _catMap: Map<string, Category> = new Map();
     private _sizeMap = {};
     private _colorNameMap = {};
     private _colorMap = {};
@@ -52,7 +53,7 @@ export class LookupService extends BaseService {
         return this._state;
     }
 
-    public getCategory(id: string) {
+    public getCategory(id: string): Category {
         return this._catMap[id];
     }
 

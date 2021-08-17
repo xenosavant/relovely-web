@@ -38,7 +38,7 @@
                   <div class="button-wrapper">
                     <button mat-stroked-button (click)="onSelectAddress()" class="primary">Save</button>
                     <button mat-stroked-button (click)="onAddAddress()">
-                      Add
+                      Different Address
                     </button>
                   </div>
                 </mat-radio-group>
@@ -87,7 +87,7 @@
                   <div class="button-wrapper">
                     <button mat-stroked-button (click)="onSelectPayment()" class="primary">Save</button>
                     <button mat-stroked-button (click)="onAddPayment()">
-                      Add
+                      New Card
                     </button>
                   </div>
                 </mat-radio-group>
@@ -194,7 +194,7 @@
           </div>
           <div class="product-info">
             <div class="title">
-              {{product.title}}
+              {{product | productTitle}}
             </div>
             <div *ngIf="product.sizeId" class="size">
               Size: {{product.sizeId | appSize}}

@@ -21,8 +21,4 @@ export class ProductBodyComponent implements OnInit {
     this.clicked.emit(this.product.id);
   }
 
-  get title(): string {
-    return this.product.title || ('Mystery Bundle ' + this.product.quantity.toString() + ' items');
-  }
-
 }

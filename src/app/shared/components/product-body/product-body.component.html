@@ -7,9 +7,7 @@
   </div>
   <div class="info-footer">
     <div class="product-name">
-      <ng-container *ngIf="product.type === 'bundle'">Mystery Bundle - {{ product.categories | appCategories }}
-      </ng-container>
-      <ng-container *ngIf="product.type === 'item'">{{product.title}}</ng-container>
+      {{product | productTitle}}
     </div>
     <div *ngIf="product.sizeId" class="product-size">
       Size: {{product.sizeId | appSize}}

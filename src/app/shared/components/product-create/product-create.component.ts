@@ -17,8 +17,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserAuth } from '@app/shared/models/user-auth.model';
 import { UserService } from '@app/shared/services/user/user.service';
 import heic2any from "heic2any";
-import { get } from 'http';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { CategoriesPipe } from '@app/shared/pipes/categories.pipe';
 
 const MAX_WIDTH = 800;
 
@@ -82,7 +81,8 @@ export class ProductCreateComponent implements OnInit {
     private lookupService: LookupService,
     private ref: ChangeDetectorRef,
     private productService: ProductService,
-    private breakpointObserver: BreakpointObserver) {
+    private breakpointObserver: BreakpointObserver,
+    private categoriesPipe: CategoriesPipe) {
   }
 
   ngOnInit() {
@@ -229,7 +229,6 @@ export class ProductCreateComponent implements OnInit {
   }
 
   setSizes(category: Category) {
-    this.currentSizes = [];
     this.sizes.forEach(size => {
       if (size.categoryIds.indexOf(category.id) > -1) {
         size.filters.forEach(filter => {
@@ -259,13 +258,23 @@ export class ProductCreateComponent implements OnInit {
     if (this.type === 'bundle') {
       const rootIndex = parseInt(this.form.get('category').value) - 1;
       if (index === 1) {
-        this.categories = [this.rootCategories, this.rootCategories[rootIndex].children];
+        const parent = this.categoryArray.controls[0].value.id;
+        if (this.bundleCategories.indexOf(parent) === -1) {
+          this.bundleCategories.push(parent);
+        }
         if (this.bundleCategories.indexOf(selection.value) === -1) {
           this.bundleCategories.push(selection.value);
         }
         for (let i = 0; i < 2; i++) {
           this.categoryArray.removeAt(i);
         }
+        this.currentSizes = [];
+        this.bundleCategories.forEach(cat => {
+          const category = this.lookupService.getCategory(cat);
+          if (!category.children.length) {
+            this.setSizes(category);
+          }
+        })
       } else {
         const indexOfSelection = this.categories[0][rootIndex].children.findIndex(c => c.id === selection.value);
         this.categories = [this.rootCategories, this.rootCategories[rootIndex].children, this.rootCategories[rootIndex].children[indexOfSelection].children];
@@ -273,7 +282,6 @@ export class ProductCreateComponent implements OnInit {
         this.categoryArray.push(this.formBuilder.group({
           id: null
         }));
-        this.setSizes(this.rootCategories[rootIndex].children[indexOfSelection]);
       }
     } else {
       for (let i = this.categoryArray['controls'].length - 1; i > index; i--) {
@@ -288,14 +296,15 @@ export class ProductCreateComponent implements OnInit {
           id: null
         }))
       }
-      const cats = (this.form.get('categories') as FormArray).controls;
-      if (cats.length === 3 && cats[2].value.id) {
-        this.setSizes(cats[2].value.id);
+      if (index === 2) {
+        this.currentSizes = [];
+        this.setSizes(this.categories[index][targetIndex]);
       }
     }
   }
 
   getCategory(id) {
+    console.log(id)
     return this.lookupService.getCategory(id).name;
   }
 
@@ -541,5 +550,16 @@ export class ProductCreateComponent implements OnInit {
         this.earningsBreakdown += `, but no commission or fees for your next sale`;
       }
     }
+  }
+
+  get selectedBundleCategories(): string[] {
+    const categories = [];
+    this.bundleCategories.forEach(cat => {
+      const category = this.lookupService.getCategory(cat);
+      if (!category.children.length) {
+        categories.push(category.name);
+      }
+    });
+    return categories;
   }
 }

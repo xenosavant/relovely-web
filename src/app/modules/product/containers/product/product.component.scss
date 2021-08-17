@@ -42,6 +42,8 @@
         .product-name {
             font-size: 20px  !important;
             font-weight: 800  !important;
+            margin-bottom: 8px;
+            margin-top: 4px;
         }
         .product-price {
             .retail {
@@ -200,7 +202,12 @@
 
         .size-wrapper {
             margin-top: 8px;
-            color: $light-gray
+            .size {
+                color: $light-gray
+            }
+            .label {
+                font-weight: 1000;
+            }
         }
 
         .button-wrapper {
@@ -279,4 +286,8 @@
 
 .size {
     font-weight: 1000;
+}
+
+.product-title {
+    margin-top: 0px;
 }

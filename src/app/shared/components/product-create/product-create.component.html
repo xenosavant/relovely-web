@@ -189,8 +189,8 @@
             <div class="bundle-categories">
                 <mat-chip-list #chipList>
                     <mat-chip [selectable]="false" (removed)="onRemoveCategory(id)" [removable]="true"
-                        *ngFor="let id of bundleCategories">
-                        {{getCategory(id)}}
+                        *ngFor="let name of selectedBundleCategories">
+                        {{name}}
                         <mat-icon svgIcon="close" matChipRemove></mat-icon>
                     </mat-chip>
                 </mat-chip-list>
