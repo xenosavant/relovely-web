@@ -145,6 +145,7 @@ export class ProductCreateComponent implements OnInit {
           this.tags = [...this.product.tags];
           this.images = [...this.product.images];
           this.video = this.product.videos.length ? this.product.videos[0] : null;
+          this.setSizes(this.lookupService.getCategory(this.product.categories[0]));
           this.calculateFees();
         } else {
           this.title = 'List A Product';
@@ -193,6 +194,10 @@ export class ProductCreateComponent implements OnInit {
           this.tags = [...this.product.tags];
           this.images = [...this.product.images];
           this.selectTopLevel({ value: this.product.categories[0] }, true);
+          this.bundleCategories.forEach(id => {
+            const category = this.lookupService.getCategory(id);
+            this.setSizesFromCategory(category);
+          })
           this.calculateFees();
         } else {
           this.title = 'Create A Bundle';
@@ -229,22 +234,16 @@ export class ProductCreateComponent implements OnInit {
   }
 
   setSizes(category: Category) {
-    this.sizes.forEach(size => {
-      if (size.categoryIds.indexOf(category.id) > -1) {
-        size.filters.forEach(filter => {
-          if (!this.currentSizes.some(size => filter.key === size.key)) {
-            this.currentSizes.push(filter);
-          }
-        });
+    this.setSizesFromCategory(category);
+    if (this.type === 'item') {
+      const formField = this.form.get('size');
+      if (!this.currentSizes.length) {
+        formField.clearValidators();
+        formField.updateValueAndValidity();
+      } else {
+        formField.setValidators([Validators.required]);
+        formField.updateValueAndValidity();
       }
-    });
-    const formField = this.form.get('size');
-    if (!this.currentSizes.length) {
-      formField.clearValidators();
-      formField.updateValueAndValidity();
-    } else {
-      formField.setValidators([Validators.required]);
-      formField.updateValueAndValidity();
     }
   }
 
@@ -304,7 +303,6 @@ export class ProductCreateComponent implements OnInit {
   }
 
   getCategory(id) {
-    console.log(id)
     return this.lookupService.getCategory(id).name;
   }
 
@@ -561,5 +559,17 @@ export class ProductCreateComponent implements OnInit {
       }
     });
     return categories;
+  }
+
+  setSizesFromCategory(category: Category) {
+    this.sizes.forEach(size => {
+      if (size.categoryIds.indexOf(category.id) > -1) {
+        size.filters.forEach(filter => {
+          if (!this.currentSizes.some(size => filter.key === size.key)) {
+            this.currentSizes.push(filter);
+          }
+        });
+      }
+    });
   }
 }
