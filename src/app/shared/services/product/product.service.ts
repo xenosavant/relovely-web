@@ -21,31 +21,22 @@ export class ProductService extends BaseService {
         );
     }
 
-    getProducts(page: number, categoryId: string, searchTerm: string = null, sizes: string[] = null, colors: string[] = null, prices: PriceRange[] = null): Observable<ListResponse<Product>> {
+    getProducts(page: number, categoryId: string, searchTerm: string = null, sizes: string[] = null,
+        colors: string[] = null, prices: PriceRange[] = null, types: string[]): Observable<ListResponse<Product>> {
         let query = `?category=${categoryId}`;
         if (sizes) {
-            let sizeArray = ''
-            sizes.forEach((size, index) => {
-                sizeArray += size;
-                if (index !== sizeArray.length - 1) {
-                    sizeArray += '+';
-                }
-            });
             query = query + `&sizes=${sizes}`;
         }
         if (colors) {
-            let colorArray = ''
-            colors.forEach((color, index) => {
-                colorArray += color;
-                if (index !== colorArray.length - 1) {
-                    colorArray += '+';
-                }
-            });
             query = query + `&colors=${colors}`;
         }
         if (prices) {
             const json = JSON.stringify(prices);
             query = query + `&prices=${json}`
+        }
+
+        if (types) {
+            query = query + `&types=${types}`
         }
         if (searchTerm) {
             query = query + `&terms=${searchTerm}`

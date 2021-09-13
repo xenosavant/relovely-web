@@ -8,6 +8,7 @@ export interface IUserPreferences {
     sizes?: string[];
     colors?: string[];
     prices?: PriceRange[];
+    types?: string[];
 }
 
 export interface PriceRange {

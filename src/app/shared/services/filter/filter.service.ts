@@ -9,7 +9,7 @@ import { UserService } from '../user/user.service';
 @Injectable()
 export class FilterService extends BaseService {
 
-    private emptyState = { sizes: [], colors: [], prices: [] };
+    private emptyState = { sizes: [], colors: [], prices: [], types: [] };
     private _state: IUserPreferences = this.emptyState;
 
     public filterStateSubject$ = new BehaviorSubject<IUserPreferences>(this.emptyState);
@@ -56,11 +56,23 @@ export class FilterService extends BaseService {
         this.filterStateSubject$.next(this._state);
     }
 
+    public updateTypes(types: string[]) {
+        this._state.types = types;
+        const user = this.userService.user$.getValue();
+        if (user) {
+            this.userService.updateUser(user.id, { preferences: this._state }).subscribe(u => {
+                this.userService.setCurrentUser(u);
+            });
+        }
+        this.filterStateSubject$.next(this._state);
+    }
+
     public clear() {
         this._state = {
             sizes: [],
             colors: [],
-            prices: []
+            prices: [],
+            types: []
         }
         const user = this.userService.user$.getValue();
         if (user) {

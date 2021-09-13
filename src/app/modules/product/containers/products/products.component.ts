@@ -149,6 +149,7 @@ export class ProductsComponent implements OnInit {
   }
 
   getProducts(state: IUserPreferences) {
+    console.log(state);
     if (this.cache) {
       this.loadData({ items: this.cache.products, count: this.cache.total });
       this.cache = null;
@@ -171,7 +172,7 @@ export class ProductsComponent implements OnInit {
         }
       });
       this.productService.getProducts(this.currentPage, this.categoryId || '-1', this.searchTerm, filteredSizes.length ? state.sizes : null,
-        state.colors.length ? state.colors : null, state.prices.length ? state.prices : null).subscribe(result => {
+        state.colors.length ? state.colors : null, state.prices.length ? state.prices : null, state.types && state.types.length ? state.types : null).subscribe(result => {
           this.loadData(result);
           const navService = this.navigationService;
           setTimeout(function () {
