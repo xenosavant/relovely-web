@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <ng-container *ngIf="order.sizes || order.instagram || order.pinterest || order.buyerInfo">
+        <ng-container *ngIf="order.instagram || order.pinterest || order.buyerInfo">
             <div class="divider light"></div>
             <div class="grid-wrapper">
                 <div>
@@ -76,9 +76,6 @@
                     <div *ngIf="order.buyerInfo" class="">
                         {{order.buyerInfo}}
                     </div>
-                </div>
-                <div class="sizes">
-                    <strong>Sizes:</strong> {{order.sizes | appSizes}}
                 </div>
             </div>
         </ng-container>

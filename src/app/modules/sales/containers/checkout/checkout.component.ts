@@ -67,7 +67,6 @@ export class CheckoutComponent implements OnInit {
   currentShipping: number;
   currentPromo: Promo = null;
   initialized = false;
-  selectedSizes: string[] = [];
   sizes: KeyValue[] = [];
 
 
@@ -112,12 +111,6 @@ export class CheckoutComponent implements OnInit {
             instagram: new FormControl(''),
             buyerInfo: new FormControl(''),
           });
-          const sizes = this.lookupService.state.sizes.filter(s => s.categoryIds.includes(this.product.categories[0]));
-          sizes.forEach(size => {
-            size.filters.forEach(f => {
-              this.sizes.push(f);
-            });
-          });
         }
         this.recalcCosts();
       }, err => {
@@ -153,16 +146,6 @@ export class CheckoutComponent implements OnInit {
       this.email = new FormGroup({
         email: new FormControl('', [Validators.required, Validators.email]),
       })
-    }
-  }
-
-  onRemoveSize(id) {
-    this.selectedSizes.splice(this.selectedSizes.indexOf(id), 1);
-  }
-
-  onSelectSize(control) {
-    if (this.selectedSizes.indexOf(control.value) <= -1) {
-      this.selectedSizes.push(control.value);
     }
   }
 
@@ -434,7 +417,6 @@ export class CheckoutComponent implements OnInit {
     if (this.product.type === 'bundle') {
       order = {
         ...order,
-        sizes: this.selectedSizes,
         pinterest: this.extraInfo.get('pinterest').value,
         instagram: this.extraInfo.get('instagram').value,
         buyerInfo: this.extraInfo.get('buyerInfo').value,

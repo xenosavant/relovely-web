@@ -128,15 +128,6 @@
           <h2>Additional Info </h2>
           <div class="form-wrapper">
             <form novalidate [formGroup]="extraInfo">
-              <div class="size">
-                <mat-form-field appearance="outline">
-                  <mat-select required placeholder="Sizes (Select all that may apply)" class="form-control"
-                    formControlName="size" (selectionChange)="onSelectSize($event)">
-                    <mat-option *ngFor="let size of sizes" [value]="size.key">{{size.value}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
               <div class="bundle-categories">
                 <mat-chip-list #chipList>
                   <mat-chip [selectable]="false" (removed)="onRemoveSize(id)" [removable]="true"

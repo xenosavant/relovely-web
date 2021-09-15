@@ -26,7 +26,6 @@ export class Order {
     public labelPrinted?: boolean;
     public shippingDiscount?: number;
     public discount?: number;
-    public sizes?: string[];
     public pinterest?: string;
     public instagram?: string;
     public buyerInfo?: string;
