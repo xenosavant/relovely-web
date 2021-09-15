@@ -37,7 +37,7 @@ export class ProductCreateComponent implements OnInit {
   public crop = false;
   public form: FormGroup;
   public categories: Array<Category[]> = [];
-  public bundleCategories: string[] = [];
+  public bundleCategories: Map<string, string[]> = new Map();
   public bundleSizes: string[] = [];
   public bundlePrices: { [id: string]: string[] } = {
     '3': ['3500', '5000', '7500', '10000'],
@@ -178,7 +178,7 @@ export class ProductCreateComponent implements OnInit {
           this.id = this.product.cloudId;
           this.form = new FormGroup({
             description: new FormControl(this.product.description, [Validators.required]),
-            category: new FormControl(this.product.categories[0], [Validators.required]),
+            category: new FormControl(this.product.categories.find(cat => cat.length === 1), [Validators.required]),
             categories: new FormArray([
               this.formBuilder.group({
                 id: ''
@@ -190,12 +190,17 @@ export class ProductCreateComponent implements OnInit {
             tag: new FormControl(''),
           });
           this.bundleSizes = [...this.product.sizes];
-          this.bundleCategories = this.product.categories.slice(1);
+          const catIds = this.product.categories.filter(id =>
+            id.length === 4
+          );
+          catIds.forEach(id => {
+            this.bundleCategories.set(id, this.lookupService.getParents(id).map(cat => cat.id))
+          });
           this.tags = [...this.product.tags];
           this.images = [...this.product.images];
-          this.selectTopLevel({ value: this.product.categories[0] }, true);
-          this.bundleCategories.forEach(id => {
-            const category = this.lookupService.getCategory(id);
+          this.selectTopLevel({ value: this.product.categories.find(cat => cat.length === 1) }, true);
+          this.bundleCategories.forEach((value, key) => {
+            const category = this.lookupService.getCategory(key);
             this.setSizesFromCategory(category);
           })
           this.calculateFees();
@@ -220,7 +225,7 @@ export class ProductCreateComponent implements OnInit {
   selectTopLevel(control, init = false) {
     const newIndex = this.rootCategories.findIndex(c => c.id === control.value);
     if (!init) {
-      this.bundleCategories = [];
+      this.bundleCategories = new Map();
     }
     const length = this.categoryArray.length;
     for (let i = 0; i < length; i++) {
@@ -257,22 +262,17 @@ export class ProductCreateComponent implements OnInit {
     if (this.type === 'bundle') {
       const rootIndex = parseInt(this.form.get('category').value) - 1;
       if (index === 1) {
-        const parent = this.categoryArray.controls[0].value.id;
-        if (this.bundleCategories.indexOf(parent) === -1) {
-          this.bundleCategories.push(parent);
-        }
-        if (this.bundleCategories.indexOf(selection.value) === -1) {
-          this.bundleCategories.push(selection.value);
+        const parents = this.lookupService.getParents(selection.value)
+        if (!this.bundleCategories.get(selection.value)) {
+          this.bundleCategories.set(selection.value, parents.map(p => p.id));
         }
         for (let i = 0; i < 2; i++) {
           this.categoryArray.removeAt(i);
         }
         this.currentSizes = [];
-        this.bundleCategories.forEach(cat => {
-          const category = this.lookupService.getCategory(cat);
-          if (!category.children.length) {
-            this.setSizes(category);
-          }
+        this.bundleCategories.forEach((value, key) => {
+          const category = this.lookupService.getCategory(key);
+          this.setSizes(category);
         })
       } else {
         const indexOfSelection = this.categories[0][rootIndex].children.findIndex(c => c.id === selection.value);
@@ -307,7 +307,7 @@ export class ProductCreateComponent implements OnInit {
   }
 
   onRemoveCategory(id) {
-    this.bundleCategories.splice(this.bundleCategories.indexOf(id, 1));
+    this.bundleCategories.delete(id);
   }
 
   onRemoveSize(id) {
@@ -438,13 +438,18 @@ export class ProductCreateComponent implements OnInit {
       };
 
       if (this.type === 'bundle') {
-        this.categoryError = this.bundleCategories.length <= 1 ? true : false;
+        this.categoryError = this.bundleCategories.size < 1 ? true : false;
         this.sizeError = !this.bundleSizes.length ? true : false;
         if (this.sizeError || this.categoryError) {
           this.loading = false;
           return;
         }
-        product.categories = [this.form.get('category').value, ...this.bundleCategories];
+        const categories = new Set();
+        this.bundleCategories.forEach((value, key) => {
+          categories.add(key);
+          value.forEach(item => categories.add(item))
+        });
+        product.categories = [...categories] as string[];
         product.sizes = this.bundleSizes;
         product.quantity = parseInt(this.form.get('quantity').value);
       } else {
@@ -464,7 +469,6 @@ export class ProductCreateComponent implements OnInit {
           product.retailPrice = parseInt(this.form.get('retailPrice').value.replace(this.currencyChars, ''), 10);
         }
       }
-
       if (this.edit) {
         this.productService.patchProduct(product, this.product.id).subscribe(response => {
           this.loading = false;
@@ -552,11 +556,9 @@ export class ProductCreateComponent implements OnInit {
 
   get selectedBundleCategories(): string[] {
     const categories = [];
-    this.bundleCategories.forEach(cat => {
-      const category = this.lookupService.getCategory(cat);
-      if (!category.children.length) {
-        categories.push(category.name);
-      }
+    this.bundleCategories.forEach((value, key) => {
+      const category = this.lookupService.getCategory(key);
+      categories.push(category.id);
     });
     return categories;
   }

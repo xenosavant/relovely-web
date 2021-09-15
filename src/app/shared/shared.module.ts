@@ -75,6 +75,7 @@ import { HorizontalUserListComponent } from './components/horizontal-user-list/h
 import { AppSizesPipe } from './pipes/sizes.pipe';
 import { CategoriesPipe } from './pipes/categories.pipe';
 import { ProductTitlePipe } from './pipes/product-title-pipe';
+import { CategoryPipe } from './pipes/category.pipe';
 
 @NgModule({
   imports: [
@@ -150,7 +151,8 @@ import { ProductTitlePipe } from './pipes/product-title-pipe';
     LinkInstagramComponent,
     AddAddressComponent,
     SellerApplyComponent,
-    HorizontalUserListComponent],
+    HorizontalUserListComponent,
+    CategoryPipe],
   exports: [
     CommonModule,
     FormsModule,
@@ -218,7 +220,8 @@ import { ProductTitlePipe } from './pipes/product-title-pipe';
     LinkInstagramComponent,
     AddAddressComponent,
     SellerApplyComponent,
-    HorizontalUserListComponent
+    HorizontalUserListComponent,
+    CategoryPipe
   ],
   providers: [DecimalPipe, CategoriesPipe, AuthenticationGuard, SellerGuard, AdminGuard],
 })

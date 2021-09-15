@@ -140,7 +140,6 @@ export class DesktopFiltersComponent implements OnInit {
   }
 
   onLeaveMenu(event: any, menu: string) {
-    console.log(event)
     this.closeActiveMenu();
   }
 

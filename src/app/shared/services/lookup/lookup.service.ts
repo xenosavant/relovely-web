@@ -1,12 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Observable, Subject, of, BehaviorSubject } from 'rxjs';
 import { Category } from '../../models/category.model';
 import { SizeFilterGroup } from '../../models/size-filter-group.model';
 import { BaseService } from '../base.service';
-import { LookupResponse } from './lookup.response';
-import { map, catchError } from 'rxjs/operators';
-import { SignupResponse } from '../auth/signup.response';
-import { INavigationState } from '@app/shared/interfaces/navigation-state.interface';
 import { LookupState } from './lookup-state';
 import { ColorFilter } from '@app/shared/interfaces/color-filter.interface';
 import { states } from '../../../data/states'
@@ -16,7 +11,6 @@ import { sizes } from '@app/data/sizes.data';
 import { colors } from '@app/data/colors.data';
 import { prices } from '@app/data/prices.data';
 import { categories } from '@app/data/categories.data';
-import { KeyValue } from '@angular/common';
 
 @Injectable()
 export class LookupService extends BaseService {
@@ -55,6 +49,20 @@ export class LookupService extends BaseService {
 
     public getCategory(id: string): Category {
         return this._catMap[id];
+    }
+
+    public getParents(id: string): Category[] {
+        const cat = this._catMap[id];
+        return this.getParent(cat);
+    }
+
+    private getParent(cat: Category, array = []) {
+        const parent = cat.parent;
+        if (parent) {
+            array.push(parent);
+            return this.getParent(parent, array);
+        }
+        return array;
     }
 
     public getSize(id: string) {

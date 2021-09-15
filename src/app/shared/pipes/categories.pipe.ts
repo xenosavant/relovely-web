@@ -7,16 +7,13 @@ export class CategoriesPipe implements PipeTransform {
     constructor(private lookupService: LookupService) { }
 
     transform(categories: string[]): string {
-        let returnString = ''
-        categories.forEach((cat, index) => {
+        let returnString = '';
+        const bottomLevelCats = categories.filter(ct => !this.lookupService.getCategory(ct).children.length);
+        bottomLevelCats.forEach((cat, index) => {
             const category = this.lookupService.getCategory(cat);
-            if (!category.children.length) {
-                if (index !== 0) {
-                    returnString += this.lookupService.getCategory(cat).name;
-                }
-                if (index !== 0 && index !== categories.length - 1) {
-                    returnString += ', ';
-                }
+            returnString += category.name;
+            if (index !== bottomLevelCats.length - 1) {
+                returnString += ', ';
             }
         })
         return returnString;

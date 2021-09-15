@@ -149,7 +149,6 @@ export class ProductsComponent implements OnInit {
   }
 
   getProducts(state: IUserPreferences) {
-    console.log(state);
     if (this.cache) {
       this.loadData({ items: this.cache.products, count: this.cache.total });
       this.cache = null;
