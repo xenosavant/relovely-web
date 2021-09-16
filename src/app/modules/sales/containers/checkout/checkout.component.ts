@@ -16,6 +16,8 @@ import { NavigationService } from '@app/shared/services/navigation/navigation.se
 import { guid } from '../../../../shared/utils/rand';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Promo } from '@app/shared/models/promo.model';
+import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
+import { KeyValue } from '@app/shared/interfaces/key-value.interface';
 
 @Component({
   selector: 'app-checkout',
@@ -48,6 +50,7 @@ export class CheckoutComponent implements OnInit {
   savingAddress = false;
   error: string;
   shippingAddress: FormGroup;
+  extraInfo: FormGroup;
   email: FormGroup;
   billingSame = false;
   addressError = false;
@@ -64,6 +67,7 @@ export class CheckoutComponent implements OnInit {
   currentShipping: number;
   currentPromo: Promo = null;
   initialized = false;
+  sizes: KeyValue[] = [];
 
 
 
@@ -100,6 +104,14 @@ export class CheckoutComponent implements OnInit {
         if (this.user) {
           this.selectedAddress = this.user.addresses.find(a => a.primary);
         }
+        if (this.product.type === 'bundle') {
+          this.extraInfo = new FormGroup({
+            size: new FormControl(''),
+            pinterest: new FormControl(''),
+            instagram: new FormControl(''),
+            buyerInfo: new FormControl(''),
+          });
+        }
         this.recalcCosts();
       }, err => {
         this.error = 'Hmmm...something went wrong. Please referesh the page and try again.'
@@ -110,7 +122,6 @@ export class CheckoutComponent implements OnInit {
 
   init() {
     this.initialized = true;
-    console.log('init')
     if (this.user) {
       if (this.user.addresses.length) {
         this.selectedAddress = this.user.addresses.find(a => a.primary);
@@ -396,16 +407,25 @@ export class CheckoutComponent implements OnInit {
   checkout() {
     this.checkingOut = true;
     this.error = null;
+    let order = {
+      tax: this.tax,
+      shipmentId: this.shipmentId,
+      joinMailingList: this.emailList,
+      paymentId: this.selectedPayment.stripeId,
+      promoCode: this.currentPromo ? this.currentPromo.code : undefined
+    } as any;
+    if (this.product.type === 'bundle') {
+      order = {
+        ...order,
+        pinterest: this.extraInfo.get('pinterest').value,
+        instagram: this.extraInfo.get('instagram').value,
+        buyerInfo: this.extraInfo.get('buyerInfo').value,
+      };
+    }
     if (this.user) {
+      order.address = this.selectedAddress;
       this.orderService.postOrder(
-        {
-          address: this.selectedAddress,
-          paymentId: this.selectedPayment.stripeId,
-          shipmentId: this.shipmentId,
-          joinMailingList: this.emailList,
-          tax: this.tax,
-          promoCode: this.currentPromo ? this.currentPromo.code : undefined
-        }, this.product.id)
+        order, this.product.id)
         .subscribe(order => {
           this.navigationService.navigate({ path: `/sales/orders/${order.id}` })
         }, err => {
@@ -414,19 +434,13 @@ export class CheckoutComponent implements OnInit {
           this.ref.markForCheck();
         })
     } else {
+      order.address = this.shippingAddressValue;
+      order.last4 = this.selectedPayment.last4;
+      order.cardType = this.selectedPayment.type;
+      order.email = this.email.get('email').value;
+      order.createAccount = this.createUser;
       this.orderService.guestOrder(
-        {
-          address: this.shippingAddressValue,
-          paymentId: this.selectedPayment.stripeId,
-          shipmentId: this.shipmentId,
-          tax: this.tax,
-          last4: this.selectedPayment.last4,
-          cardType: this.selectedPayment.type,
-          email: this.email.get('email').value,
-          joinMailingList: this.emailList,
-          createAccount: this.createUser,
-          promoCode: this.currentPromo ? this.currentPromo.code : undefined
-        }, this.product.id)
+        order, this.product.id)
         .subscribe(order => {
           this.navigationService.navigate({ path: `/sales/orders/guest` })
         }, err => {
@@ -452,5 +466,4 @@ export class CheckoutComponent implements OnInit {
       country: 'US'
     }
   }
-
 }

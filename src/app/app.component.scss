@@ -385,3 +385,8 @@ mat-nav-list {
 .mobile-content {
   min-height: calc(100vh - 142px);
 }
+
+.sidenav-inner {
+  height: calc(100vh - 56px);
+  overflow: scroll;
+}

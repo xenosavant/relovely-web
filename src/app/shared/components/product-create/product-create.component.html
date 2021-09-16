@@ -1,16 +1,13 @@
 <app-modal [title]="title" (close)="onClose()">
-    <ng-container *ngIf="!loading">
+    <div *ngIf="imageUploadError" class="image-error">
+        An error occured upoloading the image, please try again
+    </div>
+    <ng-container *ngIf="!loading && type === 'item'">
         <div *ngIf="saveError" class="image-error">
             Unable to create listing. Check your internet connection and try again.
         </div>
         <div class="info hint">
             *We recommend at least one photo wearing the product
-        </div>
-        <div *ngIf="imageError" class="image-error">
-            Please upload at least one photo
-        </div>
-        <div *ngIf="imageUploadError" class="image-error">
-            An error occured upoloading the image, please try again
         </div>
         <div *ngIf="images.length" class="info">
             Cover Photo
@@ -55,7 +52,7 @@
                     <textarea matInput placeholder="Product Description" formControlName="description"></textarea>
                 </mat-form-field>
             </div>
-            <div class="categories">
+            <div class="categories--three">
                 <ng-container formArrayName="categories" *ngFor="let item of categoryArray['controls']; let i = index;">
                     <div [formGroupName]="i">
                         <mat-form-field appearance="outline">
@@ -134,30 +131,166 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="price-wrapper">
-                <div *ngIf="!form.get('price').valid && form.get('price').dirty && !priceInput.focused" class="error">
-                    Price must be greater than $0.50
-                </div>
-                <div *ngIf="!(!form.get('price').valid && form.get('price').dirty)" class="fees">
-                    <div class="earnings" [class.hide]="!(price && price >= 50)">
-                        <div>Seller Earnings:</div>
-                        <div>{{sellerEarnings | appCurrency}}</div>
-                    </div>
-                    <div class="breakdown" [class.hide]="!(price && price >= 50)">
-                        {{earningsBreakdown}}
-                    </div>
+        </form>
+    </ng-container>
+    <ng-container *ngIf="!loading && type === 'bundle'">
+        <div *ngIf="saveError" class="image-error">
+            Unable to create listing. Check your internet connection and try again.
+        </div>
+        <div *ngIf="images.length" class="info">
+            Cover Photo
+        </div>
+        <div class="thumbnails">
+            <div class="image-wrapper" *ngIf="images.length">
+                <img [src]="images[0].cropped">
+                <div class="overlay">
+                    <mat-icon svgIcon="close" (click)="onRemoveImage(url)"></mat-icon>
                 </div>
             </div>
-            <div class="button-wrapper">
-                <app-button (click)="onClose()">
-                    <strong>Cancel</strong>
-                </app-button>
-                <button mat-stroked-button class="primary" [disabled]="!form.valid" (click)="onSave()">
-                    List
-                </button>
+            <div *ngIf="mobile && !images.length" class="add-image"
+                (click)="inputMobile.value = null; inputMobile.click()"><img src="./assets/images/plus.png">
+            </div>
+            <div *ngIf="!mobile && !images.length" class="add-image" (click)="input.value = null; input.click()"><img
+                    src="./assets/images/plus.png"></div>
+        </div>
+        <div class="info hint">
+            * Add a photo of yourself, or a general representation of the style items that could be in the box
+        </div>
+        <input #input type="file" style="visibility:hidden; height:0px;" (change)="imageChanged($event)" />
+        <input #inputMobile type="file" style="visibility:hidden; height:0px;" (change)="imageChanged($event)" />
+        <form novalidate [formGroup]="form">
+            <div class="description">
+                <mat-form-field appearance="outline">
+                    <textarea matInput placeholder="Bundle Description" formControlName="description"></textarea>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-select placeholder="Category" class="form-control"
+                        (selectionChange)="selectTopLevel($event, i)" formControlName="category">
+                        <mat-option *ngFor="let cat of categories[0]" [value]="cat.id">{{cat.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="categories--two">
+                <ng-container formArrayName="categories" *ngFor="let item of categoryArray['controls']; let i = index;">
+                    <div [formGroupName]="i">
+                        <mat-form-field appearance="outline">
+                            <mat-select placeholder="Categories (select all that apply)" class="form-control"
+                                (selectionChange)="selectCategory($event, i)" formControlName="id">
+                                <mat-option *ngFor="let cat of categories[i+1]" [value]="cat.id">{{cat.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="bundle-categories">
+                <mat-chip-list #chipList>
+                    <mat-chip [selectable]="false" (removed)="onRemoveCategory(bundleCategory)" [removable]="true"
+                        *ngFor="let bundleCategory of selectedBundleCategories">
+                        {{bundleCategory | appCategory}}
+                        <mat-icon svgIcon="close" matChipRemove></mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+            <div class="size">
+                <mat-form-field appearance="outline">
+                    <mat-select placeholder="Sizes (Select all that may apply)" class="form-control"
+                        formControlName="size" (selectionChange)="selectSize($event)">
+                        <mat-option *ngFor="let size of currentSizes" [value]="size.key">{{size.value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="bundle-categories">
+                <mat-chip-list #chipList>
+                    <mat-chip [selectable]="false" (removed)="onRemoveSize(id)" [removable]="true"
+                        *ngFor="let id of bundleSizes">
+                        {{id | appSize}}
+                        <mat-icon svgIcon="close" matChipRemove></mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+            <div class="info hint bottom">* If in between pounds, round up to the next pound (lb).</div>
+            <div class="weight">
+                <mat-form-field appearance="outline">
+                    <mat-select placeholder="Shipping Weight" class="form-control" formControlName="weight">
+                        <mat-option *ngFor="let weight of weights" [value]="weight.key">{{weight.value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="info hint tag-hint">
+                Press enter after every tag
+            </div>
+            <div class="tags">
+                <mat-form-field appearance="outline">
+                    <mat-chip-list #chipList>
+                        <mat-chip [selectable]="false" (removed)="onRemoveTag(tag)" [removable]="true"
+                            *ngFor="let tag of tags">
+                            {{tag}}
+                            <mat-icon svgIcon="close" matChipRemove></mat-icon>
+                        </mat-chip>
+                        <input matInput [matChipInputFor]="chipList" type="text" class="form-control"
+                            formControlName="tag" (keyup)="onKeyup($event)" placeholder="Tags (up to 16)" />
+                    </mat-chip-list>
+                </mat-form-field>
+            </div>
+            <div class="double-field">
+                <div class="price">
+                    <mat-form-field appearance="outline">
+                        <mat-select placeholder="Number of items" class="form-control" formControlName="quantity">
+                            <mat-option *ngFor="let quantity of quantities" [value]="quantity">{{quantity}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="price">
+                    <mat-form-field appearance="outline">
+                        <mat-select placeholder="Price" class="form-control" formControlName="price">
+                            <mat-option *ngFor="let price of bundlePrices[this.form.get('quantity').value]"
+                                [value]="price">{{price | appCurrency}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
             </div>
         </form>
     </ng-container>
+    <div class="price-wrapper">
+        <div *ngIf="!form.get('price').valid && form.get('price').dirty" class="error">
+            Price must be greater than $0.50
+        </div>
+        <div *ngIf="!(!form.get('price').valid && form.get('price').dirty)" class="fees">
+            <div class="earnings" [class.hide]="!(price && price >= 50)">
+                <div>Seller Earnings:</div>
+                <div>{{sellerEarnings | appCurrency}}</div>
+            </div>
+            <div class="breakdown" [class.hide]="!(price && price >= 50)">
+                {{earningsBreakdown}}
+            </div>
+        </div>
+    </div>
+    <div *ngIf="imageError" class="image-error">
+        Please upload at least one photo
+    </div>
+    <div *ngIf="categoryError" class="image-error">
+        Please select at least one category
+    </div>
+    <div *ngIf="sizeError" class="image-error">
+        Please select at least one size
+    </div>
+    <div class="button-wrapper">
+        <app-button (click)="onClose()">
+            <strong>Cancel</strong>
+        </app-button>
+        <button mat-stroked-button class="primary" [disabled]="!form.valid" (click)="onSave()">
+            <ng-container *ngIf="!edit">List</ng-container>
+            <ng-container *ngIf="edit">Update</ng-container>
+        </button>
+    </div>
     <div class="loading-wrapper" *ngIf="loading">
         <div class="loading">
             <mat-spinner diameter="30"></mat-spinner>

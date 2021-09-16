@@ -106,7 +106,7 @@ export class ProductComponent implements OnInit {
   }
 
   edit() {
-    this.productService.showProductCreate(this.product, this.currentUser.id)
+    this.productService.showProductCreate(this.product, this.currentUser.id, this.product.type)
   }
 
   close() {
@@ -133,7 +133,7 @@ export class ProductComponent implements OnInit {
       if (this.currentUser && this.currentUser.id === response.product.sellerId) {
         this.seller = true;
       }
-      if (!this.seller) {
+      if (!this.seller && this.currentUser) {
         this.productService.viewProduct(response.product.id).subscribe(() => {
         });
       }

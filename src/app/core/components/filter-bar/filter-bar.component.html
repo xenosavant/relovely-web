@@ -25,16 +25,17 @@
         </mat-basic-chip>
       </mat-chip-list>
     </mat-tab>
-    <!-- <mat-tab label="Listings">
+    <mat-tab label="Shop by">
       <div class='listing-wrapper'>
-        <mat-basic-chip (click)="bid = !bid" [class.selected]="bid"> Bid</mat-basic-chip>
-        <mat-basic-chip (click)="buy = !buy" [class.selected]="buy"> Buy</mat-basic-chip>
+        <mat-basic-chip (click)="itemChanged()" [class.selected]="this.selectedTypes.includes('item')"> Items
+        </mat-basic-chip>
+        <mat-basic-chip (click)="bundleChanged()" [class.selected]="this.selectedTypes.includes('bundle')"> Bundles
+        </mat-basic-chip>
       </div>
-    </mat-tab> -->
+    </mat-tab>
   </mat-tab-group>
   <div class="clear" (click)="onClearFilters()">
-    <div *ngIf="sizesActive || colorsActive || pricesActive" class="filters-active"></div>
-    <div>Clear</div>
+    <div *ngIf="sizesActive || colorsActive || pricesActive || typesActive" class="filters-active"></div>
     <mat-icon svgIcon="sync"></mat-icon>
   </div>
 </div>

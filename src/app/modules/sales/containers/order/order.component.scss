@@ -11,6 +11,7 @@
     margin: 0 auto;
     max-width: $desktop-breakpoint;
     width: 100%;
+    padding-bottom: 16px;
  }
 
  .order-wrapper {
@@ -120,4 +121,18 @@
     img {
         height: 25vh;
     }
+}
+
+.sizes {
+    @media(max-width: 500px) {
+        margin-top: 8px;
+    }
+}
+
+.additional {
+    margin-bottom: 16px;
+}
+
+.buyer {
+    margin-top: 16px;
 }

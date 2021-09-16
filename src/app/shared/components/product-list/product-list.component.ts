@@ -77,7 +77,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   onEdit() {
-    this.edit.emit(this.product);
+    this.edit.emit({ ...this.product });
   }
 
   onFavorite() {

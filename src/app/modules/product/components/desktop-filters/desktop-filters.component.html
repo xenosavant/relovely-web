@@ -21,6 +21,13 @@
                 <mat-icon svgIcon="chevron"></mat-icon>
             </div>
         </li>
+        <li class="alert-after" [class.active]="typesActive" #typeTrigger="matMenuTrigger"
+            (mouseenter)="onEnterTrigger($event, 'type')" [matMenuTriggerFor]="typeMenu">
+            <div class="item">
+                <div class="label">Shopy by</div>
+                <mat-icon svgIcon="chevron"></mat-icon>
+            </div>
+        </li>
     </ul>
     <div class="clear" (click)="onClearFilters()">
         <mat-icon svgIcon="sync"></mat-icon>
@@ -84,8 +91,17 @@
     </div>
 </mat-menu>
 
-<!-- <mat-menu #listingsMenu="matMenu" yPosition="below" xPosition="before" [overlapTrigger]="false">
-    <div class="listing-wrapper" (mouseleave)="onLeaveMenu($event, 'listings')" (click)="$event.stopPropagation()">
+<mat-menu #typeMenu="matMenu" yPosition="below" xPosition="after" [overlapTrigger]="false">
+    <div class="type-menu-wrapper" (mouseover)="closeActiveMenu()">
+        <span class="top-menu" (mouseover)="closeActiveMenu()"></span>
+        <span class="left-menu" (mouseover)="closeActiveMenu()"></span>
+        <span (mouseover)="$event.stopPropagation()" class="type-wrapper"
+            (mouseleave)="onLeaveTrigger($event, 'type')"></span>
     </div>
-    <div (mouseleave)="onLeaveMenu($event)" class="listings-filter-wrapper"></div>
-</mat-menu> -->
+    <div (mouseleave)="onLeaveMenu($event, 'type')" class="type-filter-wrapper" (click)="$event.stopPropagation()">
+        <mat-basic-chip disableRipple [class.selected]="selectedTypes.indexOf(item.value) > -1"
+            (click)="selectType(item.value)" *ngFor="let item of typeFilters">
+            <div> {{item.key | titlecase}}</div>
+        </mat-basic-chip>
+    </div>
+</mat-menu>

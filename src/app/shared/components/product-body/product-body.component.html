@@ -7,10 +7,15 @@
   </div>
   <div class="info-footer">
     <div class="product-name">
-      {{product.title}}
+      {{product | productTitle}}
     </div>
     <div *ngIf="product.sizeId" class="product-size">
       Size: {{product.sizeId | appSize}}
+    </div>
+    <div *ngIf="product.type === 'bundle'">
+      <span class="product-size">Size:
+        <span class="size">{{product.sizes | appSizes}}</span>
+      </span>
     </div>
     <div class="product-price">
       {{product.price | appCurrency}}

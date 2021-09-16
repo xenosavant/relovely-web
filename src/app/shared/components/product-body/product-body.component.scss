@@ -27,42 +27,42 @@
 .info-footer {
     padding-top:.5em;
     display: block;
-    height: 4em;
+    height: 80px;
     @media (min-width:$desktop-breakpoint) {
-        height: 6em;
+        height: 100px;
     }
     .product-name {
         font-size: 14px;
-        max-height: 30px;
+        max-height: 36px;
         font-weight: 600;
+        line-height: 18px;
         @media (min-width:$desktop-breakpoint) {
             font-size: 16px;
+            line-height: 20px;
             max-height: 40px;
         }
         display: inline-block;
         overflow: hidden;
     }
     .product-size {
-        font-size:.7em;
-        color: #686868;
+        font-size:14px;
+        .size {
+            font-weight: 1000;
+        }
     }
     .product-price {
-        font-size:.8em;
+        font-size:14px;
         margin-top: 4px;
     }
     @media (min-width:$desktop-breakpoint) {
         .product-name {
-            font-size: 1.1em;
-            line-height: 1.2em;
+            font-size: 18px;
         }
         .product-price {
-            font-size: .9em;
-            line-height: 1.3em;
-
+            font-size: 16px;
         }
         .product-size {
-            font-size: .9em;
-            line-height: 1.3em;
+            font-size: 16px;
         }
     }
 }

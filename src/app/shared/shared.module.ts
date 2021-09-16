@@ -72,6 +72,10 @@ import { AuthenticationGuard } from './guards/auth.guard';
 import { SellerGuard } from './guards/seller.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { HorizontalUserListComponent } from './components/horizontal-user-list/horizontal-user-list.component';
+import { AppSizesPipe } from './pipes/sizes.pipe';
+import { CategoriesPipe } from './pipes/categories.pipe';
+import { ProductTitlePipe } from './pipes/product-title-pipe';
+import { CategoryPipe } from './pipes/category.pipe';
 
 @NgModule({
   imports: [
@@ -130,6 +134,9 @@ import { HorizontalUserListComponent } from './components/horizontal-user-list/h
     AddressComponent,
     AppCurrencyPipe,
     AppSizePipe,
+    AppSizesPipe,
+    ProductTitlePipe,
+    CategoriesPipe,
     ProductCreateComponent,
     ImageViewerComponent,
     AddAddressModalComponent,
@@ -144,7 +151,8 @@ import { HorizontalUserListComponent } from './components/horizontal-user-list/h
     LinkInstagramComponent,
     AddAddressComponent,
     SellerApplyComponent,
-    HorizontalUserListComponent],
+    HorizontalUserListComponent,
+    CategoryPipe],
   exports: [
     CommonModule,
     FormsModule,
@@ -178,6 +186,7 @@ import { HorizontalUserListComponent } from './components/horizontal-user-list/h
     ProfileStatsComponent,
     ProductsListComponent,
     ProductListComponent,
+    ProductTitlePipe,
     UserListComponent,
     UsersListComponent,
     FakeSlidesDirective,
@@ -195,6 +204,8 @@ import { HorizontalUserListComponent } from './components/horizontal-user-list/h
     AddressComponent,
     AppCurrencyPipe,
     AppSizePipe,
+    AppSizesPipe,
+    CategoriesPipe,
     ProductCreateComponent,
     ImageViewerComponent,
     AddAddressModalComponent,
@@ -209,8 +220,9 @@ import { HorizontalUserListComponent } from './components/horizontal-user-list/h
     LinkInstagramComponent,
     AddAddressComponent,
     SellerApplyComponent,
-    HorizontalUserListComponent
+    HorizontalUserListComponent,
+    CategoryPipe
   ],
-  providers: [DecimalPipe, AuthenticationGuard, SellerGuard, AdminGuard],
+  providers: [DecimalPipe, CategoriesPipe, AuthenticationGuard, SellerGuard, AdminGuard],
 })
 export class SharedModule { }

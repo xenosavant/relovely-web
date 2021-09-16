@@ -25,12 +25,14 @@ export class DesktopFiltersComponent implements OnInit {
   hideSizeMenu = false;
 
   selectedPriceFilters: PriceFilter[] = [];
+  selectedTypes: string[] = [];
+  typeFilters = [{ key: 'Items', value: 'item' }, { key: 'Bundles', value: 'bundle' }];
   priceFilters: PriceFilter[];
 
   @ViewChild('sizeTrigger') sizeTrigger: MatMenuTrigger;
   @ViewChild('colorTrigger', { static: true }) colorTrigger: MatMenuTrigger;
   @ViewChild('priceTrigger', { static: true }) priceTrigger: MatMenuTrigger;
-  @ViewChild('listingsTrigger', { static: true }) listingsTrigger: MatMenuTrigger;
+  @ViewChild('typeTrigger', { static: true }) typeTrigger: MatMenuTrigger;
 
   private _activeTrigger: MatMenuTrigger;
 
@@ -83,13 +85,18 @@ export class DesktopFiltersComponent implements OnInit {
             })
             this.selectedPriceFilters = temp;
           }
+          if (cache.types) {
+            const temp = [];
+            cache.types.forEach(type => {
+              temp.push(type)
+            });
+            this.selectedTypes = temp;
+          }
         }
         this.ref.markForCheck();
       }
     });
   }
-
-
 
   selectSize(group: SizeFilterGroup, key: string) {
     if (group.selectedKeys.some(selectedKey => key === selectedKey)) {
@@ -124,11 +131,22 @@ export class DesktopFiltersComponent implements OnInit {
     }))
   }
 
+  selectType(type: string) {
+    const index = this.selectedTypes.indexOf(type);
+    if (index > -1) {
+      this.selectedTypes.splice(index, 1);
+    } else {
+      this.selectedTypes.push(type);
+    }
+    this.filterService.updateTypes(this.selectedTypes);
+  }
+
   onLeaveMenu(event: any, menu: string) {
     this.closeActiveMenu();
   }
 
   onLeaveTrigger(event: any, menu: string) {
+    let xOffset = 80;
     switch (menu) {
       case 'size':
         this._activeTrigger = this['sizeTrigger'];
@@ -139,8 +157,12 @@ export class DesktopFiltersComponent implements OnInit {
       case 'price':
         this._activeTrigger = this['priceTrigger'];
         break;
+      case 'type':
+        this._activeTrigger = this['typeTrigger'];
+        xOffset = 250;
+        break;
     }
-    if (event.offsetX < 0 || event.offsetX > 80 || !(event.offsetY > 20)) {
+    if (event.offsetX < 0 || event.offsetX > xOffset || !(event.offsetY > 20)) {
       this.closeActiveMenu();
     }
   }
@@ -160,6 +182,9 @@ export class DesktopFiltersComponent implements OnInit {
         break;
       case 'price':
         this._activeTrigger = this['priceTrigger'];
+        break;
+      case 'type':
+        this._activeTrigger = this['typeTrigger'];
         break;
     }
 
@@ -183,6 +208,9 @@ export class DesktopFiltersComponent implements OnInit {
     if (this.priceTrigger.menuOpen) {
       this.priceTrigger.closeMenu();
     }
+    if (this.typeTrigger.menuOpen) {
+      this.typeTrigger.closeMenu();
+    }
   }
 
   onClearFilters() {
@@ -191,6 +219,7 @@ export class DesktopFiltersComponent implements OnInit {
     this.sizeFilters.forEach(filter => {
       filter.selectedKeys = [];
     });
+    this.selectedTypes = [];
     this.filterService.clear();
   }
 
@@ -204,5 +233,9 @@ export class DesktopFiltersComponent implements OnInit {
 
   get pricesActive() {
     return this.selectedPriceFilters.length > 0;
+  }
+
+  get typesActive() {
+    return this.selectedTypes.length > 0;
   }
 }

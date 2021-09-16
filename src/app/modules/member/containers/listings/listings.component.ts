@@ -67,8 +67,8 @@ export class ListingsComponent implements OnInit {
     })
   }
 
-  onEdit(event: Product) {
-    this.productService.showProductCreate(event, this.user.id);
+  onEdit(product: Product) {
+    this.productService.showProductCreate(product, this.user.id, product.type);
   }
 
   goToProduct(id: string) {

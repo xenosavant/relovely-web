@@ -26,9 +26,8 @@ export class FilterBarComponent implements OnInit {
   currentSizeFilters: SizeFilterGroup[] = [];
   colorFilters: ColorFilter[];
   selectedColors: string[] = [];
+  selectedTypes: string[] = [];
   priceFilters: PriceFilter[];
-  buy = false;
-  bid = false;
 
   constructor(private navigationService: NavigationService,
     private route: ActivatedRoute,
@@ -74,6 +73,9 @@ export class FilterBarComponent implements OnInit {
                 this.priceFilters.find(price => price.id === pref.id)
               )
             })
+          }
+          if (cache.types) {
+            this.selectedTypes = cache.types;
           }
         }
       }
@@ -129,10 +131,28 @@ export class FilterBarComponent implements OnInit {
     this.currentSizeFilters.forEach(filter => {
       filter.selectedKeys = [];
     })
+    this.selectedTypes = [];
     this.currentSizeFilters = Object.assign([], this.currentSizeFilters);
     this.ref.markForCheck();
   }
 
+  itemChanged() {
+    if (this.selectedTypes.includes('item')) {
+      this.selectedTypes.splice(this.selectedTypes.indexOf('item'));
+    } else {
+      this.selectedTypes.push('item');
+    }
+    this.filterService.updateTypes(this.selectedTypes);
+  }
+
+  bundleChanged() {
+    if (this.selectedTypes.includes('bundle')) {
+      this.selectedTypes.splice(this.selectedTypes.indexOf('bundle'));
+    } else {
+      this.selectedTypes.push('bundle');
+    }
+    this.filterService.updateTypes(this.selectedTypes);
+  }
   get sizesActive(): boolean {
     return this.currentSizeFilters && this.currentSizeFilters.some(f => f.selectedKeys.length > 0);
   }
@@ -141,6 +161,10 @@ export class FilterBarComponent implements OnInit {
   }
   get pricesActive(): boolean {
     return this.selectedPriceFilters.length > 0;
+  }
+
+  get typesActive(): boolean {
+    return this.selectedTypes.length > 0;
   }
 
 }

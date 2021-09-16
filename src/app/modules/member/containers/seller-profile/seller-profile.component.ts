@@ -89,12 +89,12 @@ export class SellerProfileComponent implements OnChanges {
     if (this.currentUser && this.currentUser.seller.missingInfo.includes('external_account') || this.currentUser.seller.verificationStatus !== 'verified' || !this.currentUser.returnAddress) {
       this.navigationService.navigate({ path: '/account/settings', queryStrings: [{ key: 'error', value: 'required' }] })
     } else {
-      this.productService.showProductCreate(null, this.currentUser.id);
+      this.productService.showProductCreate(null, this.currentUser.id, 'item');
     }
   }
 
-  showEditModal(product: any) {
-    this.productService.showProductCreate(product, this.currentUser.id);
+  showEditModal(product: Product) {
+    this.productService.showProductCreate(product, this.currentUser.id, product.type);
   }
 
   onUpdate() {
