@@ -133,7 +133,7 @@ export class ProductComponent implements OnInit {
       if (this.currentUser && this.currentUser.id === response.product.sellerId) {
         this.seller = true;
       }
-      if (!this.seller) {
+      if (!this.seller && this.currentUser) {
         this.productService.viewProduct(response.product.id).subscribe(() => {
         });
       }

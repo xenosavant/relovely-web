@@ -57,7 +57,7 @@ export class FilterService extends BaseService {
     }
 
     public updateTypes(types: string[]) {
-        this._state.types = types;
+        this._state.types = [...types];
         const user = this.userService.user$.getValue();
         if (user) {
             this.userService.updateUser(user.id, { preferences: this._state }).subscribe(u => {

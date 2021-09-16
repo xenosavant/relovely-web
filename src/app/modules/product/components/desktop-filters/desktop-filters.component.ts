@@ -86,9 +86,11 @@ export class DesktopFiltersComponent implements OnInit {
             this.selectedPriceFilters = temp;
           }
           if (cache.types) {
+            const temp = [];
             cache.types.forEach(type => {
-              this.selectedTypes.push(type)
-            })
+              temp.push(type)
+            });
+            this.selectedTypes = temp;
           }
         }
         this.ref.markForCheck();

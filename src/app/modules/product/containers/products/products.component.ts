@@ -136,6 +136,7 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    this.filterSub.unsubscribe();
     this.productModalSubscription.unsubscribe();
   }
 
@@ -171,7 +172,7 @@ export class ProductsComponent implements OnInit {
         }
       });
       this.productService.getProducts(this.currentPage, this.categoryId || '-1', this.searchTerm, filteredSizes.length ? state.sizes : null,
-        state.colors.length ? state.colors : null, state.prices.length ? state.prices : null, state.types && state.types.length ? state.types : null).subscribe(result => {
+        state.colors.length ? state.colors : null, state.prices.length ? state.prices : null, (state.types && state.types.length) ? state.types : null).subscribe(result => {
           this.loadData(result);
           const navService = this.navigationService;
           setTimeout(function () {
