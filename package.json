@@ -9,7 +9,7 @@
     "build": "ng build --outputPath=./dist/html",
     "build:circle": "ng build --outputPath=./dist/html",
     "build-prod": "ng build --prod",
-    "build-prod:circle": "ng build --prod --outputPath=./dist/html",
+    "build-prod:circle": "ng build --prod --aot --outputHashing=all --outputPath=./dist/html",
     "test": "npm run lint && ng test --configuration=test",
     "lint": "ng lint",
     "e2e": "ng e2e",
