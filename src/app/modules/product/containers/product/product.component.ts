@@ -14,6 +14,7 @@ import { UserAuth } from '@app/shared/models/user-auth.model';
 import { NavigationItem } from '@app/shared/models/navigation-item.model';
 import { LookupService } from '@app/shared/services/lookup/lookup.service';
 import { Subscription } from 'rxjs';
+import { getShippingCost } from '@app/shared/utils/shipping';
 
 @Component({
   selector: 'app-product',
@@ -200,5 +201,9 @@ export class ProductComponent implements OnInit {
 
   onClose() {
     this.overlayService.close();
+  }
+
+  get price() {
+    return this.product.price + getShippingCost(this.product.weight);
   }
 }

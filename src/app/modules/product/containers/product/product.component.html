@@ -29,7 +29,7 @@
                     {{product | productTitle}}
                 </div>
                 <div class="product-price">
-                    {{product.price | appCurrency}}
+                    {{price | appCurrency}}
                     <span *ngIf="product.retailPrice" class="strike-through">{{product.retailPrice | appCurrency}}
                     </span>
                 </div>
@@ -108,7 +108,7 @@
                     </div>
                 </div>
                 <div class="product-price">
-                    {{product.price | appCurrency}}
+                    {{price | appCurrency}}
                     <span *ngIf="product.retailPrice" class="strike-through">{{product.retailPrice | appCurrency}}
                     </span>
                 </div>

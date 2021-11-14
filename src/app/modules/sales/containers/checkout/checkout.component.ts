@@ -18,6 +18,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Promo } from '@app/shared/models/promo.model';
 import { SizeFilterGroup } from '@app/shared/models/size-filter-group.model';
 import { KeyValue } from '@app/shared/interfaces/key-value.interface';
+import { getShippingCost } from '@app/shared/utils/shipping';
 
 @Component({
   selector: 'app-checkout',
@@ -112,6 +113,7 @@ export class CheckoutComponent implements OnInit {
             buyerInfo: new FormControl(''),
           });
         }
+        this.shippingCost = getShippingCost(this.product.weight);
         this.recalcCosts();
       }, err => {
         this.error = 'Hmmm...something went wrong. Please referesh the page and try again.'
@@ -158,7 +160,6 @@ export class CheckoutComponent implements OnInit {
         categoryId: this.product.categories.find(c => c.length === 2),
         weight: this.product.weight, toAddress: this.selectedAddress, sellerId: this.product.sellerId, price: this.product.price
       }).subscribe(response => {
-        this.shippingCost = response.shippingRate;
         this.total = this.product.price + this.shippingCost;
         this.shippingRateId = response.rateId;
         this.shipmentId = response.shipmentId;
@@ -174,7 +175,6 @@ export class CheckoutComponent implements OnInit {
         this.ref.markForCheck();
       });
     } else {
-      this.shippingCost = 0;
       this.total = this.product.price + this.shippingCost;
       this.calculateTotals();
       this.shippingCostLoading = false
