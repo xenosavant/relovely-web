@@ -191,8 +191,7 @@ export class ProductCreateComponent implements OnInit {
           });
           this.bundleSizes = [...this.product.sizes];
           const catIds = this.product.categories.filter(id =>
-            id.length === 4
-          );
+            this.lookupService.getCategory(id).children.length === 0);
           catIds.forEach(id => {
             this.bundleCategories.set(id, this.lookupService.getParents(id).map(cat => cat.id))
           });
